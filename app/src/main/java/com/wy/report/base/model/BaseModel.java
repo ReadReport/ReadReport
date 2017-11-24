@@ -11,7 +11,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @author cantalou
  * @date 2017年11月24日 9:26
  */
-public class BaseModel {
+public class BaseModel<T> {
 
     private int state;
 
@@ -21,5 +21,37 @@ public class BaseModel {
     @JSONField(name = "errmsg")
     private String errMsg;
 
+    private T data;
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getErrCode() {
+        return errCode;
+    }
+
+    public void setErrCode(int errCode) {
+        this.errCode = errCode;
+    }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

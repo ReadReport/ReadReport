@@ -2,6 +2,10 @@ package com.wy.report.manager.auth;
 
 import android.text.format.DateUtils;
 
+import com.cantalou.android.util.Log;
+import com.wy.report.base.model.BaseModel;
+import com.wy.report.business.auth.model.TokenModel;
+import com.wy.report.business.auth.service.AuthService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.manager.preferences.Key;
 import com.wy.report.manager.preferences.PreferenceManager;
@@ -21,9 +25,9 @@ import rx.functions.Action1;
  */
 public class AuthManager {
 
-    public static final String APP_ID = "appid";
+    public static final String APP_ID = "dbg_ios_app";
 
-    public static final String APP_SECRET = "secret";
+    public static final String APP_SECRET = "6F2TL4tX3QhKCSJC";
 
     /**
      * Token失效时间<br/>
@@ -36,7 +40,7 @@ public class AuthManager {
      */
     private static final long REFRESH_INTERVAL = DateUtils.HOUR_IN_MILLIS;
 
-    private TokenInfo tokenInfo = new TokenInfo();
+    private TokenModel tokenModel = new TokenModel();
 
     private PreferenceManager preferenceManager;
 
@@ -46,14 +50,14 @@ public class AuthManager {
 
     private AuthManager() {
         preferenceManager = PreferenceManager.getInstance();
-        tokenInfo = preferenceManager.getValue(Key.AUTH_TOKEN_INFO, TokenInfo.class);
-        Observable.interval(0L, REFRESH_INTERVAL, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                  .subscribe(new Action1<Long>() {
-                      @Override
-                      public void call(Long aLong) {
-                          refreshToken();
-                      }
-                  });
+        tokenModel = preferenceManager.getValue(Key.AUTH_TOKEN_INFO, TokenModel.class);
+        Observable.interval(REFRESH_INTERVAL, REFRESH_INTERVAL, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        refreshToken();
+                    }
+                });
     }
 
     public static final AuthManager getInstance() {
@@ -62,27 +66,34 @@ public class AuthManager {
 
     public void refreshToken() {
         RetrofitHelper.getRetrofit()
-                      .create(AuthService.class)
-                      .getToken(APP_ID, APP_SECRET)
-                      .subscribe(new Subscriber<TokenInfo>() {
-                          @Override
-                          public void onCompleted() {
-                          }
+                .create(AuthService.class)
+                .getToken(APP_ID, APP_SECRET)
+                .subscribe(new Subscriber<BaseModel<TokenModel>>() {
 
-                          @Override
-                          public void onError(Throwable e) {
-                          }
+                    @Override
+                    public void onStart() {
 
-                          @Override
-                          public void onNext(TokenInfo tokenInfo) {
-                              AuthManager.this.tokenInfo = tokenInfo;
-                              preferenceManager.setValue(Key.AUTH_TOKEN_INFO, tokenInfo);
-                          }
-                      });
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(e);
+                    }
+
+                    @Override
+                    public void onNext(BaseModel<TokenModel> model) {
+                        AuthManager.this.tokenModel = model.getData();
+                        preferenceManager.setValue(Key.AUTH_TOKEN_INFO, tokenModel);
+                    }
+                });
 
     }
 
-    public TokenInfo getTokenInfo() {
-        return tokenInfo;
+    public TokenModel getTokenModel() {
+        return tokenModel;
     }
 }

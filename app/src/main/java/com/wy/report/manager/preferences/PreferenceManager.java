@@ -106,6 +106,10 @@ public class PreferenceManager {
         throw new RuntimeException("Unknown key " + key + ",value " + value);
     }
 
+    public <T> T getValue(String key, Class<?> type) {
+        return (T) getValue(key, type, null);
+    }
+
     public <T> T getValue(String key, Object defaultValue) {
         return (T) getValue(key, null, defaultValue);
     }

@@ -1,7 +1,7 @@
 package com.wy.report.helper.retrofit.interceptor;
 
 import com.wy.report.manager.auth.AuthManager;
-import com.wy.report.manager.auth.TokenInfo;
+import com.wy.report.business.auth.model.TokenModel;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -36,13 +36,13 @@ public class AuthInterceptor implements Interceptor {
             return chain.proceed(original);
         }
 
-        TokenInfo tokenInfo = AuthManager.getInstance()
-                                         .getTokenInfo();
+        TokenModel tokenModel = AuthManager.getInstance()
+                                         .getTokenModel();
         LinkedHashMap<String, String> nameValuePair = new LinkedHashMap<>(4);
         nameValuePair.put("appid", AuthManager.APP_ID);
         nameValuePair.put("secret", AuthManager.APP_SECRET);
-        nameValuePair.put("token", tokenInfo.getToken());
-        nameValuePair.put("timestamp", String.valueOf(tokenInfo.getTimestamp()));
+        nameValuePair.put("token", tokenModel.getToken());
+        nameValuePair.put("timestamp", String.valueOf(tokenModel.getTimestamp()));
 
         Request request = null;
         if ("GET".equalsIgnoreCase(original.method())) {

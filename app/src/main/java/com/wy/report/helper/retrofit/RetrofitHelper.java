@@ -34,7 +34,7 @@ public class RetrofitHelper {
 
         retrofit = new Retrofit.Builder().baseUrl("http://api.vip120.com")
                 .client(okHttpClient)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.createAsync())
                 .addConverterFactory(FastJsonConverterFactory.create())
                 .build();
     }

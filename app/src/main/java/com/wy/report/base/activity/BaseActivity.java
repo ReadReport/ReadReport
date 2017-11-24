@@ -1,8 +1,12 @@
 package com.wy.report.base.activity;
 
-import android.support.annotation.LayoutRes;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+
+import com.hwangjr.rxbus.Bus;
+import com.hwangjr.rxbus.RxBus;
+import com.wy.report.R;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -22,4 +26,29 @@ import android.view.View;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    protected Bus rxBus;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        rxBus = RxBus.get();
+        if (!rxBus.hasRegistered(this)) {
+            rxBus.register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (rxBus != null && rxBus.hasRegistered(this)) {
+            rxBus.unregister(this);
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.navigtor_pop_right_in, R.anim.navigtor_pop_right_out);
+    }
 }
