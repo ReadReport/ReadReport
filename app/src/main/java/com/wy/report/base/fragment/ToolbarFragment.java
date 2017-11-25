@@ -1,10 +1,4 @@
-package com.wy.report.base.activity;
-
-import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+package com.wy.report.base.fragment;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -20,13 +14,17 @@ import android.view.View;
  * the License.
  *
  * @author cantalou
- * @date 2017-11-23 22:22
+ * @date 2017-11-24 23:54
  */
-public class BaseActivity extends AppCompatActivity {
+public class ToolbarFragment extends BaseFragment {
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    /**
+     * Fragment 内容布局文件id
+     *
+     * @return
+     */
+    protected int contentLayoutId() {
+        return 0;
     }
 }
+
