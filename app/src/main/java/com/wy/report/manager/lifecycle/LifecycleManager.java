@@ -1,6 +1,4 @@
-package com.wy.report.base.fragment;
-
-/*
+package com.wy.report.manager.lifecycle;/*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
@@ -14,17 +12,19 @@ package com.wy.report.base.fragment;
  * the License.
  *
  * @author cantalou
- * @date 2017-11-24 23:54
+ * @date 2017-11-25 17:04
  */
-public class ToolbarFragment extends BaseFragment {
 
-    /**
-     * Fragment 内容布局文件id
-     *
-     * @return
-     */
-    protected int contentLayoutId() {
-        return 0;
+public class LifecycleManager {
+
+    static final class InstanceHolder {
+        static final LifecycleManager instance = new LifecycleManager();
+    }
+
+    private LifecycleManager() {
+    }
+
+    public static LifecycleManager getInstance() {
+        return InstanceHolder.instance;
     }
 }
-

@@ -1,11 +1,19 @@
 package com.wy.report.base.activity;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
+import com.umeng.analytics.MobclickAgent;
 import com.wy.report.R;
 
 /*
@@ -24,9 +32,11 @@ import com.wy.report.R;
  * @author cantalou
  * @date 2017-11-23 22:22
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
     protected Bus rxBus;
+
+    protected Toolbar.OnMenuItemClickListener menuItemClickListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +46,29 @@ public class BaseActivity extends AppCompatActivity {
         if (!rxBus.hasRegistered(this)) {
             rxBus.register(this);
         }
+        initData();
+        setContentView(contentLayoutID());
+        initView();
+    }
+
+    @CallSuper
+    protected abstract void initData();
+
+    @CallSuper
+    protected abstract void initView();
+
+    protected abstract int contentLayoutID();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -50,5 +83,36 @@ public class BaseActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.navigtor_pop_right_in, R.anim.navigtor_pop_right_out);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (menuItemClickListener != null) {
+            return menuItemClickListener.onMenuItemClick(item);
+        }
+        return false;
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(baseLayoutID());
+        ViewGroup baseLayout = (ViewGroup) findViewById(R.id.base_layout);
+        baseLayout.addView(view);
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(baseLayoutID());
+        ViewGroup baseLayout = (ViewGroup) findViewById(R.id.base_layout);
+        LayoutInflater.from(this)
+                      .inflate(layoutResID, baseLayout);
+    }
+
+    protected int baseLayoutID() {
+        return R.layout.activity_base;
+    }
+
+    public void setMenuItemClickListener(Toolbar.OnMenuItemClickListener menuItemClickListener) {
+        this.menuItemClickListener = menuItemClickListener;
     }
 }

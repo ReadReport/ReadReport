@@ -16,9 +16,8 @@ package com.wy.report.base.fragment;
  * @author cantalou
  * @date 2017-11-24 23:54
  */
-public class NetworkFragment extends ToolbarFragment {
+public abstract class NetworkFragment extends PtrFragment {
 
-    protected boolean showToolbar() {
-        return true;
-    }
+
+
 }
