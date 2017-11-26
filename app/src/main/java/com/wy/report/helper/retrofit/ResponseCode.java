@@ -285,7 +285,7 @@ public final class ResponseCode {
      */
     public static final int ERROR_CODE_70004 = 70004;
 
-    public static final SparseArray map = new SparseArray();
+    public static final SparseArray<String> map = new SparseArray();
 
     static {
         map.put(ERROR_CODE_40000, "系统繁忙，请稍候再试");

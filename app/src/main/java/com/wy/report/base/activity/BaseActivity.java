@@ -51,10 +51,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         initView();
     }
 
-    @CallSuper
     protected abstract void initData();
 
-    @CallSuper
     protected abstract void initView();
 
     protected abstract int contentLayoutID();
