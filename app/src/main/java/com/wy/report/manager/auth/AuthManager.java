@@ -2,18 +2,17 @@ package com.wy.report.manager.auth;
 
 import android.text.format.DateUtils;
 
-import com.cantalou.android.util.Log;
 import com.wy.report.base.model.BaseModel;
 import com.wy.report.business.auth.model.TokenModel;
 import com.wy.report.business.auth.service.AuthService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.preferences.Key;
 import com.wy.report.manager.preferences.PreferenceManager;
 
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -68,22 +67,7 @@ public class AuthManager {
         RetrofitHelper.getRetrofit()
                 .create(AuthService.class)
                 .getToken(APP_ID, APP_SECRET)
-                .subscribe(new Subscriber<BaseModel<TokenModel>>() {
-
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(e);
-                    }
-
+                .subscribe(new NetworkSubscriber<BaseModel<TokenModel>>() {
                     @Override
                     public void onNext(BaseModel<TokenModel> model) {
                         AuthManager.this.tokenModel = model.getData();

@@ -3,6 +3,8 @@ package com.wy.report.helper.retrofit.converter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.wy.report.base.model.BaseModel;
+import com.wy.report.helper.retrofit.ResponseCode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -35,8 +37,11 @@ final class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody, 
     @Override
     public T convert(ResponseBody value) throws IOException {
         try {
-            return JSON.parseObject(value.string(), mType, config, featureValues,
-                    features != null ? features : EMPTY_SERIALIZER_FEATURES);
+            T result = JSON.parseObject(value.string(), mType, config, featureValues, features != null ? features : EMPTY_SERIALIZER_FEATURES);
+            if (((BaseModel) result).getErrCode() > 0) {
+                ResponseCode.convert2Exception(((BaseModel) result).getErrCode(), ((BaseModel) result).getErrMsg());
+            }
+            return result;
         } finally {
             value.close();
         }
