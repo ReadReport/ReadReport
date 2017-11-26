@@ -30,9 +30,11 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
         titles = getResources().getStringArray(R.array.home_title);
+    }
 
+    @Override
+    protected void initView() {
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -51,10 +53,6 @@ public class HomeActivity extends BaseActivity {
         });
         viewPager.setOffscreenPageLimit(fragments.length);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    @Override
-    protected void initView() {
     }
 
     @Override

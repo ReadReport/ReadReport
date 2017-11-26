@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme"
         android:name=".ReportApplication">
 
-        <meta-data android:value="YOUR_APP_KEY" android:name="55c1a323e0f55a2d860017f5"/>
+        <meta-data android:value="APP_KEY" android:name="55c1a323e0f55a2d860017f5"/>
         <meta-data android:value="Channel ID" android:name="test"/>
 
         <activity

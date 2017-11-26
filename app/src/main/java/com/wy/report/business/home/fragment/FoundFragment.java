@@ -1,5 +1,6 @@
 package com.wy.report.business.home.fragment;
 
+import com.wy.report.R;
 import com.wy.report.base.fragment.BaseFragment;
 
 /*
@@ -21,6 +22,6 @@ public class FoundFragment extends BaseFragment {
 
     @Override
     protected int contentLayoutID() {
-        return 0;
+        return R.layout.activity_splash;
     }
 }
