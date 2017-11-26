@@ -1,10 +1,17 @@
 package com.wy.report.manager.auth;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.SystemClock;
 import android.text.format.DateUtils;
 
+import com.wy.report.ReportApplication;
 import com.wy.report.base.model.BaseModel;
 import com.wy.report.business.auth.model.TokenModel;
 import com.wy.report.business.auth.service.AuthService;
+import com.wy.report.helper.retrofit.ReportException;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.preferences.Key;
@@ -43,6 +50,11 @@ public class AuthManager {
 
     private PreferenceManager preferenceManager;
 
+    /**
+     * 上一次刷新token的时间
+     */
+    private long lastRefreshTime;
+
     private static class InstanceHolder {
         static final AuthManager instance = new AuthManager();
     }
@@ -51,29 +63,50 @@ public class AuthManager {
         preferenceManager = PreferenceManager.getInstance();
         tokenModel = preferenceManager.getValue(Key.AUTH_TOKEN_INFO, TokenModel.class);
         Observable.interval(REFRESH_INTERVAL, REFRESH_INTERVAL, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long aLong) {
-                        refreshToken();
-                    }
-                });
+                  .subscribe(new Action1<Long>() {
+                      @Override
+                      public void call(Long aLong) {
+                          refreshToken();
+                      }
+                  });
+        registerNetworkChange();
     }
+
+
+    private void registerNetworkChange() {
+        Context context = ReportApplication.getGlobalContext();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        filter.addAction("android.net.wifi.STATE_CHANGE");
+        context.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                refreshToken();
+            }
+        }, filter);
+    }
+
 
     public static final AuthManager getInstance() {
         return InstanceHolder.instance;
     }
 
     public void refreshToken() {
+        if (SystemClock.elapsedRealtime() - lastRefreshTime < REFRESH_INTERVAL) {
+            return;
+        }
         RetrofitHelper.getRetrofit()
-                .create(AuthService.class)
-                .getToken(APP_ID, APP_SECRET)
-                .subscribe(new NetworkSubscriber<BaseModel<TokenModel>>() {
-                    @Override
-                    public void onNext(BaseModel<TokenModel> model) {
-                        AuthManager.this.tokenModel = model.getData();
-                        preferenceManager.setValue(Key.AUTH_TOKEN_INFO, tokenModel);
-                    }
-                });
+                      .create(AuthService.class)
+                      .getToken(APP_ID, APP_SECRET)
+                      .subscribe(new NetworkSubscriber<BaseModel<TokenModel>>() {
+                          @Override
+                          public void onNext(BaseModel<TokenModel> model) {
+                              AuthManager.this.tokenModel = model.getData();
+                              preferenceManager.setValue(Key.AUTH_TOKEN_INFO, tokenModel);
+                              lastRefreshTime = SystemClock.elapsedRealtime();
+                          }
+                      });
 
     }
 

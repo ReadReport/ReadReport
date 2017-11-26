@@ -10,6 +10,7 @@ public class TokenModel {
 
     private long timestamp;
 
+
     public String getToken() {
         return token;
     }
@@ -25,4 +26,5 @@ public class TokenModel {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
 }

@@ -3,7 +3,6 @@ package com.wy.report;
 import android.app.Application;
 import android.content.Context;
 
-import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.wy.report.manager.auth.AuthManager;
 

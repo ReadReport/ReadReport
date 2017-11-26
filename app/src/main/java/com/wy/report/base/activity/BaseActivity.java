@@ -16,6 +16,8 @@ import com.hwangjr.rxbus.RxBus;
 import com.umeng.analytics.MobclickAgent;
 import com.wy.report.R;
 
+import butterknife.ButterKnife;
+
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -41,13 +43,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         rxBus = RxBus.get();
         if (!rxBus.hasRegistered(this)) {
             rxBus.register(this);
         }
         initData();
         setContentView(contentLayoutID());
+        ButterKnife.bind(this);
         initView();
     }
 

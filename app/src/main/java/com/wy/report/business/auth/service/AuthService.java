@@ -19,6 +19,4 @@ public interface AuthService {
     @GET("/Index/getToken")
     Observable<BaseModel<TokenModel>> getToken(@Query("appid") String appId, @Query("secret") String secret);
 
-    @GET("/Index/getToken")
-    Call<BaseModel<TokenModel>> syncGetToken(@Query("appid") String appId, @Query("secret") String secret);
 }
