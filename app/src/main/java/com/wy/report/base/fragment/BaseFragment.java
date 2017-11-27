@@ -35,12 +35,11 @@ public abstract class BaseFragment extends Fragment {
 
     protected Bus rxBus;
 
+    protected Toolbar toolbar;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (this instanceof Toolbar.OnMenuItemClickListener && activity instanceof BaseActivity) {
-            ((BaseActivity) activity).setMenuItemClickListener((Toolbar.OnMenuItemClickListener) this);
-        }
     }
 
     @Override
@@ -79,4 +78,12 @@ public abstract class BaseFragment extends Fragment {
      * @return
      */
     protected abstract int contentLayoutID();
+
+    protected boolean isSupportToolbar() {
+        return true;
+    }
+
+    protected boolean isToolbarOverlap() {
+        return false;
+    }
 }

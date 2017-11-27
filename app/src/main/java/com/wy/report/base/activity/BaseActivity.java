@@ -1,16 +1,21 @@
 package com.wy.report.base.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.cantalou.android.util.DeviceUtils;
 import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
 import com.umeng.analytics.MobclickAgent;
@@ -34,7 +39,7 @@ import butterknife.ButterKnife;
  * @author cantalou
  * @date 2017-11-23 22:22
  */
-public abstract class BaseActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected Bus rxBus;
 
@@ -42,6 +47,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        if (isWindowTranslucentStatus() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
+
         super.onCreate(savedInstanceState);
         rxBus = RxBus.get();
         if (!rxBus.hasRegistered(this)) {
@@ -85,34 +97,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         overridePendingTransition(R.anim.navigtor_pop_right_in, R.anim.navigtor_pop_right_out);
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (menuItemClickListener != null) {
-            return menuItemClickListener.onMenuItemClick(item);
-        }
-        return false;
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(baseLayoutID());
-        ViewGroup baseLayout = (ViewGroup) findViewById(R.id.base_layout);
-        baseLayout.addView(view);
-    }
-
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(baseLayoutID());
-        ViewGroup baseLayout = (ViewGroup) findViewById(R.id.base_layout);
-        LayoutInflater.from(this)
-                      .inflate(layoutResID, baseLayout);
-    }
-
     protected int baseLayoutID() {
         return R.layout.activity_base;
     }
 
-    public void setMenuItemClickListener(Toolbar.OnMenuItemClickListener menuItemClickListener) {
-        this.menuItemClickListener = menuItemClickListener;
+    protected boolean isWindowTranslucentStatus() {
+        return false;
     }
+
 }

@@ -5,6 +5,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.wy.report.R;
 import com.wy.report.base.activity.BaseActivity;
@@ -53,6 +55,22 @@ public class HomeActivity extends BaseActivity {
         });
         viewPager.setOffscreenPageLimit(fragments.length);
         tabLayout.setupWithViewPager(viewPager);
+        initTabLayout();
+        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
+    }
+
+    private void initTabLayout() {
+        int[] iconDrawable = new int[]{R.drawable.home_tab_home_selector, R.drawable.home_tab_find_selector, R.drawable.home_tab_me_selector};
+        for (int i = 0; i < titles.length; i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.setCustomView(R.layout.view_home_tab_item_layout);
+            tab.setIcon(iconDrawable[i]);
+            tab.setText(titles[i]);
+            if(i == 0){
+                tab.select();
+            }
+        }
     }
 
     @Override
@@ -60,5 +78,8 @@ public class HomeActivity extends BaseActivity {
         return R.layout.activity_home;
     }
 
-
+    @Override
+    protected boolean isWindowTranslucentStatus() {
+        return true;
+    }
 }
