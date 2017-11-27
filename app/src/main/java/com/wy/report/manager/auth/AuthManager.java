@@ -96,7 +96,7 @@ public class AuthManager {
         if (SystemClock.elapsedRealtime() - lastRefreshTime < REFRESH_INTERVAL) {
             return;
         }
-        RetrofitHelper.getRetrofit()
+        RetrofitHelper.getInstance()
                       .create(AuthService.class)
                       .getToken(APP_ID, APP_SECRET)
                       .subscribe(new NetworkSubscriber<BaseModel<TokenModel>>() {

@@ -3,16 +3,22 @@ package com.wy.report.helper.retrofit;
 import com.wy.report.helper.retrofit.converter.FastJsonConverterFactory;
 import com.wy.report.helper.retrofit.interceptor.AuthInterceptor;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Observable;
 
 /**
  * @author cantalou
  * @date 2017年11月23日 10:38
  */
+@SuppressWarnings({"unused", "unchecked"})
 public class RetrofitHelper {
 
     private static class InstanceHolder {
@@ -23,12 +29,12 @@ public class RetrofitHelper {
 
     private Retrofit retrofit;
 
+    private HashMap<Class, Object> serviceProxyCache = new HashMap<>();
 
     private RetrofitHelper() {
 
         okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
                 .addNetworkInterceptor(new AuthInterceptor())
                 .build();
 
@@ -39,15 +45,39 @@ public class RetrofitHelper {
                 .build();
     }
 
-    public static final RetrofitHelper getInstance() {
+    public static RetrofitHelper getInstance() {
         return InstanceHolder.instance;
     }
 
-    public static Retrofit getRetrofit() {
-        return InstanceHolder.instance.retrofit;
+    public <T> T create(Class<T> clazz) {
+        T proxy = (T) serviceProxyCache.get(clazz);
+        if (proxy != null) {
+            return proxy;
+        }
+        proxy = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, new ProxyHandler(retrofit.create(clazz)));
+        serviceProxyCache.put(clazz, proxy);
+        return proxy;
     }
 
-    public static OkHttpClient getOkHttpClient() {
-        return InstanceHolder.instance.okHttpClient;
+
+    public OkHttpClient getOkHttpClient() {
+        return okHttpClient;
+    }
+
+
+    private static class ProxyHandler implements InvocationHandler {
+
+        private Object target;
+
+        ProxyHandler(Object target) {
+            this.target = target;
+        }
+
+        @Override
+        public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
+            Observable observable = (Observable) method.invoke(target, objects);
+            observable.retryWhen(new RetryWhenException());
+            return observable;
+        }
     }
 }
