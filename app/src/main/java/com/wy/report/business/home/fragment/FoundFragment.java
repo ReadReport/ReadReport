@@ -1,5 +1,7 @@
 package com.wy.report.business.home.fragment;
 
+import android.view.View;
+
 import com.wy.report.R;
 import com.wy.report.base.fragment.BaseFragment;
 
@@ -15,8 +17,7 @@ public class FoundFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
-
+    protected void initView(View content) {
     }
 
     @Override

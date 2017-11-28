@@ -13,6 +13,8 @@ import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
 import com.wy.report.base.activity.BaseActivity;
 
+import butterknife.ButterKnife;
+
 /*
  *
  * @author cantalou
@@ -41,13 +43,14 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initData();
 
-    protected abstract void initView();
+    protected abstract void initView(View content);
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View contentView = inflater.inflate(contentLayoutID(), container, false);
-        initView();
+        ButterKnife.bind(this, contentView);
+        initView(contentView);
         return contentView;
     }
 

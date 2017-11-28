@@ -19,6 +19,9 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
 
     private Context context = ReportApplication.getGlobalContext();
 
+    public NetworkSubscriber() {
+    }
+
     @Override
     public void onStart() {
         if (NetworkUtils.isNetworkAvailable(context)) {
@@ -33,9 +36,11 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
     @Override
     public void onError(Throwable e) {
         if (e instanceof ReportException) {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }else if(e instanceof IOException){
-            Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT)
+                 .show();
+        } else if (e instanceof IOException) {
+            Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT)
+                 .show();
         }
     }
 

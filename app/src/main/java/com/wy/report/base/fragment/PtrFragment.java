@@ -1,12 +1,17 @@
 package com.wy.report.base.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.wy.report.R;
+
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -24,18 +29,29 @@ import com.wy.report.R;
  * @author cantalou
  * @date 2017-11-24 23:54
  */
-public abstract class PtrFragment extends BaseFragment {
+public abstract class PtrFragment extends BaseFragment implements PtrHandler {
 
-    @Nullable
+
+
+    protected PtrFrameLayout ptrFrameLayout;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup prtContent = (ViewGroup)inflater.inflate(ptrLayoutID(), container, false);
-        inflater.inflate(contentLayoutID(), prtContent);
-        initView();
-        return prtContent;
+    @CallSuper
+    protected void initView(View content) {
+        ptrFrameLayout = (PtrFrameLayout)content.findViewById(R.id.ptr_layout);
     }
 
-    protected int ptrLayoutID() {
-        return R.layout.fragment_ptr;
+    @Override
+    public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+        return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+    }
+
+    @Override
+    public void onRefreshBegin(PtrFrameLayout frame) {
+
+    }
+
+    public PtrFrameLayout getPtrFrameLayout() {
+        return ptrFrameLayout;
     }
 }
