@@ -40,7 +40,8 @@
         </activity>
 
         <activity
-            android:name=".business.home.activity.HomeActivity">
+            android:name=".business.home.activity.HomeActivity"
+            android:theme="@style/AppTranslucentStatusBar">
         </activity>
     </application>
 

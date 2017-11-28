@@ -21,12 +21,13 @@ public class SplashActivity extends AppCompatActivity {
         AuthManager.getInstance()
                    .refreshToken();
 
-        Observable.timer(2, TimeUnit.SECONDS)
+        Observable.timer(2, TimeUnit.MILLISECONDS)
                   .subscribe(new Action1<Long>() {
                       @Override
                       public void call(Long aLong) {
                           AuthRouterManager.getInstance()
                                            .openHome(SplashActivity.this);
+                          finish();
                       }
                   });
     }
