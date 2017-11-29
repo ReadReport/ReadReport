@@ -1,5 +1,6 @@
 package com.wy.report.base.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
@@ -34,11 +35,11 @@ public abstract class ToolbarFragment extends BaseFragment {
         View toolbar = inflater.inflate(toolbarLayoutID(), toolbarContainer, false);
 
         if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
-            toolbarContainer.addView(toolbar);
             toolbarContainer.addView(contentView);
+            toolbarContainer.addView(toolbar);
         } else {
-            toolbarContainer.addView(contentView);
             toolbarContainer.addView(toolbar);
+            toolbarContainer.addView(contentView);
         }
         return toolbarContainer;
     }
@@ -48,8 +49,9 @@ public abstract class ToolbarFragment extends BaseFragment {
     protected void initView(View contentView) {
         toolbar = (Toolbar) contentView.findViewById(R.id.toolbar);
         BaseActivity activity = (BaseActivity) getActivity();
-        if (activity != null && activity.isWindowTranslucentStatus()) {
-            toolbar.setPadding(toolbar.getPaddingLeft(), DeviceUtils.getStatusBarHeight(activity), toolbar.getPaddingRight(), toolbar.getPaddingBottom());
+        if (activity != null && activity.isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int statusBarHeight = DeviceUtils.getStatusBarHeight(activity);
+            toolbar.setPadding(toolbar.getPaddingLeft(), statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
         }
     }
 

@@ -1,133 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:background="@color/hui_e9ebed">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/home_top_bg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/hui_e9ebed">
+            android:layout_height="250dp"
+            android:scaleType="matrix"
+            android:src="@android:color/holo_blue_bright"/>
 
-            <ImageView
-                android:id="@+id/home_top_bg"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:src="@android:color/holo_blue_bright"
-                android:scaleType="matrix"/>
-
-            <LinearLayout
-                android:id="@+id/home_use_report_num_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="50dp">
-
-                <TextView
-                    android:id="@+id/home_use_report_num_pre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_use_report_num_pre"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    />
-
-                <TextView
-                    android:id="@+id/home_use_report_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    />
-
-                <TextView
-                    android:id="@+id/home_use_report_num_suf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_use_report_num_suf"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    />
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/home_use_report_num_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="50dp">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/home_use_report_num_pre"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/home_use_report_num_ll"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:text="@string/home_use_report_tip"
+                android:text="@string/home_use_report_num_pre"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 />
 
+            <TextView
+                android:id="@+id/home_use_report_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                />
 
-            <!-- 查询报告, 上传报告, 管理报告 -->
+            <TextView
+                android:id="@+id/home_use_report_num_suf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_use_report_num_suf"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_use_report_num_ll"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/home_use_report_tip"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            />
+
+
+        <!-- 查询报告, 上传报告, 管理报告 -->
+        <LinearLayout
+            android:id="@+id/home_report_operation"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="235dp"
+            android:background="@drawable/shape_white_corner"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <LinearLayout
-                android:id="@+id/home_report_operation"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="235dp"
-                android:background="@drawable/shape_white_corner"
+                android:id="@+id/home_inquire_report"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/home_inquire_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/home_query_report"
+                    android:textColor="@color/hei_333333"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/home_upload_report"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/home_upload_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/home_upload_report"
+                    android:textColor="@color/hei_333333"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/home_manage_report"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/home_inquire_report"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:src="@drawable/home_inquire_icon"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_query_report"
-                        android:textColor="@color/hei_333333"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/home_upload_report"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:src="@drawable/home_upload_icon"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_upload_report"
-                        android:textColor="@color/hei_333333"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/home_manage_report"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:id="@+id/home_manage_report_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -139,42 +146,168 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:includeFontPadding="false"
                         android:text="@string/home_manage_report"
                         android:textColor="@color/hei_333333"/>
                 </LinearLayout>
-            </LinearLayout>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/home_manage_report_ll"
+                    android:layout_marginLeft="-27dp"
+                    android:layout_marginTop="-9dp"
+                    android:layout_toRightOf="@id/home_manage_report_ll"
+                    android:src="@drawable/home_dc_marked"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
 
-            <!-- 体检预约, 自我解读-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_below="@id/home_report_operation"
-                android:layout_marginLeft="10dp"
+        <!-- 体检预约, 自我解读-->
+        <LinearLayout
+            android:id="@+id/home_reserve_interpret"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/home_report_operation"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/home_examination_reserve"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp">
+                android:layout_weight="1"
+                android:background="@drawable/shape_white_corner"
+                android:paddingLeft="15dp">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_white_corner">
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.5"/>
 
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/home_examination_reserve_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/home_examination_reserve"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_white_corner">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:src="@drawable/home_hot_marked"
+                    app:layout_constraintLeft_toRightOf="@id/home_examination_reserve_title"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
 
-                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/home_examination_reserve_online"
+                    android:textColor="@color/hui_858585"
+                    android:textSize="11sp"
+                    app:layout_constraintTop_toBottomOf="@id/guideline"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/home_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+            </android.support.constraint.ConstraintLayout>
+
+            <RelativeLayout
+                android:id="@+id/home_self_interpretation"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_white_corner"
+                android:paddingLeft="15dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/home_self_interpretation"
+                        android:textColor="@color/hei_333333"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/home_health_data_self_interpretation"
+                        android:textColor="@color/hui_858585"
+                        android:textSize="11sp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/home_more"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/home_reserve_interpret"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_white_corner"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/home_dynamic"
+                android:text="@string/home_interpretation_feed"
+                android:textColor="@color/hei_333333"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/home_interpretation_feed_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-    </ScrollView>
+    </RelativeLayout>
 
-</FrameLayout>
+</ScrollView>
+
