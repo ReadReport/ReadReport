@@ -19,4 +19,5 @@
     <string name="home_health_data_self_interpretation">健康数据自我检测</string>
 
     <string name="home_interpretation_feed">解读动态</string>
+    <string name="home_interpretation_feed_template">%s报告已被医生解读</string>
 </resources>

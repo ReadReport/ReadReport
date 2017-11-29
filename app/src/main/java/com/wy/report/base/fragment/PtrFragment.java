@@ -70,15 +70,21 @@ public abstract class PtrFragment extends ToolbarFragment implements PtrHandler 
 
     @Override
     public void onRefreshBegin(final PtrFrameLayout frame) {
-        Observable.timer(2, TimeUnit.SECONDS)
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new Action1<Long>() {
-                      @Override
-                      public void call(Long aLong) {
-                          frame.refreshComplete();
-                      }
-                  });
+        loadData();
     }
+
+    public void performRefresh() {
+        ptrFrameLayout.autoRefresh(true);
+    }
+
+    public void onLoadingStart() {
+
+    }
+
+    public void onLoadEnd() {
+        ptrFrameLayout.refreshComplete();
+    }
+
 
     public PtrFrameLayout getPtrFrameLayout() {
         return ptrFrameLayout;
@@ -86,5 +92,16 @@ public abstract class PtrFragment extends ToolbarFragment implements PtrHandler 
 
     protected int ptrLayoutID() {
         return R.layout.fragment_ptr;
+    }
+
+    protected void loadData() {
+        Observable.timer(2, TimeUnit.SECONDS)
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(new Action1<Long>() {
+                      @Override
+                      public void call(Long aLong) {
+                          onLoadEnd();
+                      }
+                  });
     }
 }

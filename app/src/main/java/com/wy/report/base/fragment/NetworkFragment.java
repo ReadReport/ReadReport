@@ -18,6 +18,14 @@ package com.wy.report.base.fragment;
  */
 public abstract class NetworkFragment extends PtrFragment {
 
+    private boolean hasLoadData = false;
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser && !hasLoadData){
+            loadData();
+        }
+    }
 
 }

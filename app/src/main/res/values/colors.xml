@@ -4,9 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="hui_e9ebed">#e9ebed</color>
-    <color name="hui_858585">#858585</color>
+    <color name="lan_30acff">#30acff</color>
 
+    <color name="hui_858585">#858585</color>
+    <color name="hui_ababab">#ababab</color>
+    <color name="hui_e9ebed">#e9ebed</color>
 
     <color name="hei_333333">#333333</color>
+    <color name="hei_575757">#575757</color>
 </resources>
