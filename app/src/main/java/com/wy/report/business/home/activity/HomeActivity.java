@@ -56,7 +56,6 @@ public class HomeActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(fragments.length);
         tabLayout.setupWithViewPager(viewPager);
         initTabLayout();
-        viewPager.setCurrentItem(1);
         viewPager.setCurrentItem(0);
     }
 
@@ -79,7 +78,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    protected boolean isWindowTranslucentStatus() {
+    public boolean isWindowTranslucentStatus() {
         return true;
     }
 }

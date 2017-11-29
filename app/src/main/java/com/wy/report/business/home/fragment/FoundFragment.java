@@ -22,6 +22,6 @@ public class FoundFragment extends BaseFragment {
 
     @Override
     protected int contentLayoutID() {
-        return R.layout.activity_splash;
+        return R.layout.fragment_find;
     }
 }

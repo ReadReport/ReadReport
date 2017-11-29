@@ -101,7 +101,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return R.layout.activity_base;
     }
 
-    protected boolean isWindowTranslucentStatus() {
+    public boolean isWindowTranslucentStatus() {
         return false;
     }
 

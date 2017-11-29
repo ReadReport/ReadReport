@@ -1,11 +1,11 @@
 package com.wy.report.business.home.fragment;
 
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.wy.report.R;
-import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.fragment.PtrFragment;
+import com.wy.report.util.ViewUtils;
 
 import butterknife.BindView;
 
@@ -16,8 +16,8 @@ import butterknife.BindView;
  */
 public class HomeFragment extends PtrFragment {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.home_top_bg)
+    ImageView topBg;
 
     @Override
     protected void initData() {
@@ -27,13 +27,23 @@ public class HomeFragment extends PtrFragment {
     @Override
     protected void initView(View content) {
         super.initView(content);
+//        toolbar.getBackground()
+//               .setAlpha(0);
+//        ViewUtils.convertToLeftTopCrop(topBg);
+    }
 
-        toolbar.getBackground()
-               .setAlpha(0);
+
+    @Override
+    protected int toolbarLayoutID() {
+        return R.layout.view_home_toolbar;
     }
 
     @Override
     protected int contentLayoutID() {
         return R.layout.fragment_home;
+    }
+
+    protected int toolbarFlag() {
+        return TOOL_BAR_FLAG_SHOW | TOOL_BAR_FLAG_OVERLAY;
     }
 }
