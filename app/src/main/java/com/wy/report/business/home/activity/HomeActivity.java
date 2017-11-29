@@ -1,22 +1,17 @@
 package com.wy.report.business.home.activity;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.wy.report.R;
 import com.wy.report.base.activity.BaseActivity;
 import com.wy.report.business.home.fragment.FoundFragment;
 import com.wy.report.business.home.fragment.HomeFragment;
 import com.wy.report.business.home.fragment.MyFragment;
-import com.wy.report.manager.auth.AuthManager;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity {
 
@@ -56,7 +51,6 @@ public class HomeActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(fragments.length);
         tabLayout.setupWithViewPager(viewPager);
         initTabLayout();
-        viewPager.setCurrentItem(0);
     }
 
     private void initTabLayout() {
@@ -67,6 +61,7 @@ public class HomeActivity extends BaseActivity {
             tab.setIcon(iconDrawable[i]);
             tab.setText(titles[i]);
             if(i == 0){
+                tabLayout.getTabAt(i + 1).select();
                 tab.select();
             }
         }
@@ -78,7 +73,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    public boolean isWindowTranslucentStatus() {
+    public boolean isTranslucentStatusBar() {
         return true;
     }
 }

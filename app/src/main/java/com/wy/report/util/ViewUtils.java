@@ -7,16 +7,8 @@ import android.widget.ImageView;
 import com.cantalou.android.util.DeviceUtils;
 
 /**
- * Project Name: ReadReport<p>
- * File Name:    ViewUtils.java<p>
- * ClassName:    ViewUtils<p>
- * <p>
- * TODO.
- *
- * @author LinZhiWei
+ * @author cantalou
  * @date 2017年11月29日 9:38
- * <p>
- * Copyright (c) 2017年, 4399 Network CO.ltd. All Rights Reserved.
  */
 public class ViewUtils {
 
