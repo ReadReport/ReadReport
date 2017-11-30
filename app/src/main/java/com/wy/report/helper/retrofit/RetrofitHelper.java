@@ -13,6 +13,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * @author cantalou
@@ -34,15 +36,15 @@ public class RetrofitHelper {
     private RetrofitHelper() {
 
         okHttpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .addNetworkInterceptor(new AuthInterceptor())
-                .build();
+                                         .connectTimeout(30, TimeUnit.SECONDS)
+                                         .addNetworkInterceptor(new AuthInterceptor())
+                                         .build();
 
         retrofit = new Retrofit.Builder().baseUrl("http://api.vip120.com")
-                .client(okHttpClient)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.createAsync())
-                .addConverterFactory(FastJsonConverterFactory.create())
-                .build();
+                                         .client(okHttpClient)
+                                         .addCallAdapterFactory(RxJavaCallAdapterFactory.createAsync())
+                                         .addConverterFactory(FastJsonConverterFactory.create())
+                                         .build();
     }
 
     public static RetrofitHelper getInstance() {
@@ -76,7 +78,9 @@ public class RetrofitHelper {
         @Override
         public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
             Observable observable = (Observable) method.invoke(target, objects);
-            observable.retryWhen(new RetryWhenException());
+            observable.retryWhen(new RetryWhenException())
+                      .subscribeOn(Schedulers.io())
+                      .observeOn(AndroidSchedulers.mainThread());
             return observable;
         }
     }

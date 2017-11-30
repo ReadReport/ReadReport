@@ -3,6 +3,7 @@ package com.wy.report.helper.retrofit.subscriber;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.cantalou.android.util.Log;
 import com.cantalou.android.util.NetworkUtils;
 import com.wy.report.ReportApplication;
 import com.wy.report.helper.retrofit.ReportException;
@@ -35,6 +36,7 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
+        Log.e(e);
         if (e instanceof ReportException) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT)
                  .show();

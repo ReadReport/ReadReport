@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Observable.timer(2, TimeUnit.MILLISECONDS)
+        Observable.timer(2, TimeUnit.SECONDS)
                   .subscribe(new Action1<Long>() {
                       @Override
                       public void call(Long aLong) {

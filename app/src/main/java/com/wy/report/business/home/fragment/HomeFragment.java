@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import rx.android.schedulers.AndroidSchedulers;
 
 /*
  * 首页
@@ -44,6 +45,12 @@ public class HomeFragment extends NetworkFragment {
 
     @BindView(R.id.home_use_report_num)
     TextView useReportNum;
+
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+
+    @BindView(R.id.toolbar_msg_icon)
+    ImageView toolbarMsgIcon;
 
     private Drawable toolbarBackground;
 
@@ -65,9 +72,9 @@ public class HomeFragment extends NetworkFragment {
         scrollView.setOnScrollChangeListener(new ObservableScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int alpha = (int) (255.0 * Math.abs(scrollY) / toolbar.getHeight());
-                alpha = alpha > 255 ? 255 : alpha;
-                toolbarBackground.setAlpha(alpha);
+                double ratio = 1.0 * Math.abs(scrollY) / toolbar.getHeight();
+                toolbarBackground.setAlpha(ratio > 1 ? 255 : (int) (255 * ratio));
+                toolbarTitle.setTextColor(ratio > 1 ? 0xFFFFFF : (int) (0xFFFFFF * ratio));
             }
         });
     }
@@ -109,6 +116,7 @@ public class HomeFragment extends NetworkFragment {
     @Override
     protected void loadData() {
         homeService.getTotalNumber()
+//                   .observeOn(AndroidSchedulers.mainThread())
                    .subscribe(new PtrSubscriber<BaseModel<HomeReportModel>>(this) {
                        @Override
                        public void onNext(BaseModel<HomeReportModel> totalNumberBaseModel) {
