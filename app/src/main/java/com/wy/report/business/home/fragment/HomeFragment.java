@@ -1,24 +1,25 @@
 package com.wy.report.business.home.fragment;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.cantalou.android.util.Log;
 import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
-import com.wy.report.base.fragment.PtrFragment;
+import com.wy.report.base.model.BaseModel;
 import com.wy.report.business.home.model.FeedModel;
+import com.wy.report.business.home.model.HomeReportModel;
+import com.wy.report.business.home.service.HomeService;
+import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.ViewUtils;
 import com.wy.report.widget.ObservableScrollView;
 
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,7 +31,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * @author cantalou
  * @date 2017-11-26 22:55
  */
-public class HomeFragment extends NetworkFragment implements ObservableScrollView.OnScrollChangeListener {
+public class HomeFragment extends NetworkFragment {
 
     @BindView(R.id.home_top_bg)
     ImageView topBg;
@@ -41,27 +42,34 @@ public class HomeFragment extends NetworkFragment implements ObservableScrollVie
     @BindView(R.id.home_scroll_view)
     ObservableScrollView scrollView;
 
+    @BindView(R.id.home_use_report_num)
+    TextView useReportNum;
+
     private Drawable toolbarBackground;
+
+    private HomeService homeService;
 
     @Override
     protected void initData() {
+        homeService = RetrofitHelper.getInstance()
+                                    .create(HomeService.class);
     }
 
     @Override
     protected void initView(View content) {
         super.initView(content);
         ViewUtils.convertToLeftTopCrop(topBg);
-        scrollView.setOnScrollChangeListener(this);
+
         toolbarBackground = toolbar.getBackground();
         toolbarBackground.setAlpha(0);
-
-        ArrayList<FeedModel> data = new ArrayList<>();
-        data.add(new FeedModel(0, "15806035102", System.currentTimeMillis() / 1000));
-        data.add(new FeedModel(0, "15806035102", System.currentTimeMillis() / 1000));
-        data.add(new FeedModel(0, "15806035102", System.currentTimeMillis() / 1000));
-        data.add(new FeedModel(0, "15806035102", System.currentTimeMillis() / 1000));
-        data.add(new FeedModel(0, "15806035102", System.currentTimeMillis() / 1000));
-        fillFeed(data);
+        scrollView.setOnScrollChangeListener(new ObservableScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                int alpha = (int) (255.0 * Math.abs(scrollY) / toolbar.getHeight());
+                alpha = alpha > 255 ? 255 : alpha;
+                toolbarBackground.setAlpha(alpha);
+            }
+        });
     }
 
     @Override
@@ -91,7 +99,7 @@ public class HomeFragment extends NetworkFragment implements ObservableScrollVie
             feedContainer.addView(itemView);
 
             TextView feedContent = (TextView) itemView.findViewById(R.id.home_feed_content);
-            feedContent.setText(String.format(getString(R.string.home_interpretation_feed_template), StringUtils.hidePhoneNumber(model.getPhoneNum())));
+            feedContent.setText(String.format(getString(R.string.home_interpretation_feed_template), StringUtils.hidePhoneNumber(model.getMobile())));
 
             TextView time = (TextView) itemView.findViewById(R.id.home_feed_time);
             time.setText(StringUtils.formatTime(model.getTime() * 1000));
@@ -99,9 +107,16 @@ public class HomeFragment extends NetworkFragment implements ObservableScrollVie
     }
 
     @Override
-    public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        int alpha = (int) (255.0 * Math.abs(scrollY) / toolbar.getHeight());
-        alpha = alpha > 255 ? 255 : alpha;
-        toolbarBackground.setAlpha(alpha);
+    protected void loadData() {
+        homeService.getTotalNumber()
+                   .subscribe(new PtrSubscriber<BaseModel<HomeReportModel>>(this) {
+                       @Override
+                       public void onNext(BaseModel<HomeReportModel> totalNumberBaseModel) {
+                           super.onNext(totalNumberBaseModel);
+                           HomeReportModel homeReportModel = totalNumberBaseModel.getData();
+                           useReportNum.setText(new DecimalFormat("#,###").format(homeReportModel.getTotalNumber()));
+                           fillFeed(homeReportModel.getReportInfo());
+                       }
+                   });
     }
 }

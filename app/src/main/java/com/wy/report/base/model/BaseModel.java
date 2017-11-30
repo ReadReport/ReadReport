@@ -16,7 +16,7 @@ public class BaseModel<T> {
     private int state;
 
     @JSONField(name = "errcode")
-    private int errCode;
+    private String errCode;
 
     @JSONField(name = "errmsg")
     private String errMsg;
@@ -31,11 +31,11 @@ public class BaseModel<T> {
         this.state = state;
     }
 
-    public int getErrCode() {
+    public String getErrCode() {
         return errCode;
     }
 
-    public void setErrCode(int errCode) {
+    public void setErrCode(String errCode) {
         this.errCode = errCode;
     }
 

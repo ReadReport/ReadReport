@@ -1,5 +1,7 @@
 package com.wy.report.helper.retrofit.subscriber;
 
+import android.support.annotation.CallSuper;
+
 import com.wy.report.base.fragment.PtrFragment;
 
 /*
@@ -21,9 +23,16 @@ public class PtrSubscriber<T> extends NetworkSubscriber<T> {
     }
 
     @Override
+    @CallSuper
+    public void onNext(T t) {
+        super.onNext(t);
+        handler.getPtrFrameLayout()
+                .refreshComplete();
+    }
+
+    @Override
     public void onCompleted() {
         super.onCompleted();
-        handler.getPtrFrameLayout()
-               .refreshComplete();
+
     }
 }

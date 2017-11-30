@@ -10,6 +10,10 @@ public class TokenModel {
 
     private long timestamp;
 
+    /**
+     * 获取Token时的系统启动时间
+     */
+    private long systemClock;
 
     public String getToken() {
         return token;
@@ -27,4 +31,11 @@ public class TokenModel {
         this.timestamp = timestamp;
     }
 
+    public long getSystemClock() {
+        return systemClock;
+    }
+
+    public void setSystemClock(long systemClock) {
+        this.systemClock = systemClock;
+    }
 }

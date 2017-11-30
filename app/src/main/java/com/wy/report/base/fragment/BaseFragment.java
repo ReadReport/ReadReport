@@ -72,11 +72,4 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract int contentLayoutID();
 
-    protected boolean isSupportToolbar() {
-        return true;
-    }
-
-    protected boolean isToolbarOverlap() {
-        return false;
-    }
 }

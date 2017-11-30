@@ -8,10 +8,14 @@ package com.wy.report.helper.retrofit;
  */
 public class ReportException extends RuntimeException {
 
-    private int code;
+    private String code;
 
-    public ReportException(String detailMessage, int code) {
+    public ReportException(String detailMessage, String code) {
         super(detailMessage);
         this.code = code;
+    }
+
+    public String getCode() {
+        return code;
     }
 }

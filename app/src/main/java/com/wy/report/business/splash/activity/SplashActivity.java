@@ -18,9 +18,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        AuthManager.getInstance()
-                   .refreshToken();
-
         Observable.timer(2, TimeUnit.MILLISECONDS)
                   .subscribe(new Action1<Long>() {
                       @Override
