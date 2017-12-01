@@ -1,57 +1,25 @@
 package com.wy.report.base.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import android.os.Parcelable;
+
+import com.alibaba.fastjson.JSON;
+
+import java.util.Map;
 
 /**
- * 成功：json对象{state:0,data:json格式的token对象信息}
- * 失败：json对象{errcode:40006,errmsg:'',now:1428889859}
- * json对象{errcode:40007,errmsg:'',now:1428889859}
- * json对象{errcode:40003,errmsg:'',now:1428889859}
- *
  * @author cantalou
- * @date 2017年11月24日 9:26
+ * @date 2017年12月01日 14:53
  */
-public class BaseModel<T> {
+public abstract class BaseModel implements Parcelable {
 
-    private int state;
-
-    @JSONField(name = "errcode")
-    private String errCode;
-
-    @JSONField(name = "errmsg")
-    private String errMsg;
-
-    private T data;
-
-    public int getState() {
-        return state;
+    public Map<String, Object> toFieldMap() {
+        String json = JSON.toJSONString(this);
+        return (Map<String, Object>) JSON.parseObject(json, Map.class);
     }
 
-    public void setState(int state) {
-        this.state = state;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public String getErrCode() {
-        return errCode;
-    }
-
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
-    }
-
-    public String getErrMsg() {
-        return errMsg;
-    }
-
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }

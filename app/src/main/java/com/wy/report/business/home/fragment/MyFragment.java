@@ -24,6 +24,6 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected int contentLayoutID() {
-        return R.layout.activity_splash;
+        return R.layout.fragment_my;
     }
 }

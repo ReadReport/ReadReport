@@ -3,6 +3,7 @@ package com.wy.report.manager.router;
 import android.content.Context;
 
 import com.wy.report.business.home.activity.HomeActivity;
+import com.wy.report.manager.auth.UserManger;
 
 public class AuthRouterManager {
 
@@ -11,6 +12,8 @@ public class AuthRouterManager {
     public static final String LOGIN_ACTIVITY_PREFIX = "login";
 
     private Router router;
+
+    private UserManger userManger;
 
     /**
      * 主页面
@@ -30,10 +33,11 @@ public class AuthRouterManager {
      */
     private AuthRouterManager() {
         router = new Router();
+        userManger = UserManger.getInstance();
         router.addInterceptor(new Router.Interceptor() {
             @Override
             public boolean process(String url) {
-                if (url.startsWith(LOGIN_ACTIVITY_PREFIX)) {
+                if (url.startsWith(LOGIN_ACTIVITY_PREFIX) && !userManger.isLogin()) {
                     return true;
                 }
                 return false;

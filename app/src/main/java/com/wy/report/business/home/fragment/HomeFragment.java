@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
-import com.wy.report.base.model.BaseModel;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.home.model.FeedModel;
 import com.wy.report.business.home.model.HomeReportModel;
 import com.wy.report.business.home.service.HomeService;
@@ -25,7 +25,6 @@ import java.util.List;
 import butterknife.BindView;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
-import rx.android.schedulers.AndroidSchedulers;
 
 /*
  * 首页
@@ -69,12 +68,26 @@ public class HomeFragment extends NetworkFragment {
 
         toolbarBackground = toolbar.getBackground();
         toolbarBackground.setAlpha(0);
+        final int white = getResources().getColor(android.R.color.white);
+        final int black = getResources().getColor(android.R.color.black);
         scrollView.setOnScrollChangeListener(new ObservableScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                double ratio = 1.0 * Math.abs(scrollY) / toolbar.getHeight();
-                toolbarBackground.setAlpha(ratio > 1 ? 255 : (int) (255 * ratio));
-                toolbarTitle.setTextColor(ratio > 1 ? 0xFFFFFF : (int) (0xFFFFFF * ratio));
+                float ratio = 1f * Math.abs(scrollY) / toolbar.getHeight();
+                if (ratio > 1) {
+                    return;
+                }
+                toolbarBackground.setAlpha((int) (255 * ratio));
+                final float half = 0.5f;
+                if (ratio < half) {
+                    ratio = (half - ratio) / half;
+                    toolbarTitle.setTextColor(white);
+                    toolbarTitle.setAlpha(ratio);
+                } else {
+                    ratio = (ratio - half) / half;
+                    toolbarTitle.setTextColor(black);
+                    toolbarTitle.setAlpha(ratio);
+                }
             }
         });
     }
@@ -116,12 +129,11 @@ public class HomeFragment extends NetworkFragment {
     @Override
     protected void loadData() {
         homeService.getTotalNumber()
-//                   .observeOn(AndroidSchedulers.mainThread())
-                   .subscribe(new PtrSubscriber<BaseModel<HomeReportModel>>(this) {
+                   .subscribe(new PtrSubscriber<ResponseModel<HomeReportModel>>(this) {
                        @Override
-                       public void onNext(BaseModel<HomeReportModel> totalNumberBaseModel) {
-                           super.onNext(totalNumberBaseModel);
-                           HomeReportModel homeReportModel = totalNumberBaseModel.getData();
+                       public void onNext(ResponseModel<HomeReportModel> totalNumberResponseModel) {
+                           super.onNext(totalNumberResponseModel);
+                           HomeReportModel homeReportModel = totalNumberResponseModel.getData();
                            useReportNum.setText(new DecimalFormat("#,###").format(homeReportModel.getTotalNumber()));
                            fillFeed(homeReportModel.getReportInfo());
                        }

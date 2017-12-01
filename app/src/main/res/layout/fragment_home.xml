@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize"
-            android:gravity="center"
+            android:gravity="bottom|center_horizontal"
             android:orientation="horizontal"
             android:paddingTop="50dp">
 
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:textSize="14sp"
+                android:textSize="24sp"
                 />
 
             <TextView

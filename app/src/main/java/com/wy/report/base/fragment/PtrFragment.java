@@ -35,9 +35,11 @@ import rx.functions.Action1;
  * @author cantalou
  * @date 2017-11-24 23:54
  */
-public abstract class PtrFragment extends ToolbarFragment implements PtrHandler {
+public abstract class PtrFragment extends NetworkFragment implements PtrHandler {
 
     protected PtrFrameLayout ptrFrameLayout;
+
+    protected boolean hasLoadData = false;
 
     @Nullable
     @Override
@@ -73,18 +75,29 @@ public abstract class PtrFragment extends ToolbarFragment implements PtrHandler 
         loadData();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !hasLoadData) {
+            loadData();
+        }
+    }
+
     public void performRefresh() {
         ptrFrameLayout.autoRefresh(true);
     }
 
-    public void onLoadingStart() {
+    public void onPtrStart() {
 
     }
 
-    public void onLoadEnd() {
+    public void onPtrError() {
         ptrFrameLayout.refreshComplete();
     }
 
+    public void onPtrSuccess() {
+        ptrFrameLayout.refreshComplete();
+    }
 
     public PtrFrameLayout getPtrFrameLayout() {
         return ptrFrameLayout;
@@ -100,7 +113,7 @@ public abstract class PtrFragment extends ToolbarFragment implements PtrHandler 
                   .subscribe(new Action1<Long>() {
                       @Override
                       public void call(Long aLong) {
-                          onLoadEnd();
+                          onSuccess();
                       }
                   });
     }

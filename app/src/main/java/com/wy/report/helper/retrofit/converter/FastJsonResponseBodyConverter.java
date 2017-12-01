@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
-import com.wy.report.base.model.BaseModel;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.helper.retrofit.ResponseCode;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ final class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody, 
     public T convert(ResponseBody value) throws IOException {
         try {
             T result = JSON.parseObject(value.string(), mType, config, featureValues, features != null ? features : EMPTY_SERIALIZER_FEATURES);
-            BaseModel model = (BaseModel) result;
+            ResponseModel model = (ResponseModel) result;
             if (!TextUtils.isEmpty(model.getErrCode())) {
                 ResponseCode.convert2Exception(model.getErrCode(), model.getErrMsg());
             }

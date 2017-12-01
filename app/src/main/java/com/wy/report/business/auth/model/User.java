@@ -1,12 +1,15 @@
 package com.wy.report.business.auth.model;
 
+import android.os.Parcel;
+
 import com.alibaba.fastjson.annotation.JSONField;
+import com.wy.report.base.model.BaseModel;
 
 /**
  * @author cantalou
  * @date 2017年11月30日 14:36
  */
-public class User {
+public class User extends BaseModel {
 
     /**
      * 用户ID
@@ -99,4 +102,44 @@ public class User {
     public void setBirthday(long birthday) {
         this.birthday = birthday;
     }
+
+
+    public User() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.name);
+        dest.writeInt(this.sex);
+        dest.writeString(this.head);
+        dest.writeString(this.mobile);
+        dest.writeString(this.relationship);
+        dest.writeLong(this.birthday);
+    }
+
+    protected User(Parcel in) {
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.sex = in.readInt();
+        this.head = in.readString();
+        this.mobile = in.readString();
+        this.relationship = in.readString();
+        this.birthday = in.readLong();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

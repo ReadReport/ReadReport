@@ -1,9 +1,10 @@
 package com.wy.report.business.auth.service;
 
-import com.wy.report.base.model.BaseModel;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.TokenModel;
 import com.wy.report.business.auth.model.User;
 
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -26,20 +27,30 @@ public interface AuthService {
      * @return
      */
     @GET("/Index/getToken")
-    Observable<BaseModel<TokenModel>> getToken(@Query("appid") String appId, @Query("secret") String secret);
+    Observable<ResponseModel<TokenModel>> getToken(@Query("appid") String appId, @Query("secret") String secret);
+
+    /**
+     * 同步获取token
+     *
+     * @param appId
+     * @param secret
+     * @return
+     */
+    @GET("/Index/getToken")
+    Call<ResponseModel<TokenModel>> syncGetToken(@Query("appid") String appId, @Query("secret") String secret);
 
     /**
      * 用户名密码登录
      * @return
      */
     @POST("/Member/dbg_login")
-    Observable<BaseModel<User>> login(@Field("mobile")String mobile, @Field("password") String password);
+    Observable<ResponseModel<User>> login(@Field("mobile")String mobile, @Field("password") String password);
 
 
     /**
      * 获取短信验证码
      */
     @GET("/Member/dbg_get_verify_code")
-    Observable<BaseModel> getSmsVerifyCode(@Query("mobile")String mobile);
+    Observable<ResponseModel> getSmsVerifyCode(@Query("mobile")String mobile);
 
 }

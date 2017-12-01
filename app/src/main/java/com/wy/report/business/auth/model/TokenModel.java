@@ -1,10 +1,12 @@
 package com.wy.report.business.auth.model;
 
+import com.wy.report.base.model.BaseModel;
+
 /**
  * @author cantalou
  * @date 2017年11月23日 15:12
  */
-public class TokenModel {
+public class TokenModel extends BaseModel {
 
     private String token = "";
 

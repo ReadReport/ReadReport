@@ -49,22 +49,30 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
 
+        savedInstanceState.remove("android:support:fragments");
         super.onCreate(savedInstanceState);
         rxBus = RxBus.get();
         if (!rxBus.hasRegistered(this)) {
             rxBus.register(this);
         }
-        initData();
-        setContentView(contentLayoutID());
-        ButterKnife.bind(this);
-        initView();
+        initData(savedInstanceState);
+        int contentLayoutID = contentLayoutID();
+        if (contentLayoutID > 0) {
+            setContentView(contentLayoutID);
+            ButterKnife.bind(this);
+            initView();
+        }
     }
 
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
-    protected abstract void initView();
+    protected void initView() {
 
-    protected abstract int contentLayoutID();
+    }
+
+    protected int contentLayoutID() {
+        return 0;
+    }
 
     @Override
     protected void onResume() {
@@ -90,10 +98,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.navigtor_pop_right_in, R.anim.navigtor_pop_right_out);
-    }
-
-    protected int baseLayoutID() {
-        return R.layout.activity_base;
     }
 
     public boolean isTranslucentStatusBar() {

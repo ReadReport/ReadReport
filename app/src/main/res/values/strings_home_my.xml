@@ -1,0 +1,10 @@
+<resources>
+    <string name="home_my_login_register">登录/注册</string>
+    <string name="home_my_logined_privilege">登录后可查看更多特权</string>
+    <string name="home_my_examination_reserve">体检预约</string>
+    <string name="home_my_report_manage">报告管理</string>
+    <string name="home_my_family_member_manage">家庭成员管理</string>
+    <string name="home_my_message">消息</string>
+    <string name="home_my_account_bind">账号绑定</string>
+    <string name="home_my_setting">设置</string>
+</resources>

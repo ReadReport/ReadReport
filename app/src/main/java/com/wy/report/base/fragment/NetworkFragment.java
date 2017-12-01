@@ -1,5 +1,10 @@
 package com.wy.report.base.fragment;
 
+import android.view.View;
+
+import com.wy.report.R;
+import com.wy.report.base.dialog.CommonProgressDialog;
+
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,16 +21,29 @@ package com.wy.report.base.fragment;
  * @author cantalou
  * @date 2017-11-24 23:54
  */
-public abstract class NetworkFragment extends PtrFragment {
+public abstract class NetworkFragment extends ToolbarFragment {
 
-    private boolean hasLoadData = false;
+    private CommonProgressDialog progressDialog;
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser && !hasLoadData){
-            loadData();
-        }
+    protected void initView(View contentView) {
+        super.initView(contentView);
+        progressDialog = new CommonProgressDialog(getActivity(), R.style.AppProgressDialog);
     }
 
+    public void onStart() {
+
+    }
+
+    public void onError() {
+
+    }
+
+    public void onSuccess() {
+
+    }
+
+    protected void loadData() {
+
+    }
 }

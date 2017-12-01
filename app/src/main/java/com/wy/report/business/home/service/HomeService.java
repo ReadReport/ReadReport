@@ -1,6 +1,6 @@
 package com.wy.report.business.home.service;
 
-import com.wy.report.base.model.BaseModel;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.home.model.FeedModel;
 import com.wy.report.business.home.model.HomeReportModel;
 
@@ -14,8 +14,8 @@ import rx.Observable;
 public interface HomeService {
 
     @GET("/Doctor/get_total_report_unscramble_num")
-    Observable<BaseModel<HomeReportModel>> getTotalNumber();
+    Observable<ResponseModel<HomeReportModel>> getTotalNumber();
 
     @GET("/Doctor/get_total_report_unscramble_num")
-    Observable<BaseModel<FeedModel>> getFeed();
+    Observable<ResponseModel<FeedModel>> getFeed();
 }

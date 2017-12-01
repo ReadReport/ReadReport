@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,12 +20,28 @@ public class Router {
         boolean process(String url);
     }
 
+    public static class Item {
+
+        public Class activityClass;
+
+        public Class fragmentClass;
+
+        public Item(Class activityClass) {
+            this.activityClass = activityClass;
+        }
+
+        public Item(Class activityClass, Class fragmentClass) {
+            this.activityClass = activityClass;
+            this.fragmentClass = fragmentClass;
+        }
+    }
+
     private List<Interceptor> interceptors = new ArrayList<>();
 
     public Router() {
     }
 
-    protected HashMap<String, Class> map = new HashMap<>();
+    protected HashMap<String, Item> map = new HashMap<>();
 
     public void open(Context context, String url) {
         open(context, url, null, true);
@@ -58,12 +75,16 @@ public class Router {
             }
         }
 
-        Class activityClass = map.get(url);
-        if (activityClass == null) {
-            throw new IllegalStateException("Can not find class mapped with url " + url);
+        Item item = map.get(url);
+        if (item == null) {
+            throw new IllegalStateException("Can not find class or fragment mapped with url " + url);
         }
 
-        Intent intent = new Intent(context, activityClass);
+        Intent intent = new Intent(context, item.activityClass);
+
+        if (item.fragmentClass != null) {
+            intent.putExtra(BundleKey.BUNDLE_KEY_FRAGMENT_CLASS_NAME, item.fragmentClass.getName());
+        }
 
         if (extras != null) {
             intent.putExtras(extras);
@@ -86,8 +107,12 @@ public class Router {
         }
     }
 
-    public void map(String url, Class activityClass) {
-        map.put(url, activityClass);
+    public void map(String url, Class activityClazz) {
+        map.put(url, new Item(activityClazz));
+    }
+
+    public void map(String url, Class activityClazz, Class fragmentClass) {
+        map.put(url, new Item(activityClazz, fragmentClass));
     }
 
     public void addInterceptor(Interceptor interceptor) {

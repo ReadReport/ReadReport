@@ -77,11 +77,13 @@ public class RetrofitHelper {
 
         @Override
         public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
-            Observable observable = (Observable) method.invoke(target, objects);
-            observable.retryWhen(new RetryWhenException())
-                      .subscribeOn(Schedulers.io())
-                      .observeOn(AndroidSchedulers.mainThread());
-            return observable;
+            Object result = method.invoke(target, objects);
+            if (result instanceof Observable) {
+                return ((Observable) result).retryWhen(new RetryWhenException())
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread());
+            }
+            return result;
         }
     }
 }

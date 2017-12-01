@@ -7,22 +7,25 @@ import android.content.IntentFilter;
 import android.os.SystemClock;
 import android.text.format.DateUtils;
 
+import com.cantalou.android.util.Log;
 import com.cantalou.android.util.NetworkUtils;
 import com.wy.report.ReportApplication;
-import com.wy.report.base.model.BaseModel;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.TokenModel;
 import com.wy.report.business.auth.service.AuthService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
-import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.preferences.Key;
 import com.wy.report.manager.preferences.PreferenceManager;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import retrofit2.Response;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * 授权信息管理类
@@ -56,18 +59,26 @@ public class AuthManager {
      */
     private long lastRefreshTime;
 
+    private RetrofitHelper retrofitHelper;
+
+    /**
+     * 正在刷新token
+     */
+    private boolean isTokenRefreshing = false;
+
     private static class InstanceHolder {
         static final AuthManager instance = new AuthManager();
     }
 
     private AuthManager() {
+        retrofitHelper = RetrofitHelper.getInstance();
         preferenceManager = PreferenceManager.getInstance();
-        tokenModel = preferenceManager.getValue(Key.AUTH_TOKEN_INFO, TokenModel.class);
+        tokenModel = preferenceManager.getValue(Key.AUTH_TOKEN_INFO, TokenModel.class, tokenModel);
         Observable.interval(0, REFRESH_INTERVAL, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                   .subscribe(new Action1<Long>() {
                       @Override
                       public void call(Long aLong) {
-                          refreshToken(true);
+                          refreshToken(false);
                       }
                   });
         registerNetworkChange();
@@ -98,40 +109,58 @@ public class AuthManager {
         if (isTokenValid() && !force) {
             return;
         }
-        getTokenObservable(false).subscribe(new NetworkSubscriber<BaseModel<TokenModel>>() {
+        Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
-            public void onNext(BaseModel<TokenModel> model) {
-                saveTokenInfo(model);
+            public void call(Subscriber<? super Object> subscriber) {
+                syncRefreshToken();
             }
-        });
+        })
+                  .subscribeOn(Schedulers.io())
+                  .subscribe();
     }
 
-    private void saveTokenInfo(BaseModel<TokenModel> model) {
-        tokenModel = model.getData();
+    private synchronized void saveTokenInfo(ResponseModel<TokenModel> model) {
+        TokenModel newTokenModel = model.getData();
+        tokenModel.setTimestamp(newTokenModel.getTimestamp());
+        tokenModel.setToken(newTokenModel.getToken());
+        tokenModel.setSystemClock(SystemClock.elapsedRealtime());
         preferenceManager.setValue(Key.AUTH_TOKEN_INFO, tokenModel);
         lastRefreshTime = SystemClock.elapsedRealtime();
     }
 
-    private boolean isTokenValid() {
+    private synchronized boolean isTokenValid() {
         return SystemClock.elapsedRealtime() - lastRefreshTime < EXPIRE_TIME && System.currentTimeMillis() - tokenModel.getTimestamp() * 1000 < EXPIRE_TIME;
     }
 
-    public Observable<BaseModel<TokenModel>> getTokenObservable(boolean canCache) {
-        if (canCache && isTokenValid()) {
-            BaseModel<TokenModel> baseModel = new BaseModel();
-            baseModel.setData(tokenModel);
-            return Observable.just(baseModel);
+    public synchronized void makeExpired() {
+        lastRefreshTime = Long.MIN_VALUE;
+        tokenModel.setTimestamp(Long.MIN_VALUE);
+    }
+
+    /**
+     * 同步的刷新token，保证同一时间只有一个请求Token的网络请求在执行
+     */
+    public void syncRefreshToken() {
+        synchronized (tokenModel) {
+            if (isTokenValid()) {
+                return;
+            }
+
+            isTokenRefreshing = true;
+            try {
+                Response<ResponseModel<TokenModel>> response = retrofitHelper.create(AuthService.class)
+                                                                             .syncGetToken(APP_ID, APP_SECRET)
+                                                                             .execute();
+                saveTokenInfo(response.body());
+            } catch (IOException e) {
+                Log.e(e);
+            }
+            isTokenRefreshing = false;
         }
-        return RetrofitHelper.getInstance()
-                             .create(AuthService.class)
-                             .getToken(APP_ID, APP_SECRET)
-                             .flatMap(new Func1<BaseModel<TokenModel>, Observable<BaseModel<TokenModel>>>() {
-                                 @Override
-                                 public Observable<BaseModel<TokenModel>> call(BaseModel<TokenModel> model) {
-                                     saveTokenInfo(model);
-                                     return Observable.just(model);
-                                 }
-                             });
+    }
+
+    public boolean isTokenRefreshing() {
+        return isTokenRefreshing;
     }
 
     public TokenModel getTokenModel() {

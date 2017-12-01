@@ -5,8 +5,8 @@
         <item>我的</item>
     </string-array>
     
-    <string name="home_use_report_num_pre">此刻， 有</string>
-    <string name="home_use_report_num_suf">位</string>
+    <string name="home_use_report_num_pre">此刻， 有 </string>
+    <string name="home_use_report_num_suf"> 位</string>
     <string name="home_use_report_tip">用户使用读报告完成查询及在线解读服务</string>
     
     <string name="home_query_report">查询报告</string>
