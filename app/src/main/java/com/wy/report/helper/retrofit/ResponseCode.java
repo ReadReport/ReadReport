@@ -16,6 +16,11 @@ public final class ResponseCode {
     public static final String ERROR_CODE_1 = "1";
 
     /**
+     * 网络不可用
+     */
+    public static final String ERROR_CODE_2 = "2";
+
+    /**
      * 系统繁忙，请稍候再试
      */
     public static final String ERROR_CODE_40000 = "40000";
@@ -296,6 +301,7 @@ public final class ResponseCode {
 
     static {
         codeMap.put(ERROR_CODE_1, "未知错误");
+        codeMap.put(ERROR_CODE_2, "网络不可用");
         codeMap.put(ERROR_CODE_40000, "系统繁忙，请稍候再试");
         codeMap.put(ERROR_CODE_40001, "获取token时secret错误");
         codeMap.put(ERROR_CODE_40002, "不合法的凭证类型");

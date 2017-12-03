@@ -68,7 +68,6 @@ public class RetryWhenException implements Func1<Observable<? extends Throwable>
 
     @Override
     public Observable<?> call(Observable<? extends Throwable> observable) {
-
         return observable.flatMap(new Func1<Throwable, Observable<?>>() {
             @Override
             public Observable<?> call(Throwable throwable) {
@@ -87,11 +86,15 @@ public class RetryWhenException implements Func1<Observable<? extends Throwable>
                                      .flatMap(new Func1<Wrapper, Observable<?>>() {
                                          @Override
                                          public Observable<?> call(Wrapper wrapper) {
-                                             if ((wrapper.throwable instanceof ConnectException
+                                             if (wrapper.throwable instanceof ConnectException
                                                      || wrapper.throwable instanceof SocketTimeoutException
-                                                     || wrapper.throwable instanceof TimeoutException)
-                                                     && wrapper.index < count + 1) { //如果超出重试次数也抛出错误，否则默认是会进入onCompleted
-                                                 return Observable.timer(delay + (wrapper.index - 1) * increaseDelay, TimeUnit.MILLISECONDS);
+                                                     || wrapper.throwable instanceof TimeoutException) {
+                                                 //如果超出重试次数也抛出错误，否则默认是会进入onCompleted
+                                                 if (wrapper.index < count + 1) {
+                                                     return Observable.timer(delay + (wrapper.index - 1) * increaseDelay, TimeUnit.MILLISECONDS);
+                                                 } else {
+                                                     return Observable.error(ResponseCode.convert2Exception(ResponseCode.ERROR_CODE_2, ""));
+                                                 }
                                              }
                                              return Observable.error(wrapper.throwable);
                                          }

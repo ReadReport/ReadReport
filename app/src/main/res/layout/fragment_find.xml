@@ -70,13 +70,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shape_white_corner">
+            android:background="@drawable/shape_white_corner"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <ImageView
                 android:id="@+id/home_find_health_test_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/ic_find_test"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -94,6 +95,11 @@
                 app:layout_constraintLeft_toRightOf="@id/home_find_health_test_icon"
                 app:layout_constraintTop_toTopOf="@id/home_find_health_test_icon"/>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/home_find_health_test_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </android.support.constraint.ConstraintLayout>
 
         <!-- 健康知识 -->
@@ -101,13 +107,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shape_white_corner">
+            android:background="@drawable/shape_white_corner"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <ImageView
                 android:id="@+id/home_find_health_knowledge_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/ic_find_health"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -124,6 +131,11 @@
                 app:layout_constraintBottom_toBottomOf="@id/home_find_health_knowledge_icon"
                 app:layout_constraintLeft_toRightOf="@id/home_find_health_knowledge_icon"
                 app:layout_constraintTop_toTopOf="@id/home_find_health_knowledge_icon"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/home_find_health_knowledge_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </android.support.constraint.ConstraintLayout>
 

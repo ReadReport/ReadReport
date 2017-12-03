@@ -11,6 +11,7 @@ import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.helper.retrofit.ReportException;
 
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 
 import rx.Subscriber;
 
@@ -22,28 +23,27 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
 
     private Context context = ReportApplication.getGlobalContext();
 
-    private NetworkFragment networkFragment;
+    private SoftReference<NetworkFragment> handler;
 
     public NetworkSubscriber() {
     }
 
     public NetworkSubscriber(NetworkFragment networkFragment) {
-        this.networkFragment = networkFragment;
+        this.handler = new SoftReference<NetworkFragment>(networkFragment);
     }
 
     @Override
     public void onStart() {
         if (NetworkUtils.isNetworkAvailable(context)) {
         }
-
-        if(networkFragment != null){
+        NetworkFragment networkFragment = handler.get();
+        if (networkFragment != null) {
             networkFragment.onNetworkStart();
         }
     }
 
     @Override
     public void onCompleted() {
-
     }
 
     @Override
@@ -56,7 +56,8 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
             Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT)
                  .show();
         }
-        if(networkFragment != null){
+        NetworkFragment networkFragment = handler.get();
+        if (networkFragment != null) {
             networkFragment.onNetworkError();
         }
     }
@@ -64,7 +65,8 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
     @Override
     @CallSuper
     public void onNext(T t) {
-        if(networkFragment != null){
+        NetworkFragment networkFragment = handler.get();
+        if (networkFragment != null) {
             networkFragment.onNetworkSuccess();
         }
     }

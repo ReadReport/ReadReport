@@ -7,7 +7,14 @@ import android.widget.TextView;
 import com.wy.report.R;
 import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.fragment.PtrFragment;
+import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.home.model.HomeFindModel;
+import com.wy.report.business.home.service.HomeService;
+import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.massage.MessageManager;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -25,9 +32,13 @@ public class FindFragment extends PtrFragment {
 
     private MessageManager messageManager;
 
+    private HomeService homeService;
+
     @Override
     protected void initData() {
         messageManager = MessageManager.getInstance();
+        homeService = RetrofitHelper.getInstance()
+                                    .create(HomeService.class);
     }
 
     @Override
@@ -42,7 +53,7 @@ public class FindFragment extends PtrFragment {
         updateToolbarMessageState();
     }
 
-    private void updateToolbarMessageState(){
+    private void updateToolbarMessageState() {
         toolbarMsgIcon.setImageResource(messageManager.hasNewMessage() ? R.drawable.nav_noticeb_new : R.drawable.nav_noticeb);
     }
 
@@ -56,7 +67,15 @@ public class FindFragment extends PtrFragment {
         return R.layout.view_home_toolbar;
     }
 
-    protected int toolbarFlag() {
-        return TOOL_BAR_FLAG_SHOW;
+    @Override
+    protected void loadData() {
+        homeService.getFindInfo()
+                   .subscribe(new PtrSubscriber<ResponseModel<HomeFindModel>>(this){
+                       @Override
+                       public void onNext(ResponseModel<HomeFindModel> homeFindModelResponseModel) {
+                           super.onNext(homeFindModelResponseModel);
+
+                       }
+                   });
     }
 }

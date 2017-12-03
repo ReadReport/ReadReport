@@ -4,6 +4,8 @@ import android.support.annotation.CallSuper;
 
 import com.wy.report.base.fragment.PtrFragment;
 
+import java.lang.ref.SoftReference;
+
 /*
  *
  * @author cantalou
@@ -11,11 +13,11 @@ import com.wy.report.base.fragment.PtrFragment;
  */
 public class PtrSubscriber<T> extends NetworkSubscriber<T> {
 
-    protected PtrFragment handler;
+    protected SoftReference<PtrFragment> handler;
 
     public PtrSubscriber(PtrFragment handler) {
         super(handler);
-        this.handler = handler;
+        this.handler = new SoftReference<PtrFragment>(handler);
     }
 
     @Override
@@ -27,13 +29,15 @@ public class PtrSubscriber<T> extends NetworkSubscriber<T> {
     @CallSuper
     public void onNext(T t) {
         super.onNext(t);
-        handler.getPtrFrameLayout()
-                .refreshComplete();
+        PtrFragment ptrFragment = handler.get();
+        if (ptrFragment != null) {
+            ptrFragment.getPtrFrameLayout()
+                       .refreshComplete();
+        }
     }
 
     @Override
     public void onCompleted() {
         super.onCompleted();
-
     }
 }
