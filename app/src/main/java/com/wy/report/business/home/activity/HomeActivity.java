@@ -1,5 +1,6 @@
 package com.wy.report.business.home.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -7,7 +8,7 @@ import android.support.v4.view.ViewPager;
 
 import com.wy.report.R;
 import com.wy.report.base.activity.BaseActivity;
-import com.wy.report.business.home.fragment.FoundFragment;
+import com.wy.report.business.home.fragment.FindFragment;
 import com.wy.report.business.home.fragment.HomeFragment;
 import com.wy.report.business.home.fragment.MyFragment;
 
@@ -21,12 +22,12 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
 
-    Fragment[] fragments = new Fragment[]{new HomeFragment(), new FoundFragment(), new MyFragment()};
+    Fragment[] fragments = new Fragment[]{new HomeFragment(), new FindFragment(), new MyFragment()};
 
     String[] titles;
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         titles = getResources().getStringArray(R.array.home_title);
     }
 

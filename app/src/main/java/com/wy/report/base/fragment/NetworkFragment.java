@@ -31,15 +31,15 @@ public abstract class NetworkFragment extends ToolbarFragment {
         progressDialog = new CommonProgressDialog(getActivity(), R.style.AppProgressDialog);
     }
 
-    public void onStart() {
+    public void onNetworkStart() {
 
     }
 
-    public void onError() {
+    public void onNetworkError() {
 
     }
 
-    public void onSuccess() {
+    public void onNetworkSuccess() {
 
     }
 

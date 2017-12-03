@@ -37,7 +37,7 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
         }
 
         if(networkFragment != null){
-            networkFragment.onStart();
+            networkFragment.onNetworkStart();
         }
     }
 
@@ -56,12 +56,16 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
             Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT)
                  .show();
         }
-        networkFragment.onError();
+        if(networkFragment != null){
+            networkFragment.onNetworkError();
+        }
     }
 
     @Override
     @CallSuper
     public void onNext(T t) {
-        networkFragment.onSuccess();
+        if(networkFragment != null){
+            networkFragment.onNetworkSuccess();
+        }
     }
 }

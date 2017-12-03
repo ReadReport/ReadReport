@@ -100,7 +100,8 @@
                     android:layout_marginTop="10dp"
                     android:includeFontPadding="false"
                     android:text="@string/home_query_report"
-                    android:textColor="@color/hei_333333"/>
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -122,7 +123,8 @@
                     android:layout_marginTop="10dp"
                     android:includeFontPadding="false"
                     android:text="@string/home_upload_report"
-                    android:textColor="@color/hei_333333"/>
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <RelativeLayout
@@ -151,7 +153,8 @@
                         android:layout_marginTop="10dp"
                         android:includeFontPadding="false"
                         android:text="@string/home_manage_report"
-                        android:textColor="@color/hei_333333"/>
+                        android:textColor="@color/hei_333333"
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <ImageView
@@ -303,7 +306,7 @@
 
             <LinearLayout
                 android:id="@+id/home_interpretation_feed_container"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="5dp"

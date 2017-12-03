@@ -47,6 +47,11 @@ public abstract class ToolbarFragment extends BaseFragment {
     @Override
     @CallSuper
     protected void initView(View contentView) {
+        initToolbar();
+    }
+
+    @CallSuper
+    protected void initToolbar() {
         toolbar = (Toolbar) contentView.findViewById(R.id.toolbar);
         BaseActivity activity = (BaseActivity) getActivity();
         if (activity != null && activity.isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

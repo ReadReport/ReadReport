@@ -1,0 +1,6 @@
+<resources>
+    <string name="home_find_title">发现</string>
+    <string name="home_find_daily_detect">日常检测</string>
+    <string name="home_find_health_test">健康测试</string>
+    <string name="home_find_health_knowledge">健康知识</string>
+</resources>

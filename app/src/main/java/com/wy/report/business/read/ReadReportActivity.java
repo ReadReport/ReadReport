@@ -1,5 +1,7 @@
 package com.wy.report.business.read;
 
+import android.os.Bundle;
+
 import com.wy.report.base.activity.BaseActivity;
 
 /**
@@ -9,8 +11,9 @@ import com.wy.report.base.activity.BaseActivity;
  * Description: ReadReport
  */
 public class ReadReportActivity extends BaseActivity {
+
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
 
     }
 

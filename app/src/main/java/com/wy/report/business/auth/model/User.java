@@ -1,6 +1,7 @@
 package com.wy.report.business.auth.model;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.wy.report.base.model.BaseModel;
@@ -9,7 +10,7 @@ import com.wy.report.base.model.BaseModel;
  * @author cantalou
  * @date 2017年11月30日 14:36
  */
-public class User extends BaseModel {
+public class User extends BaseModel implements Parcelable{
 
     /**
      * 用户ID

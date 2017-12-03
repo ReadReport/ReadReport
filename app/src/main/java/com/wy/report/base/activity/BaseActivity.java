@@ -49,7 +49,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
 
-        savedInstanceState.remove("android:support:fragments");
+        if(savedInstanceState != null){
+            savedInstanceState.remove("android:support:fragments");
+        }
         super.onCreate(savedInstanceState);
         rxBus = RxBus.get();
         if (!rxBus.hasRegistered(this)) {

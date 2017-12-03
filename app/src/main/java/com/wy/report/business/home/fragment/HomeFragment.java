@@ -9,18 +9,21 @@ import android.widget.TextView;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
+import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.home.model.FeedModel;
 import com.wy.report.business.home.model.HomeReportModel;
 import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.ViewUtils;
 import com.wy.report.widget.ObservableScrollView;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.MissingResourceException;
 
 import butterknife.BindView;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -31,7 +34,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * @author cantalou
  * @date 2017-11-26 22:55
  */
-public class HomeFragment extends NetworkFragment {
+public class HomeFragment extends PtrFragment {
 
     @BindView(R.id.home_top_bg)
     ImageView topBg;
@@ -55,17 +58,24 @@ public class HomeFragment extends NetworkFragment {
 
     private HomeService homeService;
 
+    private MessageManager messageManager;
+
     @Override
     protected void initData() {
         homeService = RetrofitHelper.getInstance()
                                     .create(HomeService.class);
+        messageManager = MessageManager.getInstance();
     }
 
     @Override
     protected void initView(View content) {
         super.initView(content);
         ViewUtils.convertToLeftTopCrop(topBg);
+    }
 
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
         toolbarBackground = toolbar.getBackground();
         toolbarBackground.setAlpha(0);
         final int white = getResources().getColor(android.R.color.white);
@@ -83,10 +93,14 @@ public class HomeFragment extends NetworkFragment {
                     ratio = (half - ratio) / half;
                     toolbarTitle.setTextColor(white);
                     toolbarTitle.setAlpha(ratio);
+                    toolbarMsgIcon.setImageResource(messageManager.hasNewMessage() ? R.drawable.nav_notice_new : R.drawable.nav_notice);
+                    toolbarMsgIcon.setAlpha(ratio);
                 } else {
                     ratio = (ratio - half) / half;
                     toolbarTitle.setTextColor(black);
                     toolbarTitle.setAlpha(ratio);
+                    toolbarMsgIcon.setImageResource(messageManager.hasNewMessage() ? R.drawable.nav_noticeb_new : R.drawable.nav_noticeb);
+                    toolbarMsgIcon.setAlpha(ratio);
                 }
             }
         });

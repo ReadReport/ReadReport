@@ -14,6 +14,7 @@ public class PtrSubscriber<T> extends NetworkSubscriber<T> {
     protected PtrFragment handler;
 
     public PtrSubscriber(PtrFragment handler) {
+        super(handler);
         this.handler = handler;
     }
 

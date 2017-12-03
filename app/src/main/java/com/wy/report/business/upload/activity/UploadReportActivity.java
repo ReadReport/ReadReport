@@ -1,5 +1,7 @@
 package com.wy.report.business.upload.activity;
 
+import android.os.Bundle;
+
 import com.wy.report.base.activity.BaseActivity;
 
 /*
@@ -10,7 +12,7 @@ import com.wy.report.base.activity.BaseActivity;
 public class UploadReportActivity extends BaseActivity {
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
 
     }
 

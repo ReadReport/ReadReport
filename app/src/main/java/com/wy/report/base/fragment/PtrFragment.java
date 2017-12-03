@@ -113,7 +113,7 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
                   .subscribe(new Action1<Long>() {
                       @Override
                       public void call(Long aLong) {
-                          onSuccess();
+                          onPtrSuccess();
                       }
                   });
     }
