@@ -7,8 +7,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
-import com.wy.report.base.fragment.NetworkFragment;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.home.model.FeedModel;
@@ -23,7 +25,6 @@ import com.wy.report.widget.ObservableScrollView;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.MissingResourceException;
 
 import butterknife.BindView;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -60,6 +61,8 @@ public class HomeFragment extends PtrFragment {
 
     private MessageManager messageManager;
 
+    private boolean toolbarOverHalf;
+
     @Override
     protected void initData() {
         homeService = RetrofitHelper.getInstance()
@@ -85,7 +88,7 @@ public class HomeFragment extends PtrFragment {
             public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 float ratio = 1f * Math.abs(scrollY) / toolbar.getHeight();
                 if (ratio > 1) {
-                    return;
+                    ratio = 1;
                 }
                 toolbarBackground.setAlpha((int) (255 * ratio));
                 final float half = 0.5f;
@@ -95,15 +98,27 @@ public class HomeFragment extends PtrFragment {
                     toolbarTitle.setAlpha(ratio);
                     toolbarMsgIcon.setImageResource(messageManager.hasNewMessage() ? R.drawable.nav_notice_new : R.drawable.nav_notice);
                     toolbarMsgIcon.setAlpha(ratio);
+                    toolbarOverHalf = false;
                 } else {
                     ratio = (ratio - half) / half;
                     toolbarTitle.setTextColor(black);
                     toolbarTitle.setAlpha(ratio);
                     toolbarMsgIcon.setImageResource(messageManager.hasNewMessage() ? R.drawable.nav_noticeb_new : R.drawable.nav_noticeb);
                     toolbarMsgIcon.setAlpha(ratio);
+                    toolbarOverHalf = true;
                 }
             }
         });
+        updateToolbarMessageState(null);
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_NEW_MESSAGE)})
+    public void updateToolbarMessageState(Object obj) {
+        if (toolbarOverHalf) {
+            toolbarMsgIcon.setImageResource(messageManager.hasNewMessage() ? R.drawable.nav_noticeb_new : R.drawable.nav_noticeb);
+        } else {
+            toolbarMsgIcon.setImageResource(messageManager.hasNewMessage() ? R.drawable.nav_notice_new : R.drawable.nav_notice);
+        }
     }
 
     @Override
@@ -142,7 +157,7 @@ public class HomeFragment extends PtrFragment {
 
     @Override
     protected void loadData() {
-        homeService.getTotalNumber()
+        homeService.getHomeInfo()
                    .subscribe(new PtrSubscriber<ResponseModel<HomeReportModel>>(this) {
                        @Override
                        public void onNext(ResponseModel<HomeReportModel> totalNumberResponseModel) {

@@ -15,7 +15,7 @@ import rx.Observable;
 public interface HomeService {
 
     @GET("/Doctor/get_total_report_unscramble_num")
-    Observable<ResponseModel<FeedModel>> getHomeInfo();
+    Observable<ResponseModel<HomeReportModel>> getHomeInfo();
 
     @GET("/Doctor/get_total_report_unscramble_num")
     Observable<ResponseModel<HomeFindModel>> getFindInfo();

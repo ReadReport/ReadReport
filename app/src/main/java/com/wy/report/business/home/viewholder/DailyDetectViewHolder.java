@@ -30,7 +30,8 @@ public class DailyDetectViewHolder extends BaseViewHolder<DailyDetectModel> {
     }
 
     @Override
-    public void convert(DailyDetectModel model) {
+    public void onBindViewHolder(DailyDetectModel model) {
+        super.onBindViewHolder(model);
         icon.setImageResource(model.getIconID());
         title.setText(model.getTitle());
     }

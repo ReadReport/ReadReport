@@ -9,7 +9,7 @@
         android:id="@android:id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/home_tab_home_selector"
+        android:src="@drawable/selector_home_tab_home"
         />
 
     <TextView

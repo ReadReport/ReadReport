@@ -4,9 +4,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Window;
-import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 
 import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
@@ -35,17 +34,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Bus rxBus;
 
-    protected Toolbar.OnMenuItemClickListener menuItemClickListener;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         if (isTranslucentStatusBar()) {
             Window window = getWindow();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.addFlags(LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             }
         }
 

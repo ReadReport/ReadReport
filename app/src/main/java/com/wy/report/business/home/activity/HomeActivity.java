@@ -55,7 +55,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initTabLayout() {
-        int[] iconDrawable = new int[]{R.drawable.home_tab_home_selector, R.drawable.home_tab_find_selector, R.drawable.home_tab_me_selector};
+        int[] iconDrawable = new int[]{R.drawable.selector_home_tab_home, R.drawable.selector_home_tab_find, R.drawable.selector_home_tab_me};
         for (int i = 0; i < titles.length; i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(R.layout.view_home_tab_item_layout);
