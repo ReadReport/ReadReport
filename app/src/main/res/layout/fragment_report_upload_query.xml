@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/report_upload_query_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,10 +14,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_white_corner">
-        
+
         <ImageView
+            android:id="@+id/report_upload_icon"
             android:layout_width="70dp"
-            android:layout_height="70dp"/>
+            android:layout_height="70dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="7.5dp"
+            android:layout_marginTop="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/upload_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/report_upload_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="3dp"
+            android:includeFontPadding="false"
+            android:text="@string/report_upload"
+            app:layout_constraintLeft_toRightOf="@id/report_upload_icon"
+            app:layout_constraintTop_toTopOf="@id/report_upload_icon"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:includeFontPadding="false"
+            android:text="@string/report_upload_desc"
+            app:layout_constraintBottom_toBottomOf="@id/report_upload_icon"
+            app:layout_constraintLeft_toLeftOf="@id/report_upload_title"
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -24,7 +57,44 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:background="@drawable/shape_white_corner">
+
+        <ImageView
+            android:id="@+id/report_query_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="7.5dp"
+            android:layout_marginTop="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/upload_online"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/report_query_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="3dp"
+            android:includeFontPadding="false"
+            android:text="@string/report_query"
+            app:layout_constraintLeft_toRightOf="@id/report_query_icon"
+            app:layout_constraintTop_toTopOf="@id/report_query_icon"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:includeFontPadding="false"
+            android:text="@string/report_query_desc"
+            app:layout_constraintBottom_toBottomOf="@id/report_query_icon"
+            app:layout_constraintLeft_toLeftOf="@id/report_query_title"
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
     </android.support.constraint.ConstraintLayout>
 

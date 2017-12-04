@@ -1,0 +1,6 @@
+<resources>
+    <string name="report_upload">上传报告</string>
+    <string name="report_upload_desc">通过拍照方式进行上传存储，成功上传后，可提交专家解读</string>
+    <string name="report_query">查询报告</string>
+    <string name="report_query_desc">在线查询体检报告，通过账号和密码关联方便省心</string>
+</resources>
