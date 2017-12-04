@@ -1,7 +1,7 @@
 package com.wy.report.base.constant;
 
 /**
- * @author LinZhiWei
+ * @author cantalou
  * @date 2017年12月04日 9:39
  */
 public class RxKey {

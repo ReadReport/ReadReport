@@ -10,7 +10,7 @@ import com.wy.report.base.constant.BundleKey;
  * @author cantalou
  * @date 2017年12月01日 17:35
  */
-public class StandardAcvitity extends BaseActivity {
+public class StandardActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -25,6 +25,5 @@ public class StandardAcvitity extends BaseActivity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 }

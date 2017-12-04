@@ -49,9 +49,6 @@ public class HomeFragment extends PtrFragment {
     @BindView(R.id.home_use_report_num)
     TextView useReportNum;
 
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
-
     @BindView(R.id.toolbar_msg_icon)
     ImageView toolbarMsgIcon;
 

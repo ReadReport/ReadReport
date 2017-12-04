@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/report_upload_query_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hui_f9f9f9"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!-- 上传报告 -->
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_corner">
+        
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <!-- 查询报告 -->
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_corner">
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
+

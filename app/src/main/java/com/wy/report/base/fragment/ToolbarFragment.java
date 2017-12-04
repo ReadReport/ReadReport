@@ -8,10 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cantalou.android.util.DeviceUtils;
 import com.wy.report.R;
 import com.wy.report.base.activity.BaseActivity;
+
+import butterknife.BindView;
 
 /**
  * @author cantalou
@@ -23,7 +26,12 @@ public abstract class ToolbarFragment extends BaseFragment {
 
     public static final int TOOL_BAR_FLAG_OVERLAY = 0x10;
 
+    @BindView(R.id.toolbar)
     protected Toolbar toolbar;
+
+    protected TextView toolbarTitle;
+
+    protected View toolbarBack;
 
     @Nullable
     @Override
@@ -53,10 +61,22 @@ public abstract class ToolbarFragment extends BaseFragment {
     @CallSuper
     protected void initToolbar() {
         toolbar = (Toolbar) contentView.findViewById(R.id.toolbar);
+
         BaseActivity activity = (BaseActivity) getActivity();
         if (activity != null && activity.isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int statusBarHeight = DeviceUtils.getStatusBarHeight(activity);
             toolbar.setPadding(toolbar.getPaddingLeft(), statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
+        }
+
+        toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        toolbarBack = toolbar.findViewById(R.id.toolbar_back);
+        if (toolbarBack != null) {
+            toolbarBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 
@@ -71,4 +91,13 @@ public abstract class ToolbarFragment extends BaseFragment {
     protected int toolbarFlag() {
         return TOOL_BAR_FLAG_SHOW;
     }
+
+    protected void setTitle(String title) {
+        toolbarTitle.setText(title);
+    }
+
+    protected void setTitle(int titleResID) {
+        toolbarTitle.setText(titleResID);
+    }
+
 }
