@@ -1,4 +1,4 @@
-package com.wy.report.business.read;
+package com.wy.report.business.read.activity;
 
 import android.os.Bundle;
 
