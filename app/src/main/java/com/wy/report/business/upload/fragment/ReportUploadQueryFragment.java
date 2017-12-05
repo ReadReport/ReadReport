@@ -2,6 +2,7 @@ package com.wy.report.business.upload.fragment;
 
 import android.view.View;
 
+import com.wy.report.R;
 import com.wy.report.base.fragment.ToolbarFragment;
 
 /**
@@ -12,16 +13,16 @@ public class ReportUploadQueryFragment extends ToolbarFragment {
 
     @Override
     protected void initData() {
-
     }
 
     @Override
-    protected void initView(View contentView) {
-        super.initView(contentView);
+    protected void initToolbar() {
+        super.initToolbar();
+        setTitle(R.string.report_upload);
     }
 
     @Override
     protected int contentLayoutID() {
-        return 0;
+        return R.layout.fragment_report_upload_query;
     }
 }

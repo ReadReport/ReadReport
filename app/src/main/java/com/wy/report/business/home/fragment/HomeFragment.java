@@ -19,6 +19,7 @@ import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.massage.MessageManager;
+import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.ViewUtils;
 import com.wy.report.widget.ObservableScrollView;
@@ -27,6 +28,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -164,5 +166,12 @@ public class HomeFragment extends PtrFragment {
                            fillFeed(homeReportModel.getReportInfo());
                        }
                    });
+    }
+
+    @OnClick(R.id.home_upload_report)
+    public void onReportUploadClick() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.LOGIN_ROUTER_UPLOAD_REPORT);
     }
 }

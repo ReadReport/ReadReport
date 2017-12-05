@@ -74,7 +74,7 @@ public abstract class ToolbarFragment extends BaseFragment {
             toolbarBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    getActivity().finish();
                 }
             });
         }
