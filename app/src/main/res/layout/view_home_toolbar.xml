@@ -12,7 +12,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="@dimen/toolbar_height">
 
         <TextView
             android:id="@+id/toolbar_title"

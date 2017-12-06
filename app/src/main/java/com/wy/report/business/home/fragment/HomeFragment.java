@@ -168,10 +168,17 @@ public class HomeFragment extends PtrFragment {
                    });
     }
 
-    @OnClick(R.id.home_upload_report)
+    @OnClick(R.id.home_report_upload)
     public void onReportUploadClick() {
         AuthRouterManager.getInstance()
                          .getRouter()
-                         .open(getActivity(), AuthRouterManager.LOGIN_ROUTER_UPLOAD_REPORT);
+                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD);
+    }
+
+    @OnClick(R.id.home_report_inquire)
+    public void onReportQueryClick() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY);
     }
 }

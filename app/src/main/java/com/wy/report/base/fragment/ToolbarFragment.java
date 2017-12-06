@@ -64,8 +64,11 @@ public abstract class ToolbarFragment extends BaseFragment {
 
         BaseActivity activity = (BaseActivity) getActivity();
         if (activity != null && activity.isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int toolbarHeight = activity.getResources()
+                                        .getDimensionPixelOffset(R.dimen.toolbar_height);
             int statusBarHeight = DeviceUtils.getStatusBarHeight(activity);
             toolbar.setPadding(toolbar.getPaddingLeft(), statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
+            toolbar.getLayoutParams().height = toolbarHeight + statusBarHeight;
         }
 
         toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
