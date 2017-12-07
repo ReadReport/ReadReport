@@ -2,7 +2,11 @@ package com.wy.report.manager.router;
 
 import android.content.Context;
 
+import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.business.home.activity.HomeActivity;
+import com.wy.report.business.upload.fragment.ReportQueryFragment;
+import com.wy.report.business.upload.fragment.ReportUploadFragment;
+import com.wy.report.business.upload.fragment.ReportUploadQueryFragment;
 import com.wy.report.manager.auth.UserManger;
 
 public class AuthRouterManager {
@@ -11,22 +15,29 @@ public class AuthRouterManager {
 
     public static final String LOGIN_ACTIVITY_PREFIX = "login";
 
-    private Router router;
-
-    private UserManger userManger;
-
     /**
      * 主页面
      */
-    public static final String PUBLIC_ROUTER_HOME = PUBLIC_ACTIVITY_PREFIX + "/home";
+    public static final String ROUTER_HOME = PUBLIC_ACTIVITY_PREFIX + "/home";
 
-    static final class InstanceHolder {
-        static final AuthRouterManager instance = new AuthRouterManager();
-    }
+    /**
+     * 上传查询报告界面
+     */
+    public static final String ROUTER_REPORT_UPLOAD_QUERY = LOGIN_ACTIVITY_PREFIX + "/report_upload_query";
 
-    public static AuthRouterManager getInstance() {
-        return InstanceHolder.instance;
-    }
+    /**
+     * 上传报告界面
+     */
+    public static final String ROUTER_REPORT_UPLOAD = LOGIN_ACTIVITY_PREFIX + "/report_upload";
+
+    /**
+     * 上传报告界面
+     */
+    public static final String ROUTER_REPORT_QUERY = LOGIN_ACTIVITY_PREFIX + "/report_query";
+
+    private Router router;
+
+    private UserManger userManger;
 
     /**
      * Instantiates a new router manager.
@@ -38,7 +49,7 @@ public class AuthRouterManager {
             @Override
             public boolean process(String url) {
                 if (url.startsWith(LOGIN_ACTIVITY_PREFIX) && !userManger.isLogin()) {
-                    return true;
+                    return false;
                 }
                 return false;
             }
@@ -46,27 +57,18 @@ public class AuthRouterManager {
         configRouterMap();
     }
 
-    /**
-     * 配置公用路由映射.
-     */
-    private void configPublicRouterMap() {
-
-        // 配置主界面
-        router.map(PUBLIC_ROUTER_HOME, HomeActivity.class);
-
-
-    }
-
-    private void configLoginRouterMap() {
-
+    public static AuthRouterManager getInstance() {
+        return InstanceHolder.instance;
     }
 
     /**
      * 配置系统路由映射.
      */
     private void configRouterMap() {
-        configPublicRouterMap();
-        configLoginRouterMap();
+        router.map(ROUTER_HOME, HomeActivity.class);
+        router.map(ROUTER_REPORT_UPLOAD_QUERY, StandardActivity.class, ReportUploadQueryFragment.class);
+        router.map(ROUTER_REPORT_UPLOAD, StandardActivity.class, ReportUploadFragment.class);
+        router.map(ROUTER_REPORT_QUERY, StandardActivity.class, ReportQueryFragment.class);
     }
 
     /**
@@ -79,6 +81,10 @@ public class AuthRouterManager {
     }
 
     public void openHome(Context context) {
-        router.open(context, PUBLIC_ROUTER_HOME);
+        router.open(context, ROUTER_HOME);
+    }
+
+    static final class InstanceHolder {
+        static final AuthRouterManager instance = new AuthRouterManager();
     }
 }

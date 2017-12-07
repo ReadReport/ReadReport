@@ -24,6 +24,12 @@ public class SplashActivity extends AppCompatActivity {
                       public void call(Long aLong) {
                           AuthRouterManager.getInstance()
                                            .openHome(SplashActivity.this);
+                      }
+                  });
+        Observable.timer(3, TimeUnit.SECONDS)
+                  .subscribe(new Action1<Long>() {
+                      @Override
+                      public void call(Long aLong) {
                           finish();
                       }
                   });

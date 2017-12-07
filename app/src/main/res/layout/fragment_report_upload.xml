@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/report_upload_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hui_e9ebed">
+
+    <ImageView
+        android:id="@+id/report_upload_examine_info_bg"
+        android:layout_width="0dp"
+        android:layout_height="248dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/shape_white_corner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/report_upload_medical_examiner_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/upload_name"
+        app:layout_constraintLeft_toLeftOf="@+id/report_upload_examine_info_bg"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_info_bg"/>
+
+    <TextView
+        android:id="@+id/report_upload_medical_examiner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/report_medical_examiner"
+        android:textColor="@color/hei_333333"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_medical_examiner_icon"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_medical_examiner_icon"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_medical_examiner_icon"/>
+
+    <TextView
+        android:id="@+id/report_upload_medical_examiner_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_medical_examiner_icon"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_medical_examiner_title"
+        app:layout_constraintRight_toLeftOf="@+id/report_upload_medical_examiner_more"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_medical_examiner_icon"
+        tools:text="姓名"/>
+
+    <ImageView
+        android:id="@+id/report_upload_medical_examiner_more"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:src="@drawable/home_more"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_medical_examiner_icon"
+        app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_medical_examiner_icon"/>
+
+    <ImageView
+        android:id="@+id/report_upload_examine_time_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:src="@drawable/upload_date"
+        app:layout_constraintLeft_toLeftOf="@+id/report_upload_medical_examiner_icon"
+        app:layout_constraintTop_toBottomOf="@+id/report_upload_medical_examiner_icon"/>
+
+    <TextView
+        android:id="@+id/report_upload_examine_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="@string/report_examine_time"
+        android:textColor="@color/hei_333333"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_time_icon"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_examine_time_icon"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_time_icon"/>
+
+    <TextView
+        android:id="@+id/report_upload_examine_time_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_time_icon"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_examine_time_title"
+        app:layout_constraintRight_toLeftOf="@+id/report_upload_examine_time_more"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_time_icon"
+        tools:text="时间"/>
+
+    <ImageView
+        android:id="@+id/report_upload_examine_time_more"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:src="@drawable/home_more"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_time_icon"
+        app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_time_icon"/>
+
+    <ImageView
+        android:id="@+id/report_upload_examine_hospital_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:src="@drawable/upload_hospital"
+        app:layout_constraintLeft_toLeftOf="@+id/report_upload_medical_examiner_icon"
+        app:layout_constraintTop_toBottomOf="@+id/report_upload_examine_time_icon"/>
+
+    <TextView
+        android:id="@+id/report_upload_examine_hospital_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="@string/report_examine_hospital"
+        android:textColor="@color/hei_333333"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_hospital_icon"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_examine_hospital_icon"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_hospital_icon"/>
+
+    <TextView
+        android:id="@+id/report_upload_examine_hospital_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_hospital_icon"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_examine_hospital_title"
+        app:layout_constraintRight_toLeftOf="@+id/report_upload_examine_hospital_more"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_hospital_icon"
+        tools:text="医院"/>
+
+    <ImageView
+        android:id="@+id/report_upload_examine_hospital_more"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:src="@drawable/home_more"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_hospital_icon"
+        app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_hospital_icon"/>
+
+    <ImageView
+        android:id="@+id/report_upload_remark_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:src="@drawable/upload_remarks"
+        app:layout_constraintLeft_toLeftOf="@+id/report_upload_medical_examiner_icon"
+        app:layout_constraintTop_toBottomOf="@+id/report_upload_examine_hospital_icon"/>
+
+    <TextView
+        android:id="@+id/report_upload_remark_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="@string/report_remark"
+        android:textColor="@color/hei_333333"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_upload_remark_icon"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_remark_icon"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_remark_icon"/>
+
+    <TextView
+        android:id="@+id/report_upload_remark_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:maxLines="3"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@+id/report_upload_remark_title"
+        app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
+        app:layout_constraintTop_toTopOf="@+id/report_upload_remark_title"
+        tools:text="备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备备注备注备注备注备注备注
+        备注备注备注备注备注备注备注备注备注备注注备注"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="268dp"
+        android:background="@drawable/shape_white_corner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/report_upload_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/report_image"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/report_image"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
+

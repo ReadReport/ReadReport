@@ -82,7 +82,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/home_inquire_report"
+                android:id="@+id/home_report_inquire"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -105,7 +105,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/home_upload_report"
+                android:id="@+id/home_report_upload"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -128,7 +128,7 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/home_manage_report"
+                android:id="@+id/home_report_manage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

@@ -26,4 +26,9 @@ public class StandardActivity extends BaseActivity {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean isTranslucentStatusBar() {
+        return true;
+    }
 }
