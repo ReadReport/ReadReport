@@ -49,10 +49,11 @@
     <TextView
         android:id="@+id/report_upload_medical_examiner_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:ellipsize="end"
+        android:gravity="left|center_vertical"
         android:singleLine="true"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/report_upload_medical_examiner_icon"
@@ -64,10 +65,12 @@
     <ImageView
         android:id="@+id/report_upload_medical_examiner_more"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
+        android:scaleType="centerInside"
         android:src="@drawable/home_more"
+
         app:layout_constraintBottom_toBottomOf="@+id/report_upload_medical_examiner_icon"
         app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
         app:layout_constraintTop_toTopOf="@+id/report_upload_medical_examiner_icon"/>
@@ -97,10 +100,11 @@
     <TextView
         android:id="@+id/report_upload_examine_time_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:ellipsize="end"
+        android:gravity="left|center_vertical"
         android:singleLine="true"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_time_icon"
@@ -112,9 +116,10 @@
     <ImageView
         android:id="@+id/report_upload_examine_time_more"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
+        android:scaleType="centerInside"
         android:src="@drawable/home_more"
         app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_time_icon"
         app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
@@ -145,24 +150,26 @@
     <TextView
         android:id="@+id/report_upload_examine_hospital_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:ellipsize="end"
+        android:gravity="left|center_vertical"
+        android:hint="@string/report_examine_hospital_hint"
         android:singleLine="true"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_hospital_icon"
         app:layout_constraintLeft_toRightOf="@+id/report_upload_examine_hospital_title"
         app:layout_constraintRight_toLeftOf="@+id/report_upload_examine_hospital_more"
-        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_hospital_icon"
-        tools:text="医院"/>
+        app:layout_constraintTop_toTopOf="@+id/report_upload_examine_hospital_icon"/>
 
     <ImageView
         android:id="@+id/report_upload_examine_hospital_more"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
+        android:scaleType="centerInside"
         android:src="@drawable/home_more"
         app:layout_constraintBottom_toBottomOf="@+id/report_upload_examine_hospital_icon"
         app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
@@ -190,7 +197,7 @@
         app:layout_constraintLeft_toRightOf="@+id/report_upload_remark_icon"
         app:layout_constraintTop_toTopOf="@+id/report_upload_remark_icon"/>
 
-    <TextView
+    <EditText
         android:id="@+id/report_upload_remark_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -198,19 +205,25 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
+        android:background="@null"
+        android:gravity="top|left"
+        android:hint="@string/report_remark_hint"
         android:maxLines="3"
+        android:minHeight="50dp"
+        android:textCursorDrawable="@null"
         android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/report_upload_remark_title"
         app:layout_constraintLeft_toRightOf="@+id/report_upload_remark_title"
         app:layout_constraintRight_toRightOf="@+id/report_upload_examine_info_bg"
-        app:layout_constraintTop_toTopOf="@+id/report_upload_remark_title"
-        tools:text="备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备备注备注备注备注备注备注
-        备注备注备注备注备注备注备注备注备注备注注备注"/>
+        app:layout_constraintTop_toTopOf="@+id/report_upload_remark_title"/>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="268dp"
         android:background="@drawable/shape_white_corner"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -222,19 +235,53 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:text="@string/report_image"
+            android:textColor="@color/hei_333333"
+            android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
+            android:id="@+id/report_upload_image_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/report_image_num"
+            android:textColor="@color/hei_333333"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/report_upload_image"
+            app:layout_constraintLeft_toRightOf="@+id/report_upload_image"
+            app:layout_constraintTop_toTopOf="@+id/report_upload_image"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/report_image_hint"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/report_upload_image"
+            app:layout_constraintLeft_toRightOf="@+id/report_upload_image_num"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/report_upload_image"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/report_upload_image_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:text="@string/report_image"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/report_upload_image"/>
 
     </android.support.constraint.ConstraintLayout>
 
