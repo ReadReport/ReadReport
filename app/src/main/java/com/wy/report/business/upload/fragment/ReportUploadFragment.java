@@ -61,7 +61,9 @@ public class ReportUploadFragment extends ToolbarFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        savedPictureList = savedInstanceState.getStringArrayList(SAVED_PICTURE_LIST);
+        if (savedInstanceState != null) {
+            savedPictureList = savedInstanceState.getStringArrayList(SAVED_PICTURE_LIST);
+        }
     }
 
     @Override
