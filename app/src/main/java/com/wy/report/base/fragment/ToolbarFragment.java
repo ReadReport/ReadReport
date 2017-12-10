@@ -36,20 +36,22 @@ public abstract class ToolbarFragment extends BaseFragment {
     @Nullable
     @Override
     public View createView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        if ((toolbarFlag() & TOOL_BAR_FLAG_SHOW) == TOOL_BAR_FLAG_SHOW) {
+            ViewGroup toolbarContainer = (ViewGroup) inflater.inflate(toolbarContainerLayoutID(), container, false);
+            View contentView = super.createView(inflater, toolbarContainer, savedInstanceState);
+            View toolbar = inflater.inflate(toolbarLayoutID(), toolbarContainer, false);
 
-        ViewGroup toolbarContainer = (ViewGroup) inflater.inflate(toolbarContainerLayoutID(), container, false);
-
-        View contentView = super.createView(inflater, toolbarContainer, savedInstanceState);
-        View toolbar = inflater.inflate(toolbarLayoutID(), toolbarContainer, false);
-
-        if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
-            toolbarContainer.addView(contentView);
-            toolbarContainer.addView(toolbar);
+            if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
+                toolbarContainer.addView(contentView);
+                toolbarContainer.addView(toolbar);
+            } else {
+                toolbarContainer.addView(toolbar);
+                toolbarContainer.addView(contentView);
+            }
+            return toolbarContainer;
         } else {
-            toolbarContainer.addView(toolbar);
-            toolbarContainer.addView(contentView);
+            return super.createView(inflater, container, savedInstanceState);
         }
-        return toolbarContainer;
     }
 
     @Override

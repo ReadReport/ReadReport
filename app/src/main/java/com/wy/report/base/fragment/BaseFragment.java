@@ -32,16 +32,23 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rxBus = RxBus.get();
-        if (!rxBus.hasRegistered(this)) {
-            rxBus.register(this);
-        }
-        initData();
+        initData(savedInstanceState);
     }
 
-    protected abstract void initData();
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (rxBus == null) {
+            rxBus = RxBus.get();
+            if (!rxBus.hasRegistered(this)) {
+                rxBus.register(this);
+            }
+        }
+    }
 
-    protected abstract void initView(View contentView) ;
+    protected abstract void initData(Bundle savedInstanceState);
+
+    protected abstract void initView(View contentView);
 
     @Nullable
     @Override

@@ -6,7 +6,7 @@
     android:id="@+id/report_upload_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/hui_e9ebed">
+    android:background="@color/hui_f9f9f9">
 
     <ImageView
         android:id="@+id/report_upload_examine_info_bg"

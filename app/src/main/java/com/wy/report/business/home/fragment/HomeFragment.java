@@ -1,6 +1,7 @@
 package com.wy.report.business.home.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -63,7 +64,7 @@ public class HomeFragment extends PtrFragment {
     private boolean toolbarOverHalf;
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         homeService = RetrofitHelper.getInstance()
                                     .create(HomeService.class);
         messageManager = MessageManager.getInstance();

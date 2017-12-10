@@ -1,5 +1,6 @@
 package com.wy.report.business.upload.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.wy.report.R;
@@ -12,7 +13,7 @@ import com.wy.report.base.fragment.ToolbarFragment;
 public class ReportUploadQueryFragment extends ToolbarFragment {
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
     }
 
     @Override

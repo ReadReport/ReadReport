@@ -18,7 +18,7 @@ import rx.Observable;
  * @author cantalou
  * @date 2017年12月01日 14:18
  */
-public interface FamilyService {
+public interface FamilyMemberService {
 
     /**
      * 获取家庭成员列表

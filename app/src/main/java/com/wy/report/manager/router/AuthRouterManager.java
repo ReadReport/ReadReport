@@ -3,7 +3,9 @@ package com.wy.report.manager.router;
 import android.content.Context;
 
 import com.wy.report.base.activity.StandardActivity;
+import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
+import com.wy.report.business.other.fragment.PictureFragment;
 import com.wy.report.business.upload.fragment.ReportQueryFragment;
 import com.wy.report.business.upload.fragment.ReportUploadFragment;
 import com.wy.report.business.upload.fragment.ReportUploadQueryFragment;
@@ -34,6 +36,16 @@ public class AuthRouterManager {
      * 上传报告界面
      */
     public static final String ROUTER_REPORT_QUERY = LOGIN_ACTIVITY_PREFIX + "/report_query";
+
+    /**
+     * 图片预览界面
+     */
+    public static final String ROUTER_OTHER_PICTURE_PREVIEW = LOGIN_ACTIVITY_PREFIX + "/other_picture_preview";
+
+    /**
+     * 家庭成员选择界面
+     */
+    public static final String ROUTER_FAMILY_MEMBER_SELECT = LOGIN_ACTIVITY_PREFIX + "/family_member_select";
 
     private Router router;
 
@@ -69,6 +81,8 @@ public class AuthRouterManager {
         router.map(ROUTER_REPORT_UPLOAD_QUERY, StandardActivity.class, ReportUploadQueryFragment.class);
         router.map(ROUTER_REPORT_UPLOAD, StandardActivity.class, ReportUploadFragment.class);
         router.map(ROUTER_REPORT_QUERY, StandardActivity.class, ReportQueryFragment.class);
+        router.map(ROUTER_OTHER_PICTURE_PREVIEW, StandardActivity.class, PictureFragment.class);
+        router.map(ROUTER_FAMILY_MEMBER_SELECT, StandardActivity.class, FamilyMemberSelectFragment.class);
     }
 
     /**

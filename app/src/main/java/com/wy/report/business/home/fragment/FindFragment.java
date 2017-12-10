@@ -1,5 +1,6 @@
 package com.wy.report.business.home.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class FindFragment extends PtrFragment {
     private HomeService homeService;
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         messageManager = MessageManager.getInstance();
         homeService = RetrofitHelper.getInstance()
                                     .create(HomeService.class);

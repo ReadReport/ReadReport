@@ -10,47 +10,46 @@ import com.wy.report.manager.preferences.PreferenceManager;
  */
 public class UserManger {
 
-    private static class InstanceHolder {
-        static final UserManger INSTANCE = new UserManger();
-    }
-
     private PreferenceManager preferenceManager;
-
-    private User loginedUser;
+    private User loginUser;
 
     private UserManger() {
         preferenceManager = PreferenceManager.getInstance();
         loadUser();
     }
 
+    public static UserManger getInstance() {
+        return InstanceHolder.INSTANCE;
+    }
+
     private void loadUser() {
-        loginedUser = preferenceManager.getValue(Key.LOGINED_USER_INFO, User.class);
+        loginUser = preferenceManager.getValue(Key.LOGINED_USER_INFO, User.class);
     }
 
     public void updateUser(User user) {
-        if (loginedUser == null) {
-            loginedUser = user;
+        if (loginUser == null) {
+            loginUser = user;
         } else {
-            loginedUser.setBirthday(user.getBirthday());
-            loginedUser.setHead(user.getHead());
-            loginedUser.setMobile(user.getMobile());
-            loginedUser.setName(user.getName());
-            loginedUser.setRelationship(user.getRelationship());
-            loginedUser.setSex(user.getSex());
+            loginUser.setBirthday(user.getBirthday());
+            loginUser.setHead(user.getHead());
+            loginUser.setMobile(user.getMobile());
+            loginUser.setName(user.getName());
+            loginUser.setRelationship(user.getRelationship());
+            loginUser.setSex(user.getSex());
         }
-        preferenceManager.setValue(Key.LOGINED_USER_INFO, loginedUser);
+        preferenceManager.setValue(Key.LOGINED_USER_INFO, loginUser);
     }
 
     public boolean isLogin() {
-        return loginedUser != null;
+        return loginUser != null;
     }
 
-    public User getLoginedUser() {
-        return loginedUser;
+    public User getLoginUser() {
+        return loginUser;
     }
 
-    public static UserManger getInstance() {
-        return InstanceHolder.INSTANCE;
+    private static class InstanceHolder {
+        static final UserManger INSTANCE = new UserManger();
     }
 
 }

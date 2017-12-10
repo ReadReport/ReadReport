@@ -14,4 +14,9 @@
     <string name="report_image_num">(%1$d/%2$d)</string>
     <string name="report_image_hint">为方便解读，请按报告页数顺序上传</string>
     <string name="report_submit">提交</string>
+
+    <string-array name="report_hospital_tab">
+        <item>医院</item>
+        <item>连锁机构</item>
+    </string-array>
 </resources>
