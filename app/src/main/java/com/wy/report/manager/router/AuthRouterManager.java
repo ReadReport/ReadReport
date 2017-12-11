@@ -6,6 +6,7 @@ import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.other.fragment.PictureFragment;
+import com.wy.report.business.upload.fragment.HospitalListFragment;
 import com.wy.report.business.upload.fragment.ReportQueryFragment;
 import com.wy.report.business.upload.fragment.ReportUploadFragment;
 import com.wy.report.business.upload.fragment.ReportUploadQueryFragment;
@@ -13,39 +14,44 @@ import com.wy.report.manager.auth.UserManger;
 
 public class AuthRouterManager {
 
-    public static final String PUBLIC_ACTIVITY_PREFIX = "public";
+    public static final String PUBLIC_ACTIVITY_PREFIX = "public/";
 
-    public static final String LOGIN_ACTIVITY_PREFIX = "login";
+    public static final String LOGIN_ACTIVITY_PREFIX = "login/";
 
     /**
      * 主页面
      */
-    public static final String ROUTER_HOME = PUBLIC_ACTIVITY_PREFIX + "/home";
+    public static final String ROUTER_HOME = PUBLIC_ACTIVITY_PREFIX + "ROUTER_HOME";
 
     /**
      * 上传查询报告界面
      */
-    public static final String ROUTER_REPORT_UPLOAD_QUERY = LOGIN_ACTIVITY_PREFIX + "/report_upload_query";
+    public static final String ROUTER_REPORT_UPLOAD_QUERY = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_UPLOAD_QUERY";
 
     /**
      * 上传报告界面
      */
-    public static final String ROUTER_REPORT_UPLOAD = LOGIN_ACTIVITY_PREFIX + "/report_upload";
+    public static final String ROUTER_REPORT_UPLOAD = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_UPLOAD";
 
     /**
      * 上传报告界面
      */
-    public static final String ROUTER_REPORT_QUERY = LOGIN_ACTIVITY_PREFIX + "/report_query";
+    public static final String ROUTER_REPORT_QUERY = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_QUERY";
 
     /**
      * 图片预览界面
      */
-    public static final String ROUTER_OTHER_PICTURE_PREVIEW = LOGIN_ACTIVITY_PREFIX + "/other_picture_preview";
+    public static final String ROUTER_OTHER_PICTURE_PREVIEW = LOGIN_ACTIVITY_PREFIX + "ROUTER_OTHER_PICTURE_PREVIEW";
 
     /**
      * 家庭成员选择界面
      */
-    public static final String ROUTER_FAMILY_MEMBER_SELECT = LOGIN_ACTIVITY_PREFIX + "/family_member_select";
+    public static final String ROUTER_FAMILY_MEMBER_SELECT = LOGIN_ACTIVITY_PREFIX + "ROUTER_FAMILY_MEMBER_SELECT";
+
+    /**
+     * 家庭成员选择界面
+     */
+    public static final String ROUTER_REPORT_HOSPITAL_LIST = PUBLIC_ACTIVITY_PREFIX + "ROUTER_REPORT_HOSPITAL_LIST";
 
     private Router router;
 
@@ -83,6 +89,7 @@ public class AuthRouterManager {
         router.map(ROUTER_REPORT_QUERY, StandardActivity.class, ReportQueryFragment.class);
         router.map(ROUTER_OTHER_PICTURE_PREVIEW, StandardActivity.class, PictureFragment.class);
         router.map(ROUTER_FAMILY_MEMBER_SELECT, StandardActivity.class, FamilyMemberSelectFragment.class);
+        router.map(ROUTER_REPORT_HOSPITAL_LIST, StandardActivity.class, HospitalListFragment.class);
     }
 
     /**

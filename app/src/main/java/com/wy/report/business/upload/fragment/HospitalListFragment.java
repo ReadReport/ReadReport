@@ -3,8 +3,10 @@ package com.wy.report.business.upload.fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.cantalou.android.util.Log;
@@ -28,19 +30,44 @@ public class HospitalListFragment extends ToolbarFragment {
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    FragmentPagerAdapter pagerAdapter;
     private String[] tabTitles;
-
-    private Fragment[] fragments = new Fragment[]{new NotChainUnitFragment(), new ChainUnitFragment()};
+    private Fragment[] fragments;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
+        fragments = new Fragment[]{new NotChainUnitFragment(), new ChainUnitFragment()};
+        tabTitles = getResources().getStringArray(R.array.report_hospital_tab);
     }
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
+        pagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public int getCount() {
+                return fragments.length;
+            }
+
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return view == object;
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return fragments[position];
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return tabTitles[position];
+            }
+        };
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
         Observable.timer(10, TimeUnit.MILLISECONDS)
                   .subscribe(new Action1<Long>() {
                       @Override
