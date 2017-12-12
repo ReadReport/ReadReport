@@ -1,14 +1,19 @@
 package com.wy.report.business.upload.fragment;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hwangjr.rxbus.annotation.Subscribe;
@@ -19,11 +24,14 @@ import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.family.model.FamilyMemberModel;
 import com.wy.report.business.upload.model.PictureModel;
+import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.manager.router.Router;
 import com.wy.report.util.PhotoUtil;
 import com.wy.report.util.SystemIntentUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,26 +60,55 @@ public class ReportUploadFragment extends ToolbarFragment {
     @BindView(R.id.report_upload_remark_name)
     EditText remark;
 
-    @BindView(R.id.report_upload_image_rv)
-    RecyclerView imageRecycleView;
+    @BindView(R.id.recycle_view)
+    RecyclerView recyclerView;
+
+    private FamilyMemberModel familyMemberModel;
+
+    private UnitModel unitModel;
 
     private BaseQuickAdapter<PictureModel, BaseViewHolder> adapter;
 
     private ArrayList<String> savedPictureList;
+
+    private Router router;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             savedPictureList = savedInstanceState.getStringArrayList(SAVED_PICTURE_LIST);
         }
+        router = AuthRouterManager.getInstance()
+                                  .getRouter();
     }
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        createAdapter();
+        recyclerView.setAdapter(adapter);
+        restorePictureModel();
+    }
+
+    private void createAdapter() {
         adapter = new BaseQuickAdapter<PictureModel, BaseViewHolder>(R.layout.vh_select_image) {
             @Override
             protected void convert(BaseViewHolder helper, PictureModel item) {
+                switch (item.getType()) {
+                    case PictureModel.TYPE_ADD: {
+                        helper.setImageResource(R.id.vh_select_image_image, R.drawable.upload_plus)
+                              .setVisible(R.id.vh_select_image_delete, false);
+                        break;
+                    }
+                    case PictureModel.TYPE_NORMAL: {
+                        helper.setVisible(R.id.vh_select_image_delete, true);
+                        Glide.with(getActivity())
+                             .load(item.getPath())
+                             .into((ImageView) helper.getView(R.id.vh_select_image_image));
+                        break;
+                    }
+                }
                 helper.addOnClickListener(R.id.vh_select_image_delete)
                       .addOnClickListener(R.id.vh_select_image_image);
             }
@@ -88,7 +125,7 @@ public class ReportUploadFragment extends ToolbarFragment {
                                      .getRouter()
                                      .open(getActivity(), AuthRouterManager.ROUTER_OTHER_PICTURE_PREVIEW, bundleKey);
                 } else {
-                    SystemIntentUtil.createJumpIntoSystemAlbumIntent();
+                    getActivity().startActivity(SystemIntentUtil.createJumpIntoSystemAlbumIntent());
                 }
             }
         });
@@ -105,9 +142,7 @@ public class ReportUploadFragment extends ToolbarFragment {
                 }
             }
         });
-        adapter.onAttachedToRecyclerView(imageRecycleView);
-        imageRecycleView.setAdapter(adapter);
-        restorePictureModel();
+        adapter.onAttachedToRecyclerView(recyclerView);
     }
 
     private ArrayList<String> toPicturePath() {
@@ -128,6 +163,8 @@ public class ReportUploadFragment extends ToolbarFragment {
                 model.setType(PictureModel.TYPE_NORMAL);
             }
             adapter.setNewData(models);
+        } else {
+            adapter.addData(new PictureModel(PictureModel.TYPE_ADD));
         }
     }
 
@@ -144,17 +181,23 @@ public class ReportUploadFragment extends ToolbarFragment {
 
     @OnClick({R.id.report_upload_medical_examiner_name, R.id.report_upload_medical_examiner_more})
     public void nameClick() {
-
+        router.open(getActivity(), AuthRouterManager.ROUTER_FAMILY_MEMBER_SELECT);
     }
 
     @OnClick({R.id.report_upload_examine_time_name, R.id.report_upload_examine_time_more})
     public void timeClick() {
-
+        Calendar cal = Calendar.getInstance();
+        new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                time.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+            }
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @OnClick({R.id.report_upload_examine_hospital_name, R.id.report_upload_examine_hospital_more})
     public void hospitalClick() {
-
+        router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_HOSPITAL_LIST);
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_REPORT_UPLOAD_DELETE_PICTURE)})
@@ -164,8 +207,16 @@ public class ReportUploadFragment extends ToolbarFragment {
 
     @Subscribe(tags = {@Tag(RxKey.RX_FAMILY_MEMBER_SELECT)})
     public void familyMemberSelected(FamilyMemberModel model) {
+        familyMemberModel = model;
         name.setText(model.getName());
     }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_HOSPITAL_UNIT_SELECT)})
+    public void hospitalUnitSelected(UnitModel model) {
+        unitModel = model;
+        hospital.setText(model.getTitle());
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -186,6 +237,4 @@ public class ReportUploadFragment extends ToolbarFragment {
         super.onSaveInstanceState(outState);
         outState.putStringArrayList(SAVED_PICTURE_LIST, toPicturePath());
     }
-
-
 }

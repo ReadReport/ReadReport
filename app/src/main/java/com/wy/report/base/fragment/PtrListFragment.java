@@ -1,6 +1,7 @@
 package com.wy.report.base.fragment;
 
 import android.support.annotation.CallSuper;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -44,6 +45,7 @@ public abstract class PtrListFragment<T, K extends BaseViewHolder> extends PtrFr
     }
 
     protected void initRecycleView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         quickAdapter = createAdapter();
         quickAdapter.setOnItemClickListener(this);
         quickAdapter.onAttachedToRecyclerView(recyclerView);

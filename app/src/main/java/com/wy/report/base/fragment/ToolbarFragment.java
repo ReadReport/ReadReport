@@ -26,7 +26,6 @@ public abstract class ToolbarFragment extends BaseFragment {
 
     public static final int TOOL_BAR_FLAG_OVERLAY = 0x10;
 
-    @BindView(R.id.toolbar)
     protected Toolbar toolbar;
 
     protected TextView toolbarTitle;
@@ -63,6 +62,9 @@ public abstract class ToolbarFragment extends BaseFragment {
     @CallSuper
     protected void initToolbar() {
         toolbar = (Toolbar) contentView.findViewById(R.id.toolbar);
+        if (toolbar == null) {
+            return;
+        }
 
         BaseActivity activity = (BaseActivity) getActivity();
         if (activity != null && activity.isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

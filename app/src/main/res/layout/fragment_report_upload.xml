@@ -6,7 +6,9 @@
     android:id="@+id/report_upload_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/hui_f9f9f9">
+    android:background="@color/hui_f9f9f9"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ImageView
         android:id="@+id/report_upload_examine_info_bg"
@@ -271,7 +273,7 @@
             app:layout_constraintTop_toTopOf="@+id/report_upload_image"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/report_upload_image_rv"
+            android:id="@+id/recycle_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
