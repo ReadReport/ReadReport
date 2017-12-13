@@ -6,6 +6,7 @@ import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.other.fragment.PictureFragment;
+import com.wy.report.business.read.fragment.ReportManageFragment;
 import com.wy.report.business.upload.fragment.HospitalListFragment;
 import com.wy.report.business.upload.fragment.ReportQueryFragment;
 import com.wy.report.business.upload.fragment.ReportUploadFragment;
@@ -53,6 +54,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_REPORT_HOSPITAL_LIST = PUBLIC_ACTIVITY_PREFIX + "ROUTER_REPORT_HOSPITAL_LIST";
 
+    /**
+     * 报告管理界面
+     */
+    public static final String ROUTER_REPORT_MANAGE = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_MANAGE";
+
     private Router router;
 
     private UserManger userManger;
@@ -90,6 +96,7 @@ public class AuthRouterManager {
         router.map(ROUTER_OTHER_PICTURE_PREVIEW, StandardActivity.class, PictureFragment.class);
         router.map(ROUTER_FAMILY_MEMBER_SELECT, StandardActivity.class, FamilyMemberSelectFragment.class);
         router.map(ROUTER_REPORT_HOSPITAL_LIST, StandardActivity.class, HospitalListFragment.class);
+        router.map(ROUTER_REPORT_MANAGE, StandardActivity.class, ReportManageFragment.class);
     }
 
     /**
