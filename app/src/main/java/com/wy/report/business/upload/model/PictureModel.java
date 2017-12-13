@@ -20,6 +20,10 @@ public class PictureModel extends BaseModel {
     public PictureModel() {
     }
 
+    public PictureModel(int type) {
+        this.type = type;
+    }
+
     public PictureModel(String path) {
         this.path = path;
     }

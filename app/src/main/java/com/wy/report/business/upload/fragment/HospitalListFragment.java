@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.cantalou.android.util.Log;
@@ -30,10 +30,14 @@ public class HospitalListFragment extends ToolbarFragment {
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
     FragmentPagerAdapter pagerAdapter;
+
     private String[] tabTitles;
+
     private Fragment[] fragments;
 
     @Override
@@ -72,7 +76,7 @@ public class HospitalListFragment extends ToolbarFragment {
                   .subscribe(new Action1<Long>() {
                       @Override
                       public void call(Long aLong) {
-                          setIndicatorWidth();
+                          //setIndicatorWidth();
                       }
                   });
     }

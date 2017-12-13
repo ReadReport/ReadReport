@@ -2,7 +2,9 @@ package com.wy.report.business.upload.fragment;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.PtrFragment;
@@ -29,7 +31,14 @@ public class NotChainUnitFragment extends PtrFragment {
     }
 
     @Override
+    protected void initView(View contentView) {
+        super.initView(contentView);
+        recycleViewLeft.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recycleViewRight.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+    }
+
+    @Override
     protected int contentLayoutID() {
-        return 0;
+        return R.layout.fragment_hospital_not_chain_unit;
     }
 }
