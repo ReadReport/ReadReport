@@ -182,4 +182,11 @@ public class HomeFragment extends PtrFragment {
                          .getRouter()
                          .open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY);
     }
+
+    @OnClick(R.id.home_manage_report_ll)
+    public void onReportManageClick() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
+    }
 }
