@@ -2,6 +2,8 @@ package com.wy.report.business.read.mode;
 
 import android.databinding.ObservableField;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * @author: ZangSong
  * @email: gnoszsong@gmail.com
@@ -9,8 +11,11 @@ import android.databinding.ObservableField;
  * @description: ReadReport
  */
 public class ReportItemMode {
+    @JSONField(name="upload_date")
     private ObservableField<String> time;
+    @JSONField(name="name")
     private ObservableField<String> name;
+    @JSONField(name="ti_hospital")
     private ObservableField<String> hospital;
 
     public ObservableField<String> getTime() {
