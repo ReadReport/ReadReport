@@ -34,8 +34,10 @@ public class PictureFragment extends ToolbarFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        paths = bundle.getStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
-        index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
+        if (bundle != null) {
+            paths = bundle.getStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
+            index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
+        }
     }
 
     @Override

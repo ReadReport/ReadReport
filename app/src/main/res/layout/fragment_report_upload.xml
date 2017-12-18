@@ -28,6 +28,7 @@
                 android:id="@+id/report_upload_medical_examiner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@drawable/selector_white_bg"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -73,6 +74,7 @@
                 android:id="@+id/report_upload_examine_time"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@drawable/selector_white_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -119,6 +121,7 @@
                 android:id="@+id/report_upload_examine_hospital"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@drawable/selector_white_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 

@@ -123,7 +123,7 @@
                 android:id="@+id/submit_to_hospital_btn"
                 android:layout_width="81dp"
                 android:layout_height="30dp"
-                android:background="@drawable/selector_white_bg_corner"
+                android:background="@drawable/selector_white_bg"
                 android:text="提交至医生"
                 android:textColor="@color/lan_24aaff"
                 android:textSize="13sp"

@@ -104,17 +104,22 @@ public class ReportUploadFragment extends ToolbarFragment {
             protected void convert(BaseViewHolder helper, PictureModel item) {
                 switch (item.getType()) {
                     case PictureModel.TYPE_ADD: {
-                        helper.setImageResource(R.id.vh_select_image_image, R.drawable.upload_plus)
-                              .setVisible(R.id.vh_select_image_delete, false);
+                        ImageView iv = helper.getView(R.id.vh_select_image_image);
+                        iv.setBackgroundResource(R.drawable.selector_white_bg);
+                        iv.setImageResource(R.drawable.upload_plus);
+                        iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        helper.setVisible(R.id.vh_select_image_delete, false);
                         break;
                     }
                     case PictureModel.TYPE_NORMAL: {
                         helper.setVisible(R.id.vh_select_image_delete, true);
+                        ImageView iv = helper.getView(R.id.vh_select_image_image);
+                        iv.setBackgroundResource(0);
+                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         Glide.with(getActivity())
                              .load(item.getPath())
-                             .into((ImageView) helper.getView(R.id.vh_select_image_image));
-                        helper.addOnClickListener(R.id.vh_select_image_delete)
-                              .addOnClickListener(R.id.vh_select_image_image);
+                             .into(iv);
+                        helper.addOnClickListener(R.id.vh_select_image_delete);
                         break;
                     }
                 }
@@ -161,7 +166,9 @@ public class ReportUploadFragment extends ToolbarFragment {
         List<PictureModel> models = adapter.getData();
         ArrayList<String> picturePaths = new ArrayList<>(models.size());
         for (PictureModel model : models) {
-            picturePaths.add(model.getPath());
+            if(model.getType() == PictureModel.TYPE_NORMAL){
+                picturePaths.add(model.getPath());
+            }
         }
         return picturePaths;
     }
@@ -191,12 +198,12 @@ public class ReportUploadFragment extends ToolbarFragment {
         setTitle(R.string.report_upload);
     }
 
-    @OnClick({R.id.report_upload_medical_examiner_name, R.id.report_upload_medical_examiner_more})
+    @OnClick({R.id.report_upload_medical_examiner})
     public void nameClick() {
         router.open(getActivity(), AuthRouterManager.ROUTER_FAMILY_MEMBER_SELECT);
     }
 
-    @OnClick({R.id.report_upload_examine_time_name, R.id.report_upload_examine_time_more})
+    @OnClick({R.id.report_upload_examine_time})
     public void timeClick() {
         Calendar cal = Calendar.getInstance();
         new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -207,7 +214,7 @@ public class ReportUploadFragment extends ToolbarFragment {
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    @OnClick({R.id.report_upload_examine_hospital_name, R.id.report_upload_examine_hospital_more})
+    @OnClick({R.id.report_upload_examine_hospital})
     public void hospitalClick() {
         router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_HOSPITAL_LIST);
     }
@@ -243,8 +250,6 @@ public class ReportUploadFragment extends ToolbarFragment {
                     list.add(0, new PictureModel(picturePath));
                     adapter.replaceData(list);
                 } else {
-                    adapter.addData(0, new PictureModel(picturePath));
-                    adapter.addData(0, new PictureModel(picturePath));
                     adapter.addData(0, new PictureModel(picturePath));
                     recyclerView.getLayoutManager()
                                 .requestLayout();

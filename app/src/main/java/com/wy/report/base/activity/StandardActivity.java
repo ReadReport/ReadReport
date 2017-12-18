@@ -24,6 +24,7 @@ public class StandardActivity extends BaseActivity {
         try {
             Fragment fragment = (Fragment) Class.forName(fragmentClassName)
                                                 .newInstance();
+            fragment.setArguments(intent.getExtras());
             getSupportFragmentManager().beginTransaction()
                                        .replace(android.R.id.content, fragment)
                                        .commitAllowingStateLoss();

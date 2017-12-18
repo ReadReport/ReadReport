@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cantalou.android.util.Log;
 import com.wy.report.R;
@@ -49,28 +51,52 @@ public class HospitalListFragment extends ToolbarFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        pagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
+//        pagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
+//            @Override
+//            public int getCount() {
+//                return fragments.length;
+//            }
+//
+//            @Override
+//            public boolean isViewFromObject(View view, Object object) {
+//                return view == object;
+//            }
+//
+//            @Override
+//            public Fragment getItem(int position) {
+//                return fragments[position];
+//            }
+//
+//            @Override
+//            public CharSequence getPageTitle(int position) {
+//                return tabTitles[position];
+//            }
+//        };
+//        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(new PagerAdapter() {
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                TextView tv = new TextView(getActivity());
+                tv.setText("123");
+                return tv;
+            }
+
             @Override
             public int getCount() {
-                return fragments.length;
+                return 1;
             }
 
             @Override
             public boolean isViewFromObject(View view, Object object) {
-                return view == object;
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                return fragments[position];
+                return false;
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return tabTitles[position];
+                return "123";
             }
-        };
-        viewPager.setAdapter(pagerAdapter);
+        });
         tabLayout.setupWithViewPager(viewPager);
         Observable.timer(10, TimeUnit.MILLISECONDS)
                   .subscribe(new Action1<Long>() {
