@@ -7,42 +7,43 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.wy.report.R;
 import com.zyyoona7.lib.BaseCustomPopup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BHM on 17/12/17.
  */
+public class ManagePopMenu extends BaseCustomPopup
+        implements BaseQuickAdapter.OnItemClickListener {
 
-public class ManagePopMenu extends BaseCustomPopup implements BaseQuickAdapter.OnItemClickListener {
-
-    private List<String> items;
+    private List<PopItem> items;
 
     private static final String TAG = "ManagePopMenu";
 
     private RecyclerView recyclerView;
 
-    protected BaseQuickAdapter<T, K> quickAdapter;
+    protected BaseQuickAdapter<PopItem,BaseViewHolder> quickAdapter;
 
-    protected ManagePopMenu(Context context) {
+    public ManagePopMenu(Context context) {
         super(context);
     }
 
     @Override
     protected void initAttributes() {
-        setContentView(recyclerView,
-                ViewGroup.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(300));
-
+        recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        quickAdapter = createAdapter();
-        quickAdapter.setOnItemClickListener(this);
-        quickAdapter.onAttachedToRecyclerView(recyclerView);
+        createAdapter();
         recyclerView.setAdapter(quickAdapter);
-        setFocusAndOutsideEnable(false)
-                .setBackgroundDimEnable(true)
-                .setDimValue(0.5f);
+
+        setContentView(recyclerView,
+                       ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setBackgroundDimEnable(false);
+        setOutsideTouchable(true);
+        setFocusAndOutsideEnable(true);
     }
 
     @Override
@@ -56,8 +57,61 @@ public class ManagePopMenu extends BaseCustomPopup implements BaseQuickAdapter.O
 
     }
 
+
+    public void initData()
+    {
+        items = new ArrayList<>();
+        PopItem item1 = new PopItem();
+        item1.setId("1");
+        item1.setContent("jhfdsaaf");
+        PopItem item2 = new PopItem();
+        item2.setId("1");
+        item2.setContent("jhfdsaaf");
+        items.add(item1);
+        items.add(item2);
+    }
+
     private void createAdapter()
     {
+        initData();
+        quickAdapter = new PopAdapter(R.layout.view_report_manage_pop_item);
+        quickAdapter.setOnItemClickListener(this);
+        quickAdapter.onAttachedToRecyclerView(recyclerView);
+        quickAdapter.addData(items);
+    }
 
+    public class PopItem
+    {
+        private String id;
+        private String content;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+    }
+
+    public class PopAdapter extends BaseQuickAdapter<PopItem, BaseViewHolder>
+    {
+
+        public PopAdapter(int layoutResId) {
+            super(layoutResId);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, PopItem item) {
+            helper.setText(R.id.pop_item_tv,item.getContent());
+        }
     }
 }

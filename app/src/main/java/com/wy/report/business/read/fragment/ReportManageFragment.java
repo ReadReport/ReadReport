@@ -6,14 +6,17 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.business.read.mode.ReportManageViewMode;
+import com.wy.report.business.read.view.ManagePopMenu;
 import com.wy.report.databinding.FragmentManageBinding;
+import com.zyyoona7.lib.EasyPopup;
+import com.zyyoona7.lib.HorizontalGravity;
+import com.zyyoona7.lib.VerticalGravity;
 
 import butterknife.BindView;
 
@@ -24,30 +27,35 @@ public class ReportManageFragment extends PtrFragment {
     private ReportManageViewMode reportManageViewMode;
 
 
+    private ManagePopMenu mPopMenu;
+
+    private boolean isPop;
 
     @BindView(R.id.toolbar_pop)
     TextView toolBarPop;
-
-    private Gift
-
 
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         reportManageViewMode = new ReportManageViewMode(this);
-        ptrWithoutToolbar=true;
+        ptrWithoutToolbar = true;
     }
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
         reportManageViewMode.initData();
+        initPopMenu();
         toolBarPop.setText("全部");
         toolBarPop.setClickable(true);
         toolBarPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "ssss", Toast.LENGTH_SHORT).show();
+                if (isPop) {
+                    mPopMenu.dismiss();
+                } else {
+                    mPopMenu.showAtAnchorView(toolbar, VerticalGravity.BELOW, HorizontalGravity.ALIGN_RIGHT,0,0);
+                }
             }
         });
     }
@@ -79,5 +87,24 @@ public class ReportManageFragment extends PtrFragment {
     @Override
     protected void loadData() {
         reportManageViewMode.getDataFromNet();
+    }
+
+    private void initPopMenu() {
+        mPopMenu = new ManagePopMenu(getActivity());
+        mPopMenu.createPopup();
+        mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                isPop = false;
+            }
+        });
+        mPopMenu.setOnAttachedWindowListener(new EasyPopup.OnAttachedWindowListener() {
+            @Override
+            public void onAttachedWindow(int i, int i1, EasyPopup easyPopup) {
+                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
+                isPop = true;
+            }
+        });
     }
 }
