@@ -1,26 +1,25 @@
 package com.wy.report.business.read.mode;
 
-import android.content.Context;
 import android.databinding.BindingAdapter;
-import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.wy.report.R;
+import com.wy.report.base.adapter.QuickDataBindingAdapter;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.base.viewholder.BaseDataBindingViewHolder;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.business.read.service.ReadService;
 import com.wy.report.databinding.ViewReportItemBinding;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
+
 import java.util.List;
 
 
@@ -36,22 +35,17 @@ public class ReportManageViewMode {
 
     private User user;
 
-
     private ObservableField<String> toolBarPopContent;
 
 
-
-    public ReportManageViewMode(PtrFragment context)
-    {
+    public ReportManageViewMode(PtrFragment context) {
         this.fragment = context;
-
     }
 
     public ObservableArrayList<ReportItemMode> data;
 
 
-    public ObservableArrayList<ReportItemMode> getData()
-    {
+    public ObservableArrayList<ReportItemMode> getData() {
         data = new ObservableArrayList<>();
 
         ReportItemMode data1 = new ReportItemMode();
@@ -88,12 +82,10 @@ public class ReportManageViewMode {
         return data;
     }
 
-    public void getDataFromNet()
-    {
+    public void getDataFromNet() {
         readService = RetrofitHelper.getInstance()
-                .create(ReadService.class);
-        readService.getReportList(user.getId()).subscribe(new PtrSubscriber<ResponseModel<List<ReportListMode.ReportItem>>>(fragment)
-        {
+                                    .create(ReadService.class);
+        readService.getReportList(user.getId()).subscribe(new PtrSubscriber<ResponseModel<List<ReportListMode.ReportItem>>>(fragment) {
             @Override
             public void onNext(ResponseModel<List<ReportListMode.ReportItem>> listResponseModel) {
                 super.onNext(listResponseModel);
@@ -102,77 +94,38 @@ public class ReportManageViewMode {
         });
     }
 
-    public void initData()
-    {
+    public void initData() {
         getData();
         user = UserManger.getInstance().getLoginUser();
     }
 
 
     @BindingAdapter("bind:image")
-    public static void loadImage(ImageView image, Drawable resId){
+    public static void loadImage(ImageView image, Drawable resId) {
         image.setImageDrawable(resId);
     }
 
     @BindingAdapter("bind:data")
-    public static void setData(RecyclerView recyclerView, ObservableArrayList<ReportItemMode> list){
+    public static void setData(RecyclerView recyclerView, ObservableArrayList<ReportItemMode> list) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new TestBindingAdapter(recyclerView.getContext(), list));
+        QuickAdapter quickAdapter = new QuickAdapter(R.layout.view_report_item);
+//        quickAdapter.addData(list);
+        recyclerView.setAdapter(quickAdapter);
+        quickAdapter.bindToRecyclerView(recyclerView);
+        quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
     }
 
+    public static class QuickAdapter extends QuickDataBindingAdapter<ReportItemMode, ViewReportItemBinding> {
 
-
-    public static class TestBindingAdapter extends RecyclerView.Adapter<ItemHolder> {
-
-        private ObservableArrayList<ReportItemMode> data;
-
-        private Context context;
-
-        public TestBindingAdapter(Context context, ObservableArrayList<ReportItemMode> list) {
-            this.context = context;
-            this.data = list;
+        public QuickAdapter(int layoutResId) {
+            super(layoutResId);
         }
-
         @Override
-        public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            ViewReportItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_report_item, parent, false);
-            return new ItemHolder(binding);
-        }
-
-        @Override
-        public void onBindViewHolder(ItemHolder holder, int position) {
-            holder.getBinding().setItem(data.get(position));
+        protected void convert(BaseDataBindingViewHolder<ViewReportItemBinding> helper, ReportItemMode item) {
+            helper.getBinding().setItem(item);
             // 立刻刷新界面
-            holder.getBinding().executePendingBindings();
-        }
-
-        @Override
-        public int getItemCount() {
-            return data == null ? 0 : data.size();
+            helper.getBinding().executePendingBindings();
         }
     }
 
-    public  static class ItemHolder extends RecyclerView.ViewHolder {
-
-        public ItemHolder(View itemView) {
-            super(itemView);
-        }
-
-        private ViewReportItemBinding binding;
-
-        public ItemHolder(ViewReportItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        public ViewReportItemBinding getBinding() {
-            return binding;
-        }
-
-        public void setBinding(ViewReportItemBinding binding) {
-            this.binding = binding;
-        }
-
-
-    }
 }
