@@ -29,21 +29,30 @@ import java.util.List;
 public class ReportManageViewMode {
 
 
+    public ObservableArrayList<ReportItemMode> data;
     private ReadService readService;
-
     private PtrFragment fragment;
-
     private User user;
-
     private ObservableField<String> toolBarPopContent;
-
 
     public ReportManageViewMode(PtrFragment context) {
         this.fragment = context;
     }
 
-    public ObservableArrayList<ReportItemMode> data;
+    @BindingAdapter({"image"})
+    public static void loadImage(ImageView image, Drawable resId) {
+        image.setImageDrawable(resId);
+    }
 
+    @BindingAdapter({"data"})
+    public static void setData(RecyclerView recyclerView, ObservableArrayList<ReportItemMode> list) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
+        QuickAdapter quickAdapter = new QuickAdapter(R.layout.view_report_item);
+//        quickAdapter.addData(list);
+        recyclerView.setAdapter(quickAdapter);
+        quickAdapter.bindToRecyclerView(recyclerView);
+        quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
+    }
 
     public ObservableArrayList<ReportItemMode> getData() {
         data = new ObservableArrayList<>();
@@ -97,22 +106,6 @@ public class ReportManageViewMode {
     public void initData() {
         getData();
         user = UserManger.getInstance().getLoginUser();
-    }
-
-
-    @BindingAdapter("bind:image")
-    public static void loadImage(ImageView image, Drawable resId) {
-        image.setImageDrawable(resId);
-    }
-
-    @BindingAdapter("bind:data")
-    public static void setData(RecyclerView recyclerView, ObservableArrayList<ReportItemMode> list) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
-        QuickAdapter quickAdapter = new QuickAdapter(R.layout.view_report_item);
-//        quickAdapter.addData(list);
-        recyclerView.setAdapter(quickAdapter);
-        quickAdapter.bindToRecyclerView(recyclerView);
-        quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
     }
 
     public static class QuickAdapter extends QuickDataBindingAdapter<ReportItemMode, ViewReportItemBinding> {
