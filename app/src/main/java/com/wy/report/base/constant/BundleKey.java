@@ -7,4 +7,10 @@ package com.wy.report.base.constant;
 public final class BundleKey {
 
     public static final String BUNDLE_KEY_FRAGMENT_CLASS_NAME = "BUNDLE_KEY_FRAGMENT_CLASS_NAME";
+
+    public static final String BUNDLE_KEY_PICTURE_PATH_LIST = "BUNDLE_KEY_PICTURE_PATH_LIST";
+
+    public static final String BUNDLE_KEY_PICTURE_PATH_LIST_INDEX = "BUNDLE_KEY_PICTURE_PATH_LIST_INDEX";
+
+
 }

@@ -1,6 +1,7 @@
 package com.wy.report.business.home.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.massage.MessageManager;
+import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.ViewUtils;
 import com.wy.report.widget.ObservableScrollView;
@@ -27,6 +29,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -61,7 +64,7 @@ public class HomeFragment extends PtrFragment {
     private boolean toolbarOverHalf;
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         homeService = RetrofitHelper.getInstance()
                                     .create(HomeService.class);
         messageManager = MessageManager.getInstance();
@@ -164,5 +167,26 @@ public class HomeFragment extends PtrFragment {
                            fillFeed(homeReportModel.getReportInfo());
                        }
                    });
+    }
+
+    @OnClick(R.id.home_report_upload)
+    public void onReportUploadClick() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD);
+    }
+
+    @OnClick(R.id.home_report_inquire)
+    public void onReportQueryClick() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY);
+    }
+
+    @OnClick(R.id.home_manage_report_ll)
+    public void onReportManageClick() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
     }
 }

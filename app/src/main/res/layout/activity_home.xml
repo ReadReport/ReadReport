@@ -18,8 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
+        android:background="@android:color/white"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
         app:tabIndicatorHeight="0dp"
         />
 

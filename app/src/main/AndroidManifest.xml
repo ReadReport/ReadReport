@@ -54,6 +54,15 @@
             android:name=".base.activity.StandardActivity"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".business.read.activity.ReportListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".business.read.activity.ReadReportActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

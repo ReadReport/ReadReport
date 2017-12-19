@@ -1,0 +1,4 @@
+<resources>
+    <string name="family_member_select_title">选择成员</string>
+    <string name="family_member_select_relation_template">(%s)</string>
+</resources>

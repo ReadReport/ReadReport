@@ -41,6 +41,12 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
 
     protected boolean hasLoadData = false;
 
+    /**
+     * 下拉刷新去掉toolbar
+     */
+    protected boolean ptrWithoutToolbar = false;
+
+
     @Nullable
     @Override
     public View createView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -50,11 +56,25 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
         prtContainer.removeView(prtContainer.findViewById(R.id.ptr_container_placeholder));
         ReflectUtil.set(prtContainer, "mContent", null);
 
-        //re init view
-        ViewGroup contentView = (ViewGroup) super.createView(inflater, container, savedInstanceState);
-        prtContainer.addView(contentView);
-        ReflectUtil.invoke(prtContainer, "onFinishInflate");
-        return prtContainer;
+        if (ptrWithoutToolbar) {
+            //re init view
+            ViewGroup root = (ViewGroup) super.createView(inflater, container, savedInstanceState);
+            //remove toolbar content
+            root.removeView(toolbarContentView);
+            //ptr view add toolbar content
+            prtContainer.addView(toolbarContentView);
+            ReflectUtil.invoke(prtContainer, "onFinishInflate");
+
+            //add ptr
+            root.addView(prtContainer);
+            return root;
+        } else {
+            //re init view
+            ViewGroup contentView = (ViewGroup) super.createView(inflater, container, savedInstanceState);
+            prtContainer.addView(contentView);
+            ReflectUtil.invoke(prtContainer, "onFinishInflate");
+            return prtContainer;
+        }
     }
 
     @Override
@@ -67,7 +87,11 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
 
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-        return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+        if (ptrWithoutToolbar) {
+            return PtrDefaultHandler.checkContentCanBePulledDown(frame, toolbarContentView, header);
+        } else {
+            return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+        }
     }
 
     @Override
@@ -109,12 +133,12 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
 
     protected void loadData() {
         Observable.timer(2, TimeUnit.SECONDS)
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new Action1<Long>() {
-                      @Override
-                      public void call(Long aLong) {
-                          onPtrSuccess();
-                      }
-                  });
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        onPtrSuccess();
+                    }
+                });
     }
 }

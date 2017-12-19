@@ -1,5 +1,6 @@
 package com.wy.report.business.home.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.wy.report.R;
@@ -13,7 +14,7 @@ import com.wy.report.base.fragment.BaseFragment;
 public class MyFragment extends BaseFragment {
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
 
     }
 

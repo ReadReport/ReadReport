@@ -26,30 +26,33 @@ public abstract class ToolbarFragment extends BaseFragment {
 
     public static final int TOOL_BAR_FLAG_OVERLAY = 0x10;
 
-    @BindView(R.id.toolbar)
     protected Toolbar toolbar;
 
     protected TextView toolbarTitle;
+
+    protected View toolbarContentView;
 
     protected View toolbarBack;
 
     @Nullable
     @Override
     public View createView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        if ((toolbarFlag() & TOOL_BAR_FLAG_SHOW) == TOOL_BAR_FLAG_SHOW) {
+            ViewGroup toolbarContainer = (ViewGroup) inflater.inflate(toolbarContainerLayoutID(), container, false);
+            toolbarContentView = super.createView(inflater, toolbarContainer, savedInstanceState);
+            View toolbar = inflater.inflate(toolbarLayoutID(), toolbarContainer, false);
 
-        ViewGroup toolbarContainer = (ViewGroup) inflater.inflate(toolbarContainerLayoutID(), container, false);
-
-        View contentView = super.createView(inflater, toolbarContainer, savedInstanceState);
-        View toolbar = inflater.inflate(toolbarLayoutID(), toolbarContainer, false);
-
-        if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
-            toolbarContainer.addView(contentView);
-            toolbarContainer.addView(toolbar);
+            if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
+                toolbarContainer.addView(toolbarContentView);
+                toolbarContainer.addView(toolbar);
+            } else {
+                toolbarContainer.addView(toolbar);
+                toolbarContainer.addView(toolbarContentView);
+            }
+            return toolbarContainer;
         } else {
-            toolbarContainer.addView(toolbar);
-            toolbarContainer.addView(contentView);
+            return super.createView(inflater, container, savedInstanceState);
         }
-        return toolbarContainer;
     }
 
     @Override
@@ -61,11 +64,17 @@ public abstract class ToolbarFragment extends BaseFragment {
     @CallSuper
     protected void initToolbar() {
         toolbar = (Toolbar) contentView.findViewById(R.id.toolbar);
+        if (toolbar == null) {
+            return;
+        }
 
         BaseActivity activity = (BaseActivity) getActivity();
         if (activity != null && activity.isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int toolbarHeight = activity.getResources()
+                                        .getDimensionPixelOffset(R.dimen.toolbar_height);
             int statusBarHeight = DeviceUtils.getStatusBarHeight(activity);
             toolbar.setPadding(toolbar.getPaddingLeft(), statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
+            toolbar.getLayoutParams().height = toolbarHeight + statusBarHeight;
         }
 
         toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -74,7 +83,7 @@ public abstract class ToolbarFragment extends BaseFragment {
             toolbarBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    getActivity().finish();
                 }
             });
         }

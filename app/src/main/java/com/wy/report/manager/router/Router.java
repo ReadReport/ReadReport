@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.wy.report.R;
@@ -16,32 +17,11 @@ import java.util.List;
 public class Router {
 
 
-    public interface Interceptor {
-        boolean process(String url);
-    }
-
-    public static class Item {
-
-        public Class activityClass;
-
-        public Class fragmentClass;
-
-        public Item(Class activityClass) {
-            this.activityClass = activityClass;
-        }
-
-        public Item(Class activityClass, Class fragmentClass) {
-            this.activityClass = activityClass;
-            this.fragmentClass = fragmentClass;
-        }
-    }
-
+    protected HashMap<String, Item> map = new HashMap<>();
     private List<Interceptor> interceptors = new ArrayList<>();
 
     public Router() {
     }
-
-    protected HashMap<String, Item> map = new HashMap<>();
 
     public void open(Context context, String url) {
         open(context, url, null, true);
@@ -107,16 +87,36 @@ public class Router {
         }
     }
 
-    public void map(String url, Class activityClazz) {
+    public void map(String url, Class<? extends Activity> activityClazz) {
         map.put(url, new Item(activityClazz));
     }
 
-    public void map(String url, Class activityClazz, Class fragmentClass) {
+    public void map(String url, Class<? extends Activity> activityClazz, Class<?extends Fragment>fragmentClass) {
         map.put(url, new Item(activityClazz, fragmentClass));
     }
 
     public void addInterceptor(Interceptor interceptor) {
         interceptors.add(interceptor);
+    }
+
+    public interface Interceptor {
+        boolean process(String url);
+    }
+
+    public static class Item {
+
+        public Class activityClass;
+
+        public Class fragmentClass;
+
+        public Item(Class activityClass) {
+            this.activityClass = activityClass;
+        }
+
+        public Item(Class activityClass, Class fragmentClass) {
+            this.activityClass = activityClass;
+            this.fragmentClass = fragmentClass;
+        }
     }
 
 }
