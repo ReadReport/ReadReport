@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.wy.report.R;
 import com.wy.report.base.dialog.CommonProgressDialog;
+import com.wy.report.helper.retrofit.subscriber.SubscriberCallback;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -21,7 +22,7 @@ import com.wy.report.base.dialog.CommonProgressDialog;
  * @author cantalou
  * @date 2017-11-24 23:54
  */
-public abstract class NetworkFragment extends ToolbarFragment {
+public abstract class NetworkFragment extends ToolbarFragment implements SubscriberCallback {
 
     private CommonProgressDialog progressDialog;
 
@@ -31,16 +32,19 @@ public abstract class NetworkFragment extends ToolbarFragment {
         progressDialog = new CommonProgressDialog(getActivity(), R.style.AppProgressDialog);
     }
 
-    public void onNetworkStart() {
-
+    @Override
+    public void handleStart() {
+        progressDialog.show();
     }
 
-    public void onNetworkError() {
-
+    @Override
+    public void handleError(Throwable t) {
+        progressDialog.dismiss();
     }
 
-    public void onNetworkSuccess() {
-
+    @Override
+    public void handleSuccess(Object o) {
+        progressDialog.dismiss();
     }
 
     protected void loadData() {

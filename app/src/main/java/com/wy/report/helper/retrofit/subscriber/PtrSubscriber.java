@@ -13,43 +13,8 @@ import java.lang.ref.SoftReference;
  */
 public class PtrSubscriber<T> extends NetworkSubscriber<T> {
 
-    protected SoftReference<PtrFragment> handler;
-
     public PtrSubscriber(PtrFragment handler) {
         super(handler);
-        this.handler = new SoftReference<>(handler);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        PtrFragment ptrFragment = handler.get();
-        if (ptrFragment != null) {
-            ptrFragment.onPtrStart();
-        }
-    }
-
-    @Override
-    @CallSuper
-    public void onNext(T t) {
-        super.onNext(t);
-        PtrFragment ptrFragment = handler.get();
-        if (ptrFragment != null) {
-            ptrFragment.onPtrSuccess();
-        }
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        super.onError(e);
-        PtrFragment ptrFragment = handler.get();
-        if (ptrFragment != null) {
-            ptrFragment.onPtrError();
-        }
-    }
-
-    @Override
-    public void onCompleted() {
-        super.onCompleted();
-    }
 }
