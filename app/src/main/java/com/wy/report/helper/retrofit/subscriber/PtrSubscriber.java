@@ -17,12 +17,16 @@ public class PtrSubscriber<T> extends NetworkSubscriber<T> {
 
     public PtrSubscriber(PtrFragment handler) {
         super(handler);
-        this.handler = new SoftReference<PtrFragment>(handler);
+        this.handler = new SoftReference<>(handler);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        PtrFragment ptrFragment = handler.get();
+        if (ptrFragment != null) {
+            ptrFragment.onPtrStart();
+        }
     }
 
     @Override
@@ -31,8 +35,16 @@ public class PtrSubscriber<T> extends NetworkSubscriber<T> {
         super.onNext(t);
         PtrFragment ptrFragment = handler.get();
         if (ptrFragment != null) {
-            ptrFragment.getPtrFrameLayout()
-                       .refreshComplete();
+            ptrFragment.onPtrSuccess();
+        }
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        super.onError(e);
+        PtrFragment ptrFragment = handler.get();
+        if (ptrFragment != null) {
+            ptrFragment.onPtrError();
         }
     }
 

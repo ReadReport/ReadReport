@@ -112,7 +112,6 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
     }
 
     public void onPtrStart() {
-
     }
 
     public void onPtrError() {
