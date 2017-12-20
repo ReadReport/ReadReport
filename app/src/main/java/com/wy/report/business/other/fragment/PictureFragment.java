@@ -34,10 +34,8 @@ public class PictureFragment extends ToolbarFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            paths = bundle.getStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
-            index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
-        }
+        paths = bundle.getStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
+        index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
     }
 
     @Override
@@ -71,16 +69,37 @@ public class PictureFragment extends ToolbarFragment {
             }
         });
         viewPager.setCurrentItem(index);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setTitle((position + 1) + "/" + paths.size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        toolbar.setBackgroundColor(getResources().getColor(android.R.color.black));
+        setTitle((index + 1) + "/" + paths.size());
     }
 
     @Override
     protected int contentLayoutID() {
         return R.layout.fragment_picture;
+    }
+
+    @Override
+    protected int toolbarLayoutID() {
+        return R.layout.view_picture_toolbar;
     }
 }

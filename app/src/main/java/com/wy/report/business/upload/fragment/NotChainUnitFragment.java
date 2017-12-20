@@ -1,9 +1,11 @@
 package com.wy.report.business.upload.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -51,15 +53,16 @@ public class NotChainUnitFragment extends PtrFragment {
                                         .create(HospitalService.class);
     }
 
-
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-
         adapterLeft = new BaseQuickAdapter<HospitalProvinceModel, BaseViewHolder>(R.layout.vh_hospital_province) {
             @Override
             protected void convert(BaseViewHolder helper, HospitalProvinceModel item) {
-                helper.setText(R.id.vh_hospital_province, item.getProvince());
+                TextView province = helper.getView(R.id.vh_hospital_province);
+                province.setText(item.getProvince());
+                Resources res = getResources();
+                province.setTextColor(item.isSelected() ? res.getColor(R.color.lan_30acff) : res.getColor(R.color.hei_333333));
             }
         };
         adapterLeft.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -123,5 +126,10 @@ public class NotChainUnitFragment extends PtrFragment {
     @Override
     protected int contentLayoutID() {
         return R.layout.fragment_hospital_not_chain_unit;
+    }
+
+    @Override
+    protected int toolbarFlag() {
+        return 0;
     }
 }

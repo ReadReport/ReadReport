@@ -1,10 +1,10 @@
 package com.wy.report.base.fragment;
 
+import android.support.annotation.CallSuper;
 import android.view.View;
 
 import com.wy.report.R;
 import com.wy.report.base.dialog.CommonProgressDialog;
-import com.wy.report.helper.retrofit.subscriber.SubscriberCallback;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -22,29 +22,33 @@ import com.wy.report.helper.retrofit.subscriber.SubscriberCallback;
  * @author cantalou
  * @date 2017-11-24 23:54
  */
-public abstract class NetworkFragment extends ToolbarFragment implements SubscriberCallback {
+public abstract class NetworkFragment extends ToolbarFragment {
 
-    private CommonProgressDialog progressDialog;
+    protected CommonProgressDialog progressDialog;
 
     @Override
+    @CallSuper
     protected void initView(View contentView) {
         super.initView(contentView);
         progressDialog = new CommonProgressDialog(getActivity(), R.style.AppProgressDialog);
     }
 
-    @Override
     public void handleStart() {
-        progressDialog.show();
+        if (progressDialog != null) {
+            progressDialog.show();
+        }
     }
 
-    @Override
     public void handleError(Throwable t) {
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
-    @Override
     public void handleSuccess(Object o) {
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     protected void loadData() {

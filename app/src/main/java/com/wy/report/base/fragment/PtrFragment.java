@@ -111,19 +111,19 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
         ptrFrameLayout.autoRefresh(true);
     }
 
-    public void onPtrStart() {
-    }
-
-    public void onPtrError() {
-        ptrFrameLayout.refreshComplete();
-    }
-
-    public void onPtrSuccess() {
-        ptrFrameLayout.refreshComplete();
-    }
-
     public PtrFrameLayout getPtrFrameLayout() {
         return ptrFrameLayout;
+    }
+
+    public void handlePtrStart() {
+    }
+
+    public void handlePtrError(Throwable t) {
+        ptrFrameLayout.refreshComplete();
+    }
+
+    public void handlePtrSuccess(Object o) {
+        ptrFrameLayout.refreshComplete();
     }
 
     protected int ptrLayoutID() {
@@ -132,12 +132,12 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
 
     protected void loadData() {
         Observable.timer(2, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long aLong) {
-                        onPtrSuccess();
-                    }
-                });
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(new Action1<Long>() {
+                      @Override
+                      public void call(Long aLong) {
+                          handlePtrSuccess(null);
+                      }
+                  });
     }
 }

@@ -48,7 +48,6 @@ public abstract class PtrListFragment<T, K extends BaseViewHolder> extends PtrFr
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         quickAdapter = createAdapter();
         quickAdapter.setOnItemClickListener(this);
-        quickAdapter.onAttachedToRecyclerView(recyclerView);
         recyclerView.setAdapter(quickAdapter);
     }
 

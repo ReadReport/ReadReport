@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.cantalou.android.util.Log;
 import com.cantalou.android.util.NetworkUtils;
 import com.wy.report.ReportApplication;
+import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.helper.retrofit.ReportException;
 
 import java.io.IOException;
@@ -20,11 +21,10 @@ import rx.Subscriber;
  */
 public abstract class NetworkSubscriber<T> extends Subscriber<T> {
 
+    protected SoftReference<NetworkFragment> handler;
     private Context context = ReportApplication.getGlobalContext();
 
-    protected SoftReference<SubscriberCallback<T>> handler;
-
-    public NetworkSubscriber(SubscriberCallback<T> networkFragment) {
+    public NetworkSubscriber(NetworkFragment networkFragment) {
         this.handler = new SoftReference<>(networkFragment);
     }
 
@@ -32,9 +32,13 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
     public void onStart() {
         if (NetworkUtils.isNetworkAvailable(context)) {
         }
-        SubscriberCallback<T> callback = handler.get();
-        if (callback != null) {
-            callback.handleStart();
+        handleStart();
+    }
+
+    public void handleStart() {
+        NetworkFragment fragment = handler.get();
+        if (fragment != null) {
+            fragment.handleStart();
         }
     }
 
@@ -53,19 +57,26 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
             Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT)
                  .show();
         }
-        SubscriberCallback<T> callback = handler.get();
-        if (callback != null) {
-            callback.handleError(e);
-        }
+        handleError(e);
     }
 
+    public void handleError(Throwable t) {
+        NetworkFragment fragment = handler.get();
+        if (fragment != null) {
+            fragment.handleError(t);
+        }
+    }
 
     @Override
     @CallSuper
     public void onNext(T t) {
-        SubscriberCallback<T> callback = handler.get();
-        if (callback != null) {
-            callback.handleSuccess(t);
+        handleSuccess(t);
+    }
+
+    public void handleSuccess(T t) {
+        NetworkFragment fragment = handler.get();
+        if (fragment != null) {
+            fragment.handleSuccess(t);
         }
     }
 }
