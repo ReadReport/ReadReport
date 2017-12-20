@@ -63,10 +63,14 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
             root.removeView(toolbarContentView);
             //ptr view add toolbar content
             prtContainer.addView(toolbarContentView);
-            ReflectUtil.invoke(prtContainer, "onFinishInflate");
 
+            ReflectUtil.invoke(prtContainer, "onFinishInflate");
             //add ptr
-            root.addView(prtContainer);
+            if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
+                root.addView(prtContainer, 0);
+            } else {
+                root.addView(prtContainer);
+            }
             return root;
         } else {
             //re init view
@@ -133,12 +137,12 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
 
     protected void loadData() {
         Observable.timer(2, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long aLong) {
-                        onPtrSuccess();
-                    }
-                });
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(new Action1<Long>() {
+                      @Override
+                      public void call(Long aLong) {
+                          onPtrSuccess();
+                      }
+                  });
     }
 }

@@ -86,7 +86,7 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
     compile 'com.github.zyyoona7:EasyPopup:1.0.2'
-
+    compile 'com.makeramen:roundedimageview:2.3.0'
 
     testCompile 'junit:junit:4.12'
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+    >
+
+
+    <com.wy.report.widget.view.SuperEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:delete_height="80"
+        app:delete_width="80"
+        app:delete_x="0"
+        app:delete_y="0"
+        app:ic_delete="@drawable/btn_delete_normal"
+        app:ic_left_click="@drawable/ic_modify_phone"
+        app:ic_left_unclick="@drawable/ic_modify_phone"
+        app:left_height="30"
+        app:left_width="30"
+        app:left_x="0"
+        app:left_y="0"
+        app:lineColor_click="@color/hei_333333"
+        app:lineColor_unclick="@color/hei_333333"
+        app:linePosition="1"
+        />
+
+</android.support.constraint.ConstraintLayout>
