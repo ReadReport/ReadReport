@@ -4,16 +4,15 @@ import com.wy.report.base.model.BaseModel;
 
 import java.util.List;
 
-/*
- *
+/**
  * @author cantalou
- * @date 2017-12-11 22:17
+ * @date 2017年12月20日 12:54
  */
-public class NotChainUnitModel extends BaseModel {
+public class HospitalCityModel extends BaseModel {
 
     private String name;
 
-    private List<UnitModel> unitList;
+    private List<UnitModel> units;
 
     public String getName() {
         return name;
@@ -23,11 +22,11 @@ public class NotChainUnitModel extends BaseModel {
         this.name = name;
     }
 
-    public List<UnitModel> getUnitList() {
-        return unitList;
+    public List<UnitModel> getUnits() {
+        return units;
     }
 
-    public void setUnitList(List<UnitModel> unitList) {
-        this.unitList = unitList;
+    public void setUnits(List<UnitModel> units) {
+        this.units = units;
     }
 }

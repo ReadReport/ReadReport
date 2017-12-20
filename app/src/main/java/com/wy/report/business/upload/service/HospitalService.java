@@ -1,6 +1,8 @@
 package com.wy.report.business.upload.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.upload.model.HospitalCityModel;
+import com.wy.report.business.upload.model.HospitalProvinceModel;
 import com.wy.report.business.upload.model.UnitModel;
 
 import java.util.List;
@@ -19,5 +21,5 @@ public interface HospitalService {
     Observable<ResponseModel<List<UnitModel>>> getChainUnits();
 
     @GET("/Doctor/get_not_chain_units")
-    Observable<ResponseModel<List<UnitModel>>> getNotChainUnits();
+    Observable<ResponseModel<List<HospitalProvinceModel>>> getNotChainUnits();
 }
