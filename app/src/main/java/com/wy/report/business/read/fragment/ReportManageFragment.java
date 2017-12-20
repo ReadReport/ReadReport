@@ -26,7 +26,6 @@ public class ReportManageFragment extends PtrFragment {
 
     private ReportManageViewMode reportManageViewMode;
 
-
     private ManagePopMenu mPopMenu;
 
     private boolean isPop;
