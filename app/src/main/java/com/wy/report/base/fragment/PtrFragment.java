@@ -63,10 +63,14 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
             root.removeView(toolbarContentView);
             //ptr view add toolbar content
             prtContainer.addView(toolbarContentView);
-            ReflectUtil.invoke(prtContainer, "onFinishInflate");
 
+            ReflectUtil.invoke(prtContainer, "onFinishInflate");
             //add ptr
-            root.addView(prtContainer);
+            if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
+                root.addView(prtContainer, 0);
+            } else {
+                root.addView(prtContainer);
+            }
             return root;
         } else {
             //re init view
@@ -109,6 +113,17 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
 
     public void performRefresh() {
         ptrFrameLayout.autoRefresh(true);
+    }
+
+    public void onPtrStart() {
+    }
+
+    public void onPtrError() {
+        ptrFrameLayout.refreshComplete();
+    }
+
+    public void onPtrSuccess() {
+        ptrFrameLayout.refreshComplete();
     }
 
     public PtrFrameLayout getPtrFrameLayout() {
