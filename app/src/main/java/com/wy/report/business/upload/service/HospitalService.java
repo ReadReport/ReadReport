@@ -20,6 +20,6 @@ public interface HospitalService {
     @GET("/Doctor/get_chain_units")
     Observable<ResponseModel<List<UnitModel>>> getChainUnits();
 
-    @GET("/Doctor/get_not_chain_units")
+    @GET("/Doctor/new_get_not_chain_units")
     Observable<ResponseModel<List<HospitalProvinceModel>>> getNotChainUnits();
 }

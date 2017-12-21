@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /*
  *
@@ -74,10 +76,10 @@ public class NotChainUnitFragment extends PtrFragment {
         recycleViewLeft.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recycleViewLeft.setAdapter(adapterLeft);
 
-        adapterRight = new BaseQuickAdapter<UnitModel, BaseViewHolder>(R.layout.vh_hospital_province) {
+        adapterRight = new BaseQuickAdapter<UnitModel, BaseViewHolder>(R.layout.vh_hospital_unit) {
             @Override
             protected void convert(BaseViewHolder helper, UnitModel item) {
-                helper.setText(R.id.vh_hospital_title, item.getProvince());
+                helper.setText(R.id.vh_hospital_title, item.getTitle());
             }
         };
         adapterRight.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -100,6 +102,7 @@ public class NotChainUnitFragment extends PtrFragment {
                            public void onNext(ResponseModel<List<HospitalProvinceModel>> listResponseModel) {
                                super.onNext(listResponseModel);
                                adapterLeft.setNewData(listResponseModel.getData());
+                               showProvinceUnitData(0);
                            }
                        });
     }
@@ -131,5 +134,11 @@ public class NotChainUnitFragment extends PtrFragment {
     @Override
     protected int toolbarFlag() {
         return 0;
+    }
+
+    @Override
+    public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+        return super.checkCanDoRefresh(frame, content, header) && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewLeft, header)
+                && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewRight, header);
     }
 }

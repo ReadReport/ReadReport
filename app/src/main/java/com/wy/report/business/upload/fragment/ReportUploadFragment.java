@@ -5,7 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -36,9 +36,13 @@ import com.wy.report.util.SystemIntentUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.wy.report.base.constant.ActivityRequestCode.CODE_OPEN_ALBUM;
 
@@ -67,6 +71,9 @@ public class ReportUploadFragment extends ToolbarFragment {
 
     @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
+
+    @BindView(R.id.nested_scroll_view)
+    NestedScrollView nestedScrollView;
 
     private FamilyMemberModel familyMemberModel;
 
@@ -166,7 +173,7 @@ public class ReportUploadFragment extends ToolbarFragment {
         List<PictureModel> models = adapter.getData();
         ArrayList<String> picturePaths = new ArrayList<>(models.size());
         for (PictureModel model : models) {
-            if(model.getType() == PictureModel.TYPE_NORMAL){
+            if (model.getType() == PictureModel.TYPE_NORMAL) {
                 picturePaths.add(model.getPath());
             }
         }
@@ -245,15 +252,27 @@ public class ReportUploadFragment extends ToolbarFragment {
         switch (requestCode) {
             case CODE_OPEN_ALBUM: {
                 String picturePath = PhotoUtil.onActivityResult(getActivity(), requestCode, resultCode, data);
+
                 List<PictureModel> list = adapter.getData();
-                if (list.size() + 1 == MAX_PICTURE_NUM) {
-                    list.add(0, new PictureModel(picturePath));
+
+                adapter.addData(list.size() - 1, new PictureModel(picturePath));
+                adapter.addData(list.size() - 1, new PictureModel(picturePath));
+                adapter.addData(list.size() - 1, new PictureModel(picturePath));
+                recyclerView.getLayoutManager()
+                            .requestLayout();
+
+                if (list.size() == MAX_PICTURE_NUM + 1) {
+                    list.remove(MAX_PICTURE_NUM);
                     adapter.replaceData(list);
-                } else {
-                    adapter.addData(0, new PictureModel(picturePath));
-                    recyclerView.getLayoutManager()
-                                .requestLayout();
                 }
+                Observable.timer(10, TimeUnit.MILLISECONDS)
+                          .observeOn(AndroidSchedulers.mainThread())
+                          .subscribe(new Action1<Long>() {
+                              @Override
+                              public void call(Long aLong) {
+                                  nestedScrollView.fullScroll(View.FOCUS_DOWN);
+                              }
+                          });
                 break;
             }
         }

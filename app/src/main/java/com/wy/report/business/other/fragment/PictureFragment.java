@@ -16,6 +16,7 @@ import com.wy.report.base.fragment.ToolbarFragment;
 import java.util.List;
 
 import butterknife.BindView;
+import uk.co.senab.photoview.PhotoView;
 
 /*
  *
@@ -54,7 +55,8 @@ public class PictureFragment extends ToolbarFragment {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                ImageView imageView = new ImageView(getActivity());
+                ImageView imageView = new PhotoView(getActivity());
+                imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 container.addView(imageView, lp);
                 Glide.with(getActivity())
@@ -65,7 +67,7 @@ public class PictureFragment extends ToolbarFragment {
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeViewAt(position);
+                container.removeView((View)object);
             }
         });
         viewPager.setCurrentItem(index);
