@@ -11,6 +11,7 @@ import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
 import com.umeng.analytics.MobclickAgent;
 import com.wy.report.R;
+import com.wy.report.ReportApplication;
 
 import butterknife.ButterKnife;
 
@@ -77,6 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        ReportApplication.setCurrentActivity(this);
     }
 
     @Override

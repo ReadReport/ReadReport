@@ -4,7 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.wy.report.R;
+import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.auth.model.User;
+import com.wy.report.business.auth.service.AuthService;
+import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.AuthManager;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 
 import java.util.concurrent.TimeUnit;
@@ -33,6 +39,17 @@ public class SplashActivity extends AppCompatActivity {
                           finish();
                       }
                   });
+        RetrofitHelper.getInstance()
+                      .create(AuthService.class)
+                      .login("18046042250", "111111")
+                      .subscribe(new NetworkSubscriber<ResponseModel<User>>(null) {
+                          @Override
+                          public void onNext(ResponseModel<User> userResponseModel) {
+                              super.onNext(userResponseModel);
+                              UserManger.getInstance()
+                                        .updateUser(userResponseModel.getData());
+                          }
+                      });
     }
 }
 

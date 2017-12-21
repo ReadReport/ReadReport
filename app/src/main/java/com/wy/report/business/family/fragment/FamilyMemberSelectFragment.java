@@ -38,6 +38,7 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
                                             .create(FamilyMemberService.class);
         user = UserManger.getInstance()
                          .getLoginUser();
+        loadData();
     }
 
     @Override

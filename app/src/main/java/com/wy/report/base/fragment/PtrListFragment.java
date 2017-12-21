@@ -11,6 +11,7 @@ import com.wy.report.R;
 
 
 import butterknife.BindView;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
 /*
@@ -49,6 +50,11 @@ public abstract class PtrListFragment<T, K extends BaseViewHolder> extends PtrFr
         quickAdapter = createAdapter();
         quickAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(quickAdapter);
+    }
+
+    @Override
+    public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+        return super.checkCanDoRefresh(frame, recyclerView, header);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.wy.report;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
@@ -12,7 +13,21 @@ import com.wy.report.manager.auth.AuthManager;
  */
 public class ReportApplication extends Application {
 
-    public static ReportApplication globalContext;
+    private static ReportApplication globalContext;
+
+    private static Activity currentActivity;
+
+    public static ReportApplication getGlobalContext() {
+        return globalContext;
+    }
+
+    public static Activity getCurrentActivity() {
+        return currentActivity;
+    }
+
+    public static void setCurrentActivity(Activity currentActivity) {
+        ReportApplication.currentActivity = currentActivity;
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -25,9 +40,5 @@ public class ReportApplication extends Application {
         super.onCreate();
         MobclickAgent.setCatchUncaughtExceptions(true);
         AuthManager.getInstance();
-    }
-
-    public static ReportApplication getGlobalContext() {
-        return globalContext;
     }
 }

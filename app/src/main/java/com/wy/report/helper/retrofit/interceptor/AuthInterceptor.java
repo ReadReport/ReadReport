@@ -48,20 +48,20 @@ public class AuthInterceptor implements Interceptor {
         nameValuePair.put("token", tokenModel.getToken());
         nameValuePair.put("timestamp", String.valueOf(tokenModel.getTimestamp()));
 
+        Request.Builder newBuilder = original.newBuilder();
         Request request = null;
         if ("GET".equalsIgnoreCase(original.method())) {
             HttpUrl.Builder httpBuilder = httpUrl.newBuilder();
             for (Map.Entry<String, String> entry : nameValuePair.entrySet()) {
                 httpBuilder.addQueryParameter(entry.getKey(), entry.getValue());
             }
-            request = original.newBuilder()
-                              .url(httpBuilder.build())
-                              .build();
+            request = newBuilder.url(httpBuilder.build())
+                                .build();
         } else {
-
             RequestBody body = original.body();
+            RequestBody newBody = body;
             if (body instanceof FormBody) {
-                FormBody formBody = (FormBody) request.body();
+                FormBody formBody = (FormBody) body;
                 FormBody.Builder bodyBuilder = new FormBody.Builder();
                 for (int i = 0; i < formBody.size(); i++) {
                     bodyBuilder.addEncoded(formBody.encodedName(i), formBody.encodedValue(i));
@@ -69,11 +69,9 @@ public class AuthInterceptor implements Interceptor {
                 for (Map.Entry<String, String> entry : nameValuePair.entrySet()) {
                     bodyBuilder.addEncoded(entry.getKey(), entry.getValue());
                 }
-                request = request.newBuilder()
-                                 .post(bodyBuilder.build())
-                                 .build();
+                newBody = bodyBuilder.build();
             } else if (body instanceof MultipartBody) {
-                MultipartBody formBody = (MultipartBody) request.body();
+                MultipartBody formBody = (MultipartBody) body;
                 MultipartBody.Builder bodyBuilder = new MultipartBody.Builder(formBody.boundary()).setType(formBody.type());
                 for (MultipartBody.Part part : formBody.parts()) {
                     bodyBuilder.addPart(part);
@@ -81,12 +79,12 @@ public class AuthInterceptor implements Interceptor {
                 for (Map.Entry<String, String> entry : nameValuePair.entrySet()) {
                     bodyBuilder.addFormDataPart(entry.getKey(), entry.getValue());
                 }
-                request = request.newBuilder()
-                                 .post(bodyBuilder.build())
-                                 .build();
+                newBody = bodyBuilder.build();
             }
+            request = newBuilder.post(newBody)
+                                .header("Content-Length", Long.toString(newBody.contentLength()))
+                                .build();
         }
-
         return chain.proceed(request);
     }
 }
