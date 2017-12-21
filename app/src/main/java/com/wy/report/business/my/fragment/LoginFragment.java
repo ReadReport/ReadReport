@@ -3,6 +3,7 @@ package com.wy.report.business.my.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
 
 /**
@@ -30,6 +31,8 @@ public class LoginFragment extends NetworkFragment {
 
     @Override
     protected int contentLayoutID() {
-        return 0;
+        return R.layout.fragment_login;
     }
+
+
 }

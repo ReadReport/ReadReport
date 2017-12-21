@@ -6,6 +6,9 @@ import android.view.View;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.PtrFragment;
+import com.wy.report.manager.router.AuthRouterManager;
+
+import butterknife.OnClick;
 
 /**
  * 我的
@@ -42,5 +45,12 @@ public class MyFragment extends PtrFragment {
     @Override
     protected int contentLayoutID() {
         return R.layout.fragment_my;
+    }
+
+    @OnClick(R.id.home_my_header_layout)
+    public void onReportQueryClick() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
     }
 }

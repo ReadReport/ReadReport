@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 
 import com.wy.report.R;
+import com.wy.report.util.DensityUtils;
 
 import java.lang.reflect.Field;
 
@@ -83,6 +84,9 @@ public class SuperEditText extends AppCompatEditText {
         left_width = typedArray.getInteger(R.styleable.SuperEditText_left_width, 60);
         left_height = typedArray.getInteger(R.styleable.SuperEditText_left_height, 60);
 
+        left_width = DensityUtils.dip2px(context, left_width);
+        left_height = DensityUtils.dip2px(context, left_height);
+
         ic_left_click.setBounds(left_x, left_y, left_width, left_height);
         // Drawable.setBounds(x,y,width,height) = 设置Drawable的初始位置、宽和高等信息
         // x = 组件在容器X轴上的起点、y = 组件在容器Y轴上的起点、width=组件的长度、height = 组件的高度
@@ -110,6 +114,8 @@ public class SuperEditText extends AppCompatEditText {
         delete_y = typedArray.getInteger(R.styleable.SuperEditText_delete_y, 0);
         delete_width = typedArray.getInteger(R.styleable.SuperEditText_delete_width, 60);
         delete_height = typedArray.getInteger(R.styleable.SuperEditText_delete_height, 60);
+        delete_width = DensityUtils.dip2px(context, delete_width);
+        delete_height = DensityUtils.dip2px(context, delete_height);
         ic_delete.setBounds(delete_x, delete_y, delete_width, delete_height);
 
         /**
