@@ -87,6 +87,7 @@ dependencies {
 
     compile 'com.github.zyyoona7:EasyPopup:1.0.2'
     compile 'com.makeramen:roundedimageview:2.3.0'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
     testCompile 'junit:junit:4.12'
 
