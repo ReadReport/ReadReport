@@ -2,6 +2,7 @@ package com.wy.report.manager.router;
 
 import android.content.Context;
 
+import com.wy.report.ReportApplication;
 import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
@@ -79,7 +80,8 @@ public class AuthRouterManager {
             @Override
             public boolean process(String url) {
                 if (url.startsWith(LOGIN_ACTIVITY_PREFIX) && !userManger.isLogin()) {
-                    return false;
+                    router.open(ReportApplication.getCurrentActivity(), ROUTER_LOGIN);
+                    return true;
                 }
                 return false;
             }

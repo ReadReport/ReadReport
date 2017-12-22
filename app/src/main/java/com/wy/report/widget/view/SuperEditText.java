@@ -28,9 +28,9 @@ public class SuperEditText extends AppCompatEditText {
     * */
     private Paint mPaint; // 画笔
 
-    private int      ic_deleteResID; // 删除图标 资源ID
+    private int ic_deleteResID; // 删除图标 资源ID
     private Drawable ic_delete; // 删除图标
-    private int      delete_x, delete_y, delete_width, delete_height; // 删除图标起点(x,y)、删除图标宽、高（px）
+    private int delete_x, delete_y, delete_width, delete_height; // 删除图标起点(x,y)、删除图标宽、高（px）
 
     private int ic_left_clickResID, ic_left_unclickResID;    // 左侧图标 资源ID（点击 & 无点击）
     private Drawable ic_left_click, ic_left_unclick; // 左侧图标（点击 & 未点击）
@@ -42,6 +42,11 @@ public class SuperEditText extends AppCompatEditText {
     private int lineColor_click, lineColor_unclick;// 点击时 & 未点击颜色
     private int color;
     private int linePosition;
+    private boolean pwdMode;
+
+    private Drawable ic_pwd_show, ic_pwd_dis;
+    private int ic_pwd_show_id, ic_pwd_dis_id;    // 左侧图标 资源ID（点击 & 无点击）
+
 
 
     public SuperEditText(Context context) {
@@ -100,6 +105,14 @@ public class SuperEditText extends AppCompatEditText {
         ic_left_unclick.setBounds(left_x, left_y, left_width, left_height);
 
 
+        // b. 未点击状态的左侧图标
+        // 1. 获取资源ID
+        ic_pwd_show_id = typedArray.getResourceId(R.styleable.SuperEditText_ic_left_unclick, R.drawable.btn_delete_normal);
+        // 2. 根据资源ID获取图标资源（转化成Drawable对象）
+        // 3. 设置图标大小（o & 未点击状态的大小相同）
+        ic_left_unclick = getResources().getDrawable(ic_left_unclickResID);
+
+
         /**
          * 初始化删除图标
          */
@@ -118,11 +131,17 @@ public class SuperEditText extends AppCompatEditText {
         delete_height = DensityUtils.dip2px(context, delete_height);
         ic_delete.setBounds(delete_x, delete_y, delete_width, delete_height);
 
-        /**
-         * 设置EditText左侧 & 右侧的图片（初始状态仅有左侧图片））
-         */
-        setCompoundDrawables(ic_left_unclick, null,
-                             null, null);
+
+        if (pwdMode) {
+            setCompoundDrawables(ic_left_unclick, null, ic_pwd_show
+                    , null);
+        } else {
+            /**
+             * 设置EditText左侧 & 右侧的图片（初始状态仅有左侧图片））
+             */
+            setCompoundDrawables(ic_left_unclick, null,
+                    null, null);
+        }
 
         // setCompoundDrawables(Drawable left, Drawable top, Drawable right, Drawable bottom)介绍
         // 作用：在EditText上、下、左、右设置图标（相当于android:drawableLeft=""  android:drawableRight=""）
@@ -161,7 +180,7 @@ public class SuperEditText extends AppCompatEditText {
         mPaint.setStrokeWidth(2.0f); // 分割线粗细
 
         // 2. 设置分割线颜色（使用十六进制代码，如#333、#8e8e8e）
-        int lineColorClick_default   = context.getResources().getColor(R.color.hui_525252); // 默认 = 蓝色#1296db
+        int lineColorClick_default = context.getResources().getColor(R.color.hui_525252); // 默认 = 蓝色#1296db
         int lineColorunClick_default = context.getResources().getColor(R.color.hui_525252); // 默认 = 灰色#9b9b9b
         lineColor_click = typedArray.getColor(R.styleable.SuperEditText_lineColor_click, lineColorClick_default);
         lineColor_unclick = typedArray.getColor(R.styleable.SuperEditText_lineColor_unclick, lineColorunClick_default);
@@ -185,7 +204,9 @@ public class SuperEditText extends AppCompatEditText {
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
-        setDeleteIconVisible(hasFocus() && text.length() > 0, hasFocus());
+        if (!pwdMode) {
+            setDeleteIconVisible(hasFocus() && text.length() > 0, hasFocus());
+        }
         // hasFocus()返回是否获得EditTEXT的焦点，即是否选中
         // setDeleteIconVisible（） = 根据传入的是否选中 & 是否有输入来判断是否显示删除图标->>关注1
     }
@@ -197,7 +218,9 @@ public class SuperEditText extends AppCompatEditText {
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        setDeleteIconVisible(focused && length() > 0, focused);
+        if (!pwdMode) {
+            setDeleteIconVisible(focused && length() > 0, focused);
+        }
         // focused = 是否获得焦点
         // 同样根据setDeleteIconVisible（）判断是否要显示删除图标->>关注1
     }
@@ -214,21 +237,30 @@ public class SuperEditText extends AppCompatEditText {
         switch (event.getAction()) {
             // 判断动作 = 手指抬起时
             case MotionEvent.ACTION_UP:
-                Drawable drawable = ic_delete;
+                if (pwdMode) {
+                    if (getCompoundDrawables()[2] == ic_pwd_show) {
+                        setCompoundDrawables(ic_left_click, null, ic_pwd_dis, null);
+                    } else if (getCompoundDrawables()[2] == ic_pwd_dis) {
+                        setCompoundDrawables(ic_left_click, null, ic_pwd_show, null);
+                    }
+                    invalidate();
+                } else {
+                    Drawable drawable = ic_delete;
 
-                if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
-                    && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
+                    if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
+                            && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
 
-                    // 判断条件说明
-                    // event.getX() ：抬起时的位置坐标
-                    // getWidth()：控件的宽度
-                    // getPaddingRight():删除图标图标右边缘至EditText控件右边缘的距离
-                    // 即：getWidth() - getPaddingRight() = 删除图标的右边缘坐标 = X1
-                    // getWidth() - getPaddingRight() - drawable.getBounds().width() = 删除图标左边缘的坐标 = X2
-                    // 所以X1与X2之间的区域 = 删除图标的区域
-                    // 当手指抬起的位置在删除图标的区域（X2=<event.getX() <=X1），即视为点击了删除图标 = 清空搜索框内容
-                    setText("");
+                        // 判断条件说明
+                        // event.getX() ：抬起时的位置坐标
+                        // getWidth()：控件的宽度
+                        // getPaddingRight():删除图标图标右边缘至EditText控件右边缘的距离
+                        // 即：getWidth() - getPaddingRight() = 删除图标的右边缘坐标 = X1
+                        // getWidth() - getPaddingRight() - drawable.getBounds().width() = 删除图标左边缘的坐标 = X2
+                        // 所以X1与X2之间的区域 = 删除图标的区域
+                        // 当手指抬起的位置在删除图标的区域（X2=<event.getX() <=X1），即视为点击了删除图标 = 清空搜索框内容
+                        setText("");
 
+                    }
                 }
                 break;
         }
@@ -241,7 +273,7 @@ public class SuperEditText extends AppCompatEditText {
      */
     private void setDeleteIconVisible(boolean deleteVisible, boolean leftVisible) {
         setCompoundDrawables(leftVisible ? ic_left_click : ic_left_unclick, null,
-                             deleteVisible ? ic_delete : null, null);
+                deleteVisible ? ic_delete : null, null);
         color = leftVisible ? lineColor_click : lineColor_unclick;
         setTextColor(color);
         invalidate();
@@ -263,7 +295,7 @@ public class SuperEditText extends AppCompatEditText {
 
         // 传入参数时，线的长度 = 控件长度 + 延伸后的长度
         canvas.drawLine(0, this.getMeasuredHeight() - linePosition, w + x,
-                        this.getMeasuredHeight() - linePosition, mPaint);
+                this.getMeasuredHeight() - linePosition, mPaint);
 
     }
 
