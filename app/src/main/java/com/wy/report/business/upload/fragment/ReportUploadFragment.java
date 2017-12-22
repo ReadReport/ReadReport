@@ -252,11 +252,7 @@ public class ReportUploadFragment extends ToolbarFragment {
         switch (requestCode) {
             case CODE_OPEN_ALBUM: {
                 String picturePath = PhotoUtil.onActivityResult(getActivity(), requestCode, resultCode, data);
-
                 List<PictureModel> list = adapter.getData();
-
-                adapter.addData(list.size() - 1, new PictureModel(picturePath));
-                adapter.addData(list.size() - 1, new PictureModel(picturePath));
                 adapter.addData(list.size() - 1, new PictureModel(picturePath));
                 recyclerView.getLayoutManager()
                             .requestLayout();
@@ -282,6 +278,12 @@ public class ReportUploadFragment extends ToolbarFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putStringArrayList(SAVED_PICTURE_LIST, toPicturePath());
+    }
+
+
+    @OnClick(R.id.submit_report)
+    public void submit(){
+
     }
 
     private class NestedGridLayoutManager extends GridLayoutManager {
