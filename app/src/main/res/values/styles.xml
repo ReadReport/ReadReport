@@ -2,12 +2,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/bai_ffffff</item>
     </style>
 
     <style name="AppSplash" parent="Theme.AppCompat.NoActionBar">
@@ -17,6 +14,7 @@
     </style>
 
     <style name="AppHome" parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="AppDialog" parent="@android:style/Theme.Dialog">
@@ -29,7 +27,7 @@
     </style>
 
     <style name="AppProgressDialog" parent="AppDialog">
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
 

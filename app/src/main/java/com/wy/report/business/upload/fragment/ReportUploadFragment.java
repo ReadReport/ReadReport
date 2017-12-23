@@ -50,7 +50,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.MediaType;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -66,9 +65,7 @@ public class ReportUploadFragment extends NetworkFragment {
 
     private static final String SAVED_PICTURE_LIST = "picture_list";
 
-    private static final int MAX_PICTURE_NUM = 12;
-
-    private static final MediaType MEDIA_TYPE_IMG = MediaType.parse("image/jpeg");
+    private static final int MAX_PICTURE_NUM = 6;
 
     @BindView(R.id.report_upload_medical_examiner_name)
     TextView name;
@@ -88,6 +85,9 @@ public class ReportUploadFragment extends NetworkFragment {
     @BindView(R.id.nested_scroll_view)
     NestedScrollView nestedScrollView;
 
+    @BindView(R.id.report_upload_image_num)
+    TextView pictureNum;
+
     private FamilyMemberModel familyMemberModel;
 
     private UnitModel unitModel;
@@ -99,6 +99,7 @@ public class ReportUploadFragment extends NetworkFragment {
     private Router router;
 
     private ReportService reportService;
+
     private UserManger userManger;
 
     @Override
@@ -122,6 +123,7 @@ public class ReportUploadFragment extends NetworkFragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
         restorePictureModel();
+        updateSelectedPictureInfo();
     }
 
     private void createAdapter() {
@@ -173,13 +175,15 @@ public class ReportUploadFragment extends NetworkFragment {
                 switch (view.getId()) {
                     case R.id.vh_select_image_delete: {
                         List<PictureModel> list = adapter.getData();
-                        if (list.size() == MAX_PICTURE_NUM) {
+                        PictureModel lastModel = list.get(list.size() - 1);
+                        if (lastModel.getType() == PictureModel.TYPE_NORMAL) {
                             list.remove(position);
                             list.add(new PictureModel(PictureModel.TYPE_ADD));
                             adapter.replaceData(list);
                         } else {
                             adapter.remove(position);
                         }
+                        updateSelectedPictureInfo();
                         break;
                     }
                 }
@@ -272,24 +276,40 @@ public class ReportUploadFragment extends NetworkFragment {
             case CODE_OPEN_ALBUM: {
                 String picturePath = PhotoUtil.onActivityResult(getActivity(), requestCode, resultCode, data);
                 List<PictureModel> list = adapter.getData();
-                adapter.addData(list.size() - 1, new PictureModel(picturePath));
-                recyclerView.getLayoutManager()
-                            .requestLayout();
-
-                if (list.size() == MAX_PICTURE_NUM + 1) {
-                    list.remove(MAX_PICTURE_NUM);
-                    adapter.replaceData(list);
+                int size = list.size();
+                adapter.addData(size - 1, new PictureModel(picturePath));
+                size++;
+                if (size == MAX_PICTURE_NUM + 1) {
+                    adapter.remove(MAX_PICTURE_NUM);
                 }
-                Observable.timer(10, TimeUnit.MILLISECONDS)
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .subscribe(new Action1<Long>() {
-                              @Override
-                              public void call(Long aLong) {
-                                  nestedScrollView.fullScroll(View.FOCUS_DOWN);
-                              }
-                          });
+
+                updateSelectedPictureInfo();
+
                 break;
             }
+        }
+    }
+
+    private void updateSelectedPictureInfo() {
+        List<PictureModel> models = adapter.getData();
+        int size = models.size();
+        PictureModel lastModel = models.get(size - 1);
+        if (lastModel.getType() != PictureModel.TYPE_NORMAL) {
+            size--;
+        }
+        pictureNum.setText(getString(R.string.report_picture_num, size, MAX_PICTURE_NUM));
+
+        if ((size % 3 == 0 || (size + 1) % 3 == 0) && size > 1) {
+            recyclerView.getLayoutManager()
+                        .requestLayout();
+            Observable.timer(10, TimeUnit.MILLISECONDS)
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .subscribe(new Action1<Long>() {
+                          @Override
+                          public void call(Long aLong) {
+                              nestedScrollView.fullScroll(View.FOCUS_DOWN);
+                          }
+                      });
         }
     }
 
