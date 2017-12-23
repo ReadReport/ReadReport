@@ -24,15 +24,25 @@ import com.wy.report.R;
 import com.wy.report.base.constant.ActivityRequestCode;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.ToolbarFragment;
+import com.wy.report.base.fragment.NetworkFragment;
+import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.auth.model.User;
 import com.wy.report.business.family.model.FamilyMemberModel;
 import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.business.upload.model.UnitModel;
+import com.wy.report.business.upload.model.UploadModel;
+import com.wy.report.business.upload.service.ReportService;
+import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
+import com.wy.report.helper.retrofit.util.PartUtils;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.manager.router.Router;
 import com.wy.report.util.PhotoUtil;
 import com.wy.report.util.SystemIntentUtil;
+import com.wy.report.util.ViewUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -51,11 +62,13 @@ import static com.wy.report.base.constant.ActivityRequestCode.CODE_OPEN_ALBUM;
  * @author cantalou
  * @date 2017-12-05 21:20
  */
-public class ReportUploadFragment extends ToolbarFragment {
+public class ReportUploadFragment extends NetworkFragment {
 
     private static final String SAVED_PICTURE_LIST = "picture_list";
 
     private static final int MAX_PICTURE_NUM = 12;
+
+    private static final MediaType MEDIA_TYPE_IMG = MediaType.parse("image/jpeg");
 
     @BindView(R.id.report_upload_medical_examiner_name)
     TextView name;
@@ -85,6 +98,9 @@ public class ReportUploadFragment extends ToolbarFragment {
 
     private Router router;
 
+    private ReportService reportService;
+    private UserManger userManger;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
@@ -92,6 +108,9 @@ public class ReportUploadFragment extends ToolbarFragment {
         }
         router = AuthRouterManager.getInstance()
                                   .getRouter();
+        userManger = UserManger.getInstance();
+        reportService = RetrofitHelper.getInstance()
+                                      .create(ReportService.class);
     }
 
     @Override
@@ -281,9 +300,37 @@ public class ReportUploadFragment extends ToolbarFragment {
     }
 
 
-    @OnClick(R.id.submit_report)
-    public void submit(){
+    @OnClick(R.id.upload_report)
+    public void upload() {
 
+        if (unitModel == null) {
+            return;
+        }
+
+        if (time == null) {
+            return;
+        }
+
+        final ArrayList<File> files = new ArrayList<>();
+        for (PictureModel pictureModel : adapter.getData()) {
+            if (pictureModel.getType() != PictureModel.TYPE_NORMAL) {
+                continue;
+            }
+            files.add(new File(pictureModel.getPath()));
+        }
+        User user = userManger.getLoginUser();
+        reportService.submitReport(user.getId(), "android", unitModel.getId(), ViewUtils.getText(time), ViewUtils.getText(remark), PartUtils.convertFile2Part(files))
+                     .subscribe(new NetworkSubscriber<ResponseModel<UploadModel>>(this) {
+                         @Override
+                         public void handleError(Throwable t) {
+                             super.handleError(t);
+                         }
+
+                         @Override
+                         public void handleSuccess(ResponseModel<UploadModel> responseModel) {
+                             super.handleSuccess(responseModel);
+                         }
+                     });
     }
 
     private class NestedGridLayoutManager extends GridLayoutManager {

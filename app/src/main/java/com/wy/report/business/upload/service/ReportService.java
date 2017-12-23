@@ -1,10 +1,21 @@
 package com.wy.report.business.upload.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.upload.model.UploadModel;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -16,19 +27,9 @@ import rx.Observable;
  */
 public interface ReportService {
 
-    /**
-     * mid:当前体检人员的id
-     * upload_from:设备来源
-     * tj_hospital：体检医院
-     * tj_date：体检时间
-     * 上传文件的二进制流
-     * remark备注
-     *
-     * @param uid
-     * @return
-     */
+
     @POST("/Report/do_upload_report")
-    @FormUrlEncoded
-    Observable<ResponseModel> submitReport(@Field("mid") int uid, @Field("upload_from") String uploadFrom, @Field("tj_hospital") String hospitalId,
-                                           @Field("tj_date") String date,@Field("remark") String remark);
+    @Multipart
+    Observable<ResponseModel<UploadModel>> submitReport(@Part("mid") Long uid, @Part("upload_from") String uploadFrom, @Part("tj_hospital") String hospitalId,
+                                                        @Part("tj_date") String date, @Part("remark") String remark, @Part MultipartBody.Part[] parts);
 }

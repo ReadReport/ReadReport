@@ -1,4 +1,4 @@
-package com.wy.report.helper.retrofit.converter;
+package com.wy.report.helper.retrofit.converter.json;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.Feature;
@@ -27,6 +27,9 @@ public class FastJsonConverterFactory extends Converter.Factory {
     private SerializeConfig serializeConfig;
     private SerializerFeature[] serializerFeatures;
 
+    private FastJsonConverterFactory() {
+    }
+
     /**
      * Create an default instance for conversion. Encoding to JSON and
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
@@ -37,17 +40,9 @@ public class FastJsonConverterFactory extends Converter.Factory {
         return new FastJsonConverterFactory();
     }
 
-    private FastJsonConverterFactory() {
-    }
-
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         return new FastJsonResponseBodyConverter<>(type, mParserConfig, featureValues, features);
-    }
-
-    @Override
-    public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
-        return new FastJsonRequestBodyConverter<>(serializeConfig, serializerFeatures);
     }
 
     public ParserConfig getParserConfig() {

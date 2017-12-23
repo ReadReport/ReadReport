@@ -1,6 +1,7 @@
 package com.wy.report.helper.retrofit;
 
-import com.wy.report.helper.retrofit.converter.FastJsonConverterFactory;
+import com.wy.report.helper.retrofit.converter.json.FastJsonConverterFactory;
+import com.wy.report.helper.retrofit.converter.part.PartConverterFactory;
 import com.wy.report.helper.retrofit.interceptor.AuthInterceptor;
 
 import java.lang.reflect.InvocationHandler;
@@ -23,14 +24,8 @@ import rx.schedulers.Schedulers;
 @SuppressWarnings({"unused", "unchecked"})
 public class RetrofitHelper {
 
-    private static class InstanceHolder {
-        static final RetrofitHelper instance = new RetrofitHelper();
-    }
-
     private OkHttpClient okHttpClient;
-
     private Retrofit retrofit;
-
     private HashMap<Class, Object> serviceProxyCache = new HashMap<>();
 
     private RetrofitHelper() {
@@ -44,6 +39,7 @@ public class RetrofitHelper {
                                          .client(okHttpClient)
                                          .addCallAdapterFactory(RxJavaCallAdapterFactory.createAsync())
                                          .addConverterFactory(FastJsonConverterFactory.create())
+                                         .addConverterFactory(PartConverterFactory.create())
                                          .build();
     }
 
@@ -61,11 +57,13 @@ public class RetrofitHelper {
         return proxy;
     }
 
-
     public OkHttpClient getOkHttpClient() {
         return okHttpClient;
     }
 
+    private static class InstanceHolder {
+        static final RetrofitHelper instance = new RetrofitHelper();
+    }
 
     private static class ProxyHandler implements InvocationHandler {
 

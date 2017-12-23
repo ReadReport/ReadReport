@@ -1,4 +1,4 @@
-package com.wy.report.helper.retrofit.converter;
+package com.wy.report.helper.retrofit.converter.json;
 
 import android.text.TextUtils;
 

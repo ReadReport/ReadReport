@@ -3,6 +3,7 @@ package com.wy.report.util;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cantalou.android.util.DeviceUtils;
 
@@ -27,5 +28,10 @@ public class ViewUtils {
         Matrix matrix = imageView.getImageMatrix();
         matrix.postScale(scaleRatio, scaleRatio);
         imageView.setImageMatrix(matrix);
+    }
+
+    public static String getText(TextView tv) {
+        return tv.getText()
+                 .toString();
     }
 }
