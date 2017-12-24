@@ -46,7 +46,6 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
      */
     protected boolean ptrWithoutToolbar = false;
 
-
     @Nullable
     @Override
     public View createView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

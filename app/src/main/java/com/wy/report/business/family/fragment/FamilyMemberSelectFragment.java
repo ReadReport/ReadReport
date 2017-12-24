@@ -39,6 +39,7 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
         user = UserManger.getInstance()
                          .getLoginUser();
         loadData();
+        ptrWithoutToolbar = true;
     }
 
     @Override
@@ -79,6 +80,7 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         rxBus.post(RxKey.RX_FAMILY_MEMBER_SELECT, adapter.getItem(position));
+        getActivity().finish();
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_FAMILY_MEMBER_ADD)})

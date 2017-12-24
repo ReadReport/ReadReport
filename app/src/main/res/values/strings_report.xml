@@ -12,7 +12,7 @@
     <string name="report_remark">备\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020注:</string>
     <string name="report_remark_hint">给解读报告医生的留言信息</string>
     <string name="report_image">图片</string>
-    <string name="report_image_num">(%1$d/%2$d)</string>
+    <string name="report_picture_num">(%1$d/%2$d)</string>
     <string name="report_image_hint">为方便解读，请按报告页数顺序上传</string>
     <string name="report_submit">提交</string>
 
