@@ -10,21 +10,20 @@
 
     <declare-styleable name="SuperEditText">
 
-        <attr name="ic_delete" format="reference"/>
-        <attr name="delete_x" format="integer"/>
-        <attr name="delete_y" format="integer"/>
-        <attr name="delete_width" format="integer"/>
-        <attr name="delete_height" format="integer"/>
+        <attr name="deleteMode" format="boolean"/>
+        <attr name="ic_right" format="reference"/>
+        <attr name="right_x" format="integer"/>
+        <attr name="right_y" format="integer"/>
+        <attr name="right_width" format="integer"/>
+        <attr name="right_height" format="integer"/>
 
-        <attr name="ic_left_click" format="reference"/>
-        <attr name="ic_left_unclick" format="reference"/>
 
         <attr name="ic_pwd_show" format="reference"/>
         <attr name="ic_pwd_dis" format="reference"/>
         <attr name="pwdMode" format="boolean"/>
 
 
-
+        <attr name="ic_left" format="reference"/>
         <attr name="left_x" format="integer"/>
         <attr name="left_y" format="integer"/>
         <attr name="left_width" format="integer"/>
