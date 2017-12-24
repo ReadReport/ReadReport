@@ -73,7 +73,6 @@ public class HomeFragment extends PtrFragment {
     @Override
     protected void initView(View content) {
         super.initView(content);
-        ViewUtils.convertToLeftTopCrop(topBg);
     }
 
     @Override

@@ -15,6 +15,12 @@ public class DailyDetectModel extends BaseModel {
 
     private int iconID;
 
+    public DailyDetectModel(int id, String title, int iconID) {
+        this.id = id;
+        this.title = title;
+        this.iconID = iconID;
+    }
+
     public int getId() {
         return id;
     }

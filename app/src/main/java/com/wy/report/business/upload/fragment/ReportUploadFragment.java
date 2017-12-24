@@ -3,11 +3,13 @@ package com.wy.report.business.upload.fragment;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -32,6 +34,7 @@ import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.model.UploadModel;
 import com.wy.report.business.upload.service.ReportService;
+import com.wy.report.helper.dialog.DialogHelper;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.helper.retrofit.util.PartUtils;
@@ -39,6 +42,7 @@ import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.manager.router.Router;
 import com.wy.report.util.PhotoUtil;
+import com.wy.report.util.StringUtils;
 import com.wy.report.util.SystemIntentUtil;
 import com.wy.report.util.ViewUtils;
 
@@ -349,8 +353,36 @@ public class ReportUploadFragment extends NetworkFragment {
                          @Override
                          public void handleSuccess(ResponseModel<UploadModel> responseModel) {
                              super.handleSuccess(responseModel);
+                             DialogHelper.showReportUploadSuccessDialog(getActivity(), new DialogInterface.OnClickListener() {
+                                 @Override
+                                 public void onClick(DialogInterface dialog, int which) {
+                                     getActivity().finish();
+                                 }
+                             }, new DialogInterface.OnClickListener() {
+                                 @Override
+                                 public void onClick(DialogInterface dialog, int which) {
+                                 }
+                             });
                          }
                      });
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (familyMemberModel != null || unitModel != null || StringUtils.isNotBlank(time) || StringUtils.isNotBlank(remark) || adapter.getItemCount() > 1) {
+            DialogHelper.showReportUploadConfirmDialog(getActivity(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    getActivity().finish();
+                }
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            return true;
+        }
+        return super.onBackPressed();
     }
 
     private class NestedGridLayoutManager extends GridLayoutManager {

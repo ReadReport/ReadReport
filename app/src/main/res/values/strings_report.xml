@@ -16,6 +16,16 @@
     <string name="report_image_hint">为方便解读，请按报告页数顺序上传</string>
     <string name="report_submit">提交</string>
 
+    <string name="report_upload_success_tips1">报告上传成功</string>
+    <string name="report_upload_success_tips2">马上交给医生解读？</string>
+    <string name="report_interpret_later">稍后解读</string>
+    <string name="report_interpret_now">提交解读</string>
+
+    <string name="report_upload_lack_info_tips1">报告还未填写完成，</string>
+    <string name="report_upload_lack_info_tips2">你确认要离开？</string>
+    <string name="report_upload_lack_info_leave">离开</string>
+    <string name="report_upload_lack_info_continue">继续填写</string>
+
     <string-array name="report_hospital_tab">
         <item>医院</item>
         <item>连锁机构</item>

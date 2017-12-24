@@ -4,7 +4,7 @@ import android.support.annotation.CallSuper;
 import android.view.View;
 
 import com.wy.report.R;
-import com.wy.report.base.dialog.CommonProgressDialog;
+import com.wy.report.widget.dialog.CommonProgressDialog;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not

@@ -17,8 +17,8 @@
             android:id="@+id/home_top_bg"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:scaleType="matrix"
-            android:src="@android:color/holo_blue_bright"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/img_me_bg"/>
 
         <LinearLayout
             android:id="@+id/home_use_report_num_ll"

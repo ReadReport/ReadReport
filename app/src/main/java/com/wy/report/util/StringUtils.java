@@ -168,7 +168,7 @@ public class StringUtils {
      * @author LinZhiWei
      * @date 2015年5月6日 下午1:55:43
      */
-    public static boolean isNotBlank(EditText str) {
+    public static boolean isNotBlank(TextView str) {
         return str != null && !isBlank(str.getText());
     }
 }

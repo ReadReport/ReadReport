@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.wy.report.base.constant.BundleKey;
+import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.util.PhotoUtil;
 
@@ -17,13 +18,15 @@ import static com.wy.report.base.constant.ActivityRequestCode.CODE_OPEN_ALBUM;
  */
 public class StandardActivity extends BaseActivity {
 
+    BaseFragment fragment;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
         String fragmentClassName = intent.getStringExtra(BundleKey.BUNDLE_KEY_FRAGMENT_CLASS_NAME);
         try {
-            Fragment fragment = (Fragment) Class.forName(fragmentClassName)
-                                                .newInstance();
+            fragment = (BaseFragment) Class.forName(fragmentClassName)
+                                           .newInstance();
             fragment.setArguments(intent.getExtras());
             getSupportFragmentManager().beginTransaction()
                                        .replace(android.R.id.content, fragment)
@@ -39,8 +42,10 @@ public class StandardActivity extends BaseActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onBackPressed() {
+        if (fragment.onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
     }
-
 }

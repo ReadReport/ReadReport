@@ -1,10 +1,12 @@
 package com.wy.report.business.home.activity;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 
 import com.wy.report.R;
 import com.wy.report.base.activity.BaseActivity;
@@ -25,6 +27,8 @@ public class HomeActivity extends BaseActivity {
     Fragment[] fragments = new Fragment[]{new HomeFragment(), new FindFragment(), new MyFragment()};
 
     String[] titles;
+
+    private long lastBackClickTime;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -61,8 +65,9 @@ public class HomeActivity extends BaseActivity {
             tab.setCustomView(R.layout.view_home_tab_item_layout);
             tab.setIcon(iconDrawable[i]);
             tab.setText(titles[i]);
-            if(i == 0){
-                tabLayout.getTabAt(i + 1).select();
+            if (i == 0) {
+                tabLayout.getTabAt(i + 1)
+                         .select();
                 tab.select();
             }
         }
@@ -76,5 +81,16 @@ public class HomeActivity extends BaseActivity {
     @Override
     public boolean isTranslucentStatusBar() {
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - lastBackClickTime < 2000) {
+            super.onBackPressed();
+            return;
+        }
+        lastBackClickTime = System.currentTimeMillis();
+        Toast.makeText(this, getString(R.string.home_back_tips), Toast.LENGTH_SHORT)
+             .show();
     }
 }

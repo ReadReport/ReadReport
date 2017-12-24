@@ -88,4 +88,7 @@ public abstract class BaseFragment extends Fragment {
         return inflater.inflate(contentLayoutID(), container, false);
     }
 
+    public boolean onBackPressed() {
+        return false;
+    }
 }

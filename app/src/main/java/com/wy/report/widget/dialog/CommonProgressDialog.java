@@ -1,4 +1,4 @@
-package com.wy.report.base.dialog;
+package com.wy.report.widget.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
