@@ -11,6 +11,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -27,9 +28,13 @@ import rx.Observable;
  */
 public interface ReportService {
 
-
     @POST("/Report/do_upload_report")
     @Multipart
     Observable<ResponseModel<UploadModel>> submitReport(@Part("mid") Long uid, @Part("upload_from") String uploadFrom, @Part("tj_hospital") String hospitalId,
                                                         @Part("tj_date") String date, @Part("remark") String remark, @Part MultipartBody.Part[] parts);
+
+    @GET("/Report/do_upload_report")
+    @Multipart
+    Observable<ResponseModel<UploadModel>> queryReport(@Part("mid") Long uid, @Part("tj_hospital") String hospitalId,
+                                                        @Part("tj_date") String account, @Part("remark") String password);
 }

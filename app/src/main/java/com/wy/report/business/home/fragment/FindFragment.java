@@ -113,6 +113,12 @@ public class FindFragment extends PtrFragment {
                     TextView title = (TextView) item.findViewById(R.id.home_find_daily_detect_item_title);
                     title.setText(model.getTitle());
                     lineContainer.addView(item, new LayoutParams(itemWidth, LayoutParams.WRAP_CONTENT));
+                    item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
                 }
                 container.addView(lineContainer, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 return lineContainer;

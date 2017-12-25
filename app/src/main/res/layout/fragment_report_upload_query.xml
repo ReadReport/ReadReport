@@ -11,9 +11,10 @@
 
     <!-- 上传报告 -->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/report_upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_white_corner">
+        android:background="@drawable/selector_white_bg_corner">
 
         <ImageView
             android:id="@+id/report_upload_icon"
@@ -55,10 +56,11 @@
 
     <!-- 查询报告 -->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/report_query"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@drawable/shape_white_corner">
+        android:background="@drawable/selector_white_bg_corner">
 
         <ImageView
             android:id="@+id/report_query_icon"

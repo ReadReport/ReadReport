@@ -32,4 +32,16 @@
     </string-array>
     <string name="report_hospital_tab_hospital">医院</string>
     <string name="report_hospital_tab_unit">连锁机构</string>
+
+    <string name="report_account">账\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020号:</string>
+    <string name="report_account_hint">请输入医院提供的查询账号</string>
+    <string name="report_password">密\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020码:</string>
+    <string name="report_password_hint">请输入医院提供的密码</string>
+    <string name="report_not_found">查不到报告？</string>
+    <string name="report_submit_info">提交信息</string>
+    <string name="report_tips">查询人员信息必须与就诊时登记的实名信息一致，否则医院不能提供相应的查询服务。查询信息经过严格的加密处理，保证您的个人隐私，请放心使用。</string>
+
+    <string name="report_query_success_tips1">已收到您的获取报告请求</string>
+    <string name="report_query_success_tips2">我们将尽快处理</string>
+
 </resources>

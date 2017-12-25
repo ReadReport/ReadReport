@@ -3,7 +3,7 @@
         android:color="@color/ripple_material_light">
     <item>
         <selector>
-            <item android:drawable="@android:color/white"/>
+            <item android:drawable="@drawable/shape_white_corner"/>
         </selector>
     </item>
 </ripple>

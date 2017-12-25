@@ -3,6 +3,7 @@ package com.wy.report.business.upload.fragment;
 import android.os.Bundle;
 
 import com.wy.report.R;
+import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.fragment.ToolbarFragment;
 
@@ -11,7 +12,7 @@ import com.wy.report.base.fragment.ToolbarFragment;
  * @author cantalou
  * @date 2017-12-06 21:24
  */
-public class ReportQueryFragment extends ToolbarFragment {
+public class ReportQueryFragment extends NetworkFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
