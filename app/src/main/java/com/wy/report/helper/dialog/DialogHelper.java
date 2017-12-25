@@ -40,4 +40,17 @@ public class DialogHelper {
         return dialog;
     }
 
+    public static Dialog showReportQueryConfirmDialog(Context context, OnClickListener positive) {
+        CommonResultDialog.Builder builder = new CommonResultDialog.Builder(context);
+        builder.setContentViewLayoutId(R.layout.view_dialog_result);
+        builder.setPositiveButton(R.string.confirm, positive);
+        builder.setPositiveBackgroundResource(R.drawable.shape_blue_corner_5_bottom);
+        builder.setResultIconId(R.drawable.msg_success);
+        builder.setResultTips1Id(R.string.report_query_success_tips1);
+        builder.setResultTips2Id(R.string.report_query_success_tips2);
+        Dialog dialog = builder.create();
+        dialog.show();
+        return dialog;
+    }
+
 }

@@ -54,7 +54,7 @@ public class AuthRouterManager {
     /**
      * 家庭成员选择界面
      */
-    public static final String ROUTER_REPORT_HOSPITAL_LIST = PUBLIC_ACTIVITY_PREFIX + "ROUTER_REPORT_HOSPITAL_LIST";
+    public static final String ROUTER_REPORT_HOSPITAL_LIST = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_HOSPITAL_LIST";
 
     /**
      * 报告管理界面
