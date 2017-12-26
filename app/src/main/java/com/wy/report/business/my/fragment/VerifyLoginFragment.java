@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wy.report.R;
@@ -15,6 +16,7 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,7 +27,7 @@ import butterknife.OnClick;
  * @date: 17-12-20 下午8:48
  * @description: ReadReport
  */
-public class VerifyCodeLoginFragment extends NetworkFragment {
+public class VerifyLoginFragment extends NetworkFragment {
 
 
     private static String TAG = "LoginFragment";
@@ -38,6 +40,8 @@ public class VerifyCodeLoginFragment extends NetworkFragment {
     @BindView(R.id.login_pwd)
     EditText passWord;
 
+    @BindView(R.id.toolbar_menu)
+    TextView menu;
     @Override
     protected void initData(Bundle savedInstanceState) {
         myService = RetrofitHelper.getInstance()
@@ -53,6 +57,7 @@ public class VerifyCodeLoginFragment extends NetworkFragment {
     protected void initToolbar() {
         super.initToolbar();
         setTitle(getResources().getString(R.string.my_verify_login));
+        menu.setText(R.string.my_register);
     }
 
     @Override
@@ -97,6 +102,11 @@ public class VerifyCodeLoginFragment extends NetworkFragment {
     public void getVerifyCode()
     {
         String mobile = userName.getText().toString();
+        if(StringUtils.isBlank(mobile))
+        {
+            Toast.makeText(getActivity(),getResources().getString(R.string.my_verify_mobile_null),Toast.LENGTH_LONG);
+            return;
+        }
         myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this){
             @Override
             public void onNext(ResponseModel responseModel) {
