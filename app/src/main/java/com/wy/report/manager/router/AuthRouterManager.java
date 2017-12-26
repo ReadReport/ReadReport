@@ -7,6 +7,7 @@ import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.my.fragment.LoginFragment;
+import com.wy.report.business.my.fragment.VerifyCodeLoginFragment;
 import com.wy.report.business.other.fragment.PictureFragment;
 import com.wy.report.business.read.fragment.ReportManageFragment;
 import com.wy.report.business.upload.fragment.HospitalListFragment;
@@ -66,6 +67,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_LOGIN = PUBLIC_ACTIVITY_PREFIX + "ROUTER_LOGIN";
 
+    /**
+     * 验证码登录界面
+     */
+    public static final String ROUTER_VERIFY_LOGIN = PUBLIC_ACTIVITY_PREFIX + "ROUTER_VERIFY_LOGIN";
+
     private Router router;
 
     private UserManger userManger;
@@ -106,6 +112,7 @@ public class AuthRouterManager {
         router.map(ROUTER_REPORT_HOSPITAL_LIST, StandardActivity.class, HospitalListFragment.class);
         router.map(ROUTER_REPORT_MANAGE, StandardActivity.class, ReportManageFragment.class);
         router.map(ROUTER_LOGIN, StandardActivity.class, LoginFragment.class);
+        router.map(ROUTER_VERIFY_LOGIN, StandardActivity.class, VerifyCodeLoginFragment.class);
     }
 
     /**

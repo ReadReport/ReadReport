@@ -38,10 +38,10 @@
 
     <com.wy.report.widget.view.SuperEditText
         android:id="@+id/login_pwd"
-        android:layout_width="match_parent"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="40dp"
         android:drawablePadding="15dp"
         android:text="1586368456"
@@ -51,7 +51,7 @@
         app:ic_pwd_dis="@drawable/btn_password_close"
         app:ic_pwd_show="@drawable/btn_password_open"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/get_verify_code"
         app:layout_constraintTop_toBottomOf="@+id/login_account"
         app:left_height="15"
         app:left_width="15"
@@ -67,6 +67,23 @@
         app:right_y="0"
         />
     <TextView
+        android:id="@+id/get_verify_code"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_blue_corner_25"
+        android:gravity="center"
+        android:text="@string/my_verify_code_get_code"
+        android:textColor="@color/lan_30acff"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/login_pwd"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_pwd"
+        app:layout_constraintBottom_toBottomOf="@+id/login_pwd"
+        />
+
+    <TextView
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -81,36 +98,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_pwd"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/my_forget_pwd"
-        android:textColor="@color/hui_ababab"
-        android:textSize="12sp"
-        app:layout_constraintLeft_toLeftOf="@+id/login"
-        app:layout_constraintTop_toBottomOf="@+id/login"/>
-
-    <TextView
-        android:id="@+id/verify_code_login"
-        android:clickable="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/my_validate_code_login"
-        android:textColor="@color/hui_ababab"
-        android:textSize="12sp"
-        app:layout_constraintRight_toRightOf="@+id/login"
-        app:layout_constraintTop_toBottomOf="@+id/login"/>
-
-
-    <!--<com.rengwuxian.materialedittext.MaterialEditText-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:drawableLeft="@drawable/ic_modify_phone">-->
-
-    <!--</com.rengwuxian.materialedittext.MaterialEditText>-->
 
 </android.support.constraint.ConstraintLayout>

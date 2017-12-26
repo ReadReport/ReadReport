@@ -2,9 +2,6 @@ package com.wy.report.business.my.service;
 
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.my.model.UserModel;
-import com.wy.report.business.read.mode.ReportListMode;
-
-import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -19,7 +16,7 @@ import rx.Observable;
 public interface MyService {
 
     /**
-     * 获取报告列表
+     * 登录
      *
      * @param mobile
      * @return
@@ -27,4 +24,14 @@ public interface MyService {
     @FormUrlEncoded
     @POST("/Member/dbg_login")
     Observable<ResponseModel<UserModel>> loginByPwd(@Field("mobile") String mobile, @Field("password") String pwd);
+
+    /**
+     * 获取验证码
+     *
+     * @param mobile
+     * @return
+     */
+    @FormUrlEncoded
+    @GET("/Member/dbg_get_verify_code")
+    Observable<ResponseModel<UserModel>> getVerifyCode(@Query("mobile") String mobile);
 }
