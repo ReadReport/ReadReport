@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
@@ -15,12 +16,10 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
-import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_LOGIN;
 
 /**
  * @author: ZangSong
@@ -28,7 +27,7 @@ import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_LOGIN
  * @date: 17-12-20 下午8:48
  * @description: ReadReport
  */
-public class LoginFragment extends NetworkFragment {
+public class VerifyLoginFragment extends NetworkFragment {
 
 
     private static String TAG = "LoginFragment";
@@ -43,29 +42,27 @@ public class LoginFragment extends NetworkFragment {
 
     @BindView(R.id.toolbar_menu)
     TextView menu;
-
     @Override
     protected void initData(Bundle savedInstanceState) {
-
+        myService = RetrofitHelper.getInstance()
+                                  .create(MyService.class);
     }
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        userName.setText("18046042250");
-        passWord.setText("111111");
     }
 
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        setTitle(getResources().getString(R.string.my_login));
+        setTitle(getResources().getString(R.string.my_verify_login));
         menu.setText(R.string.my_register);
     }
 
     @Override
     protected int contentLayoutID() {
-        return R.layout.fragment_login;
+        return R.layout.fragment_verify_code_login;
     }
 
     @Override
@@ -75,12 +72,11 @@ public class LoginFragment extends NetworkFragment {
 
     @OnClick(R.id.login)
     public void login() {
-        myService = RetrofitHelper.getInstance()
-                                  .create(MyService.class);
+
         String username = userName.getText().toString();
         String pwd      = passWord.getText().toString();
         Log.d(TAG, "登录 用户名:" + username);
-        Log.d(TAG, "登录 密码:" + pwd);
+        Log.d(TAG, "登录 验证码:" + pwd);
         myService.loginByPwd(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {
             @Override
             public void onNext(ResponseModel<UserModel> userModelResponseModel) {
@@ -101,9 +97,23 @@ public class LoginFragment extends NetworkFragment {
 
     }
 
-    @OnClick(R.id.verify_code_login)
-    public void verifyCodeLogin()
+
+    @OnClick(R.id.get_verify_code)
+    public void getVerifyCode()
     {
-        AuthRouterManager.getInstance().getRouter().open(getActivity(),ROUTER_VERIFY_LOGIN);
+        String mobile = userName.getText().toString();
+        if(StringUtils.isBlank(mobile))
+        {
+            Toast.makeText(getActivity(),getResources().getString(R.string.my_verify_mobile_null),Toast.LENGTH_LONG);
+            return;
+        }
+        myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this){
+            @Override
+            public void onNext(ResponseModel responseModel) {
+                super.onNext(responseModel);
+                Toast.makeText(getActivity(),getResources().getString(R.string.my_verify_code_send),Toast.LENGTH_LONG);
+            }
+        });
+
     }
 }

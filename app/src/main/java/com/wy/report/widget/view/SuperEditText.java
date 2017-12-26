@@ -146,7 +146,7 @@ public class SuperEditText extends AppCompatEditText {
                     null, null);
         } else {
             setCompoundDrawables(ic_left, null,
-                    ic_Right, null);
+                    null, null);
         }
 
         // setCompoundDrawables(Drawable left, Drawable top, Drawable right, Drawable bottom)介绍
@@ -259,7 +259,7 @@ public class SuperEditText extends AppCompatEditText {
                         invalidate();
 
                     }
-                } else {
+                } else if(deleteMode){
                     Drawable drawable = ic_Right;
 
                     if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
