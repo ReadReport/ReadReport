@@ -89,6 +89,10 @@ public abstract class ToolbarFragment extends BaseFragment {
                 }
             });
         }
+
+        if(getMenuLayoutId() > 0){
+            toolbar.inflateMenu(getMenuLayoutId());
+        }
     }
 
     protected int toolbarContainerLayoutID() {
@@ -109,6 +113,10 @@ public abstract class ToolbarFragment extends BaseFragment {
 
     protected void setTitle(int titleResID) {
         toolbarTitle.setText(titleResID);
+    }
+
+    protected int getMenuLayoutId() {
+        return 0;
     }
 
 }
