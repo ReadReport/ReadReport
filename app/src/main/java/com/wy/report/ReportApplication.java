@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wy.report.manager.auth.AuthManager;
+import com.wy.report.util.Utils;
 
 /**
  * @author cantalou
@@ -40,5 +41,6 @@ public class ReportApplication extends Application {
         super.onCreate();
         MobclickAgent.setCatchUncaughtExceptions(true);
         AuthManager.getInstance();
+        Utils.init(this);
     }
 }

@@ -1,7 +1,6 @@
 package com.wy.report.business.my.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.LogUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,9 +29,6 @@ import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_LOGIN
  * @description: ReadReport
  */
 public class LoginFragment extends NetworkFragment {
-
-
-    private static String TAG = "LoginFragment";
 
     private MyService myService;
 
@@ -79,14 +76,14 @@ public class LoginFragment extends NetworkFragment {
                                   .create(MyService.class);
         String username = userName.getText().toString();
         String pwd      = passWord.getText().toString();
-        Log.d(TAG, "登录 用户名:" + username);
-        Log.d(TAG, "登录 密码:" + pwd);
+        LogUtils.d("登录 用户名", username);
+        LogUtils.d("登录 密码", pwd);
         myService.loginByPwd(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {
             @Override
             public void onNext(ResponseModel<UserModel> userModelResponseModel) {
                 super.onNext(userModelResponseModel);
                 UserModel userModel = userModelResponseModel.getData();
-                Log.d(TAG, "登录成功:" + userModel.toString());
+                LogUtils.d("登录成功", userModel.toString());
                 User user = new User();
                 user.setName(userModel.getName());
                 user.setId(Integer.valueOf(userModel.getId()));
@@ -102,8 +99,7 @@ public class LoginFragment extends NetworkFragment {
     }
 
     @OnClick(R.id.verify_code_login)
-    public void verifyCodeLogin()
-    {
-        AuthRouterManager.getInstance().getRouter().open(getActivity(),ROUTER_VERIFY_LOGIN);
+    public void verifyCodeLogin() {
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_VERIFY_LOGIN);
     }
 }

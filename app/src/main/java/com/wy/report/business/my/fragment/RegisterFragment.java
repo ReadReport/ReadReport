@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
@@ -16,6 +15,7 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,6 +41,7 @@ public class RegisterFragment extends NetworkFragment {
 
     @BindView(R.id.toolbar_menu)
     TextView menu;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         myService = RetrofitHelper.getInstance()
@@ -98,14 +99,13 @@ public class RegisterFragment extends NetworkFragment {
 
 
     @OnClick(R.id.get_verify_code)
-    public void getVerifyCode()
-    {
+    public void getVerifyCode() {
         String mobile = userName.getText().toString();
-        myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this){
+        myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
-                Toast.makeText(getActivity(),getResources().getString(R.string.my_verify_code_send),Toast.LENGTH_LONG);
+                ToastUtils.showLong(getResources().getString(R.string.my_verify_code_send));
             }
         });
 
