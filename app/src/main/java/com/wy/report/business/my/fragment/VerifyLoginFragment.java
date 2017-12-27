@@ -1,11 +1,9 @@
 package com.wy.report.business.my.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
@@ -16,7 +14,9 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
-import com.wy.report.util.StringUtils;
+import com.wy.report.util.LogUtils;
+import com.wy.report.util.RegexUtils;
+import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -75,14 +75,14 @@ public class VerifyLoginFragment extends NetworkFragment {
 
         String username = userName.getText().toString();
         String pwd      = passWord.getText().toString();
-        Log.d(TAG, "登录 用户名:" + username);
-        Log.d(TAG, "登录 验证码:" + pwd);
+        LogUtils.d(TAG, "登录 用户名:" + username);
+        LogUtils.d(TAG, "登录 验证码:" + pwd);
         myService.loginByPwd(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {
             @Override
             public void onNext(ResponseModel<UserModel> userModelResponseModel) {
                 super.onNext(userModelResponseModel);
                 UserModel userModel = userModelResponseModel.getData();
-                Log.d(TAG, "登录成功:" + userModel.toString());
+                LogUtils.d("登录成功:" + userModel.toString());
                 User user = new User();
                 user.setName(userModel.getName());
                 user.setId(Integer.valueOf(userModel.getId()));
@@ -102,16 +102,16 @@ public class VerifyLoginFragment extends NetworkFragment {
     public void getVerifyCode()
     {
         String mobile = userName.getText().toString();
-        if(StringUtils.isBlank(mobile))
+        if(!RegexUtils.isMobileSimple(mobile))
         {
-            Toast.makeText(getActivity(),getResources().getString(R.string.my_verify_mobile_null),Toast.LENGTH_LONG);
+            ToastUtils.showLong(getResources().getString(R.string.my_verify_mobile_null));
             return;
         }
         myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this){
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
-                Toast.makeText(getActivity(),getResources().getString(R.string.my_verify_code_send),Toast.LENGTH_LONG);
+                ToastUtils.showLong(getResources().getString(R.string.my_verify_code_send));
             }
         });
 

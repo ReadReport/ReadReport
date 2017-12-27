@@ -53,6 +53,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:support-v4:22.2.1'
+
     compile 'com.android.support:design:22.2.1'
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
@@ -87,7 +89,6 @@ dependencies {
 
     compile 'com.github.zyyoona7:EasyPopup:1.0.2'
     compile 'com.makeramen:roundedimageview:2.3.0'
-    compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
     testCompile 'junit:junit:4.12'
 
