@@ -3,6 +3,7 @@ package com.wy.report.business.home.fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cantalou.android.util.DeviceUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -23,6 +25,8 @@ import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.home.model.DailyDetectModel;
 import com.wy.report.business.home.model.HealthKnowledgeModel;
 import com.wy.report.business.home.model.HealthTestModel;
+import com.wy.report.business.home.model.HomeFindHealthyKnowledgeModel;
+import com.wy.report.business.home.model.HomeFindHealthyTestModel;
 import com.wy.report.business.home.model.HomeFindModel;
 import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
@@ -30,6 +34,7 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.DensityUtils;
+import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,13 +58,21 @@ public class FindFragment extends PtrFragment {
     @BindView(R.id.view_pager)
     ViewPager dailyDetectViewPager;
 
+    @BindView(R.id.home_find_health_test_rv)
+    RecyclerView healthTestRecycleView;
+
+    @BindView(R.id.home_find_health_knowledge_rv)
+    RecyclerView healthKnowledgeRecycleView;
+
     private MessageManager messageManager;
 
     private HomeService homeService;
 
-    private BaseQuickAdapter<HealthTestModel,BaseViewHolder> healthTestAdapter;
+    private BaseQuickAdapter<HealthTestModel, BaseViewHolder> healthTestAdapter;
 
-    private BaseQuickAdapter<HealthKnowledgeModel,BaseViewHolder> healthKnowledageAdapter;
+    private BaseQuickAdapter<HealthKnowledgeModel, BaseViewHolder> healthKnowledgeAdapter;
+
+    private HomeFindModel model;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -75,12 +88,31 @@ public class FindFragment extends PtrFragment {
         super.initView(contentView);
         ptrFrameLayout.disableWhenHorizontalMove(true);
 
-        healthTestAdapter = new BaseQuickAdapter<HealthTestModel, BaseViewHolder>(R.id.home_find_health_knowledge_icon) {
+        healthTestRecycleView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
+        healthTestAdapter = new BaseQuickAdapter<HealthTestModel, BaseViewHolder>(R.layout.vh_find_heanth_test_item) {
             @Override
             protected void convert(BaseViewHolder helper, HealthTestModel item) {
-
+                Glide.with(getActivity())
+                     .load(item.getImage())
+                     .into((ImageView) helper.getView(R.id.home_find_health_test_item_icon));
+                helper.setText(R.id.home_find_health_test_item_title, item.getTitle())
+                      .setText(R.id.home_find_health_test_item_test_num, item.getTestedNum());
             }
         };
+        healthTestRecycleView.setAdapter(healthTestAdapter);
+
+        healthKnowledgeRecycleView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
+        healthKnowledgeAdapter = new BaseQuickAdapter<HealthKnowledgeModel, BaseViewHolder>(R.layout.vh_find_heanth_knowledge_item) {
+            @Override
+            protected void convert(BaseViewHolder helper, HealthKnowledgeModel item) {
+                Glide.with(getActivity())
+                     .load(item.getImage())
+                     .into((ImageView) helper.getView(R.id.home_find_health_knowledge_item_icon));
+                helper.setText(R.id.home_find_health_knowledge_item_title, item.getTitle())
+                      .setText(R.id.home_find_health_knowledge_item_desc, item.getDesc());
+            }
+        };
+        healthKnowledgeRecycleView.setAdapter(healthKnowledgeAdapter);
     }
 
     @Override
@@ -113,19 +145,19 @@ public class FindFragment extends PtrFragment {
                        @Override
                        public void onNext(ResponseModel<HomeFindModel> homeFindModelResponseModel) {
                            super.onNext(homeFindModelResponseModel);
-
-                           HomeFindModel model = homeFindModelResponseModel.getData();
-                           initDailyDetect(model.getDailyDetectModels());
+                           model = homeFindModelResponseModel.getData();
+                           updateData();
                        }
                    });
     }
 
-    private void initDailyDetect(List<DailyDetectModel> dailyDetects) {
+    private void updateData() {
 
         final int itemWidth = (DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20)) / DAILY_DETECT_LINE_NUM;
 
         final ArrayList<ArrayList<DailyDetectModel>> dailyDetectLines = new ArrayList<>();
         ArrayList<DailyDetectModel> line = null;
+        List<DailyDetectModel> dailyDetects = model.getDailyDetectModels();
         for (int i = 0; i < dailyDetects.size(); i++) {
             if (i % DAILY_DETECT_LINE_NUM == 0) {
                 line = new ArrayList<>();
@@ -174,5 +206,11 @@ public class FindFragment extends PtrFragment {
             }
         });
 
+        HomeFindHealthyTestModel testModel = model.getHomeFindHealthyTestModel();
+        healthTestAdapter.setNewData(testModel.getHealthTestModels());
+
+        HomeFindHealthyKnowledgeModel knowledgeModel = model.getHomeFindHealthyKnowledgeModel();
+        healthKnowledgeAdapter.setNewData(knowledgeModel.getHealthKnowledgeModels());
     }
+
 }

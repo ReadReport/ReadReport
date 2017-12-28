@@ -25,7 +25,6 @@ import java.util.List;
 
 public class WheelView extends ScrollView {
 
-    public static final String TAG = WheelView.class.getSimpleName();
     public static final int OFF_SET_DEFAULT = 1;
     private static final int SCROLL_DIRECTION_UP = 0;
     private static final int SCROLL_DIRECTION_DOWN = 1;

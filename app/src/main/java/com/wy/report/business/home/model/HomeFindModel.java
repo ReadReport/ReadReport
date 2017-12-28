@@ -16,10 +16,10 @@ public class HomeFindModel {
     private List<DailyDetectModel> dailyDetectModels;
 
     @JSONField(name = "test")
-    private List<HealthTestModel> healthTestModels;
+    private HomeFindHealthyTestModel homeFindHealthyTestModel;
 
     @JSONField(name="knowledge")
-    private List<HealthKnowledgeModel> healthKnowledgeModels;
+    private HomeFindHealthyKnowledgeModel homeFindHealthyKnowledgeModel;
 
     public List<DailyDetectModel> getDailyDetectModels() {
         if(dailyDetectModels == null){
@@ -37,19 +37,19 @@ public class HomeFindModel {
         this.dailyDetectModels = dailyDetectModels;
     }
 
-    public List<HealthTestModel> getHealthTestModels() {
-        return healthTestModels;
+    public HomeFindHealthyTestModel getHomeFindHealthyTestModel() {
+        return homeFindHealthyTestModel;
     }
 
-    public void setHealthTestModels(List<HealthTestModel> healthTestModels) {
-        this.healthTestModels = healthTestModels;
+    public void setHomeFindHealthyTestModel(HomeFindHealthyTestModel homeFindHealthyTestModel) {
+        this.homeFindHealthyTestModel = homeFindHealthyTestModel;
     }
 
-    public List<HealthKnowledgeModel> getHealthKnowledgeModels() {
-        return healthKnowledgeModels;
+    public HomeFindHealthyKnowledgeModel getHomeFindHealthyKnowledgeModel() {
+        return homeFindHealthyKnowledgeModel;
     }
 
-    public void setHealthKnowledgeModels(List<HealthKnowledgeModel> healthKnowledgeModels) {
-        this.healthKnowledgeModels = healthKnowledgeModels;
+    public void setHomeFindHealthyKnowledgeModel(HomeFindHealthyKnowledgeModel homeFindHealthyKnowledgeModel) {
+        this.homeFindHealthyKnowledgeModel = homeFindHealthyKnowledgeModel;
     }
 }

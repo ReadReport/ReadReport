@@ -1,5 +1,6 @@
 package com.wy.report.business.home.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.wy.report.base.model.BaseModel;
 
 /*
@@ -9,19 +10,22 @@ import com.wy.report.base.model.BaseModel;
  */
 public class HealthTestModel extends BaseModel {
 
-    private int id;
+    private String id;
 
+    @JSONField(name="theme")
     private String title;
 
+    @JSONField(name="l_img")
     private String image;
 
-    private int testedNum;
+    @JSONField(name="views")
+    private String testedNum;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -41,11 +45,11 @@ public class HealthTestModel extends BaseModel {
         this.image = image;
     }
 
-    public int getTestedNum() {
+    public String getTestedNum() {
         return testedNum;
     }
 
-    public void setTestedNum(int testedNum) {
+    public void setTestedNum(String testedNum) {
         this.testedNum = testedNum;
     }
 }

@@ -1,5 +1,7 @@
 package com.wy.report.business.home.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /*
  * 健康知识
  * @author cantalou
@@ -7,21 +9,15 @@ package com.wy.report.business.home.model;
  */
 public class HealthKnowledgeModel {
 
-    private int id;
+    private String url;
 
     private String title;
 
+    @JSONField(name = "img_m")
     private String image;
 
+    @JSONField(name = "intro")
     private String desc;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -45,5 +41,13 @@ public class HealthKnowledgeModel {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
