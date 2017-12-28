@@ -108,6 +108,7 @@ public class ReportUploadFragment extends NetworkFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         if (savedInstanceState != null) {
             savedPictureList = savedInstanceState.getStringArrayList(SAVED_PICTURE_LIST);
         }

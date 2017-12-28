@@ -1,10 +1,8 @@
 package com.wy.report.business.home.fragment;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.internal.view.menu.MenuView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +24,11 @@ import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.massage.MessageManager;
+import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.manager.router.Router;
 import com.wy.report.util.DensityUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -58,6 +55,7 @@ public class FindFragment extends PtrFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         messageManager = MessageManager.getInstance();
         homeService = RetrofitHelper.getInstance()
                                     .create(HomeService.class);
@@ -72,7 +70,7 @@ public class FindFragment extends PtrFragment {
 
     private void initDailyDetect() {
         ptrFrameLayout.disableWhenHorizontalMove(true);
-        final int itemWidth = (DeviceUtils.getDeviceWidthPixels(getActivity())- DensityUtils.dip2px(getActivity(), 20)) / DAILY_DETECT_LINE_NUM ;
+        final int itemWidth = (DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20)) / DAILY_DETECT_LINE_NUM;
         ArrayList<DailyDetectModel> dailyDetects = new ArrayList<>();
         dailyDetects.add(new DailyDetectModel(1, "血压管理", R.drawable.btn_rcjc_bloodpressure));
         dailyDetects.add(new DailyDetectModel(2, "血糖管理", R.drawable.btn_rcjc_bloodsugar));
@@ -116,7 +114,7 @@ public class FindFragment extends PtrFragment {
                     item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            router.open(getActivity(), AuthRouterManager.ROUTER_DAILY_DETECT);
                         }
                     });
                 }

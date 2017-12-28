@@ -34,6 +34,7 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         familyMemberService = RetrofitHelper.getInstance()
                                             .create(FamilyMemberService.class);
         user = UserManger.getInstance()

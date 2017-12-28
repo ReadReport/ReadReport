@@ -36,6 +36,7 @@ public class ReportManageFragment extends PtrFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         reportManageViewMode = new ReportManageViewMode(this);
         ptrWithoutToolbar = true;
     }

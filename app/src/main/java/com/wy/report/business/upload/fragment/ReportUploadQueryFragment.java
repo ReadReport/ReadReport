@@ -18,6 +18,7 @@ public class ReportUploadQueryFragment extends ToolbarFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
     }
 
     @Override

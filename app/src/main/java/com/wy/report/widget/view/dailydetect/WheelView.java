@@ -95,6 +95,7 @@ public class WheelView extends ScrollView {
 
         normalViewHeight = dip2px(34);
         selectedViewHeight = dip2px(38);
+        itemHeight = normalViewHeight;
 
         this.setVerticalScrollBarEnabled(false);
 
@@ -233,7 +234,6 @@ public class WheelView extends ScrollView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(TAG, "w: " + w + ", h: " + h + ", oldw: " + oldw + ", oldh: " + oldh);
         viewWidth = w;
     }
 
@@ -251,6 +251,7 @@ public class WheelView extends ScrollView {
         }
 
         int width = getChildAt(0).getMeasuredWidth();
+        int[] selectedAreaBorder = obtainSelectedAreaBorder();
         canvas.drawLine(0, selectedAreaBorder[0], width, selectedAreaBorder[0], paint);
         canvas.drawLine(0, selectedAreaBorder[1], width, selectedAreaBorder[1], paint);
         super.onDraw(canvas);

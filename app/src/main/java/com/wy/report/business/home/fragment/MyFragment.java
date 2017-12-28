@@ -20,6 +20,7 @@ public class MyFragment extends PtrFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         ptrWithoutToolbar = true;
     }
 

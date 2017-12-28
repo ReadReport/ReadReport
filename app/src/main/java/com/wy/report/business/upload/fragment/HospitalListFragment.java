@@ -38,6 +38,7 @@ public class HospitalListFragment extends ToolbarFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         fragments = new Fragment[]{new NotChainUnitFragment(), new ChainUnitFragment()};
         tabTitles = getResources().getStringArray(R.array.report_hospital_tab);
     }

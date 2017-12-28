@@ -2,6 +2,7 @@ package com.wy.report.base.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
+import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.manager.router.Router;
 
 import butterknife.ButterKnife;
 
@@ -23,6 +26,8 @@ public abstract class BaseFragment extends Fragment {
     protected Bus rxBus;
 
     protected View contentView;
+
+    protected Router router;
 
     @Override
     public void onAttach(Activity activity) {
@@ -46,7 +51,11 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    protected abstract void initData(Bundle savedInstanceState);
+    @CallSuper
+    protected void initData(Bundle savedInstanceState) {
+        router = AuthRouterManager.getInstance()
+                                  .getRouter();
+    }
 
     protected abstract void initView(View contentView);
 

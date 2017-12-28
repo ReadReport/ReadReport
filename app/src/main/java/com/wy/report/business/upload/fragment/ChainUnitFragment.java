@@ -32,6 +32,7 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         hospitalService = RetrofitHelper.getInstance()
                                         .create(HospitalService.class);
         ptrWithoutToolbar = false;

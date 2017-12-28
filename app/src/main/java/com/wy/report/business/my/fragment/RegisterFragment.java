@@ -44,6 +44,7 @@ public class RegisterFragment extends NetworkFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         myService = RetrofitHelper.getInstance()
                                   .create(MyService.class);
     }

@@ -43,7 +43,7 @@ public class LoginFragment extends NetworkFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
+        super.initData(savedInstanceState);
     }
 
     @Override

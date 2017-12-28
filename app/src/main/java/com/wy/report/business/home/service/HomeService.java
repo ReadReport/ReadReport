@@ -19,4 +19,9 @@ public interface HomeService {
 
     @GET("/Doctor/get_total_report_unscramble_num")
     Observable<ResponseModel<HomeFindModel>> getFindInfo();
+
+    @GET("/Doctor/get_total_report_unscramble_num")
+    Observable<ResponseModel<HomeFindModel>> getFindKnowledge();
+
+
 }

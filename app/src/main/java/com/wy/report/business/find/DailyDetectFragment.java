@@ -16,7 +16,7 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
+        super.initData(savedInstanceState);
     }
 
     @Override

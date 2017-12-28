@@ -5,6 +5,7 @@ import android.content.Context;
 import com.wy.report.ReportApplication;
 import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
+import com.wy.report.business.find.DailyDetectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.my.fragment.LoginFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
@@ -72,6 +73,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_VERIFY_LOGIN = PUBLIC_ACTIVITY_PREFIX + "ROUTER_VERIFY_LOGIN";
 
+    /**
+     * 每日监测
+     */
+    public static final String ROUTER_DAILY_DETECT = LOGIN_ACTIVITY_PREFIX + "ROUTER_DAILY_DETECT";
+
     private Router router;
 
     private UserManger userManger;
@@ -113,6 +119,7 @@ public class AuthRouterManager {
         router.map(ROUTER_REPORT_MANAGE, StandardActivity.class, ReportManageFragment.class);
         router.map(ROUTER_LOGIN, StandardActivity.class, LoginFragment.class);
         router.map(ROUTER_VERIFY_LOGIN, StandardActivity.class, VerifyLoginFragment.class);
+        router.map(ROUTER_DAILY_DETECT, StandardActivity.class, DailyDetectFragment.class);
     }
 
     /**

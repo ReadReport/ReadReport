@@ -55,6 +55,7 @@ public class ReportQueryFragment extends NetworkFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         reportService = RetrofitHelper.getInstance()
                                       .create(ReportService.class);
         router = AuthRouterManager.getInstance()

@@ -65,6 +65,7 @@ public class HomeFragment extends PtrFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         homeService = RetrofitHelper.getInstance()
                                     .create(HomeService.class);
         messageManager = MessageManager.getInstance();

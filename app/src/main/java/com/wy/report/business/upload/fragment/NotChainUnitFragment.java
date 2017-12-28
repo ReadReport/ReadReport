@@ -51,6 +51,7 @@ public class NotChainUnitFragment extends PtrFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         hospitalService = RetrofitHelper.getInstance()
                                         .create(HospitalService.class);
         ptrWithoutToolbar = false;
