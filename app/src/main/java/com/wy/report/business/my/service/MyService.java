@@ -1,6 +1,7 @@
 package com.wy.report.business.my.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.my.model.RegisterMode;
 import com.wy.report.business.my.model.UserModel;
 
 import retrofit2.http.Field;
@@ -16,7 +17,7 @@ import rx.Observable;
 public interface MyService {
 
     /**
-     * 登录
+     * 密码登录
      *
      * @param mobile
      * @return
@@ -31,7 +32,25 @@ public interface MyService {
      * @param mobile
      * @return
      */
-    @FormUrlEncoded
     @GET("/Member/dbg_get_verify_code")
     Observable<ResponseModel<UserModel>> getVerifyCode(@Query("mobile") String mobile);
+
+
+    /**
+     * 验证码登录
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/Member/dbg_sms_login")
+    Observable<ResponseModel<UserModel>> loginByVerifyCode(@Field("mobile") String mobile, @Field("verify") String pwd);
+
+    /**
+     * 注册
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/Member/member_register")
+    Observable<ResponseModel<RegisterMode>> register(@Field("mobile") String mobile, @Field("password") String pwd, @Field("verify") String verify);
 }

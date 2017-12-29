@@ -5,7 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
@@ -20,6 +23,7 @@ import com.wy.report.util.LogUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.wy.report.manager.router.AuthRouterManager.ROUTER_REGISTER;
 import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_LOGIN;
 
 /**
@@ -93,6 +97,7 @@ public class LoginFragment extends NetworkFragment {
                 user.setSex(Integer.valueOf(userModel.getSex()));
                 user.setRelationship(userModel.getRelationship());
                 UserManger.getInstance().updateUser(user);
+                rxBus.post(RxKey.RX_LOGIN,UserManger.getInstance().getLoginUser());
             }
         });
 
@@ -101,5 +106,18 @@ public class LoginFragment extends NetworkFragment {
     @OnClick(R.id.verify_code_login)
     public void verifyCodeLogin() {
         AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_VERIFY_LOGIN);
+    }
+
+
+    @OnClick(R.id.toolbar_menu)
+    public void gotoRegister()
+    {
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_REGISTER);
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
+    public void onLoginSuccess(User user)
+    {
+        getActivity().finish();
     }
 }

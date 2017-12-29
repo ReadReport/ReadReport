@@ -6,11 +6,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
-import com.wy.report.business.my.model.UserModel;
+import com.wy.report.business.my.model.RegisterMode;
 import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
@@ -33,11 +36,14 @@ public class RegisterFragment extends NetworkFragment {
 
     private MyService myService;
 
-    @BindView(R.id.login_account)
+    @BindView(R.id.register_account)
     EditText userName;
 
-    @BindView(R.id.login_pwd)
+    @BindView(R.id.register_pwd)
     EditText passWord;
+
+    @BindView(R.id.register_verify)
+    EditText verifyCode;
 
     @BindView(R.id.toolbar_menu)
     TextView menu;
@@ -57,13 +63,13 @@ public class RegisterFragment extends NetworkFragment {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        setTitle(getResources().getString(R.string.my_verify_login));
-        menu.setText(R.string.my_register);
+        setTitle(getResources().getString(R.string.my_register));
+        menu.setText(R.string.my_login);
     }
 
     @Override
     protected int contentLayoutID() {
-        return R.layout.fragment_verify_code_login;
+        return R.layout.fragment_register;
     }
 
     @Override
@@ -71,31 +77,25 @@ public class RegisterFragment extends NetworkFragment {
         super.loadData();
     }
 
-    @OnClick(R.id.login)
-    public void login() {
-
-        String username = userName.getText().toString();
-        String pwd      = passWord.getText().toString();
-        Log.d(TAG, "登录 用户名:" + username);
-        Log.d(TAG, "登录 验证码:" + pwd);
-        myService.loginByPwd(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {
+    @OnClick(R.id.register)
+    public void register() {
+        String username   = userName.getText().toString();
+        String pwd        = passWord.getText().toString();
+        String verifycode = verifyCode.getText().toString();
+        Log.d(TAG, "注册 用户名:" + username);
+        Log.d(TAG, "注册 验证码:" + verifycode);
+        Log.d(TAG, "注册 密码:" + pwd);
+        myService.register(username, pwd, verifycode).subscribe(new NetworkSubscriber<ResponseModel<RegisterMode>>(this) {
             @Override
-            public void onNext(ResponseModel<UserModel> userModelResponseModel) {
-                super.onNext(userModelResponseModel);
-                UserModel userModel = userModelResponseModel.getData();
-                Log.d(TAG, "登录成功:" + userModel.toString());
+            public void onNext(ResponseModel<RegisterMode> registerModeResponseModel) {
+                super.onNext(registerModeResponseModel);
+                String newId = registerModeResponseModel.getData().getId();
                 User user = new User();
-                user.setName(userModel.getName());
-                user.setId(Integer.valueOf(userModel.getId()));
-                user.setHead(userModel.getHeadIcon());
-                user.setBirthday(Integer.valueOf(userModel.getBirthday()));
-                user.setMobile(userModel.getMobile());
-                user.setSex(Integer.valueOf(userModel.getSex()));
-                user.setRelationship(userModel.getRelationship());
+                user.setId(Long.valueOf(newId));
                 UserManger.getInstance().updateUser(user);
+                rxBus.post(RxKey.RX_LOGIN,UserManger.getInstance().getLoginUser());
             }
         });
-
     }
 
 
@@ -109,6 +109,11 @@ public class RegisterFragment extends NetworkFragment {
                 ToastUtils.showLong(getResources().getString(R.string.my_verify_code_send));
             }
         });
+    }
 
+    @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
+    public void onLoginSuccess(User user)
+    {
+        getActivity().finish();
     }
 }

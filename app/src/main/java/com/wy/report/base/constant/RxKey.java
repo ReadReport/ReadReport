@@ -15,4 +15,6 @@ public class RxKey {
     public static final String RX_FAMILY_MEMBER_SELECT = "RX_FAMILY_MEMBER_SELECT";
 
     public static final String RX_HOSPITAL_UNIT_SELECT = "RX_HOSPITAL_UNIT_SELECT";
+
+    public static final String RX_LOGIN = "RX_LOGIN";
 }

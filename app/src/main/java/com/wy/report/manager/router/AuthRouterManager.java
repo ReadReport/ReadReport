@@ -10,6 +10,7 @@ import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.find.DailyDetectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.my.fragment.LoginFragment;
+import com.wy.report.business.my.fragment.RegisterFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.other.fragment.PictureFragment;
 import com.wy.report.business.read.fragment.ReportManageFragment;
@@ -86,6 +87,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_WEBVIEW = PUBLIC_ACTIVITY_PREFIX + "ROUTER_WEBVIEW";
 
+    /**
+     * 注册界面
+     */
+    public static final String ROUTER_REGISTER = PUBLIC_ACTIVITY_PREFIX + "ROUTER_REGISTER";
+
     private Router router;
 
     private UserManger userManger;
@@ -129,6 +135,7 @@ public class AuthRouterManager {
         router.map(ROUTER_VERIFY_LOGIN, StandardActivity.class, VerifyLoginFragment.class);
         router.map(ROUTER_DAILY_DETECT, StandardActivity.class, DailyDetectFragment.class);
         router.map(ROUTER_WEBVIEW, StandardActivity.class, WebViewFragment.class);
+        router.map(ROUTER_REGISTER, StandardActivity.class, RegisterFragment.class);
     }
 
     /**

@@ -4,9 +4,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
+import com.wy.report.business.auth.model.User;
 import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.ToastUtils;
 
 import butterknife.OnClick;
 
@@ -53,5 +58,12 @@ public class MyFragment extends PtrFragment {
         AuthRouterManager.getInstance()
                          .getRouter()
                          .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
+    }
+
+
+    @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
+    public void onLoginSuccess(User user)
+    {
+        ToastUtils.showLong("登录成功"+user.getName());
     }
 }

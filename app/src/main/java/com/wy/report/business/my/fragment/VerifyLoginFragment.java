@@ -5,7 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
@@ -14,12 +17,15 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.LogUtils;
 import com.wy.report.util.RegexUtils;
 import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.wy.report.manager.router.AuthRouterManager.ROUTER_REGISTER;
 
 /**
  * @author: ZangSong
@@ -44,6 +50,7 @@ public class VerifyLoginFragment extends NetworkFragment {
     TextView menu;
     @Override
     protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         myService = RetrofitHelper.getInstance()
                                   .create(MyService.class);
     }
@@ -77,7 +84,7 @@ public class VerifyLoginFragment extends NetworkFragment {
         String pwd      = passWord.getText().toString();
         LogUtils.d(TAG, "登录 用户名:" + username);
         LogUtils.d(TAG, "登录 验证码:" + pwd);
-        myService.loginByPwd(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {
+        myService.loginByVerifyCode(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {
             @Override
             public void onNext(ResponseModel<UserModel> userModelResponseModel) {
                 super.onNext(userModelResponseModel);
@@ -114,6 +121,17 @@ public class VerifyLoginFragment extends NetworkFragment {
                 ToastUtils.showLong(getResources().getString(R.string.my_verify_code_send));
             }
         });
+    }
 
+    @OnClick(R.id.toolbar_menu)
+    public void gotoRegister()
+    {
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_REGISTER);
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
+    public void onLoginSuccess(User user)
+    {
+        getActivity().finish();
     }
 }
