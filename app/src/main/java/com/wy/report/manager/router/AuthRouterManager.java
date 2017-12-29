@@ -1,9 +1,11 @@
 package com.wy.report.manager.router;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.wy.report.ReportApplication;
 import com.wy.report.base.activity.StandardActivity;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.find.DailyDetectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
@@ -15,6 +17,7 @@ import com.wy.report.business.upload.fragment.HospitalListFragment;
 import com.wy.report.business.upload.fragment.ReportQueryFragment;
 import com.wy.report.business.upload.fragment.ReportUploadFragment;
 import com.wy.report.business.upload.fragment.ReportUploadQueryFragment;
+import com.wy.report.business.web.fragment.WebViewFragment;
 import com.wy.report.manager.auth.UserManger;
 
 public class AuthRouterManager {
@@ -78,6 +81,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_DAILY_DETECT = LOGIN_ACTIVITY_PREFIX + "ROUTER_DAILY_DETECT";
 
+    /**
+     * webview
+     */
+    public static final String ROUTER_WEBVIEW = PUBLIC_ACTIVITY_PREFIX + "ROUTER_WEBVIEW";
+
     private Router router;
 
     private UserManger userManger;
@@ -120,6 +128,7 @@ public class AuthRouterManager {
         router.map(ROUTER_LOGIN, StandardActivity.class, LoginFragment.class);
         router.map(ROUTER_VERIFY_LOGIN, StandardActivity.class, VerifyLoginFragment.class);
         router.map(ROUTER_DAILY_DETECT, StandardActivity.class, DailyDetectFragment.class);
+        router.map(ROUTER_WEBVIEW, StandardActivity.class, WebViewFragment.class);
     }
 
     /**
@@ -133,6 +142,13 @@ public class AuthRouterManager {
 
     public void openHome(Context context) {
         router.open(context, ROUTER_HOME);
+    }
+
+    public void openWebView(Context context, String url ,String title) {
+        Bundle bundle = new Bundle();
+        bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_URL, url);
+        bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_TITLE, title);
+        router.open(context, ROUTER_WEBVIEW, bundle);
     }
 
     static final class InstanceHolder {

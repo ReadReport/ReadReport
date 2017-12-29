@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cantalou.android.util.DeviceUtils;
+import com.cantalou.android.util.ReflectUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hwangjr.rxbus.annotation.Subscribe;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /*
  * @author cantalou
@@ -74,6 +77,8 @@ public class FindFragment extends PtrFragment {
 
     private HomeFindModel model;
 
+    private AuthRouterManager authRouterManager;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -81,12 +86,15 @@ public class FindFragment extends PtrFragment {
         homeService = RetrofitHelper.getInstance()
                                     .create(HomeService.class);
         ptrWithoutToolbar = true;
+        authRouterManager = AuthRouterManager.getInstance();
     }
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
         ptrFrameLayout.disableWhenHorizontalMove(true);
+        ViewConfiguration conf = ViewConfiguration.get(getActivity());
+        ReflectUtil.set(ptrFrameLayout, "mPagingTouchSlop", conf.getScaledTouchSlop() / 2);
 
         healthTestRecycleView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
         healthTestAdapter = new BaseQuickAdapter<HealthTestModel, BaseViewHolder>(R.layout.vh_find_heanth_test_item) {
@@ -94,12 +102,27 @@ public class FindFragment extends PtrFragment {
             protected void convert(BaseViewHolder helper, HealthTestModel item) {
                 Glide.with(getActivity())
                      .load(item.getImage())
-                     .into((ImageView) helper.getView(R.id.home_find_health_test_item_icon));
-                helper.setText(R.id.home_find_health_test_item_title, item.getTitle())
-                      .setText(R.id.home_find_health_test_item_test_num, item.getTestedNum());
+                     .into((ImageView) helper.getView(R.id.vh_find_health_test_item_icon));
+                helper.setText(R.id.vh_find_health_test_item_title, item.getTitle())
+                      .setText(R.id.vh_find_health_test_item_test_num, item.getTestedNum())
+                      .addOnClickListener(R.id.vh_find_health_test_item_do_test);
             }
         };
+        healthTestAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HealthTestModel model = (HealthTestModel) adapter.getItem(position);
+                authRouterManager.openWebView(getActivity(), model.getId(), model.getTitle());
+            }
+        });
+        healthTestAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
         healthTestRecycleView.setAdapter(healthTestAdapter);
+
 
         healthKnowledgeRecycleView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
         healthKnowledgeAdapter = new BaseQuickAdapter<HealthKnowledgeModel, BaseViewHolder>(R.layout.vh_find_heanth_knowledge_item) {
@@ -112,6 +135,13 @@ public class FindFragment extends PtrFragment {
                       .setText(R.id.home_find_health_knowledge_item_desc, item.getDesc());
             }
         };
+        healthKnowledgeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HealthKnowledgeModel model = (HealthKnowledgeModel) adapter.getItem(position);
+                authRouterManager.openWebView(getActivity(), model.getUrl(), model.getTitle());
+            }
+        });
         healthKnowledgeRecycleView.setAdapter(healthKnowledgeAdapter);
     }
 
@@ -213,4 +243,15 @@ public class FindFragment extends PtrFragment {
         healthKnowledgeAdapter.setNewData(knowledgeModel.getHealthKnowledgeModels());
     }
 
+    @OnClick(R.id.home_find_health_test_more)
+    public void clickHealthTestMore() {
+        HomeFindHealthyTestModel testModel = model.getHomeFindHealthyTestModel();
+        authRouterManager.openWebView(getActivity(), testModel.getMore(), "");
+    }
+
+    @OnClick(R.id.home_find_health_knowledge_more)
+    public void clickHealthKnowledgeMore() {
+        HomeFindHealthyKnowledgeModel knowledgeModel = model.getHomeFindHealthyKnowledgeModel();
+        authRouterManager.openWebView(getActivity(), knowledgeModel.getMore(), "");
+    }
 }

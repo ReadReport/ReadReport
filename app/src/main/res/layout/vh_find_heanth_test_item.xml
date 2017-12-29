@@ -10,7 +10,7 @@
     android:paddingTop="15dp">
 
     <ImageView
-        android:id="@+id/home_find_health_test_item_icon"
+        android:id="@+id/vh_find_health_test_item_icon"
         android:layout_width="100dp"
         android:layout_height="70dp"
         android:scaleType="centerCrop"
@@ -19,7 +19,7 @@
         tools:src="@color/lan_c7e9ff"/>
 
     <TextView
-        android:id="@+id/home_find_health_test_item_title"
+        android:id="@+id/vh_find_health_test_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -28,21 +28,21 @@
         android:singleLine="true"
         android:textColor="@color/hei_333333"
         android:textSize="15sp"
-        app:layout_constraintLeft_toRightOf="@id/home_find_health_test_item_icon"
-        app:layout_constraintTop_toTopOf="@id/home_find_health_test_item_icon"
+        app:layout_constraintLeft_toRightOf="@id/vh_find_health_test_item_icon"
+        app:layout_constraintTop_toTopOf="@id/vh_find_health_test_item_icon"
         tools:text="男性糖尿病测试"/>
 
     <ImageView
-        android:id="@+id/home_find_health_test_item_eye"
+        android:id="@+id/vh_find_health_test_item_eye"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:src="@drawable/ic_test_quantity"
-        app:layout_constraintBottom_toBottomOf="@id/home_find_health_test_item_icon"
-        app:layout_constraintLeft_toLeftOf="@id/home_find_health_test_item_title"/>
+        app:layout_constraintBottom_toBottomOf="@id/vh_find_health_test_item_icon"
+        app:layout_constraintLeft_toLeftOf="@id/vh_find_health_test_item_title"/>
 
     <TextView
-        android:id="@+id/home_find_health_test_item_test_num"
+        android:id="@+id/vh_find_health_test_item_test_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -52,13 +52,13 @@
         android:src="@drawable/ic_test_quantity"
         android:textColor="@color/hui_ababab"
         android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@id/home_find_health_test_item_eye"
-        app:layout_constraintLeft_toRightOf="@id/home_find_health_test_item_eye"
-        app:layout_constraintTop_toTopOf="@id/home_find_health_test_item_eye"
+        app:layout_constraintBottom_toBottomOf="@id/vh_find_health_test_item_eye"
+        app:layout_constraintLeft_toRightOf="@id/vh_find_health_test_item_eye"
+        app:layout_constraintTop_toTopOf="@id/vh_find_health_test_item_eye"
         tools:text="1000已测"/>
 
     <TextView
-        android:id="@+id/home_find_health_test_item_do_test"
+        android:id="@+id/vh_find_health_test_item_do_test"
         android:layout_width="66dp"
         android:layout_height="25dp"
         android:background="@drawable/shape_blue_corner_25"

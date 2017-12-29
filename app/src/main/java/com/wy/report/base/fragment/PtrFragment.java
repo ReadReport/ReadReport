@@ -107,22 +107,12 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !hasLoadData) {
             loadData();
+            hasLoadData = true;
         }
     }
 
     public void performRefresh() {
         ptrFrameLayout.autoRefresh(true);
-    }
-
-    public void onPtrStart() {
-    }
-
-    public void onPtrError() {
-        ptrFrameLayout.refreshComplete();
-    }
-
-    public void onPtrSuccess() {
-        ptrFrameLayout.refreshComplete();
     }
 
     public PtrFrameLayout getPtrFrameLayout() {

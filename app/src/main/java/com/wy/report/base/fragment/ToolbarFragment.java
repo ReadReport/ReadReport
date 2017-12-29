@@ -107,11 +107,11 @@ public abstract class ToolbarFragment extends BaseFragment {
         return TOOL_BAR_FLAG_SHOW;
     }
 
-    protected void setTitle(String title) {
+    public void setTitle(String title) {
         toolbarTitle.setText(title);
     }
 
-    protected void setTitle(int titleResID) {
+    public void setTitle(int titleResID) {
         toolbarTitle.setText(titleResID);
     }
 

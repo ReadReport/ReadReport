@@ -12,5 +12,7 @@ public final class BundleKey {
 
     public static final String BUNDLE_KEY_PICTURE_PATH_LIST_INDEX = "BUNDLE_KEY_PICTURE_PATH_LIST_INDEX";
 
+    public static final String BUNDLE_KEY_WEB_VIEW_URL = "BUNDLE_KEY_WEB_VIEW_URL";
 
+    public static final String BUNDLE_KEY_WEB_VIEW_TITLE = "BUNDLE_KEY_WEB_VIEW_TITLE";
 }
