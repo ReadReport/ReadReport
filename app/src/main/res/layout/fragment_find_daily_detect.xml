@@ -25,6 +25,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <com.wy.report.widget.view.dailydetect.WheelView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
         </LinearLayout>
