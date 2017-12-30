@@ -9,7 +9,7 @@ import java.util.List;
  * @author cantalou
  * @date 2017-12-26 23:14
  */
-public class DetectType {
+public class DailyDetectValueType {
 
     private static String[] DECIMAL_FORMAT_PATTERN = {"", "0.0", "0.00"};
 
@@ -21,10 +21,10 @@ public class DetectType {
 
     private int showNum;
 
-    public DetectType() {
+    public DailyDetectValueType() {
     }
 
-    public DetectType(String name, String unit, int showNum, double start, double end, double delta, int fraction) {
+    public DailyDetectValueType(String name, String unit, int showNum, double start, double end, double delta, int fraction) {
         this.name = name;
         this.unit = unit;
         this.showNum = showNum;
@@ -36,7 +36,7 @@ public class DetectType {
         }
     }
 
-    public DetectType(String name, String unit, int showNum, int start, int end, int delta) {
+    public DailyDetectValueType(String name, String unit, int showNum, int start, int end, int delta) {
         this.name = name;
         this.unit = unit;
         this.showNum = showNum;
@@ -46,14 +46,46 @@ public class DetectType {
         }
     }
 
-    public DetectType(String name, String unit, int showNum, int start, int end) {
+    public DailyDetectValueType(String name, String unit, int showNum, int start, int end) {
         this(name, unit, showNum, start, end, 1);
     }
 
-    public DetectType(String name, String unit, int showNum, List<String> values) {
+    public DailyDetectValueType(String name, String unit, int showNum, List<String> values) {
         this.name = name;
         this.unit = unit;
         this.showNum = showNum;
         this.values = values;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public List<String> getValues() {
+        return values;
+    }
+
+    public void setValues(List<String> values) {
+        this.values = values;
+    }
+
+    public int getShowNum() {
+        return showNum;
+    }
+
+    public void setShowNum(int showNum) {
+        this.showNum = showNum;
     }
 }

@@ -122,6 +122,8 @@ public class FindFragment extends PtrFragment {
             }
         });
         healthTestRecycleView.setAdapter(healthTestAdapter);
+        healthTestRecycleView.setHasFixedSize(true);
+        healthTestRecycleView.setNestedScrollingEnabled(false);
 
 
         healthKnowledgeRecycleView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
@@ -143,6 +145,9 @@ public class FindFragment extends PtrFragment {
             }
         });
         healthKnowledgeRecycleView.setAdapter(healthKnowledgeAdapter);
+        healthKnowledgeRecycleView.setHasFixedSize(true);
+        healthKnowledgeRecycleView.setNestedScrollingEnabled(false);
+
     }
 
     @Override
@@ -227,6 +232,12 @@ public class FindFragment extends PtrFragment {
                     });
                 }
                 container.addView(lineContainer, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                lineContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        router.open(getActivity(),AuthRouterManager.ROUTER_DAILY_DETECT);
+                    }
+                });
                 return lineContainer;
             }
 

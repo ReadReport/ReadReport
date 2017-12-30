@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,25 +15,105 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
+            android:background="@drawable/shape_white_corner">
+
+            <com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView
+                android:id="@+id/daily_detect_value_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/daily_detect_date_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_measuring_date"
+                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
+
+            <TextView
+                android:id="@+id/daily_detect_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="3dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/daily_detect_date_title"
+                android:textColor="@color/hui_575757"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintLeft_toRightOf="@+id/daily_detect_date_icon"
+                app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
+
+            <TextView
+                android:id="@+id/daily_detect_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="3dp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintLeft_toRightOf="@+id/daily_detect_date_title"
+                app:layout_constraintTop_toTopOf="@+id/daily_detect_save"
+                tools:text="2017-01-01"/>
+
+            <ImageView
+                android:id="@+id/daily_detect_time_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_measuring_time"
+                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintLeft_toRightOf="@id/daily_detect_date_value"
+                app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
+
+            <TextView
+                android:id="@+id/daily_detect_time_value"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="3dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/hui_575757"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintLeft_toRightOf="@+id/daily_detect_time_icon"
+                app:layout_constraintRight_toLeftOf="@+id/daily_detect_save"
+                app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
+
+            <TextView
+                android:id="@+id/daily_detect_save"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_blue_corner_25"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textColor="@color/lan_30acff"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_white_corner"
-            android:orientation="vertical">
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_white_corner">
 
-            <LinearLayout
-                android:id="@+id/holder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-                <com.wy.report.widget.view.dailydetect.WheelView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
 
-            </LinearLayout>
-
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 

@@ -7,7 +7,7 @@ import com.wy.report.ReportApplication;
 import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
-import com.wy.report.business.find.DailyDetectFragment;
+import com.wy.report.business.find.fragment.DailyDetectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.my.fragment.LoginFragment;
 import com.wy.report.business.my.fragment.RegisterFragment;

@@ -220,12 +220,13 @@ public class WheelView extends ScrollView {
     private int[] obtainSelectedAreaBorder() {
         if (null == selectedAreaBorder) {
             selectedAreaBorder = new int[2];
-            for (int i = 0; i < offset; i++) {
-                selectedAreaBorder[0] += getChildAt(i).getMeasuredHeight();
+            if (getChildCount() > offset) {
+                for (int i = 0; i < offset; i++) {
+                    selectedAreaBorder[0] += getChildAt(i).getMeasuredHeight();
+                }
+                selectedAreaBorder[1] = selectedAreaBorder[0] + getChildAt(offset).getMeasuredHeight();
             }
-            selectedAreaBorder[1] = selectedAreaBorder[0] + getChildAt(offset).getMeasuredHeight();
         }
-
         return selectedAreaBorder;
     }
 

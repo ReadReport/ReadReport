@@ -1,0 +1,5 @@
+<resources>
+    <string name="daily_detect_date_title">测量时间：</string>
+    <string name="daily_detect_tendency_char">趋势图</string>
+    <string name="daily_detect_data_list">数量列表</string>
+</resources>

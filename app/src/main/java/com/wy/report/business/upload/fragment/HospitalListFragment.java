@@ -25,6 +25,7 @@ public class HospitalListFragment extends ToolbarFragment {
     ViewPager viewPager;
 
     FragmentPagerAdapter pagerAdapter;
+
     @BindView(R.id.toolbar_tab_0)
     TextView tab0;
     @BindView(R.id.toolbar_tab_line_0)
