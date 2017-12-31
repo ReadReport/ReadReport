@@ -19,6 +19,8 @@ import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.LogUtils;
+import com.wy.report.util.StringUtils;
+import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -80,6 +82,16 @@ public class LoginFragment extends NetworkFragment {
                                   .create(MyService.class);
         String username = userName.getText().toString();
         String pwd      = passWord.getText().toString();
+        if(StringUtils.isBlank(username))
+        {
+            ToastUtils.showLong(R.string.my_verify_mobile_null);
+            return;
+        }
+        if(StringUtils.isBlank(pwd))
+        {
+            ToastUtils.showLong(R.string.my_verify_pwd_null);
+            return;
+        }
         LogUtils.d("登录 用户名", username);
         LogUtils.d("登录 密码", pwd);
         myService.loginByPwd(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {

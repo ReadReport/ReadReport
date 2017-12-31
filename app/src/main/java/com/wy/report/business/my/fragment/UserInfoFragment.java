@@ -1,9 +1,8 @@
-package com.wy.report.business.home.fragment;
+package com.wy.report.business.my.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -12,22 +11,23 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
+import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.fragment.PtrFragment;
+import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
-import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 我的
+ * 我的信息
  *
  * @author cantalou
  * @date 2017-11-26 23:04
  */
-public class MyFragment extends PtrFragment {
+public class UserInfoFragment extends ToolbarFragment {
 
 
     @BindView(R.id.my_header)
@@ -44,20 +44,19 @@ public class MyFragment extends PtrFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        ptrWithoutToolbar = true;
     }
 
     @Override
     protected void initView(View content) {
         super.initView(content);
-        setTitle(getString(R.string.home_my_title));
+        setTitle(getString(R.string.user_info_title));
     }
 
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        Drawable toolbarBackground = toolbar.getBackground();
-        toolbarBackground.setAlpha(0);
+//        Drawable toolbarBackground = toolbar.getBackground();
+//        toolbarBackground.setAlpha(0);
     }
 
     @Override
