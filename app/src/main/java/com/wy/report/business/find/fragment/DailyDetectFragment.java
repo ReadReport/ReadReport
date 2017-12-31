@@ -29,75 +29,75 @@ import butterknife.OnClick;
  * @date 2017-12-26 21:14
  */
 public abstract class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMenuItemClickListener {
-
-    @BindView(R.id.daily_detect_value_container)
-    DailyDetectValueContainerView detectValueContainerView;
-
-    @BindViews({R.id.daily_detect_date_value, R.id.daily_detect_date_title})
-    TextView dailyDetectDate;
-
-    @BindView(R.id.daily_detect_time_value)
-    TextView dailyDetectTime;
-
-    @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
-    }
-
-    @Override
-    protected void initView(View contentView) {
-        super.initView(contentView);
-    }
-
-    @Override
-    protected int contentLayoutID() {
-        return R.layout.fragment_find_daily_detect;
-    }
-
-    @Override
-    protected int getMenuLayoutId() {
-        return R.menu.menu_find_daily_detect;
-    }
-
-    @Override
-    protected void initToolbar() {
-        super.initToolbar();
-        toolbar.setOnMenuItemClickListener(this);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.find_daily_detect_more: {
-                break;
-            }
-        }
-        return false;
-    }
-
-    public abstract List<DailyDetectValueType> getData();
-
-    public abstract void saveDetectData();
-
-    @OnClick({R.id.daily_detect_date_title, R.id.daily_detect_date_value})
-    public void detectDateClick() {
-        Calendar cal = Calendar.getInstance();
-        new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                dailyDetectDate.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
-            }
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    @OnClick({R.id.daily_detect_time_value, R.id.daily_detect_time_icon})
-    public void detectTimeClick() {
-        Calendar cal = Calendar.getInstance();
-        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                dailyDetectTime.setText(hourOfDay + "：" + minute);
-            }
-        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);
-    }
+//
+//    @BindView(R.id.daily_detect_value_container)
+//    DailyDetectValueContainerView detectValueContainerView;
+//
+//    @BindViews({R.id.daily_detect_date_value, R.id.daily_detect_date_title})
+//    TextView dailyDetectDate;
+//
+//    @BindView(R.id.daily_detect_time_value)
+//    TextView dailyDetectTime;
+//
+//    @Override
+//    protected void initData(Bundle savedInstanceState) {
+//        super.initData(savedInstanceState);
+//    }
+//
+//    @Override
+//    protected void initView(View contentView) {
+//        super.initView(contentView);
+//    }
+//
+//    @Override
+//    protected int contentLayoutID() {
+//        return R.layout.fragment_find_daily_detect;
+//    }
+//
+//    @Override
+//    protected int getMenuLayoutId() {
+//        return R.menu.menu_find_daily_detect;
+//    }
+//
+//    @Override
+//    protected void initToolbar() {
+//        super.initToolbar();
+//        toolbar.setOnMenuItemClickListener(this);
+//    }
+//
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.find_daily_detect_more: {
+//                break;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public abstract List<DailyDetectValueType> getData();
+//
+//    public abstract void saveDetectData();
+//
+//    @OnClick({R.id.daily_detect_date_title, R.id.daily_detect_date_value})
+//    public void detectDateClick() {
+//        Calendar cal = Calendar.getInstance();
+//        new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                dailyDetectDate.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+//            }
+//        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+//    }
+//
+//    @OnClick({R.id.daily_detect_time_value, R.id.daily_detect_time_icon})
+//    public void detectTimeClick() {
+//        Calendar cal = Calendar.getInstance();
+//        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+//            @Override
+//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                dailyDetectTime.setText(hourOfDay + "：" + minute);
+//            }
+//        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);
+//    }
 }

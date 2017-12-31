@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@color/hui_f9f9f9"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hui_f9f9f9">
 
     <LinearLayout
         android:id="@+id/home_my_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/img_me_bg"
-        >
+        android:background="@drawable/img_me_bg">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/home_my_header_layout"
@@ -19,25 +17,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginBottom="30dp"
-            android:orientation="horizontal"
             android:clickable="true"
-            >
+            android:orientation="horizontal">
 
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/header"
+                android:id="@+id/my_header"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="25dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:src="@drawable/btn_login_no"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:riv_border_color="#333333"
                 app:riv_corner_radius="40dp"
-                app:riv_mutate_background="true"
-                app:riv_oval="true"
-                app:riv_tile_mode="repeat"
-                />
+                app:riv_mutate_background="true" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -45,26 +38,25 @@
                 android:layout_marginLeft="25dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/header"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintLeft_toRightOf="@+id/my_header"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/my_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_my_login_register"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/my_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/home_my_logined_privilege"
                     android:textColor="@color/hui_ebebeb"
-                    android:textSize="13sp"
-                    />
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <ImageView
@@ -74,8 +66,7 @@
                 android:src="@drawable/selector_my_login_more"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -85,8 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/home_my_header"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/home_my_header">
         <!-- 体检预约 -->
         <android.support.constraint.ConstraintLayout
             android:id="@+id/home_my_order"
@@ -94,6 +84,8 @@
             android:layout_height="55dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_white_corner"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
@@ -107,8 +99,7 @@
                 android:src="@drawable/ic_list_reservation"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,8 +110,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/home_my_reservation_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -129,149 +119,188 @@
                 android:src="@drawable/btn_list_more"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
 
-        <!-- 家庭管理 -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/home_my_family"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            >
+            android:background="@drawable/shape_white_corner"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/home_my_family_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <!-- 报告管理 -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/home_my_report_manage"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_list_member"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="@string/home_my_family_member_manage"
-                android:textColor="@color/hei_333333"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/home_my_family_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                <ImageView
+                    android:id="@+id/home_my_report_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_list_manage"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="4dp"
-                android:src="@drawable/btn_list_more"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/home_my_report_manage"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/home_my_report_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/btn_list_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
-        <!-- 消息 -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/home_my_message"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            >
-
-            <ImageView
-                android:id="@+id/home_my_message_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <!-- 家庭成员 -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/home_my_family"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_list_news"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="@string/home_my_report_manage"
-                android:textColor="@color/hei_333333"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/home_my_message_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                <ImageView
+                    android:id="@+id/home_my_family_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_list_member"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="4dp"
-                android:src="@drawable/selector_my_login_more"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/home_my_family_member_manage"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/home_my_family_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- 账号绑定 -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/home_my_bind"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/btn_list_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
-            >
 
-            <ImageView
-                android:id="@+id/home_my_bind_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <!-- 消息 -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/home_my_message"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_list_bind"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="@string/home_my_account_bind"
-                android:textColor="@color/hei_333333"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/home_my_bind_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="4dp"
-                android:src="@drawable/btn_list_more"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-        </android.support.constraint.ConstraintLayout>
+
+                >
+
+                <ImageView
+                    android:id="@+id/home_my_message_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_list_news"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/home_my_message"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/home_my_message_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/selector_my_login_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- 账号绑定 -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/home_my_bind"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                >
+
+                <ImageView
+                    android:id="@+id/home_my_bind_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_list_bind"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/home_my_account_bind"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/home_my_bind_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/btn_list_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
 
         <!-- 设置 -->
         <android.support.constraint.ConstraintLayout
@@ -281,6 +310,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/shape_white_corner"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
@@ -294,8 +324,7 @@
                 android:src="@drawable/ic_list_set"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -306,8 +335,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/home_my_setting_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -316,8 +344,7 @@
                 android:src="@drawable/btn_list_more"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

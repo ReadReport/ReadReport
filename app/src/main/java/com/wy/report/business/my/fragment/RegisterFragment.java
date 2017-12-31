@@ -3,6 +3,7 @@ package com.wy.report.business.my.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,6 +19,10 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.manager.router.Router;
+import com.wy.report.util.RegexUtils;
+import com.wy.report.util.StringUtils;
 import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
@@ -47,6 +52,9 @@ public class RegisterFragment extends NetworkFragment {
 
     @BindView(R.id.toolbar_menu)
     TextView menu;
+
+    @BindView(R.id.register_check)
+    CheckBox check;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -79,9 +87,31 @@ public class RegisterFragment extends NetworkFragment {
 
     @OnClick(R.id.register)
     public void register() {
-        String username   = userName.getText().toString();
-        String pwd        = passWord.getText().toString();
+        String username = userName.getText().toString();
+        String pwd = passWord.getText().toString();
         String verifycode = verifyCode.getText().toString();
+
+        if (!RegexUtils.isMobileSimple(username))
+        {
+            ToastUtils.showLong(R.string.my_verify_mobile_null);
+            return;
+        }
+        if (StringUtils.isBlank(verifycode))
+        {
+            ToastUtils.showLong(R.string.my_verify_verify_null);
+            return;
+        }
+        if (StringUtils.isBlank(pwd))
+        {
+            ToastUtils.showLong(R.string.my_verify_pwd_null);
+            return;
+        }
+        if (!check.isChecked())
+        {
+            ToastUtils.showLong(R.string.my_verify_check);
+            return;
+        }
+
         Log.d(TAG, "注册 用户名:" + username);
         Log.d(TAG, "注册 验证码:" + verifycode);
         Log.d(TAG, "注册 密码:" + pwd);
@@ -102,6 +132,11 @@ public class RegisterFragment extends NetworkFragment {
     @OnClick(R.id.get_verify_code)
     public void getVerifyCode() {
         String mobile = userName.getText().toString();
+        if (!RegexUtils.isMobileSimple(mobile))
+        {
+            ToastUtils.showLong(R.string.my_verify_mobile_null);
+            return;
+        }
         myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
@@ -109,6 +144,11 @@ public class RegisterFragment extends NetworkFragment {
                 ToastUtils.showLong(getResources().getString(R.string.my_verify_code_send));
             }
         });
+    }
+
+    @OnClick(R.id.toolbar_menu)
+    public void login() {
+        getActivity().finish();
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})

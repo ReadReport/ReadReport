@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <com.wy.report.widget.view.SuperEditText
@@ -32,8 +31,7 @@
         app:right_height="15"
         app:right_width="15"
         app:right_x="0"
-        app:right_y="0"
-        />
+        app:right_y="0" />
 
     <com.wy.report.widget.view.SuperEditText
         android:id="@+id/register_verify"
@@ -59,8 +57,8 @@
         app:right_height="15"
         app:right_width="15"
         app:right_x="0"
-        app:right_y="0"
-        />
+        app:right_y="0" />
+
     <TextView
         android:id="@+id/get_verify_code"
         android:layout_width="120dp"
@@ -72,11 +70,10 @@
         android:text="@string/my_verify_code_get_code"
         android:textColor="@color/lan_30acff"
         android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/register_verify"
         app:layout_constraintLeft_toRightOf="@+id/register_verify"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/register_verify"
-        app:layout_constraintBottom_toBottomOf="@+id/register_verify"
-        />
+        app:layout_constraintTop_toTopOf="@+id/register_verify" />
 
     <com.wy.report.widget.view.SuperEditText
         android:id="@+id/register_pwd"
@@ -105,8 +102,7 @@
         app:right_height="15"
         app:right_width="15"
         app:right_x="0"
-        app:right_y="0"
-        />
+        app:right_y="0" />
 
     <TextView
         android:id="@+id/register"
@@ -122,6 +118,38 @@
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_pwd"/>
+        app:layout_constraintTop_toBottomOf="@+id/register_pwd" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/register">
+
+        <CheckBox
+            android:id="@+id/register_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/my_read_protocol"
+            android:textColor="@color/hui_ababab"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/register_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_protocol"
+            android:textSize="12sp"
+            android:textColor="@color/lan_30acff" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

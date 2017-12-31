@@ -20,6 +20,7 @@ import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.LogUtils;
 import com.wy.report.util.RegexUtils;
+import com.wy.report.util.StringUtils;
 import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
@@ -48,11 +49,12 @@ public class VerifyLoginFragment extends NetworkFragment {
 
     @BindView(R.id.toolbar_menu)
     TextView menu;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         myService = RetrofitHelper.getInstance()
-                                  .create(MyService.class);
+                .create(MyService.class);
     }
 
     @Override
@@ -79,9 +81,16 @@ public class VerifyLoginFragment extends NetworkFragment {
 
     @OnClick(R.id.login)
     public void login() {
-
         String username = userName.getText().toString();
-        String pwd      = passWord.getText().toString();
+        String pwd = passWord.getText().toString();
+        if (StringUtils.isBlank(username)) {
+            ToastUtils.showLong(R.string.my_verify_mobile_null);
+            return;
+        }
+        if (StringUtils.isBlank(pwd)) {
+            ToastUtils.showLong(R.string.my_verify_pwd_null);
+            return;
+        }
         LogUtils.d(TAG, "登录 用户名:" + username);
         LogUtils.d(TAG, "登录 验证码:" + pwd);
         myService.loginByVerifyCode(username, pwd).subscribe(new NetworkSubscriber<ResponseModel<UserModel>>(this) {
@@ -106,15 +115,13 @@ public class VerifyLoginFragment extends NetworkFragment {
 
 
     @OnClick(R.id.get_verify_code)
-    public void getVerifyCode()
-    {
+    public void getVerifyCode() {
         String mobile = userName.getText().toString();
-        if(!RegexUtils.isMobileSimple(mobile))
-        {
+        if (!RegexUtils.isMobileSimple(mobile)) {
             ToastUtils.showLong(getResources().getString(R.string.my_verify_mobile_null));
             return;
         }
-        myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this){
+        myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
@@ -124,14 +131,12 @@ public class VerifyLoginFragment extends NetworkFragment {
     }
 
     @OnClick(R.id.toolbar_menu)
-    public void gotoRegister()
-    {
+    public void gotoRegister() {
         AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_REGISTER);
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
-    public void onLoginSuccess(User user)
-    {
+    public void onLoginSuccess(User user) {
         getActivity().finish();
     }
 }
