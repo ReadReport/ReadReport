@@ -1,4 +1,4 @@
-package com.wy.report.business.find.fragment;
+package com.wy.report.business.dailydetect.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.wy.report.R;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
@@ -47,11 +48,12 @@ public abstract class DailyDetectFragment extends ToolbarFragment implements Too
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
+        detectValueContainerView.setData(getData());
     }
 
     @Override
     protected int contentLayoutID() {
-        return R.layout.fragment_find_daily_detect;
+        return R.layout.fragment_daily_detect;
     }
 
     @Override
@@ -99,5 +101,10 @@ public abstract class DailyDetectFragment extends ToolbarFragment implements Too
                 dailyDetectTime.setText(hourOfDay + "：" + minute);
             }
         }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);
+    }
+
+    @OnClick(R.id.daily_detect_data_list_operate)
+    public void dataListOperateClick(){
+        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE,"");
     }
 }

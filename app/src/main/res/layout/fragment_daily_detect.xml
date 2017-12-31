@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/hui_f9f9f9"
         android:orientation="vertical"
         android:padding="10dp">
@@ -32,8 +32,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/ic_measuring_date"
-                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintBottom_toBottomOf="@+id/daily_detect_save"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
 
@@ -42,12 +43,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:text="@string/daily_detect_date_title"
                 android:textColor="@color/hui_575757"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintBottom_toBottomOf="@+id/daily_detect_save"
                 app:layout_constraintLeft_toRightOf="@+id/daily_detect_date_icon"
                 app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
 
@@ -56,8 +58,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintBottom_toBottomOf="@+id/daily_detect_save"
                 app:layout_constraintLeft_toRightOf="@+id/daily_detect_date_title"
                 app:layout_constraintTop_toTopOf="@+id/daily_detect_save"
                 tools:text="2017-01-01"/>
@@ -67,9 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/ic_measuring_time"
-                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
-                app:layout_constraintLeft_toRightOf="@id/daily_detect_date_value"
+                app:layout_constraintBottom_toBottomOf="@+id/daily_detect_save"
+                app:layout_constraintLeft_toRightOf="@+id/daily_detect_date_value"
                 app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
 
             <TextView
@@ -77,11 +81,12 @@
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:textColor="@color/hui_575757"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/daily_detect_save"
+                app:layout_constraintBottom_toBottomOf="@+id/daily_detect_save"
                 app:layout_constraintLeft_toRightOf="@+id/daily_detect_time_icon"
                 app:layout_constraintRight_toLeftOf="@+id/daily_detect_save"
                 app:layout_constraintTop_toTopOf="@+id/daily_detect_save"/>
@@ -91,6 +96,7 @@
                 android:layout_width="80dp"
                 android:layout_height="35dp"
                 android:layout_marginBottom="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/shape_blue_corner_25"
                 android:gravity="center"
@@ -108,9 +114,36 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_white_corner">
 
+            <com.wy.report.widget.tab.TwoTabLayoutDetect
+                android:id="@+id/daily_detect_tab_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <TextView
+                android:id="@+id/daily_detect_data_list_operate"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/edit"
+                android:textColor="@color/lan_30acff"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/daily_detect_tab_container"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/daily_detect_tab_container"
+                />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/daily_detect_tab_container"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp"/>
 
 
         </android.support.constraint.ConstraintLayout>

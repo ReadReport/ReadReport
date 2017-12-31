@@ -17,4 +17,7 @@ public class RxKey {
     public static final String RX_HOSPITAL_UNIT_SELECT = "RX_HOSPITAL_UNIT_SELECT";
 
     public static final String RX_LOGIN = "RX_LOGIN";
+
+    public static final String RX_DAILY_DETECT_DATA_OPERATE = "RX_DAILY_DETECT_DATA_OPERATE";
+
 }

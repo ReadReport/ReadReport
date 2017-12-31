@@ -3,4 +3,6 @@
     <string name="more">更多</string>
     <string name="confirm">确定</string>
     <string name="save">保存</string>
+    <string name="edit">编辑</string>
+    <string name="done">完成</string>
 </resources>
