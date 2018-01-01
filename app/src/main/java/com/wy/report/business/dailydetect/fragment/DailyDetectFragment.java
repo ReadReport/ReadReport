@@ -11,8 +11,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
+import com.wy.report.business.home.model.DailyDetectModel;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
 
@@ -29,26 +31,29 @@ import butterknife.OnClick;
  * @author cantalou
  * @date 2017-12-26 21:14
  */
-public abstract class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMenuItemClickListener {
+public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMenuItemClickListener {
 
     @BindView(R.id.daily_detect_value_container)
     DailyDetectValueContainerView detectValueContainerView;
 
-    @BindViews({R.id.daily_detect_date_value, R.id.daily_detect_date_title})
+    @BindView(R.id.daily_detect_date_value)
     TextView dailyDetectDate;
 
     @BindView(R.id.daily_detect_time_value)
     TextView dailyDetectTime;
 
+    private DailyDetectModel model;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        model = getArguments().getParcelable(BundleKey.BUNDLE_KEY_MODEL);
     }
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        detectValueContainerView.setData(getData());
+        detectValueContainerView.setData(null);
     }
 
     @Override
@@ -77,10 +82,6 @@ public abstract class DailyDetectFragment extends ToolbarFragment implements Too
         return false;
     }
 
-    public abstract List<DailyDetectValueType> getData();
-
-    public abstract void saveDetectData();
-
     @OnClick({R.id.daily_detect_date_title, R.id.daily_detect_date_value})
     public void detectDateClick() {
         Calendar cal = Calendar.getInstance();
@@ -104,7 +105,7 @@ public abstract class DailyDetectFragment extends ToolbarFragment implements Too
     }
 
     @OnClick(R.id.daily_detect_data_list_operate)
-    public void dataListOperateClick(){
-        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE,"");
+    public void dataListOperateClick() {
+        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE, "");
     }
 }

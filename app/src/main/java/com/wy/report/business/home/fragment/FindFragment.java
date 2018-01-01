@@ -1,6 +1,7 @@
 package com.wy.report.business.home.fragment;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
@@ -227,15 +229,18 @@ public class FindFragment extends PtrFragment {
                     item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            router.open(getActivity(), AuthRouterManager.ROUTER_DAILY_DETECT);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable(BundleKey.BUNDLE_KEY_MODEL, (Parcelable) v.getTag());
+                            router.open(getActivity(), AuthRouterManager.ROUTER_DAILY_DETECT, bundle);
                         }
                     });
+                    item.setTag(model);
                 }
                 container.addView(lineContainer, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 lineContainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        router.open(getActivity(),AuthRouterManager.ROUTER_DAILY_DETECT);
+                        router.open(getActivity(), AuthRouterManager.ROUTER_DAILY_DETECT);
                     }
                 });
                 return lineContainer;

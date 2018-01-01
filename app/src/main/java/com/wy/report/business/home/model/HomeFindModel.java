@@ -24,11 +24,11 @@ public class HomeFindModel {
     public List<DailyDetectModel> getDailyDetectModels() {
         if(dailyDetectModels == null){
             dailyDetectModels = new ArrayList<>();
-            dailyDetectModels.add(new DailyDetectModel(1, "血压管理", R.drawable.btn_rcjc_bloodpressure));
-            dailyDetectModels.add(new DailyDetectModel(2, "血糖管理", R.drawable.btn_rcjc_bloodsugar));
-            dailyDetectModels.add(new DailyDetectModel(3, "体重管理", R.drawable.btn_rcjc_bodyweight));
-            dailyDetectModels.add(new DailyDetectModel(4, "体脂管理", R.drawable.btn_rcjc_bodyfat));
-            dailyDetectModels.add(new DailyDetectModel(5, "血脂管理", R.drawable.btn_rcjc_bloodpressure));
+            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BLOOD_PRESSURE, "血压管理", R.drawable.btn_rcjc_bloodpressure));
+            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BLOOD_SUGAR, "血糖管理", R.drawable.btn_rcjc_bloodsugar));
+            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BMI, "体重管理", R.drawable.btn_rcjc_bodyweight));
+            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BODY_FAT, "体脂管理", R.drawable.btn_rcjc_bodyfat));
+            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BLOOD_FAT, "血脂管理", R.drawable.btn_rcjc_bloodlipids));
         }
         return dailyDetectModels;
     }

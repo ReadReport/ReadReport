@@ -15,4 +15,6 @@ public final class BundleKey {
     public static final String BUNDLE_KEY_WEB_VIEW_URL = "BUNDLE_KEY_WEB_VIEW_URL";
 
     public static final String BUNDLE_KEY_WEB_VIEW_TITLE = "BUNDLE_KEY_WEB_VIEW_TITLE";
+
+    public static final String BUNDLE_KEY_MODEL = "BUNDLE_KEY_MODEL";
 }

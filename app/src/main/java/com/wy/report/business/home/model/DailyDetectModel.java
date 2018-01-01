@@ -9,6 +9,52 @@ import com.wy.report.base.model.BaseModel;
  */
 public class DailyDetectModel extends BaseModel {
 
+
+    /**
+     * 血压
+     */
+    public static final int DETECT_TYPE_BLOOD_PRESSURE = 1;
+
+    /**
+     * 血糖
+     */
+    public static final int DETECT_TYPE_BLOOD_SUGAR = 2;
+
+    /**
+     * BMI
+     */
+    public static final int DETECT_TYPE_BMI = 3;
+
+    /**
+     * 运动
+     */
+    public static final int DETECT_TYPE_SPORT = 4;
+
+    /**
+     * 睡眠
+     */
+    public static final int DETECT_TYPE_SLEEP = 5;
+
+    /**
+     * 体脂
+     */
+    public static final int DETECT_TYPE_BODY_FAT = 6;
+
+    /**
+     * 血脂
+     */
+    public static final int DETECT_TYPE_BLOOD_FAT = 7;
+
+    /**
+     * 血尿酸
+     */
+    public static final int DETECT_TYPE_BUA = 8;
+
+    /**
+     * 血氧
+     */
+    public static final int DETECT_TYPE_BLOOD_OXY = 9;
+
     private int id;
 
     private String title;
