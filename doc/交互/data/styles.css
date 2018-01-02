@@ -9,6 +9,8 @@
 }
 .box_1 {
 }
+._水平线 {
+}
 .box_2 {
 }
 ._图片 {
@@ -74,6 +76,12 @@
 .sticky_1 {
   text-align:left;
 }
+.sticky_3 {
+  text-align:left;
+}
+.marker {
+  color:#FFFFFF;
+}
 .line {
 }
 .menu_item {
@@ -85,6 +93,13 @@
 ._连接线 {
 }
 ._形状 {
+  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-weight:700;
+  font-style:normal;
+  font-size:13px;
+  color:#0099FF;
+  text-align:center;
+  line-height:normal;
 }
 .ellipse {
 }
