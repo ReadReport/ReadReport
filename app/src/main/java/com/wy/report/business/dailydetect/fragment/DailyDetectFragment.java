@@ -15,6 +15,7 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.home.model.DailyDetectModel;
+import com.wy.report.helper.dailydetect.DailyDetectHelper;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
 
@@ -53,7 +54,7 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        detectValueContainerView.setData(null);
+        detectValueContainerView.setData(DailyDetectHelper.getTypes(model));
     }
 
     @Override

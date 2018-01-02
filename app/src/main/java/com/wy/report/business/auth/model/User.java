@@ -12,6 +12,10 @@ import com.wy.report.base.model.BaseModel;
  */
 public class User extends BaseModel implements Parcelable{
 
+    public static final int GENDER_MALE = 1;
+
+    public static final int GENDER_FEMALE = 2;
+
     /**
      * 用户ID
      */

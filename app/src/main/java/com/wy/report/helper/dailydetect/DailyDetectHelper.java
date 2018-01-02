@@ -3,7 +3,11 @@ package com.wy.report.helper.dailydetect;
 import android.util.SparseArray;
 
 import com.wy.report.business.home.model.DailyDetectModel;
+import com.wy.report.helper.dailydetect.impl.BMICreator;
+import com.wy.report.helper.dailydetect.impl.BloodFatCreator;
 import com.wy.report.helper.dailydetect.impl.BloodPressureCreator;
+import com.wy.report.helper.dailydetect.impl.BloodSugarCreator;
+import com.wy.report.helper.dailydetect.impl.BodyFatCreator;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
 
 import java.util.List;
@@ -19,6 +23,10 @@ public class DailyDetectHelper {
 
     static {
         types.put(DailyDetectModel.DETECT_TYPE_BLOOD_PRESSURE, new BloodPressureCreator());
+        types.put(DailyDetectModel.DETECT_TYPE_BLOOD_FAT, new BloodFatCreator());
+        types.put(DailyDetectModel.DETECT_TYPE_BLOOD_SUGAR, new BloodSugarCreator());
+        types.put(DailyDetectModel.DETECT_TYPE_BMI, new BMICreator());
+        types.put(DailyDetectModel.DETECT_TYPE_BODY_FAT, new BodyFatCreator());
     }
 
     public static List<DailyDetectValueType> getTypes(DailyDetectModel model) {

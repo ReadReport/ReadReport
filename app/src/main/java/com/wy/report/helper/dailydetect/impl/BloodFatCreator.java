@@ -1,6 +1,8 @@
 package com.wy.report.helper.dailydetect.impl;
 
+import com.wy.report.business.auth.model.User;
 import com.wy.report.helper.dailydetect.DailyDetectValueCreator;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueType.Builder;
 
@@ -27,14 +29,44 @@ public class BloodFatCreator implements DailyDetectValueCreator {
                                                .unit("mmol/L")
                                                .start(2.8)
                                                .end(5.7)
+                                               .fraction("0.0")
+                                               .delta(0.1)
                                                .create();
+        result.add(tc);
 
         DailyDetectValueType tg = new Builder().name("甘油三酯")
                                                .unit("mmol/L")
                                                .start(0.56)
                                                .end(5.17)
+                                               .fraction("0.0")
+                                               .delta(0.1)
                                                .create();
+        result.add(tg);
 
-        return null;
+        User user = UserManger.getInstance()
+                              .getLoginUser();
+        Builder builder = new Builder().name("高胆固醇")
+                                       .unit("mmol/L")
+                                       .fraction("0.00")
+                                       .delta(0.01);
+        if (user.getSex() == User.GENDER_MALE) {
+            builder.start(0.96)
+                   .end(1.15);
+        } else {
+            builder.start(0.90)
+                   .end(1.55);
+        }
+        result.add(builder.create());
+
+        DailyDetectValueType ldl = new Builder().name("低胆固醇")
+                                                .unit("mmol/L")
+                                                .start(0)
+                                                .end(3.1)
+                                                .fraction("0.0")
+                                                .delta(0.1)
+                                                .create();
+        result.add(ldl);
+
+        return result;
     }
 }
