@@ -13,7 +13,7 @@ public class HospitalProvinceModel extends BaseModel {
 
     private String province;
 
-    private List<HospitalCityModel> city;
+    private List<UnitModel> units;
 
     private boolean selected;
 
@@ -33,11 +33,11 @@ public class HospitalProvinceModel extends BaseModel {
         this.selected = selected;
     }
 
-    public List<HospitalCityModel> getCity() {
-        return city;
+    public List<UnitModel> getUnits() {
+        return units;
     }
 
-    public void setCity(List<HospitalCityModel> city) {
-        this.city = city;
+    public void setUnits(List<UnitModel> units) {
+        this.units = units;
     }
 }

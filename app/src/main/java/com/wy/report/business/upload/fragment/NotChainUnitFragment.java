@@ -13,7 +13,6 @@ import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
-import com.wy.report.business.upload.model.HospitalCityModel;
 import com.wy.report.business.upload.model.HospitalProvinceModel;
 import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.service.HospitalService;
@@ -49,6 +48,10 @@ public class NotChainUnitFragment extends PtrFragment {
 
     private int selectedProvince = 0;
 
+    private List<HospitalProvinceModel> provinces;
+
+    private List<UnitModel> allUnits = new ArrayList<>();
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -72,7 +75,7 @@ public class NotChainUnitFragment extends PtrFragment {
         adapterLeft.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                showProvinceUnitData(position);
+                showProvince(position);
             }
         });
         recycleViewLeft.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -93,6 +96,12 @@ public class NotChainUnitFragment extends PtrFragment {
         });
         recycleViewRight.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recycleViewRight.setAdapter(adapterRight);
+        recycleViewRight.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+            }
+        });
     }
 
 
@@ -103,29 +112,45 @@ public class NotChainUnitFragment extends PtrFragment {
                            @Override
                            public void onNext(ResponseModel<List<HospitalProvinceModel>> listResponseModel) {
                                super.onNext(listResponseModel);
-                               adapterLeft.setNewData(listResponseModel.getData());
-                               showProvinceUnitData(0);
+
+                               provinces = listResponseModel.getData();
+                               adapterLeft.setNewData(provinces);
+
+                               allUnits.clear();
+                               for (HospitalProvinceModel provinceModel : listResponseModel.getData()) {
+                                   allUnits.addAll(provinceModel.getUnits());
+                               }
+                               adapterRight.setNewData(allUnits);
+
+                               showProvince(0);
                            }
                        });
     }
 
-    private void showProvinceUnitData(int position) {
-
+    private void showProvince(int position) {
         HospitalProvinceModel provinceModel = adapterLeft.getItem(selectedProvince);
         if (provinceModel != null) {
             provinceModel.setSelected(false);
             adapterLeft.notifyItemChanged(selectedProvince);
         }
-
         provinceModel = adapterLeft.getItem(position);
         provinceModel.setSelected(true);
         adapterLeft.notifyItemChanged(position);
-        List<UnitModel> allUnits = new ArrayList<>();
-        for (HospitalCityModel cityModel : provinceModel.getCity()) {
-            allUnits.addAll(cityModel.getUnits());
-        }
-        adapterRight.setNewData(allUnits);
         selectedProvince = position;
+
+        scrollToProvince(provinceModel.getProvince());
+    }
+
+    private void scrollToProvince(String province) {
+        for (int i = 0; i < allUnits.size(); i++) {
+            UnitModel unit = allUnits.get(i);
+            if (province.equals(unit.getProvince())) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recycleViewRight.getLayoutManager();
+                layoutManager.scrollToPositionWithOffset(i + 1, 0);
+                layoutManager.setStackFromEnd(true);
+                break;
+            }
+        }
     }
 
     @Override
