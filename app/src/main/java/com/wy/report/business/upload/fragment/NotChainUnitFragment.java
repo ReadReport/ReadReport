@@ -75,7 +75,7 @@ public class NotChainUnitFragment extends PtrFragment {
         adapterLeft.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                showProvince(position);
+                changeLeftProvince(position);
             }
         });
         recycleViewLeft.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -99,11 +99,12 @@ public class NotChainUnitFragment extends PtrFragment {
         recycleViewRight.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                UnitModel model = adapterRight.getItem(manager.findFirstVisibleItemPosition());
+                leftShowProvince(model.getProvince());
             }
         });
     }
-
 
     @Override
     protected void loadData() {
@@ -121,27 +122,51 @@ public class NotChainUnitFragment extends PtrFragment {
                                    allUnits.addAll(provinceModel.getUnits());
                                }
                                adapterRight.setNewData(allUnits);
-
-                               showProvince(0);
+                               changeLeftProvince(0);
                            }
                        });
     }
 
-    private void showProvince(int position) {
+    private void changeLeftProvince(int position) {
+        HospitalProvinceModel provinceModel = provinces.get(position);
+        leftShowProvince(provinceModel.getProvince());
+        rightShowProvince(provinceModel.getProvince());
+    }
+
+
+    private void leftShowProvince(String province) {
+
         HospitalProvinceModel provinceModel = adapterLeft.getItem(selectedProvince);
         if (provinceModel != null) {
             provinceModel.setSelected(false);
             adapterLeft.notifyItemChanged(selectedProvince);
         }
+
+        int position = 0;
+        List<HospitalProvinceModel> provinces = adapterLeft.getData();
+        for (int i = 0; i < provinces.size(); i++) {
+            provinceModel = provinces.get(i);
+            if (province.equals(provinceModel.getProvince())) {
+                position = i;
+                break;
+            }
+        }
+
         provinceModel = adapterLeft.getItem(position);
         provinceModel.setSelected(true);
         adapterLeft.notifyItemChanged(position);
         selectedProvince = position;
 
-        scrollToProvince(provinceModel.getProvince());
+//        LinearLayoutManager manager = (LinearLayoutManager) recycleViewLeft.getLayoutManager();
+//        int showCount = manager.findLastVisibleItemPosition() - manager.findFirstVisibleItemPosition() + 1;
+//        int toPosition = (position - manager.findFirstVisibleItemPosition()) - showCount / 2;
+//        if (toPosition < 0) {
+//            toPosition = 0;
+//        }
+//        manager.smoothScrollToPosition(recycleViewLeft, null, toPosition);
     }
 
-    private void scrollToProvince(String province) {
+    private void rightShowProvince(String province) {
         for (int i = 0; i < allUnits.size(); i++) {
             UnitModel unit = allUnits.get(i);
             if (province.equals(unit.getProvince())) {
