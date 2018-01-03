@@ -1,6 +1,5 @@
 package com.wy.report.business.my.fragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -11,12 +10,9 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.BaseFragment;
-import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.auth.model.User;
-import com.wy.report.manager.router.AuthRouterManager;
-import com.wy.report.util.StringUtils;
+import com.wy.report.manager.auth.UserManger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,72 +26,93 @@ import butterknife.OnClick;
 public class UserInfoFragment extends ToolbarFragment {
 
 
-    @BindView(R.id.my_header)
+    private static String TAG = "UserInfoFragment";
+
+    @BindView(R.id.user_info_header)
     RoundedImageView header;
 
-    @BindView(R.id.my_username)
-    TextView userName;
+    @BindView(R.id.user_info_name)
+    TextView name;
 
-    @BindView(R.id.my_phone)
-    TextView phone;
+    @BindView(R.id.user_info_birthday)
+    TextView birthday;
 
-    private boolean isLogin;
+    @BindView(R.id.user_info_sex)
+    TextView sex;
+
+    private User user;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        user = UserManger.getInstance().getLoginUser();
     }
 
     @Override
-    protected void initView(View content) {
-        super.initView(content);
-        setTitle(getString(R.string.user_info_title));
+    protected void initView(View contentView) {
+        super.initView(contentView);
+        updataInfo();
     }
 
     @Override
     protected void initToolbar() {
         super.initToolbar();
-//        Drawable toolbarBackground = toolbar.getBackground();
-//        toolbarBackground.setAlpha(0);
+        setTitle(getResources().getString(R.string.user_info_title));
     }
-
-    @Override
-    protected int toolbarFlag() {
-        return TOOL_BAR_FLAG_SHOW | TOOL_BAR_FLAG_OVERLAY;
-    }
-
 
     @Override
     protected int contentLayoutID() {
-        return R.layout.fragment_my;
-    }
-
-    @OnClick(R.id.home_my_header_layout)
-    public void onHeaderClick() {
-        if (isLogin) {
-
-        } else {
-            AuthRouterManager.getInstance()
-                    .getRouter()
-                    .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
-        }
+        return R.layout.fragment_user_info;
     }
 
 
-    @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
-    public void onLoginSuccess(User user) {
-        if (user == null) {
-            return;
-        }
-        isLogin = true;
-        if (!StringUtils.isBlank(user.getHead())) {
-            Glide.with(getActivity())
-                    .load(user.getHead())
-                    .into(header);
-        }
-        String name = StringUtils.isBlank(user.getName()) ? "null" : user.getName();
-        String phoneNum = StringUtils.isBlank(user.getMobile()) ? "null" : user.getMobile();
-        userName.setText(name);
-        phone.setText(phoneNum);
+    @OnClick(R.id.user_info_quit_login)
+    public void quitLogin() {
+        UserManger.getInstance().logout();
     }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_LOGOUT)})
+    public void onLogout() {
+        getActivity().finish();
+    }
+
+    private void updataInfo() {
+        if (user != null) {
+            name.setText(user.getName());
+            birthday.setText(String.valueOf(user.getBirthday()));
+            sex.setText(user.getSex());
+            Glide.with(getActivity()).load(user.getHead()).into(header);
+        }
+    }
+
+    /**修改头像*/
+    @OnClick(R.id.user_info_header_info)
+    public void modifyHeader() {
+        UserManger.getInstance().logout();
+    }
+
+    /**
+     * 修改名字
+     */
+    @OnClick(R.id.user_info_user_name_info)
+    public void modifyName() {
+        UserManger.getInstance().logout();
+    }
+
+    /**
+     * 修改生日
+     */
+    @OnClick(R.id.user_info_birthday_info)
+    public void modifyBirthday() {
+        UserManger.getInstance().logout();
+    }
+
+    /**
+     * 修改性别
+     */
+    @OnClick(R.id.user_info_sex_info)
+    public void modifySex() {
+        UserManger.getInstance().logout();
+    }
+
 }
