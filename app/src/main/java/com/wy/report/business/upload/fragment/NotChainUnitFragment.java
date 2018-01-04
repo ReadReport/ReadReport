@@ -1,9 +1,13 @@
 package com.wy.report.business.upload.fragment;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
@@ -75,16 +79,18 @@ public class NotChainUnitFragment extends PtrFragment {
         adapterLeft.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                changeLeftProvince(position);
+                HospitalProvinceModel provinceModel = provinces.get(position);
+                rightShowProvince(provinceModel.getProvince());
             }
         });
-        recycleViewLeft.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recycleViewLeft.setLayoutManager(new SmoothScrollLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recycleViewLeft.setAdapter(adapterLeft);
+        recycleViewLeft.setItemAnimator(null);
 
         adapterRight = new BaseQuickAdapter<UnitModel, BaseViewHolder>(R.layout.vh_hospital_unit) {
             @Override
             protected void convert(BaseViewHolder helper, UnitModel item) {
-                helper.setText(R.id.vh_hospital_title, item.getTitle());
+                helper.setText(R.id.vh_hospital_title, item.getProvince() + "-" + item.getTitle());
             }
         };
         adapterRight.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -115,6 +121,8 @@ public class NotChainUnitFragment extends PtrFragment {
                                super.onNext(listResponseModel);
 
                                provinces = listResponseModel.getData();
+                               provinces.get(0)
+                                        .setSelected(true);
                                adapterLeft.setNewData(provinces);
 
                                allUnits.clear();
@@ -122,48 +130,43 @@ public class NotChainUnitFragment extends PtrFragment {
                                    allUnits.addAll(provinceModel.getUnits());
                                }
                                adapterRight.setNewData(allUnits);
-                               changeLeftProvince(0);
                            }
                        });
-    }
-
-    private void changeLeftProvince(int position) {
-        HospitalProvinceModel provinceModel = provinces.get(position);
-        leftShowProvince(provinceModel.getProvince());
-        rightShowProvince(provinceModel.getProvince());
     }
 
 
     private void leftShowProvince(String province) {
 
-        HospitalProvinceModel provinceModel = adapterLeft.getItem(selectedProvince);
-        if (provinceModel != null) {
-            provinceModel.setSelected(false);
-            adapterLeft.notifyItemChanged(selectedProvince);
-        }
-
-        int position = 0;
+        int pendingPosition = 0;
         List<HospitalProvinceModel> provinces = adapterLeft.getData();
+        HospitalProvinceModel provinceModel = null;
         for (int i = 0; i < provinces.size(); i++) {
             provinceModel = provinces.get(i);
             if (province.equals(provinceModel.getProvince())) {
-                position = i;
+                pendingPosition = i;
                 break;
             }
         }
 
-        provinceModel = adapterLeft.getItem(position);
-        provinceModel.setSelected(true);
-        adapterLeft.notifyItemChanged(position);
-        selectedProvince = position;
+        if (provinceModel == null || selectedProvince == pendingPosition) {
+            return;
+        }
 
-//        LinearLayoutManager manager = (LinearLayoutManager) recycleViewLeft.getLayoutManager();
-//        int showCount = manager.findLastVisibleItemPosition() - manager.findFirstVisibleItemPosition() + 1;
-//        int toPosition = (position - manager.findFirstVisibleItemPosition()) - showCount / 2;
-//        if (toPosition < 0) {
-//            toPosition = 0;
-//        }
-//        manager.smoothScrollToPosition(recycleViewLeft, null, toPosition);
+        provinceModel.setSelected(true);
+        adapterLeft.notifyItemChanged(pendingPosition);
+
+        provinceModel = adapterLeft.getItem(selectedProvince);
+        provinceModel.setSelected(false);
+        adapterLeft.notifyItemChanged(selectedProvince);
+        selectedProvince = pendingPosition;
+
+        LinearLayoutManager manager = (LinearLayoutManager) recycleViewLeft.getLayoutManager();
+        int showCount = manager.findLastVisibleItemPosition() - manager.findFirstVisibleItemPosition();
+        int toPosition = pendingPosition - showCount / 2;
+        if (toPosition < 0) {
+            toPosition = 0;
+        }
+        recycleViewLeft.smoothScrollToPosition(toPosition);
     }
 
     private void rightShowProvince(String province) {
@@ -192,5 +195,35 @@ public class NotChainUnitFragment extends PtrFragment {
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
         return super.checkCanDoRefresh(frame, content, header) && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewLeft, header)
                 && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewRight, header);
+    }
+
+    public class SmoothScrollLayoutManager extends LinearLayoutManager {
+
+        public SmoothScrollLayoutManager(Context context, int orientation, boolean reverseLayout) {
+            super(context, orientation, reverseLayout);
+        }
+
+        @Override
+        public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, final int position) {
+
+            LinearSmoothScroller smoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
+                @Override
+                protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                    return 150f / displayMetrics.densityDpi;
+                }
+
+                @Override
+                public PointF computeScrollVectorForPosition(int targetPosition) {
+                    return SmoothScrollLayoutManager.this.computeScrollVectorForPosition(targetPosition);
+                }
+
+                @Override protected int getVerticalSnapPreference() {
+                    return LinearSmoothScroller.SNAP_TO_START;
+                }
+            };
+
+            smoothScroller.setTargetPosition(position);
+            startSmoothScroll(smoothScroller);
+        }
     }
 }
