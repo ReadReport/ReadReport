@@ -1,6 +1,7 @@
 package com.wy.report.business.my.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.my.model.MessageItemMode;
 import com.wy.report.business.my.model.MessageListMode;
 import com.wy.report.business.my.model.RegisterMode;
 import com.wy.report.business.my.model.UserModel;
@@ -64,4 +65,12 @@ public interface MyService {
      */
     @GET("/Message/get_messages")
     Observable<ResponseModel<MessageListMode>> getMessage(@Query("mid") String mid);
+
+    /**
+     * 消息详情
+     *
+     * @return
+     */
+    @GET("/Message/get_message_details")
+    Observable<ResponseModel<MessageItemMode>> getMessageDetail(@Query("mid") String mid,@Query("mes_id") String msgId);
 }
