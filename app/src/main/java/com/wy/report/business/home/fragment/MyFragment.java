@@ -3,7 +3,6 @@ package com.wy.report.business.home.fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,7 +15,6 @@ import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
-import com.wy.report.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -81,6 +79,17 @@ public class MyFragment extends PtrFragment {
                     .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
         }
     }
+
+
+    @OnClick(R.id.home_my_message)
+    public void onMessage() {
+        if (isLogin) {
+            AuthRouterManager.getInstance()
+                             .getRouter()
+                             .open(getActivity(), AuthRouterManager.ROUTER_MESSAGE);
+        }
+    }
+
 
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})

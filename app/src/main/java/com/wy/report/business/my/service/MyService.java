@@ -1,6 +1,7 @@
 package com.wy.report.business.my.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.my.model.MessageListMode;
 import com.wy.report.business.my.model.RegisterMode;
 import com.wy.report.business.my.model.UserModel;
 
@@ -53,4 +54,14 @@ public interface MyService {
     @FormUrlEncoded
     @POST("/Member/member_register")
     Observable<ResponseModel<RegisterMode>> register(@Field("mobile") String mobile, @Field("password") String pwd, @Field("verify") String verify);
+
+
+
+    /**
+     * 获取消息
+     *
+     * @return
+     */
+    @GET("/Message/get_messages")
+    Observable<ResponseModel<MessageListMode>> getMessage(@Query("mid") String mid);
 }

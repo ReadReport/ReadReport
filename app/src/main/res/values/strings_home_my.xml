@@ -20,5 +20,5 @@
 
     <string name="message_title">消息</string>
     <string name="message_delete">删除</string>
-
+    <string name="message_empty">你还没有更多消息哦～</string>
 </resources>
