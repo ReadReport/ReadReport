@@ -37,7 +37,6 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  */
 public class NotChainUnitFragment extends PtrFragment {
 
-
     @BindView(R.id.recycle_view_left)
     RecyclerView recycleViewLeft;
 
@@ -90,7 +89,7 @@ public class NotChainUnitFragment extends PtrFragment {
         adapterRight = new BaseQuickAdapter<UnitModel, BaseViewHolder>(R.layout.vh_hospital_unit) {
             @Override
             protected void convert(BaseViewHolder helper, UnitModel item) {
-                helper.setText(R.id.vh_hospital_title, item.getProvince() + "-" + item.getTitle());
+                helper.setText(R.id.vh_hospital_title, item.getTitle());
             }
         };
         adapterRight.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
