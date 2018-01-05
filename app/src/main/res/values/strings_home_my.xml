@@ -23,4 +23,10 @@
     <string name="message_empty">你还没有更多消息哦～</string>
 
     <string name="message_detail_title">消息详情</string>
+
+
+    <string name="family_title">家庭成员</string>
+
+
+    <string name="edit_family_title">成员编辑</string>
 </resources>

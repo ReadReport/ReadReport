@@ -90,6 +90,16 @@ public class MyFragment extends PtrFragment {
         }
     }
 
+    @OnClick(R.id.home_my_family)
+    public void onFamily() {
+        if (isLogin) {
+            AuthRouterManager.getInstance()
+                             .getRouter()
+                             .open(getActivity(), AuthRouterManager.ROUTER_FAMILY);
+        }
+    }
+
+
 
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})

@@ -9,6 +9,7 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.business.dailydetect.fragment.DailyDetectDispatchFragment;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
+import com.wy.report.business.my.fragment.FamilyFragment;
 import com.wy.report.business.my.fragment.LoginFragment;
 import com.wy.report.business.my.fragment.MessageDetailFragment;
 import com.wy.report.business.my.fragment.MessageFragment;
@@ -104,6 +105,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_MESSAGE_DETAIL = PUBLIC_ACTIVITY_PREFIX + "ROUTER_MESSAGE_DETAIL";
 
+    /**
+     * 家庭成员界面
+     */
+    public static final String ROUTER_FAMILY = PUBLIC_ACTIVITY_PREFIX + "ROUTER_FAMILY";
+
     private Router router;
 
     private UserManger userManger;
@@ -150,6 +156,7 @@ public class AuthRouterManager {
         router.map(ROUTER_REGISTER, StandardActivity.class, RegisterFragment.class);
         router.map(ROUTER_MESSAGE, StandardActivity.class, MessageFragment.class);
         router.map(ROUTER_MESSAGE_DETAIL, StandardActivity.class, MessageDetailFragment.class);
+        router.map(ROUTER_FAMILY, StandardActivity.class, FamilyFragment.class);
     }
 
     /**

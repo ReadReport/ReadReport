@@ -1,10 +1,13 @@
 package com.wy.report.business.my.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.my.model.FamilyItemMode;
 import com.wy.report.business.my.model.MessageItemMode;
 import com.wy.report.business.my.model.MessageListMode;
 import com.wy.report.business.my.model.RegisterMode;
 import com.wy.report.business.my.model.UserModel;
+
+import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -81,4 +84,13 @@ public interface MyService {
      */
     @GET("/Message/del_messges")
     Observable<ResponseModel> delMessage(@Query("mid") String mid,@Query("single_del_messges") String msgId);
+
+
+    /**
+     * 删除消息
+     *
+     * @return
+     */
+    @GET("/Member/get_family_member")
+    Observable<ResponseModel<List<FamilyItemMode>>> getFamily(@Query("mid") String mid);
 }
