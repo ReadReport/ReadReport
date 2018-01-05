@@ -27,8 +27,8 @@ public class BloodFatCreator implements DailyDetectValueCreator {
 
         DailyDetectValueType tc = new Builder().name("总胆固醇")
                                                .unit("mmol/L")
-                                               .start(2.8)
-                                               .end(5.7)
+                                               .start(1.0)
+                                               .end(1.70)
                                                .fraction("0.0")
                                                .delta(0.1)
                                                .create();
@@ -36,8 +36,8 @@ public class BloodFatCreator implements DailyDetectValueCreator {
 
         DailyDetectValueType tg = new Builder().name("甘油三酯")
                                                .unit("mmol/L")
-                                               .start(0.56)
-                                               .end(5.17)
+                                               .start(0.10)
+                                               .end(3.00)
                                                .fraction("0.0")
                                                .delta(0.1)
                                                .create();
@@ -47,6 +47,7 @@ public class BloodFatCreator implements DailyDetectValueCreator {
                               .getLoginUser();
         Builder builder = new Builder().name("高胆固醇")
                                        .unit("mmol/L")
+                                       .start(0.10)
                                        .fraction("0.00")
                                        .delta(0.01);
         if (user.getSex() == User.GENDER_MALE) {

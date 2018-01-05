@@ -1,4 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.antfortune.freeline'
+
+
+freeline {
+    hack true
+}
 
 android {
     compileSdkVersion 22
