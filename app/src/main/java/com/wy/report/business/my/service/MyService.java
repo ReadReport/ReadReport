@@ -73,4 +73,12 @@ public interface MyService {
      */
     @GET("/Message/get_message_details")
     Observable<ResponseModel<MessageItemMode>> getMessageDetail(@Query("mid") String mid,@Query("mes_id") String msgId);
+
+    /**
+     * 删除消息
+     *
+     * @return
+     */
+    @GET("/Message/del_messges")
+    Observable<ResponseModel> delMessage(@Query("mid") String mid,@Query("single_del_messges") String msgId);
 }

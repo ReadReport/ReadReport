@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/shape_white_corner"
+    >
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="10dp"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/right_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="10dp"
+        />
+
+    <TextView
+        android:id="@+id/message_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/hei_333333"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/left_line"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/message_detail_date_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_newslist_date"
+        app:layout_constraintLeft_toLeftOf="@id/message_detail_title"
+        app:layout_constraintTop_toBottomOf="@+id/message_detail_title"
+        />
+
+    <TextView
+        android:id="@+id/message_detail_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="0000-00-00"
+        android:textColor="@color/hui_ababab"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/message_detail_date_icon"
+        app:layout_constraintLeft_toRightOf="@+id/message_detail_date_icon"
+        app:layout_constraintTop_toTopOf="@+id/message_detail_date_icon"
+        />
+
+    <ImageView
+        android:id="@+id/message_detail_time_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_time"
+        app:layout_constraintBottom_toBottomOf="@+id/message_detail_date"
+        app:layout_constraintLeft_toRightOf="@+id/message_detail_date"
+        app:layout_constraintTop_toTopOf="@+id/message_detail_date"
+        />
+
+    <TextView
+        android:id="@+id/message_detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="00:00:00"
+        android:textColor="@color/hui_ababab"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/message_detail_time_icon"
+        app:layout_constraintLeft_toRightOf="@+id/message_detail_time_icon"
+        app:layout_constraintTop_toTopOf="@+id/message_detail_time_icon"
+        />
+
+    <TextView
+        android:id="@+id/message_detail_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/hei_333333"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/message_detail_date_icon"
+        app:layout_constraintLeft_toLeftOf="@+id/left_line"
+        app:layout_constraintRight_toRightOf="@+id/right_line"
+        />
+
+
+</android.support.constraint.ConstraintLayout>
+
+

@@ -8,9 +8,9 @@ import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.business.dailydetect.fragment.DailyDetectDispatchFragment;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
-import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.my.fragment.LoginFragment;
+import com.wy.report.business.my.fragment.MessageDetailFragment;
 import com.wy.report.business.my.fragment.MessageFragment;
 import com.wy.report.business.my.fragment.RegisterFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
@@ -99,6 +99,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_MESSAGE = PUBLIC_ACTIVITY_PREFIX + "ROUTER_MESSAGE";
 
+    /**
+     * 消息详细界面
+     */
+    public static final String ROUTER_MESSAGE_DETAIL = PUBLIC_ACTIVITY_PREFIX + "ROUTER_MESSAGE_DETAIL";
+
     private Router router;
 
     private UserManger userManger;
@@ -144,6 +149,7 @@ public class AuthRouterManager {
         router.map(ROUTER_WEBVIEW, StandardActivity.class, WebViewFragment.class);
         router.map(ROUTER_REGISTER, StandardActivity.class, RegisterFragment.class);
         router.map(ROUTER_MESSAGE, StandardActivity.class, MessageFragment.class);
+        router.map(ROUTER_MESSAGE_DETAIL, StandardActivity.class, MessageDetailFragment.class);
     }
 
     /**

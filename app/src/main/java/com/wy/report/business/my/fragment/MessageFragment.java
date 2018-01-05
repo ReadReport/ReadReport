@@ -5,15 +5,22 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.daimajia.swipe.SwipeLayout;
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.my.model.MessageItemMode;
 import com.wy.report.business.my.model.MessageListMode;
 import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.DensityUtils;
 import com.wy.report.util.TimeUtils;
 
@@ -27,7 +34,9 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
 
 
     private MyService       myService;
-    private MessageListMode newData;
+    private MessageListMode messageData;
+
+    private String uid;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -48,28 +57,19 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
         loadData();
     }
 
-    @Override
-    protected void initToolbar() {
-        super.initToolbar();
-        //        Drawable toolbarBackground = toolbar.getBackground();
-        //        toolbarBackground.setAlpha(0);
-    }
 
     @Override
     protected void loadData() {
-        String uid = "";
-        if (UserManger.getInstance().isLogin()) {
-            uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
-        }
+        uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
         myService.getMessage(uid).subscribe(new PtrSubscriber<ResponseModel<MessageListMode>>(this) {
             @Override
             public void onNext(ResponseModel<MessageListMode> listResponseModel) {
                 super.onNext(listResponseModel);
-                newData = listResponseModel.getData();
-                for (MessageItemMode item : newData.getViewedMessage()) {
+                messageData = listResponseModel.getData();
+                for (MessageItemMode item : messageData.getViewedMessage()) {
                     item.setViewed(true);
                 }
-                quickAdapter.setNewData(newData.getAll());
+                quickAdapter.setNewData(messageData.getAll());
             }
         });
     }
@@ -91,6 +91,16 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
         return new BaseQuickAdapter<MessageItemMode, BaseViewHolder>(R.layout.view_message_item) {
             @Override
             protected void convert(BaseViewHolder helper, final MessageItemMode item) {
+                //设置click事件到swipelayout避免冲突
+                SwipeLayout layout = helper.getView(R.id.parent);
+                layout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle          bundle = new Bundle();
+                        bundle.putString(BundleKey.BUNDLE_KEY_MESSAGE_MID, item.getId());
+                        AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_MESSAGE_DETAIL, bundle);
+                    }
+                });
                 helper.setText(R.id.message_title, item.getTitle());
                 helper.setText(R.id.message_content, item.getMessage());
                 helper.setText(R.id.message_date, TimeUtils.millis2String(Long.valueOf(item.getCreateDate()), TimeUtils.DATE_FORMAT));
@@ -99,11 +109,36 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
                 helper.setOnClickListener(R.id.message_delete, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        quickAdapter.getData().remove(item);
-                        quickAdapter.notifyDataSetChanged();
+                        deleteItem(item);
                     }
                 });
             }
         };
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_MESSAGE_READED)})
+    public void notifyReaded(String mid) {
+        for (MessageItemMode itemMode : quickAdapter.getData()) {
+            if (itemMode.getId().equals(mid)) {
+                itemMode.setViewed(true);
+                quickAdapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
+    /**
+     * 删除
+     * @param item
+     */
+    private void deleteItem(final MessageItemMode item) {
+        myService.delMessage(uid, item.getId()).subscribe(new NetworkSubscriber<ResponseModel>(this) {
+            @Override
+            public void onNext(ResponseModel responseModel) {
+                super.onNext(responseModel);
+                quickAdapter.getData().remove(item);
+                quickAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
