@@ -1,5 +1,7 @@
 package com.wy.report.manager.auth;
 
+import com.hwangjr.rxbus.RxBus;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.manager.preferences.Key;
 import com.wy.report.manager.preferences.PreferenceManager;
@@ -16,6 +18,7 @@ public class UserManger {
     private UserManger() {
         preferenceManager = PreferenceManager.getInstance();
         loadUser();
+
     }
 
     public static UserManger getInstance() {
@@ -46,6 +49,12 @@ public class UserManger {
 
     public User getLoginUser() {
         return loginUser;
+    }
+
+    public void logout() {
+        preferenceManager.setValue(Key.LOGINED_USER_INFO, null);
+        loginUser = null;
+        RxBus.get().post(RxKey.RX_LOGOUT);
     }
 
     private static class InstanceHolder {

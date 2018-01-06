@@ -18,6 +18,8 @@ public class RxKey {
 
     public static final String RX_LOGIN = "RX_LOGIN";
 
+    public static final String RX_LOGOUT = "RX_LOGOUT";
+
     public static final String RX_DAILY_DETECT_DATA_OPERATE = "RX_DAILY_DETECT_DATA_OPERATE";
 
     public static final String RX_MESSAGE_READED = "RX_MESSAGE_READED";

@@ -13,6 +13,7 @@ import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.business.auth.model.User;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 
@@ -49,6 +50,9 @@ public class MyFragment extends PtrFragment {
     protected void initView(View content) {
         super.initView(content);
         setTitle(getString(R.string.home_my_title));
+        if (UserManger.getInstance().isLogin()) {
+            onLoginSuccess(UserManger.getInstance().getLoginUser());
+        }
     }
 
     @Override
@@ -117,5 +121,15 @@ public class MyFragment extends PtrFragment {
         String phoneNum = StringUtils.isBlank(user.getMobile()) ? "null" : user.getMobile();
         userName.setText(name);
         phone.setText(phoneNum);
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_LOGOUT)})
+    public void onLogout() {
+        userName.setText(R.string.home_my_login_register);
+        phone.setText(R.string.home_my_logined_privilege);
+        Glide.with(getActivity())
+                .load(R.drawable.btn_login_no)
+                .into(header);
+        isLogin = false;
     }
 }
