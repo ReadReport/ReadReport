@@ -1,5 +1,8 @@
 package com.wy.report.business.my.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
@@ -8,7 +11,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @date: 17-12-29 下午7:46
  * @description: ReadReport
  */
-public class FamilyItemMode {
+public class FamilyItemMode implements Parcelable {
 
     @JSONField(name = "id")
     private String id;
@@ -31,6 +34,34 @@ public class FamilyItemMode {
     @JSONField(name = "id_card")
     private String idCard;
 
+
+    protected FamilyItemMode(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        relationship = in.readString();
+        birthday = in.readString();
+        sex = in.readString();
+        mobile = in.readString();
+        idCard = in.readString();
+    }
+
+
+    public FamilyItemMode()
+    {
+
+    }
+
+    public static final Creator<FamilyItemMode> CREATOR = new Creator<FamilyItemMode>() {
+        @Override
+        public FamilyItemMode createFromParcel(Parcel in) {
+            return new FamilyItemMode(in);
+        }
+
+        @Override
+        public FamilyItemMode[] newArray(int size) {
+            return new FamilyItemMode[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -86,5 +117,21 @@ public class FamilyItemMode {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeString(relationship);
+        parcel.writeString(birthday);
+        parcel.writeString(sex);
+        parcel.writeString(mobile);
+        parcel.writeString(idCard);
     }
 }

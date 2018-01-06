@@ -19,4 +19,6 @@ public final class BundleKey {
     public static final String BUNDLE_KEY_MODEL = "BUNDLE_KEY_MODEL";
 
     public static final String BUNDLE_KEY_MESSAGE_MID = "BUNDLE_KEY_MESSAGE_MID";
+
+    public static final String BUNDLE_KEY_FAMILY_ITEM = "BUNDLE_KEY_FAMILY_ITEM";
 }

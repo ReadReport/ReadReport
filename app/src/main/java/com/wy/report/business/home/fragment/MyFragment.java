@@ -124,7 +124,7 @@ public class MyFragment extends PtrFragment {
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGOUT)})
-    public void onLogout() {
+    public void onLogout(Object o) {
         userName.setText(R.string.home_my_login_register);
         phone.setText(R.string.home_my_logined_privilege);
         Glide.with(getActivity())

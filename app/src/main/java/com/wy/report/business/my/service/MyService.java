@@ -1,6 +1,7 @@
 package com.wy.report.business.my.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.my.model.AddMemberMode;
 import com.wy.report.business.my.model.FamilyItemMode;
 import com.wy.report.business.my.model.MessageItemMode;
 import com.wy.report.business.my.model.MessageListMode;
@@ -60,7 +61,6 @@ public interface MyService {
     Observable<ResponseModel<RegisterMode>> register(@Field("mobile") String mobile, @Field("password") String pwd, @Field("verify") String verify);
 
 
-
     /**
      * 获取消息
      *
@@ -75,7 +75,7 @@ public interface MyService {
      * @return
      */
     @GET("/Message/get_message_details")
-    Observable<ResponseModel<MessageItemMode>> getMessageDetail(@Query("mid") String mid,@Query("mes_id") String msgId);
+    Observable<ResponseModel<MessageItemMode>> getMessageDetail(@Query("mid") String mid, @Query("mes_id") String msgId);
 
     /**
      * 删除消息
@@ -83,14 +83,34 @@ public interface MyService {
      * @return
      */
     @GET("/Message/del_messges")
-    Observable<ResponseModel> delMessage(@Query("mid") String mid,@Query("single_del_messges") String msgId);
+    Observable<ResponseModel> delMessage(@Query("mid") String mid, @Query("single_del_messges") String msgId);
 
 
     /**
-     * 删除消息
+     * 获取家庭成员列表
      *
      * @return
      */
     @GET("/Member/get_family_member")
     Observable<ResponseModel<List<FamilyItemMode>>> getFamily(@Query("mid") String mid);
+
+
+    /**
+     * 编辑家庭成员信息
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/Member/edit_family_member")
+    Observable<ResponseModel> editFamilyMember(@Field("id") String id, @Field("name") String name, @Field("sex") String sex, @Field("birthday") String birthday, @Field("relationship") String relationship, @Field("mobile") String mobile, @Field("id_card") String idCard);
+
+    /**
+     * 添加家庭成员信息
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/Member/add_family_member")
+    Observable<ResponseModel<AddMemberMode>> addFamilyMember(@Field("mid") String mid, @Field("name") String name, @Field("sex") String sex, @Field("birthday") String birthday, @Field("relationship") String relationship, @Field("mobile") String mobile, @Field("id_card") String idCard);
+
 }

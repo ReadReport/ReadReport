@@ -14,8 +14,6 @@ import com.cantalou.android.util.DeviceUtils;
 import com.wy.report.R;
 import com.wy.report.base.activity.BaseActivity;
 
-import butterknife.BindView;
-
 /**
  * @author cantalou
  * @date 2017年11月29日 11:18
@@ -29,6 +27,8 @@ public abstract class ToolbarFragment extends BaseFragment {
     protected Toolbar toolbar;
 
     protected TextView toolbarTitle;
+
+    protected TextView toolbarMenu;
 
     protected View toolbarContentView;
 
@@ -78,6 +78,7 @@ public abstract class ToolbarFragment extends BaseFragment {
         }
 
         toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        toolbarMenu = (TextView) toolbar.findViewById(R.id.toolbar_menu);
         toolbarBack = toolbar.findViewById(R.id.toolbar_back);
         if (toolbarBack != null) {
             toolbarBack.setOnClickListener(new View.OnClickListener() {
