@@ -10,7 +10,7 @@ public class RxKey {
 
     public static final String RX_REPORT_UPLOAD_DELETE_PICTURE = "RX_REPORT_UPLOAD_DELETE_PICTURE";
 
-    public static final String RX_FAMILY_MEMBER_ADD = "RX_FAMILY_MEMBER_ADD";
+    public static final String RX_FAMILY_MEMBER_ADD = "RX_FAMILY_EDIT_ADD";
 
     public static final String RX_FAMILY_MEMBER_SELECT = "RX_FAMILY_MEMBER_SELECT";
 
@@ -18,10 +18,16 @@ public class RxKey {
 
     public static final String RX_LOGIN = "RX_LOGIN";
 
+    public static final String RX_LOGOUT = "RX_LOGOUT";
+
     public static final String RX_DAILY_DETECT_DATA_OPERATE = "RX_DAILY_DETECT_DATA_OPERATE";
 
     public static final String RX_MESSAGE_READED = "RX_MESSAGE_READED";
 
     public static final String RX_DAILY_DETECT_DATA_EDIT_MODE = "RX_DAILY_DETECT_DATA_EDIT_MODE";
 
+
+    public static final String RX_FAMILY_EDIT = "RX_FAMILY_EDIT";
+
+    public static final String RX_FAMILY_EDIT_ADD = "RX_FAMILY_EDIT_ADD";
 }

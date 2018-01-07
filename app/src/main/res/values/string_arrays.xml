@@ -1,0 +1,16 @@
+<resources>
+    <string-array name="relationship">
+        <item>父亲</item>
+        <item>母亲</item>
+        <item>兄弟姐妹</item>
+        <item>儿子</item>
+        <item>女儿</item>
+        <item>夫妻</item>
+        <item>同事朋友</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+</resources>
