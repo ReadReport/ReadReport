@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class HomeFindModel {
 
-    private List<DailyDetectModel> dailyDetectModels;
+    private List<DailyDetectTypeModel> dailyDetectTypeModels;
 
     @JSONField(name = "test")
     private HomeFindHealthyTestModel homeFindHealthyTestModel;
@@ -21,20 +21,20 @@ public class HomeFindModel {
     @JSONField(name="knowledge")
     private HomeFindHealthyKnowledgeModel homeFindHealthyKnowledgeModel;
 
-    public List<DailyDetectModel> getDailyDetectModels() {
-        if(dailyDetectModels == null){
-            dailyDetectModels = new ArrayList<>();
-            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BLOOD_PRESSURE, "血压管理", R.drawable.btn_rcjc_bloodpressure));
-            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BLOOD_SUGAR, "血糖管理", R.drawable.btn_rcjc_bloodsugar));
-            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BMI, "体重管理", R.drawable.btn_rcjc_bodyweight));
-            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BODY_FAT, "体脂管理", R.drawable.btn_rcjc_bodyfat));
-            dailyDetectModels.add(new DailyDetectModel(DailyDetectModel.DETECT_TYPE_BLOOD_FAT, "血脂管理", R.drawable.btn_rcjc_bloodlipids));
+    public List<DailyDetectTypeModel> getDailyDetectTypeModels() {
+        if(dailyDetectTypeModels == null){
+            dailyDetectTypeModels = new ArrayList<>();
+            dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BLOOD_PRESSURE, "血压管理", R.drawable.btn_rcjc_bloodpressure));
+            dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR, "血糖管理", R.drawable.btn_rcjc_bloodsugar));
+            dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BMI, "体重管理", R.drawable.btn_rcjc_bodyweight));
+            dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BODY_FAT, "体脂管理", R.drawable.btn_rcjc_bodyfat));
+            dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT, "血脂管理", R.drawable.btn_rcjc_bloodlipids));
         }
-        return dailyDetectModels;
+        return dailyDetectTypeModels;
     }
 
-    public void setDailyDetectModels(List<DailyDetectModel> dailyDetectModels) {
-        this.dailyDetectModels = dailyDetectModels;
+    public void setDailyDetectTypeModels(List<DailyDetectTypeModel> dailyDetectTypeModels) {
+        this.dailyDetectTypeModels = dailyDetectTypeModels;
     }
 
     public HomeFindHealthyTestModel getHomeFindHealthyTestModel() {

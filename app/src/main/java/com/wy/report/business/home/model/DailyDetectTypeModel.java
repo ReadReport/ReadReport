@@ -7,7 +7,7 @@ import com.wy.report.base.model.BaseModel;
  * @author cantalou
  * @date 2017-12-03 16:04
  */
-public class DailyDetectModel extends BaseModel {
+public class DailyDetectTypeModel extends BaseModel {
 
 
     /**
@@ -61,7 +61,7 @@ public class DailyDetectModel extends BaseModel {
 
     private int iconID;
 
-    public DailyDetectModel(int id, String title, int iconID) {
+    public DailyDetectTypeModel(int id, String title, int iconID) {
         this.id = id;
         this.title = title;
         this.iconID = iconID;

@@ -26,7 +26,7 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
-import com.wy.report.business.home.model.DailyDetectModel;
+import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.business.home.model.HealthKnowledgeModel;
 import com.wy.report.business.home.model.HealthTestModel;
 import com.wy.report.business.home.model.HomeFindHealthyKnowledgeModel;
@@ -192,9 +192,9 @@ public class FindFragment extends PtrFragment {
 
         final int itemWidth = (DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20)) / DAILY_DETECT_LINE_NUM;
 
-        final ArrayList<ArrayList<DailyDetectModel>> dailyDetectLines = new ArrayList<>();
-        ArrayList<DailyDetectModel> line = null;
-        List<DailyDetectModel> dailyDetects = model.getDailyDetectModels();
+        final ArrayList<ArrayList<DailyDetectTypeModel>> dailyDetectLines = new ArrayList<>();
+        ArrayList<DailyDetectTypeModel> line = null;
+        List<DailyDetectTypeModel> dailyDetects = model.getDailyDetectTypeModels();
         for (int i = 0; i < dailyDetects.size(); i++) {
             if (i % DAILY_DETECT_LINE_NUM == 0) {
                 line = new ArrayList<>();
@@ -216,10 +216,10 @@ public class FindFragment extends PtrFragment {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                ArrayList<DailyDetectModel> line = dailyDetectLines.get(position);
+                ArrayList<DailyDetectTypeModel> line = dailyDetectLines.get(position);
                 LinearLayout lineContainer = new LinearLayout(getActivity());
                 LayoutInflater layoutInflater = getLayoutInflater(null);
-                for (DailyDetectModel model : line) {
+                for (DailyDetectTypeModel model : line) {
                     View item = layoutInflater.inflate(R.layout.view_home_find_daily_detect_item, lineContainer, false);
                     ImageView icon = (ImageView) item.findViewById(R.id.home_find_daily_detect_item_icon);
                     icon.setImageResource(model.getIconID());

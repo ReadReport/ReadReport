@@ -14,16 +14,13 @@ import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
-import com.wy.report.business.home.model.DailyDetectModel;
+import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.dailydetect.DailyDetectHelper;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
 
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.OnClick;
 
 /*
@@ -43,7 +40,7 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
     @BindView(R.id.daily_detect_time_value)
     TextView dailyDetectTime;
 
-    private DailyDetectModel model;
+    private DailyDetectTypeModel model;
 
     @Override
     protected void initData(Bundle savedInstanceState) {

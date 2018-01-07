@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.fragment.BaseFragment;
-import com.wy.report.business.home.model.DailyDetectModel;
+import com.wy.report.business.home.model.DailyDetectTypeModel;
 
 /*
  *
@@ -19,7 +19,7 @@ public class DailyDetectDispatchFragment extends BaseFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         Bundle arguments = getArguments();
-        DailyDetectModel model = arguments.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
+        DailyDetectTypeModel model = arguments.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
         try {
             DailyDetectFragment fragment = getFragment(model);
             fragment.setArguments(arguments);
@@ -36,9 +36,9 @@ public class DailyDetectDispatchFragment extends BaseFragment {
     protected void initView(View contentView) {
     }
 
-    private DailyDetectFragment getFragment(DailyDetectModel model) {
+    private DailyDetectFragment getFragment(DailyDetectTypeModel model) {
         switch (model.getId()) {
-            case DailyDetectModel.DETECT_TYPE_BLOOD_SUGAR:{
+            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR:{
                 return new DailyDetectBloosSugarFragment();
             }
             default: {
