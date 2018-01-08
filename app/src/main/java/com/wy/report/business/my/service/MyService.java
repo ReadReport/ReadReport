@@ -113,4 +113,13 @@ public interface MyService {
     @POST("/Member/add_family_member")
     Observable<ResponseModel<AddMemberMode>> addFamilyMember(@Field("mid") String mid, @Field("name") String name, @Field("sex") String sex, @Field("birthday") String birthday, @Field("relationship") String relationship, @Field("mobile") String mobile, @Field("id_card") String idCard);
 
+    /**
+     * 意见反馈
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/Consult/feedback")
+    Observable<ResponseModel> feedback(@Field("mid") String mid, @Field("content") String content);
+
 }
