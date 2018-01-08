@@ -9,12 +9,15 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.business.dailydetect.fragment.DailyDetectDispatchFragment;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
+import com.wy.report.business.my.fragment.AboutFragment;
 import com.wy.report.business.my.fragment.EditFamilyFragment;
 import com.wy.report.business.my.fragment.FamilyFragment;
+import com.wy.report.business.my.fragment.FeedbackFragment;
 import com.wy.report.business.my.fragment.LoginFragment;
 import com.wy.report.business.my.fragment.MessageDetailFragment;
 import com.wy.report.business.my.fragment.MessageFragment;
 import com.wy.report.business.my.fragment.RegisterFragment;
+import com.wy.report.business.my.fragment.SettingFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.other.fragment.PictureFragment;
 import com.wy.report.business.read.fragment.ReportManageFragment;
@@ -99,22 +102,37 @@ public class AuthRouterManager {
     /**
      * 消息界面
      */
-    public static final String ROUTER_MESSAGE = PUBLIC_ACTIVITY_PREFIX + "ROUTER_MESSAGE";
+    public static final String ROUTER_MESSAGE = LOGIN_ACTIVITY_PREFIX + "ROUTER_MESSAGE";
 
     /**
      * 消息详细界面
      */
-    public static final String ROUTER_MESSAGE_DETAIL = PUBLIC_ACTIVITY_PREFIX + "ROUTER_MESSAGE_DETAIL";
+    public static final String ROUTER_MESSAGE_DETAIL = LOGIN_ACTIVITY_PREFIX + "ROUTER_MESSAGE_DETAIL";
 
     /**
      * 家庭成员界面
      */
-    public static final String ROUTER_FAMILY = PUBLIC_ACTIVITY_PREFIX + "ROUTER_FAMILY";
+    public static final String ROUTER_FAMILY = LOGIN_ACTIVITY_PREFIX + "ROUTER_FAMILY";
 
     /**
      * 编辑家庭成员界面
      */
-    public static final String ROUTER_EDIT_FAMILY = PUBLIC_ACTIVITY_PREFIX + "ROUTER_EDIT_FAMILY";
+    public static final String ROUTER_EDIT_FAMILY = LOGIN_ACTIVITY_PREFIX + "ROUTER_EDIT_FAMILY";
+
+    /**
+     * 设置界面
+     */
+    public static final String ROUTER_SETTING = PUBLIC_ACTIVITY_PREFIX + "ROUTER_EDIT_SETTING";
+
+    /**
+     * 意见反馈
+     */
+    public static final String ROUTER_FEEDBACK = LOGIN_ACTIVITY_PREFIX + "ROUTER_FEEDBACK";
+
+    /**
+     * 关于我们
+     */
+    public static final String ROUTER_ABOUT = PUBLIC_ACTIVITY_PREFIX + "ROUTER_ABOUT";
 
     private Router router;
 
@@ -164,6 +182,9 @@ public class AuthRouterManager {
         router.map(ROUTER_MESSAGE_DETAIL, StandardActivity.class, MessageDetailFragment.class);
         router.map(ROUTER_FAMILY, StandardActivity.class, FamilyFragment.class);
         router.map(ROUTER_EDIT_FAMILY, StandardActivity.class, EditFamilyFragment.class);
+        router.map(ROUTER_SETTING, StandardActivity.class, SettingFragment.class);
+        router.map(ROUTER_FEEDBACK, StandardActivity.class, FeedbackFragment.class);
+        router.map(ROUTER_ABOUT, StandardActivity.class, AboutFragment.class);
     }
 
     /**

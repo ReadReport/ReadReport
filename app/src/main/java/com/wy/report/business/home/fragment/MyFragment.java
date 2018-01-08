@@ -103,6 +103,13 @@ public class MyFragment extends PtrFragment {
         }
     }
 
+    @OnClick(R.id.home_my_setting)
+    public void onSetting() {
+            AuthRouterManager.getInstance()
+                             .getRouter()
+                             .open(getActivity(), AuthRouterManager.ROUTER_SETTING);
+    }
+
 
 
 

@@ -42,4 +42,19 @@
 
     <string name="add_family_title">成员添加</string>
 
+
+    <string name="setting_title">设置</string>
+    <string name="setting_modify_pwd">修改密码</string>
+    <string name="setting_suggestion">意见反馈</string>
+    <string name="setting_about">关于我们</string>
+
+    <string name="feedback_title">意见反馈</string>
+    <string name="feedback_hint">欢迎您提出对我们的感受和建议</string>
+    <string name="feedback_commit">发表</string>
+    <string name="feedback_empty_tip">请输入内容哦～</string>
+    <string name="feedback_success_tip">提交成功～</string>
+
+    <string name="about_title">关于我们</string>
+    <string name="about_about">读报告是全国体检预约平台中康体检网打造的一款基于体检报告的健康管理应用。提供[家庭健康档案管理]、[报告数据中心]，和[在线名医咨询]的服务，让您随时管理您和您家人的健康。</string>
+
 </resources>
