@@ -16,8 +16,10 @@ import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
+import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.dailydetect.DailyDetectHelper;
+import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView;
 
 import java.util.Calendar;
@@ -49,10 +51,14 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
 
     private DailyDetectTypeModel model;
 
+    private DailyDetectService dailyDetectService;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         model = getArguments().getParcelable(BundleKey.BUNDLE_KEY_MODEL);
+        dailyDetectService = RetrofitHelper.getInstance()
+                                           .create(DailyDetectService.class);
     }
 
     @Override
@@ -121,5 +127,10 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
         editMode = !editMode;
         dataListOperateMode.setText(editMode ? R.string.done : R.string.edit);
         rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE, Boolean.valueOf(editMode));
+    }
+
+    @OnClick(R.id.daily_detect_save)
+    public void saveRecord() {
+
     }
 }
