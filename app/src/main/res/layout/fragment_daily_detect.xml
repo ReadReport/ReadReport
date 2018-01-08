@@ -20,11 +20,12 @@
             android:layout_height="290dp"
             android:background="@drawable/shape_white_corner">
 
-            <com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView
+            <FrameLayout
                 android:id="@+id/daily_detect_value_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView

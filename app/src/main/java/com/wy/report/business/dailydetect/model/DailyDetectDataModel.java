@@ -7,11 +7,10 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.wy.report.base.model.BaseModel;
 
 /*
- *
  * @author cantalou
  * @date 2017-12-31 21:40
  */
-public class DailyDetectDataModel extends BaseModel implements Parcelable{
+public class DailyDetectDataModel extends BaseModel implements Parcelable {
 
     public static final Creator<DailyDetectDataModel> CREATOR = new Creator<DailyDetectDataModel>() {
         @Override
@@ -24,42 +23,54 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable{
             return new DailyDetectDataModel[size];
         }
     };
-    private String id;
-    @JSONField(name = "member_id")
-    private String uid;
-    @JSONField(name = "idp_fwjh_no")
-    private String idNo;
-    @JSONField(name = "test_type")
-    private String testType;
-    private String res;
-    private String message;
-    private String describe;
-    @JSONField(name = "test_time")
-    private String testTime;
-    private String suggest;
     /**
-     * 上传类型（2手动 1设备）
+     * 项目id
      */
-    @JSONField(name = "collect_type")
-    private String collectType;
-    @JSONField(name = "device_type")
-    private String deviceType;
+    private String id;
+    /**
+     * 类别id
+     */
+    @JSONField(name = "catalog_id")
+    private String catalogId;
+    /**
+     * 项目名称
+     */
+    private String name;
+    /**
+     * 选项类型
+     */
+    private String optionType;
+    /**
+     * "偏高|正常",  选项
+     */
+    private String options;
+    /**
+     * "NSE是监测小细胞肺癌的首选标志物。。。",：偏高或不正常结论
+     */
+    @JSONField(name = "high_conclusion")
+    private String highConclusion;
+    /**
+     * 偏低结论
+     */
+    @JSONField(name = "low_conclusion")
+    private String lowConclusion;
+    /**
+     * 异常建议（为空时取类别异常建议）
+     */
+    private String suggest;
 
     public DailyDetectDataModel() {
     }
 
     protected DailyDetectDataModel(Parcel in) {
         this.id = in.readString();
-        this.uid = in.readString();
-        this.idNo = in.readString();
-        this.testType = in.readString();
-        this.res = in.readString();
-        this.message = in.readString();
-        this.describe = in.readString();
-        this.testTime = in.readString();
+        this.catalogId = in.readString();
+        this.name = in.readString();
+        this.optionType = in.readString();
+        this.options = in.readString();
+        this.highConclusion = in.readString();
+        this.lowConclusion = in.readString();
         this.suggest = in.readString();
-        this.collectType = in.readString();
-        this.deviceType = in.readString();
     }
 
     public String getId() {
@@ -70,60 +81,52 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable{
         this.id = id;
     }
 
-    public String getUid() {
-        return uid;
+    public String getCatalogId() {
+        return catalogId;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setCatalogId(String catalogId) {
+        this.catalogId = catalogId;
     }
 
-    public String getIdNo() {
-        return idNo;
+    public String getName() {
+        return name;
     }
 
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getTestType() {
-        return testType;
+    public String getOptionType() {
+        return optionType;
     }
 
-    public void setTestType(String testType) {
-        this.testType = testType;
+    public void setOptionType(String optionType) {
+        this.optionType = optionType;
     }
 
-    public String getRes() {
-        return res;
+    public String getOptions() {
+        return options;
     }
 
-    public void setRes(String res) {
-        this.res = res;
+    public void setOptions(String options) {
+        this.options = options;
     }
 
-    public String getMessage() {
-        return message;
+    public String getHighConclusion() {
+        return highConclusion;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setHighConclusion(String highConclusion) {
+        this.highConclusion = highConclusion;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getLowConclusion() {
+        return lowConclusion;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
-    public String getTestTime() {
-        return testTime;
-    }
-
-    public void setTestTime(String testTime) {
-        this.testTime = testTime;
+    public void setLowConclusion(String lowConclusion) {
+        this.lowConclusion = lowConclusion;
     }
 
     public String getSuggest() {
@@ -134,22 +137,6 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable{
         this.suggest = suggest;
     }
 
-    public String getCollectType() {
-        return collectType;
-    }
-
-    public void setCollectType(String collectType) {
-        this.collectType = collectType;
-    }
-
-    public String getDeviceType() {
-        return deviceType;
-    }
-
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -158,15 +145,12 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
-        dest.writeString(this.uid);
-        dest.writeString(this.idNo);
-        dest.writeString(this.testType);
-        dest.writeString(this.res);
-        dest.writeString(this.message);
-        dest.writeString(this.describe);
-        dest.writeString(this.testTime);
+        dest.writeString(this.catalogId);
+        dest.writeString(this.name);
+        dest.writeString(this.optionType);
+        dest.writeString(this.options);
+        dest.writeString(this.highConclusion);
+        dest.writeString(this.lowConclusion);
         dest.writeString(this.suggest);
-        dest.writeString(this.collectType);
-        dest.writeString(this.deviceType);
     }
 }

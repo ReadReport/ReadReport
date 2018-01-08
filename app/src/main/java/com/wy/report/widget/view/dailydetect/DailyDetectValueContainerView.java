@@ -14,6 +14,11 @@ import java.util.List;
  */
 public class DailyDetectValueContainerView extends LinearLayout {
 
+    public DailyDetectValueContainerView(Context context) {
+        super(context);
+        setOrientation(LinearLayout.HORIZONTAL);
+    }
+
     public DailyDetectValueContainerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setOrientation(LinearLayout.HORIZONTAL);

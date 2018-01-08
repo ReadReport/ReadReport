@@ -5,5 +5,5 @@ package com.wy.report.business.dailydetect.fragment;
  * @date 2018年01月04日 10:29
  * <p>
  */
-public class DailyDetectBloosSugarFragment extends DailyDetectFragment {
+public class DailyDetectBloodSugarFragment extends DailyDetectFragment {
 }

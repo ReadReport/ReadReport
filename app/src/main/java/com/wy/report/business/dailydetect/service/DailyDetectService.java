@@ -13,15 +13,13 @@ import rx.Observable;
  *
  *
  *
-
-）
  *
  * @author cantalou
  * @date 2017-12-31 21:26
  */
 public interface DailyDetectService {
 
-    @GET("/DailyMonitor/get_recordes_by_typ")
+    @GET("/SelfTest/getMonoidalForCal")
     Observable<ResponseModel<DailyDetectDataModel>> getDetectData();
 
     /**

@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -32,13 +34,18 @@ import butterknife.OnClick;
 public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMenuItemClickListener {
 
     @BindView(R.id.daily_detect_value_container)
-    DailyDetectValueContainerView detectValueContainerView;
+    FrameLayout detectValueContainer;
 
     @BindView(R.id.daily_detect_date_value)
     TextView dailyDetectDate;
 
     @BindView(R.id.daily_detect_time_value)
     TextView dailyDetectTime;
+
+    @BindView(R.id.daily_detect_data_list_operate)
+    TextView dataListOperateMode;
+
+    private boolean editMode = false;
 
     private DailyDetectTypeModel model;
 
@@ -51,7 +58,14 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        detectValueContainerView.setData(DailyDetectHelper.getTypes(model));
+        View detectValueView = createDetectValueView();
+        detectValueContainer.addView(detectValueView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    }
+
+    protected View createDetectValueView() {
+        DailyDetectValueContainerView containerView = new DailyDetectValueContainerView(getActivity());
+        containerView.setData(DailyDetectHelper.getTypes(model));
+        return containerView;
     }
 
     @Override
@@ -104,6 +118,8 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
 
     @OnClick(R.id.daily_detect_data_list_operate)
     public void dataListOperateClick() {
-        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE, "");
+        editMode = !editMode;
+        dataListOperateMode.setText(editMode ? R.string.done : R.string.edit);
+        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE, Boolean.valueOf(editMode));
     }
 }

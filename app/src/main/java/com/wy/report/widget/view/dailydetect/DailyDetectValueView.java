@@ -2,9 +2,11 @@ package com.wy.report.widget.view.dailydetect;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,8 +50,16 @@ public class DailyDetectValueView extends LinearLayout {
     }
 
     public void setData(DailyDetectValueType type) {
-        name.setText(type.getName());
-        unit.setText(type.getUnit());
+        if (TextUtils.isEmpty(type.getName())) {
+            name.setVisibility(View.GONE);
+        } else {
+            name.setText(type.getName());
+        }
+        if (TextUtils.isEmpty(type.getName())) {
+            unit.setVisibility(View.GONE);
+        } else {
+            unit.setText(type.getUnit());
+        }
         wheelView.setItems(type.getValues());
     }
 }

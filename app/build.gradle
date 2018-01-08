@@ -97,6 +97,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
 
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     testCompile 'junit:junit:4.12'
 

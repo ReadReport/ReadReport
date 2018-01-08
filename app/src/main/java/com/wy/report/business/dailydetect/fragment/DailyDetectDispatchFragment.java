@@ -39,7 +39,7 @@ public class DailyDetectDispatchFragment extends BaseFragment {
     private DailyDetectFragment getFragment(DailyDetectTypeModel model) {
         switch (model.getId()) {
             case DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR:{
-                return new DailyDetectBloosSugarFragment();
+                return new DailyDetectBloodSugarFragment();
             }
             default: {
                 return new DailyDetectFragment();

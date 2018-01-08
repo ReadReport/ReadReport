@@ -40,6 +40,9 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
         Bundle arguments = getArguments();
         if (arguments != null) {
             datas = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_DAILY_DETECT_DATA);
+
+            DailyDetectDataModel header = new DailyDetectDataModel();
+            datas.add(0, header);
         }
     }
 
@@ -53,10 +56,11 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
         return new BaseQuickAdapter<DailyDetectDataModel, BaseViewHolder>(R.layout.vh_daily_detect_data_list_item) {
             @Override
             protected void convert(BaseViewHolder helper, DailyDetectDataModel item) {
-                helper.setText(R.id.vh_daily_detect_data_list_item_value, item.getMessage())
-                      .setText(R.id.vh_daily_detect_data_list_item_state, item.getRes())
-                      .setText(R.id.vh_daily_detect_data_list_item_time, item.getTestTime())
-                      .setVisible(R.id.vh_daily_detect_data_list_item_delete, editMode);
+                helper.setText(R.id.vh_daily_detect_data_list_item_value, item.getOptions())
+                      .setText(R.id.vh_daily_detect_data_list_item_state, item.getOptions())
+                      .setText(R.id.vh_daily_detect_data_list_item_time, item.getOptions())
+                      .setVisible(R.id.vh_daily_detect_data_list_item_delete, editMode)
+                      .addOnClickListener(R.id.vh_daily_detect_data_list_item_delete);
             }
         };
     }
@@ -66,6 +70,13 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
         super.initView(contentView);
         quickAdapter.setEmptyView(R.layout.view_daily_detect_empty);
         quickAdapter.setNewData(datas);
+        quickAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                adapter.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+        });
     }
 
 
