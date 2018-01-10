@@ -1,10 +1,10 @@
 package com.wy.report.business.dailydetect.fragment;
 
 import android.os.Bundle;
-import android.view.View;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 
 import com.wy.report.base.constant.BundleKey;
-import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 
 /*
@@ -13,11 +13,11 @@ import com.wy.report.business.home.model.DailyDetectTypeModel;
  * @author cantalou
  * @date 2017-12-26 21:14
  */
-public class DailyDetectDispatchFragment extends BaseFragment {
+public class DailyDetectDispatchFragment extends Fragment {
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
         DailyDetectTypeModel model = arguments.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
         try {
@@ -32,23 +32,28 @@ public class DailyDetectDispatchFragment extends BaseFragment {
         }
     }
 
-    @Override
-    protected void initView(View contentView) {
-    }
 
     private DailyDetectFragment getFragment(DailyDetectTypeModel model) {
         switch (model.getId()) {
-            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR:{
+            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_PRESSURE: {
+                return new DailyDetectBloodPressureFragment();
+            }
+            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR: {
+                return new DailyDetectBloodSugarFragment();
+            }
+            case DailyDetectTypeModel.DETECT_TYPE_BMI: {
+                return new DailyDetectBloodSugarFragment();
+            }
+            case DailyDetectTypeModel.DETECT_TYPE_BODY_FAT: {
+                return new DailyDetectBloodSugarFragment();
+            }
+            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT: {
                 return new DailyDetectBloodSugarFragment();
             }
             default: {
-                return new DailyDetectFragment();
+                throw new IllegalArgumentException("Unknown type " + model.getId());
             }
         }
     }
 
-    @Override
-    protected int contentLayoutID() {
-        return 0;
-    }
 }

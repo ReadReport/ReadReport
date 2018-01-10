@@ -1,5 +1,8 @@
 package com.wy.report.business.home.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.wy.report.base.model.BaseModel;
 
 /*
@@ -7,7 +10,7 @@ import com.wy.report.base.model.BaseModel;
  * @author cantalou
  * @date 2017-12-03 16:04
  */
-public class DailyDetectTypeModel extends BaseModel {
+public class DailyDetectTypeModel extends BaseModel implements Parcelable{
 
 
     /**
@@ -90,4 +93,33 @@ public class DailyDetectTypeModel extends BaseModel {
     public void setIconID(int iconID) {
         this.iconID = iconID;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeInt(this.iconID);
+    }
+
+    protected DailyDetectTypeModel(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.iconID = in.readInt();
+    }
+
+    public static final Creator<DailyDetectTypeModel> CREATOR = new Creator<DailyDetectTypeModel>() {
+        public DailyDetectTypeModel createFromParcel(Parcel source) {
+            return new DailyDetectTypeModel(source);
+        }
+
+        public DailyDetectTypeModel[] newArray(int size) {
+            return new DailyDetectTypeModel[size];
+        }
+    };
 }

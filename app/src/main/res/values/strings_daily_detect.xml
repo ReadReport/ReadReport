@@ -3,4 +3,6 @@
     <string name="daily_detect_tendency_char">趋势图</string>
     <string name="daily_detect_data_list">数量列表</string>
     <string name="daily_detect_data_empty">抱歉，您还没有数据</string>
+    <string name="daily_detect_data_list_title_status">状态</string>
+    <string name="daily_detect_data_list_title_time">时间</string>
 </resources>

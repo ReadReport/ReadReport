@@ -119,7 +119,7 @@ public class RegisterFragment extends NetworkFragment {
                 super.onNext(registerModeResponseModel);
                 String newId = registerModeResponseModel.getData().getId();
                 User user = new User();
-                user.setId(Long.valueOf(newId));
+                user.setId(newId);
                 UserManger.getInstance().updateUser(user);
                 rxBus.post(RxKey.RX_LOGIN,UserManger.getInstance().getLoginUser());
             }

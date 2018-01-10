@@ -21,5 +21,5 @@ public interface ReadService {
      * @return
      */
     @GET("/Report/get_my_reports")
-    Observable<ResponseModel<List<ReportListMode.ReportItem>>> getReportList(@Query("mid") long mid);
+    Observable<ResponseModel<List<ReportListMode.ReportItem>>> getReportList(@Query("mid") String mid);
 }

@@ -8,7 +8,7 @@ import com.wy.report.helper.dailydetect.impl.BloodFatCreator;
 import com.wy.report.helper.dailydetect.impl.BloodPressureCreator;
 import com.wy.report.helper.dailydetect.impl.BloodSugarCreator;
 import com.wy.report.helper.dailydetect.impl.BodyFatCreator;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
+import com.wy.report.widget.view.dailydetect.ValueType;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class DailyDetectHelper {
         types.put(DailyDetectTypeModel.DETECT_TYPE_BODY_FAT, new BodyFatCreator());
     }
 
-    public static List<DailyDetectValueType> getTypes(DailyDetectTypeModel model) {
+    public static List<ValueType> getTypes(DailyDetectTypeModel model) {
         return types.get(model.getId())
                     .create();
     }

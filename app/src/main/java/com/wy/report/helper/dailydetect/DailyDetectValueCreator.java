@@ -1,6 +1,6 @@
 package com.wy.report.helper.dailydetect;
 
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
+import com.wy.report.widget.view.dailydetect.ValueType;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface DailyDetectValueCreator {
 
-    List<DailyDetectValueType> create();
+    List<ValueType> create();
 }

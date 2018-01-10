@@ -29,6 +29,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected Router router;
 
+    protected AuthRouterManager authRouterManager;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -53,8 +55,8 @@ public abstract class BaseFragment extends Fragment {
 
     @CallSuper
     protected void initData(Bundle savedInstanceState) {
-        router = AuthRouterManager.getInstance()
-                                  .getRouter();
+        authRouterManager = AuthRouterManager.getInstance();
+        router = authRouterManager.getRouter();
     }
 
     protected abstract void initView(View contentView);

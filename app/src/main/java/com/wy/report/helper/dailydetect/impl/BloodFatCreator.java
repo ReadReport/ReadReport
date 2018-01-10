@@ -1,10 +1,8 @@
 package com.wy.report.helper.dailydetect.impl;
 
-import com.wy.report.business.auth.model.User;
 import com.wy.report.helper.dailydetect.DailyDetectValueCreator;
-import com.wy.report.manager.auth.UserManger;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType.Builder;
+import com.wy.report.widget.view.dailydetect.ValueType;
+import com.wy.report.widget.view.dailydetect.ValueType.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,45 +19,45 @@ import java.util.List;
 public class BloodFatCreator implements DailyDetectValueCreator {
 
     @Override
-    public List<DailyDetectValueType> create() {
+    public List<ValueType> create() {
 
-        List<DailyDetectValueType> result = new ArrayList<>();
+        List<ValueType> result = new ArrayList<>();
 
-        DailyDetectValueType tc = new Builder().name("总胆固醇")
-                                               .unit("mmol/L")
-                                               .start(1.0)
-                                               .end(9.9)
-                                               .fraction("0.0")
-                                               .delta(0.1)
-                                               .create();
+        ValueType tc = new Builder().name("总胆固醇")
+                                    .unit("mmol/L")
+                                    .start(1.0)
+                                    .end(9.9)
+                                    .fraction("0.0")
+                                    .delta(0.1)
+                                    .create();
         result.add(tc);
 
-        DailyDetectValueType tg = new Builder().name("甘油三酯")
-                                               .unit("mmol/L")
-                                               .start(0.10)
-                                               .end(3.00)
-                                               .fraction("0.0")
-                                               .delta(0.1)
-                                               .create();
+        ValueType tg = new Builder().name("甘油三酯")
+                                    .unit("mmol/L")
+                                    .start(0.10)
+                                    .end(3.00)
+                                    .fraction("0.0")
+                                    .delta(0.1)
+                                    .create();
         result.add(tg);
 
 
-        DailyDetectValueType hdl = new Builder().name("高胆固醇")
-                                                .unit("mmol/L")
-                                                .start(0.10)
-                                                .end(9.9)
-                                                .fraction("0.00")
-                                                .delta(0.01)
-                                                .create();
+        ValueType hdl = new Builder().name("高胆固醇")
+                                     .unit("mmol/L")
+                                     .start(0.10)
+                                     .end(9.9)
+                                     .fraction("0.00")
+                                     .delta(0.01)
+                                     .create();
         result.add(hdl);
 
-        DailyDetectValueType ldl = new Builder().name("低胆固醇")
-                                                .unit("mmol/L")
-                                                .start(0)
-                                                .end(3.1)
-                                                .fraction("0.0")
-                                                .delta(0.1)
-                                                .create();
+        ValueType ldl = new Builder().name("低胆固醇")
+                                     .unit("mmol/L")
+                                     .start(0)
+                                     .end(3.1)
+                                     .fraction("0.0")
+                                     .delta(0.1)
+                                     .create();
         result.add(ldl);
 
         return result;

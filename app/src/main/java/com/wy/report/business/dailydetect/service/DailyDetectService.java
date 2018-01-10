@@ -9,17 +9,13 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
 
-/*
- *
- *
- *
- *
+/**
  * @author cantalou
  * @date 2017-12-31 21:26
  */
 public interface DailyDetectService {
 
-    @GET("/SelfTest/getMonoidalForCal")
+    @GET("/DailyMonitor/get_recordes_by_type")
     Observable<ResponseModel<DailyDetectDataModel>> getDetectData();
 
     /**

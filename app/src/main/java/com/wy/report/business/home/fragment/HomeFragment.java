@@ -22,7 +22,6 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
-import com.wy.report.util.ViewUtils;
 import com.wy.report.widget.ObservableScrollView;
 
 import java.text.DecimalFormat;
@@ -62,6 +61,7 @@ public class HomeFragment extends PtrFragment {
     private MessageManager messageManager;
 
     private boolean toolbarOverHalf;
+    private HomeReportModel homeReportModel;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -162,7 +162,7 @@ public class HomeFragment extends PtrFragment {
                        @Override
                        public void onNext(ResponseModel<HomeReportModel> totalNumberResponseModel) {
                            super.onNext(totalNumberResponseModel);
-                           HomeReportModel homeReportModel = totalNumberResponseModel.getData();
+                           homeReportModel = totalNumberResponseModel.getData();
                            useReportNum.setText(new DecimalFormat("#,###").format(homeReportModel.getTotalNumber()));
                            fillFeed(homeReportModel.getReportInfo());
                        }
@@ -171,22 +171,26 @@ public class HomeFragment extends PtrFragment {
 
     @OnClick(R.id.home_report_upload)
     public void onReportUploadClick() {
-        AuthRouterManager.getInstance()
-                         .getRouter()
-                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD);
+        router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD);
     }
 
     @OnClick(R.id.home_report_inquire)
     public void onReportQueryClick() {
-        AuthRouterManager.getInstance()
-                         .getRouter()
-                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY);
+        router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY);
     }
 
     @OnClick(R.id.home_report_manage)
     public void onReportManageClick() {
-        AuthRouterManager.getInstance()
-                         .getRouter()
-                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
+        router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
+    }
+
+    @OnClick(R.id.home_examination_reserve)
+    public void examinationReserveClick() {
+        authRouterManager.openWebView(getActivity(), homeReportModel.getTjyy(), getString(R.string.home_examination_reserve));
+    }
+
+    @OnClick(R.id.home_self_interpretation)
+    public void selfInterpretationClick() {
+        authRouterManager.openWebView(getActivity(), homeReportModel.getZwjd(), getString(R.string.home_self_interpretation));
     }
 }

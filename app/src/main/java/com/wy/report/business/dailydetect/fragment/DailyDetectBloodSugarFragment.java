@@ -6,4 +6,9 @@ package com.wy.report.business.dailydetect.fragment;
  * <p>
  */
 public class DailyDetectBloodSugarFragment extends DailyDetectFragment {
+
+    @Override
+    public void saveRecord() {
+
+    }
 }

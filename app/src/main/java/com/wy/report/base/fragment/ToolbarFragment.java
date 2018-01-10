@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cantalou.android.util.DeviceUtils;
@@ -34,11 +36,13 @@ public abstract class ToolbarFragment extends BaseFragment {
 
     protected View toolbarBack;
 
+    protected ViewGroup toolbarContainer;
+
     @Nullable
     @Override
     public View createView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if ((toolbarFlag() & TOOL_BAR_FLAG_SHOW) == TOOL_BAR_FLAG_SHOW) {
-            ViewGroup toolbarContainer = (ViewGroup) inflater.inflate(toolbarContainerLayoutID(), container, false);
+            toolbarContainer = (ViewGroup) inflater.inflate(toolbarContainerLayoutID(), container, false);
             toolbarContentView = super.createView(inflater, toolbarContainer, savedInstanceState);
             View toolbar = inflater.inflate(toolbarLayoutID(), toolbarContainer, false);
 
@@ -69,12 +73,23 @@ public abstract class ToolbarFragment extends BaseFragment {
         }
 
         BaseActivity activity = (BaseActivity) getActivity();
+        int toolbarHeight = activity.getResources()
+                                    .getDimensionPixelOffset(R.dimen.toolbar_height);
+        int statusBarHeight = DeviceUtils.getStatusBarHeight(activity);
+
+        ImageView statusBarBg = new ImageView(getActivity());
+        statusBarBg.setImageResource(R.color.translucent_15);
+        statusBarBg.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, statusBarHeight));
+
         if (activity != null && activity.isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int toolbarHeight = activity.getResources()
-                                        .getDimensionPixelOffset(R.dimen.toolbar_height);
-            int statusBarHeight = DeviceUtils.getStatusBarHeight(activity);
-            toolbar.setPadding(toolbar.getPaddingLeft(), statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
-            toolbar.getLayoutParams().height = toolbarHeight + statusBarHeight;
+            if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
+                toolbar.setPadding(toolbar.getPaddingLeft(), statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
+                toolbar.getLayoutParams().height = toolbarHeight + statusBarHeight;
+                toolbarContainer.addView(statusBarBg, 0);
+            } else {
+                statusBarBg.setBackgroundDrawable(toolbar.getBackground());
+                toolbarContainer.addView(statusBarBg, 0);
+            }
         }
 
         toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -91,7 +106,7 @@ public abstract class ToolbarFragment extends BaseFragment {
             });
         }
 
-        if(getMenuLayoutId() > 0){
+        if (getMenuLayoutId() > 0) {
             toolbar.inflateMenu(getMenuLayoutId());
         }
     }

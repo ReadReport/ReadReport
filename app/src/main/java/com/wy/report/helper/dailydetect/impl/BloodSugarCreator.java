@@ -1,8 +1,9 @@
 package com.wy.report.helper.dailydetect.impl;
 
 import com.wy.report.helper.dailydetect.DailyDetectValueCreator;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType.Builder;
+import com.wy.report.widget.view.dailydetect.ValueType;
+import com.wy.report.widget.view.dailydetect.ValueType.Builder;
+import com.wy.report.widget.view.wheel.WheelViewItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,31 +19,32 @@ import java.util.List;
 public class BloodSugarCreator implements DailyDetectValueCreator {
 
     @Override
-    public List<DailyDetectValueType> create() {
+    public List<ValueType> create() {
 
-        List<DailyDetectValueType> result = new ArrayList<>();
+        List<ValueType> result = new ArrayList<>();
 
-        List<String> values = new ArrayList<String>() {{
-            add("空腹");
-            add("早餐后");
-            add("午餐前");
-            add("午餐后");
-            add("晚餐前");
-            add("晚餐后");
-            add("睡前");
-            add("夜间");
+        List<WheelViewItem> values = new ArrayList<WheelViewItem>() {{
+            add(new WheelViewItem("1","空腹"));
+            add(new WheelViewItem("2","早餐后"));
+            add(new WheelViewItem("3","午餐前"));
+            add(new WheelViewItem("4","午餐后"));
+            add(new WheelViewItem("5","晚餐前"));
+            add(new WheelViewItem("6","晚餐后"));
+            add(new WheelViewItem("7","睡前"));
+            add(new WheelViewItem("8","夜间"));
+            add(new WheelViewItem("0","随机"));
         }};
-        DailyDetectValueType time = new Builder().name("时间段")
-                                                 .unit("- -")
-                                                 .values(values)
-                                                 .create();
+        ValueType time = new Builder().name("时间段")
+                                      .unit("- -")
+                                      .values(values)
+                                      .create();
         result.add(time);
 
-        DailyDetectValueType number = new Builder().unit("血糖值")
-                                                   .start(0)
-                                                   .end(30)
-                                                   .fraction("0.0")
-                                                   .create();
+        ValueType number = new Builder().unit("血糖值")
+                                        .start(0)
+                                        .end(30)
+                                        .fraction("0.0")
+                                        .create();
         result.add(number);
 
         return result;

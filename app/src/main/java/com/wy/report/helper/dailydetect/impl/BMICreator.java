@@ -1,8 +1,8 @@
 package com.wy.report.helper.dailydetect.impl;
 
 import com.wy.report.helper.dailydetect.DailyDetectValueCreator;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType.Builder;
+import com.wy.report.widget.view.dailydetect.ValueType;
+import com.wy.report.widget.view.dailydetect.ValueType.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +17,22 @@ import java.util.List;
 public class BMICreator implements DailyDetectValueCreator {
 
     @Override
-    public List<DailyDetectValueType> create() {
+    public List<ValueType> create() {
 
-        List<DailyDetectValueType> result = new ArrayList<>();
+        List<ValueType> result = new ArrayList<>();
 
-        DailyDetectValueType weight = new Builder().name("体重")
-                                                   .unit("kg")
-                                                   .start(30)
-                                                   .end(300)
-                                                   .create();
+        ValueType weight = new Builder().name("体重")
+                                        .unit("kg")
+                                        .start(30)
+                                        .end(300)
+                                        .create();
         result.add(weight);
 
-        DailyDetectValueType height = new Builder().name("身高")
-                                                   .unit("cm")
-                                                   .start(80)
-                                                   .end(250)
-                                                   .create();
+        ValueType height = new Builder().name("身高")
+                                        .unit("cm")
+                                        .start(80)
+                                        .end(250)
+                                        .create();
         result.add(height);
 
         return result;

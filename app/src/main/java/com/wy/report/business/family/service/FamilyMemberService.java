@@ -27,7 +27,7 @@ public interface FamilyMemberService {
      * @return
      */
     @GET("/Member/get_family_member")
-    Observable<ResponseModel<List<FamilyMemberModel>>> getFamilyMember(@Query("mid") long mid);
+    Observable<ResponseModel<List<FamilyMemberModel>>> getFamilyMember(@Query("mid") String mid);
 
 
     /**
