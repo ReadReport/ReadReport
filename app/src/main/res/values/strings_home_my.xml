@@ -57,4 +57,14 @@
     <string name="about_title">关于我们</string>
     <string name="about_about">读报告是全国体检预约平台中康体检网打造的一款基于体检报告的健康管理应用。提供[家庭健康档案管理]、[报告数据中心]，和[在线名医咨询]的服务，让您随时管理您和您家人的健康。</string>
 
+    <string name="verify_phone_num_title">验证手机号</string>
+    <string name="verify_phone_num_next">下一步</string>
+    <string name="verify_phone_num_tip_1">若当前号码不用/丢失，或无法收到验证码</string>
+    <string name="verify_phone_num_tip_2">请联系客服：400-800-7580</string>
+
+    <string name="modify_pwd_title">设置密码</string>
+    <string name="modify_pwd_submit">确认重置</string>
+    <string name="modify_pwd_tip">请确认密码相同</string>
+    <string name="modify_pwd_tip2">账号验证成功，请重置密码。</string>
+    <string name="modify_pwd_success_tip">密码修改成功</string>
 </resources>

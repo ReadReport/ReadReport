@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.ToolbarFragment;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 
 import butterknife.OnClick;
@@ -30,7 +31,7 @@ public class SettingFragment extends ToolbarFragment {
 
     @OnClick(R.id.setting_modify_pwd_cl)
     public void modifyPwd() {
-
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_VERIFY_PHONE_NUM);
     }
 
     @OnClick(R.id.setting_about_cl)
@@ -41,5 +42,11 @@ public class SettingFragment extends ToolbarFragment {
     @OnClick(R.id.setting_suggestion_cl)
     public void suggestion() {
         AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_FEEDBACK);
+    }
+
+    @OnClick(R.id.setting_quit_login)
+    public void quitLogin() {
+        UserManger.getInstance().logout();
+        getActivity().finish();
     }
 }

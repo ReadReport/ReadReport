@@ -66,10 +66,6 @@ public class UserInfoFragment extends ToolbarFragment {
     }
 
 
-    @OnClick(R.id.user_info_quit_login)
-    public void quitLogin() {
-        UserManger.getInstance().logout();
-    }
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGOUT)})
     public void onLogout() {

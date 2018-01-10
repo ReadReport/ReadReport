@@ -41,10 +41,10 @@ public class VerifyLoginFragment extends NetworkFragment {
 
     private MyService myService;
 
-    @BindView(R.id.login_account)
+    @BindView(R.id.account)
     EditText userName;
 
-    @BindView(R.id.login_pwd)
+    @BindView(R.id.pwd)
     EditText passWord;
 
     @BindView(R.id.toolbar_menu)
@@ -60,6 +60,7 @@ public class VerifyLoginFragment extends NetworkFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
+        contentView.findViewById(R.id.pwd).setVisibility(View.GONE);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class VerifyLoginFragment extends NetworkFragment {
             return;
         }
         if (StringUtils.isBlank(pwd)) {
-            ToastUtils.showLong(R.string.my_verify_pwd_null);
+            ToastUtils.showLong(R.string.my_verify_verify_null);
             return;
         }
         LogUtils.d(TAG, "登录 用户名:" + username);

@@ -186,14 +186,14 @@ public class SuperEditText extends AppCompatEditText {
         mPaint.setStrokeWidth(2.0f); // 分割线粗细
 
         // 2. 设置分割线颜色（使用十六进制代码，如#333、#8e8e8e）
-        int lineColorClick_default = context.getResources().getColor(R.color.hui_525252); // 默认 = 蓝色#1296db
-        int lineColorunClick_default = context.getResources().getColor(R.color.hui_525252); // 默认 = 灰色#9b9b9b
+        int lineColorClick_default = context.getResources().getColor(R.color.hui_d1d1d1); // 默认 = 蓝色#1296db
+        int lineColorunClick_default = context.getResources().getColor(R.color.hui_d1d1d1); // 默认 = 灰色#9b9b9b
         lineColor_click = typedArray.getColor(R.styleable.SuperEditText_lineColor_click, lineColorClick_default);
         lineColor_unclick = typedArray.getColor(R.styleable.SuperEditText_lineColor_unclick, lineColorunClick_default);
         color = lineColor_unclick;
 
         mPaint.setColor(lineColor_unclick); // 分割线默认颜色 = 灰色
-        setTextColor(color); // 字体默认颜色 = 灰色
+//        setTextColor(color); // 字体默认颜色 = 灰色
 
         // 3. 分割线位置
         linePosition = typedArray.getInteger(R.styleable.SuperEditText_linePosition, 1);
@@ -290,7 +290,7 @@ public class SuperEditText extends AppCompatEditText {
         setCompoundDrawables(leftVisible ? ic_left : ic_left, null,
                 deleteVisible ? ic_Right : null, null);
         color = leftVisible ? lineColor_click : lineColor_unclick;
-        setTextColor(color);
+//        setTextColor(color);
         invalidate();
     }
 
@@ -301,7 +301,7 @@ public class SuperEditText extends AppCompatEditText {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mPaint.setColor(color);
-        setTextColor(color);
+//        setTextColor(color);
         // 绘制分割线
         // 需要考虑：当输入长度超过输入框时，所画的线需要跟随着延伸
         // 解决方案：线的长度 = 控件长度 + 延伸后的长度

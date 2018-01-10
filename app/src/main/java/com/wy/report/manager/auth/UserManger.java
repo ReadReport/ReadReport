@@ -52,9 +52,9 @@ public class UserManger {
     }
 
     public void logout() {
-        preferenceManager.setValue(Key.LOGINED_USER_INFO, null);
+        preferenceManager.delete(Key.LOGINED_USER_INFO);
         loginUser = null;
-        RxBus.get().post(RxKey.RX_LOGOUT);
+        RxBus.get().post(RxKey.RX_LOGOUT,new Object());
     }
 
     private static class InstanceHolder {

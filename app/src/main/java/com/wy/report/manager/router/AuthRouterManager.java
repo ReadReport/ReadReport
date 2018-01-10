@@ -16,9 +16,11 @@ import com.wy.report.business.my.fragment.FeedbackFragment;
 import com.wy.report.business.my.fragment.LoginFragment;
 import com.wy.report.business.my.fragment.MessageDetailFragment;
 import com.wy.report.business.my.fragment.MessageFragment;
+import com.wy.report.business.my.fragment.ModifyPwdFragment;
 import com.wy.report.business.my.fragment.RegisterFragment;
 import com.wy.report.business.my.fragment.SettingFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
+import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
 import com.wy.report.business.other.fragment.PictureFragment;
 import com.wy.report.business.read.fragment.ReportManageFragment;
 import com.wy.report.business.upload.fragment.HospitalListFragment;
@@ -134,6 +136,16 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_ABOUT = PUBLIC_ACTIVITY_PREFIX + "ROUTER_ABOUT";
 
+    /**
+     * 验证手机号
+     */
+    public static final String ROUTER_VERIFY_PHONE_NUM = LOGIN_ACTIVITY_PREFIX + "ROUTER_VERIFY_PHONE_NUM";
+
+    /**
+     * 修改密码
+     */
+    public static final String ROUTER_MODIFY_PWD = LOGIN_ACTIVITY_PREFIX + "ROUTER_MODIFY_PWD";
+
     private Router router;
 
     private UserManger userManger;
@@ -185,6 +197,8 @@ public class AuthRouterManager {
         router.map(ROUTER_SETTING, StandardActivity.class, SettingFragment.class);
         router.map(ROUTER_FEEDBACK, StandardActivity.class, FeedbackFragment.class);
         router.map(ROUTER_ABOUT, StandardActivity.class, AboutFragment.class);
+        router.map(ROUTER_VERIFY_PHONE_NUM, StandardActivity.class, VerifyPhoneNumFragment.class);
+        router.map(ROUTER_MODIFY_PWD, StandardActivity.class, ModifyPwdFragment.class);
     }
 
     /**

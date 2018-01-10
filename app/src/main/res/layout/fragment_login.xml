@@ -5,67 +5,11 @@
                                              android:layout_height="wrap_content"
     >
 
+    <include
+        layout="@layout/merge_account_pwd"
+        >
+    </include>
 
-    <com.wy.report.widget.view.SuperEditText
-        android:id="@+id/login_account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="40dp"
-        android:drawablePadding="15dp"
-        android:text="1586368456"
-        android:textColor="@color/hei_333333"
-        android:textSize="17sp"
-        app:deleteMode="true"
-        app:ic_left="@drawable/ic_modify_phone"
-        app:ic_right="@drawable/btn_delete_normal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:left_height="15"
-        app:left_width="15"
-        app:left_x="0"
-        app:left_y="0"
-        app:lineColor_click="@color/hui_858585"
-        app:lineColor_unclick="@color/hui_858585"
-        app:linePosition="1"
-        app:right_height="15"
-        app:right_width="15"
-        app:right_x="0"
-        app:right_y="0"
-        />
-
-    <com.wy.report.widget.view.SuperEditText
-        android:id="@+id/login_pwd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="40dp"
-        android:drawablePadding="15dp"
-        android:text="1586368456"
-        android:textColor="@color/hei_333333"
-        android:textSize="17sp"
-        app:ic_left="@drawable/ic_modify_password"
-        app:ic_pwd_dis="@drawable/btn_password_close"
-        app:ic_pwd_show="@drawable/btn_password_open"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_account"
-        app:left_height="15"
-        app:left_width="15"
-        app:left_x="0"
-        app:left_y="0"
-        app:lineColor_click="@color/hui_858585"
-        app:lineColor_unclick="@color/hui_858585"
-        app:linePosition="1"
-        app:pwdMode="true"
-        app:right_height="15"
-        app:right_width="15"
-        app:right_x="0"
-        app:right_y="0"
-        />
     <TextView
         android:id="@+id/login"
         android:layout_width="match_parent"
@@ -80,7 +24,9 @@
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_pwd"/>
+        app:layout_constraintTop_toBottomOf="@+id/pwd"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,27 +36,22 @@
         android:textColor="@color/hui_ababab"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@+id/login"
-        app:layout_constraintTop_toBottomOf="@+id/login"/>
+        app:layout_constraintTop_toBottomOf="@+id/login"
+        />
 
     <TextView
         android:id="@+id/verify_code_login"
-        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:clickable="true"
         android:text="@string/my_validate_code_login"
         android:textColor="@color/hui_ababab"
         android:textSize="12sp"
         app:layout_constraintRight_toRightOf="@+id/login"
-        app:layout_constraintTop_toBottomOf="@+id/login"/>
+        app:layout_constraintTop_toBottomOf="@+id/login"
+        />
 
-
-    <!--<com.rengwuxian.materialedittext.MaterialEditText-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:drawableLeft="@drawable/ic_modify_phone">-->
-
-    <!--</com.rengwuxian.materialedittext.MaterialEditText>-->
 
 </android.support.constraint.ConstraintLayout>

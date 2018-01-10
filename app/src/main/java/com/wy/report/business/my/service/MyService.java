@@ -7,6 +7,7 @@ import com.wy.report.business.my.model.MessageItemMode;
 import com.wy.report.business.my.model.MessageListMode;
 import com.wy.report.business.my.model.RegisterMode;
 import com.wy.report.business.my.model.UserModel;
+import com.wy.report.business.my.model.VerifyPhoneNumMode;
 
 import java.util.List;
 
@@ -40,6 +41,15 @@ public interface MyService {
      */
     @GET("/Member/dbg_get_verify_code")
     Observable<ResponseModel<UserModel>> getVerifyCode(@Query("mobile") String mobile);
+
+    /**
+     * 获取验证码 for 注册
+     *
+     * @param mobile
+     * @return
+     */
+    @GET("/Member/dbg_register_send_code_before_action")
+    Observable<ResponseModel<UserModel>> getVerifyCodeForRegister(@Query("mobile") String mobile);
 
 
     /**
@@ -121,5 +131,22 @@ public interface MyService {
     @FormUrlEncoded
     @POST("/Consult/feedback")
     Observable<ResponseModel> feedback(@Field("mid") String mid, @Field("content") String content);
+
+    /**
+     * 验证手机
+     *
+     * @return
+     */
+    @GET("/Member/verify_member")
+    Observable<ResponseModel<VerifyPhoneNumMode>> verifyPhone(@Query("username") String mobile, @Query("verify") String pwd);
+
+    /**
+     * 重置密码
+     *
+     * @return
+     */
+    @GET("/Member/reset_password")
+    Observable<ResponseModel> modifyPwd(@Query("username") String mobile, @Query("password") String pwd);
+
 
 }

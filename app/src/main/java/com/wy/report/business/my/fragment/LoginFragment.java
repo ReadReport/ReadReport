@@ -38,10 +38,10 @@ public class LoginFragment extends NetworkFragment {
 
     private MyService myService;
 
-    @BindView(R.id.login_account)
+    @BindView(R.id.account)
     EditText userName;
 
-    @BindView(R.id.login_pwd)
+    @BindView(R.id.pwd)
     EditText passWord;
 
     @BindView(R.id.toolbar_menu)
@@ -55,6 +55,8 @@ public class LoginFragment extends NetworkFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
+        contentView.findViewById(R.id.verify_code).setVisibility(View.GONE);
+        contentView.findViewById(R.id.get_verify_code).setVisibility(View.GONE);
         userName.setText("18046042250");
         passWord.setText("111111");
     }

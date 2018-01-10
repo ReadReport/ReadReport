@@ -23,4 +23,6 @@ public final class BundleKey {
     public static final String BUNDLE_KEY_DAILY_DETECT_DATA = "BUNDLE_KEY_DAILY_DETECT_DATA";
 
     public static final String BUNDLE_KEY_FAMILY_ITEM = "BUNDLE_KEY_FAMILY_ITEM";
+
+    public static final String BUNDLE_KEY_MODIFY_PWD_USERNAME = "BUNDLE_KEY_MODIFY_PWD_USERNAME";
 }

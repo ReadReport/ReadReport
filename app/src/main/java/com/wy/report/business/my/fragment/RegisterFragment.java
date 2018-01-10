@@ -19,8 +19,6 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
-import com.wy.report.manager.router.AuthRouterManager;
-import com.wy.report.manager.router.Router;
 import com.wy.report.util.RegexUtils;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.ToastUtils;
@@ -41,13 +39,13 @@ public class RegisterFragment extends NetworkFragment {
 
     private MyService myService;
 
-    @BindView(R.id.register_account)
+    @BindView(R.id.account)
     EditText userName;
 
-    @BindView(R.id.register_pwd)
+    @BindView(R.id.pwd)
     EditText passWord;
 
-    @BindView(R.id.register_verify)
+    @BindView(R.id.verify_code)
     EditText verifyCode;
 
     @BindView(R.id.toolbar_menu)

@@ -118,4 +118,11 @@ public class PreferenceManager {
         return (T) getValue(key, null, null);
     }
 
+    public void delete(String key)
+    {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
 }
