@@ -42,6 +42,15 @@ public class WheelView extends RecyclerView {
                 ((TextView) helper.getConvertView()).setText(item.getTitle());
             }
         };
+        addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            }
+        });
     }
 
     public void setData(List<WheelViewItem> data) {

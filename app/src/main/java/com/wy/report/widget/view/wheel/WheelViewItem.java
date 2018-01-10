@@ -5,14 +5,11 @@ package com.wy.report.widget.view.wheel;
  * @date 2018年01月10日 10:21
  * <p>
  */
-public class WheelViewItem{
+public class WheelViewItem {
 
     private String value;
 
     private String title;
-
-    public WheelViewItem() {
-    }
 
     public WheelViewItem(String value) {
         this.value = value;
@@ -29,7 +26,7 @@ public class WheelViewItem{
         return title;
     }
 
-    public String getValue(){
+    public String getValue() {
         return value;
     }
 
