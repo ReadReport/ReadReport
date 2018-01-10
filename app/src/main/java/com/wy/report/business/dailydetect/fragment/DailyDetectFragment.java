@@ -6,23 +6,25 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.ToolbarFragment;
+import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.dailydetect.DailyDetectHelper;
 import com.wy.report.helper.retrofit.RetrofitHelper;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueContainerView;
+import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,10 +35,10 @@ import butterknife.OnClick;
  * @author cantalou
  * @date 2017-12-26 21:14
  */
-public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMenuItemClickListener {
+public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMenuItemClickListener {
 
-    @BindView(R.id.daily_detect_value_container)
-    FrameLayout detectValueContainer;
+    @BindView(R.id.daily_detect_framelayout_container)
+    FrameLayout frameLayoutContainer;
 
     @BindView(R.id.daily_detect_date_value)
     TextView dailyDetectDate;
@@ -51,7 +53,9 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
 
     private DailyDetectTypeModel model;
 
-    private DailyDetectService dailyDetectService;
+    protected DailyDetectService dailyDetectService;
+
+    protected ViewGroup detectValueContainerView;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -64,14 +68,14 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        View detectValueView = createDetectValueView();
-        detectValueContainer.addView(detectValueView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        detectValueContainerView = createDetectValueView();
+        frameLayoutContainer.addView(detectValueContainerView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
-    protected View createDetectValueView() {
-        DailyDetectValueContainerView containerView = new DailyDetectValueContainerView(getActivity());
-        containerView.setData(DailyDetectHelper.getTypes(model));
-        return containerView;
+    protected ViewGroup createDetectValueView() {
+        ValueViewContainer detectValueContainerView = new ValueViewContainer(getActivity());
+        detectValueContainerView.setData(DailyDetectHelper.getTypes(model));
+        return detectValueContainerView;
     }
 
     @Override
@@ -133,4 +137,13 @@ public class DailyDetectFragment extends ToolbarFragment implements Toolbar.OnMe
     public void saveRecord() {
 
     }
+
+    protected List<String> getWheelValues() {
+        if (detectValueContainerView instanceof ValueViewContainer) {
+            return ((ValueViewContainer) detectValueContainerView).getWheelValues();
+        }
+        throw new IllegalStateException("detectValueContainerView can not cast to ValueViewContainer, you must override getWheelValues() " +
+                "method to create values.");
+    }
+
 }

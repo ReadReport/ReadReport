@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wy.report.R;
+import com.wy.report.widget.view.wheel.WheelView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
  * @author cantalou
  * @date 2017-12-26 23:13
  */
-public class DailyDetectValueView extends LinearLayout {
+public class ValueView extends LinearLayout {
 
     @BindView(R.id.view_daily_detect_value_item_name)
     TextView name;
@@ -31,12 +32,12 @@ public class DailyDetectValueView extends LinearLayout {
     @BindView(R.id.view_daily_detect_value_item_wv)
     WheelView wheelView;
 
-    public DailyDetectValueView(Context context) {
+    public ValueView(Context context) {
         super(context);
         initView(context);
     }
 
-    public DailyDetectValueView(Context context, @Nullable AttributeSet attrs) {
+    public ValueView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
@@ -49,7 +50,7 @@ public class DailyDetectValueView extends LinearLayout {
         ButterKnife.bind(this, this);
     }
 
-    public void setData(DailyDetectValueType type) {
+    public void setData(ValueType type) {
         if (TextUtils.isEmpty(type.getName())) {
             name.setVisibility(View.GONE);
         } else {
@@ -60,6 +61,10 @@ public class DailyDetectValueView extends LinearLayout {
         } else {
             unit.setText(type.getUnit());
         }
-        wheelView.setItems(type.getValues());
+        wheelView.setData(type.getValues());
+    }
+
+    public WheelView getWheelView() {
+        return wheelView;
     }
 }

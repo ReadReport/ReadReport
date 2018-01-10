@@ -18,6 +18,10 @@ public class HomeReportModel {
     @JSONField(name = "report_info")
     private ArrayList<FeedModel> reportInfo = new ArrayList<>();
 
+    private String tjyy;
+
+    private String zwjd;
+
     public long getTotalNumber() {
         return totalNumber;
     }
@@ -32,5 +36,21 @@ public class HomeReportModel {
 
     public void setReportInfo(ArrayList<FeedModel> reportInfo) {
         this.reportInfo = reportInfo;
+    }
+
+    public String getTjyy() {
+        return tjyy;
+    }
+
+    public void setTjyy(String tjyy) {
+        this.tjyy = tjyy;
+    }
+
+    public String getZwjd() {
+        return zwjd;
+    }
+
+    public void setZwjd(String zwjd) {
+        this.zwjd = zwjd;
     }
 }

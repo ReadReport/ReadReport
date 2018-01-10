@@ -3,6 +3,8 @@ package com.wy.report.widget.view.dailydetect;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.wy.report.widget.view.wheel.WheelViewItem;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +14,11 @@ import java.util.List;
  * @author cantalou
  * @date 2017-12-26 23:14
  */
-public class DailyDetectValueType {
+public class ValueType {
 
     public static class Builder {
 
-        private DailyDetectValueType result;
+        private ValueType result;
 
         private double start;
 
@@ -27,7 +29,7 @@ public class DailyDetectValueType {
         private String fraction;
 
         public Builder() {
-            result = new DailyDetectValueType();
+            result = new ValueType();
         }
 
         public Builder name(String name) {
@@ -70,12 +72,12 @@ public class DailyDetectValueType {
             return this;
         }
 
-        public Builder values(List<String> values) {
+        public Builder values(List<WheelViewItem> values) {
             result.values = values;
             return this;
         }
 
-        public DailyDetectValueType create() {
+        public ValueType create() {
             if (result.values == null) {
                 if (TextUtils.isEmpty(fraction)) {
                     result.setValues(getValues((int) start, (int) end, (int) delta));
@@ -86,21 +88,21 @@ public class DailyDetectValueType {
             return result;
         }
 
-        private static List<String> getValues(double start, double end, double delta, String pattern) {
+        private static List<WheelViewItem> getValues(double start, double end, double delta, String pattern) {
             DecimalFormat decimalFormat = new DecimalFormat();
             decimalFormat.applyPattern(pattern);
-            List<String> values = new ArrayList<>((int) ((end - start) / delta));
+            List<WheelViewItem> values = new ArrayList<>((int) ((end - start) / delta));
             for (; start <= end; start += delta) {
-                values.add(decimalFormat.format(start));
+                values.add(new WheelViewItem(decimalFormat.format(start)));
             }
             return values;
         }
 
         @NonNull
-        private static List<String> getValues(int start, int end, int delta) {
-            List<String> values = new ArrayList<>((end - start) / delta + 1);
+        private static List<WheelViewItem> getValues(int start, int end, int delta) {
+            List<WheelViewItem> values = new ArrayList<>((end - start) / delta + 1);
             for (; start <= end; start += delta) {
-                values.add(Integer.toString(start));
+                values.add(new WheelViewItem(Integer.toString(start)));
             }
             return values;
         }
@@ -112,15 +114,15 @@ public class DailyDetectValueType {
 
     private String unit;
 
-    private List<String> values;
+    private List<WheelViewItem> values;
 
     private int showNum = 5;
 
     private int startIndex = -1;
 
-    private DailyDetectValueType minValue;
+    private ValueType minValue;
 
-    private DailyDetectValueType maxValue;
+    private ValueType maxValue;
 
     private String selectValue;
 
@@ -136,11 +138,11 @@ public class DailyDetectValueType {
         return unit;
     }
 
-    public List<String> getValues() {
+    public List<WheelViewItem> getValues() {
         return values;
     }
 
-    public void setValues(List<String> values) {
+    public void setValues(List<WheelViewItem> values) {
         this.values = values;
     }
 
@@ -152,19 +154,19 @@ public class DailyDetectValueType {
         return startIndex;
     }
 
-    public DailyDetectValueType getMinValue() {
+    public ValueType getMinValue() {
         return minValue;
     }
 
-    public void setMinValue(DailyDetectValueType minValue) {
+    public void setMinValue(ValueType minValue) {
         this.minValue = minValue;
     }
 
-    public DailyDetectValueType getMaxValue() {
+    public ValueType getMaxValue() {
         return maxValue;
     }
 
-    public void setMaxValue(DailyDetectValueType maxValue) {
+    public void setMaxValue(ValueType maxValue) {
         this.maxValue = maxValue;
     }
 

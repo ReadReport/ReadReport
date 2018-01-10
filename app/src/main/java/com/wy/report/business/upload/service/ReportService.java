@@ -30,11 +30,11 @@ public interface ReportService {
 
     @POST("/Report/do_upload_report")
     @Multipart
-    Observable<ResponseModel<UploadModel>> submitReport(@Part("mid") Long uid, @Part("upload_from") String uploadFrom, @Part("tj_hospital") String hospitalId,
+    Observable<ResponseModel<UploadModel>> submitReport(@Part("mid") String uid, @Part("upload_from") String uploadFrom, @Part("tj_hospital") String hospitalId,
                                                         @Part("tj_date") String date, @Part("remark") String remark, @Part MultipartBody.Part[] parts);
 
     @GET("/Report/do_upload_report")
     @Multipart
-    Observable<ResponseModel<UploadModel>> queryReport(@Part("mid") Long uid, @Part("tj_hospital") String hospitalId,
+    Observable<ResponseModel<UploadModel>> queryReport(@Part("mid") String uid, @Part("tj_hospital") String hospitalId,
                                                         @Part("tj_date") String account, @Part("remark") String password);
 }

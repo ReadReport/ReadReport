@@ -1,8 +1,8 @@
 package com.wy.report.helper.dailydetect.impl;
 
 import com.wy.report.helper.dailydetect.DailyDetectValueCreator;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType;
-import com.wy.report.widget.view.dailydetect.DailyDetectValueType.Builder;
+import com.wy.report.widget.view.dailydetect.ValueType;
+import com.wy.report.widget.view.dailydetect.ValueType.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,28 +15,28 @@ import java.util.List;
 public class BloodPressureCreator implements DailyDetectValueCreator {
 
     @Override
-    public List<DailyDetectValueType> create() {
-        List<DailyDetectValueType> result = new ArrayList<>();
+    public List<ValueType> create() {
+        List<ValueType> result = new ArrayList<>();
 
-        DailyDetectValueType high = new Builder().name("高压")
-                                                 .unit("mmhg")
-                                                 .start(30)
-                                                 .end(240)
-                                                 .create();
+        ValueType high = new Builder().name("高压")
+                                      .unit("mmhg")
+                                      .start(30)
+                                      .end(240)
+                                      .create();
         result.add(high);
 
-        DailyDetectValueType low = new Builder().name("低压")
-                                                .unit("mmhg")
-                                                .start(30)
-                                                .end(240)
-                                                .create();
+        ValueType low = new Builder().name("低压")
+                                     .unit("mmhg")
+                                     .start(30)
+                                     .end(240)
+                                     .create();
         result.add(low);
 
-        DailyDetectValueType bmp = new Builder().name("心率")
-                                                .unit("bmp")
-                                                .start(30)
-                                                .end(220)
-                                                .create();
+        ValueType bmp = new Builder().name("心率")
+                                     .unit("bmp")
+                                     .start(30)
+                                     .end(220)
+                                     .create();
         result.add(bmp);
 
         high.setMinValue(low);

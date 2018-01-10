@@ -101,7 +101,7 @@ public class VerifyLoginFragment extends NetworkFragment {
                 LogUtils.d("登录成功:" + userModel.toString());
                 User user = new User();
                 user.setName(userModel.getName());
-                user.setId(Integer.valueOf(userModel.getId()));
+                user.setId(userModel.getId());
                 user.setHead(userModel.getHeadIcon());
                 user.setBirthday(Integer.valueOf(userModel.getBirthday()));
                 user.setMobile(userModel.getMobile());

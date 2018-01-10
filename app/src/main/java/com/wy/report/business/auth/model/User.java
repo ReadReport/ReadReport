@@ -19,7 +19,7 @@ public class User extends BaseModel implements Parcelable{
     /**
      * 用户ID
      */
-    private long id;
+    private String id;
 
     /**
      * 用户昵称
@@ -52,11 +52,11 @@ public class User extends BaseModel implements Parcelable{
      */
     private long birthday;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -119,7 +119,7 @@ public class User extends BaseModel implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeInt(this.sex);
         dest.writeString(this.head);
@@ -129,7 +129,7 @@ public class User extends BaseModel implements Parcelable{
     }
 
     protected User(Parcel in) {
-        this.id = in.readLong();
+        this.id = in.readString();
         this.name = in.readString();
         this.sex = in.readInt();
         this.head = in.readString();
