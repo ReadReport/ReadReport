@@ -53,6 +53,11 @@ public class WheelView extends RecyclerView {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 int position = linearLayoutManager.findFirstVisibleItemPosition();
+                if (down) {
+                    smoothScrollToPosition(position);
+                } else {
+                    smoothScrollToPosition(position + 1);
+                }
             }
 
             @Override
