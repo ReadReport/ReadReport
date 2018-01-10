@@ -17,10 +17,13 @@ import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
+import com.wy.report.business.auth.model.User;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.dailydetect.DailyDetectHelper;
 import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.manager.auth.UserManger;
+import com.wy.report.widget.view.dailydetect.ValueView;
 import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 
 import java.util.Calendar;
@@ -37,25 +40,19 @@ import butterknife.OnClick;
  */
 public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMenuItemClickListener {
 
+    protected DailyDetectService dailyDetectService;
+    protected ViewGroup detectValueContainerView;
+    protected User user;
     @BindView(R.id.daily_detect_framelayout_container)
     FrameLayout frameLayoutContainer;
-
     @BindView(R.id.daily_detect_date_value)
     TextView dailyDetectDate;
-
     @BindView(R.id.daily_detect_time_value)
     TextView dailyDetectTime;
-
     @BindView(R.id.daily_detect_data_list_operate)
     TextView dataListOperateMode;
-
     private boolean editMode = false;
-
     private DailyDetectTypeModel model;
-
-    protected DailyDetectService dailyDetectService;
-
-    protected ViewGroup detectValueContainerView;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -63,6 +60,8 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
         model = getArguments().getParcelable(BundleKey.BUNDLE_KEY_MODEL);
         dailyDetectService = RetrofitHelper.getInstance()
                                            .create(DailyDetectService.class);
+        user = UserManger.getInstance()
+                         .getLoginUser();
     }
 
     @Override
@@ -146,4 +145,8 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
                 "method to create values.");
     }
 
+
+    protected String getValue(int index) {
+        return ((ValueView)detectValueContainerView.getChildAt(index)).getWheelView().getSelectedItem().getValue();
+    }
 }

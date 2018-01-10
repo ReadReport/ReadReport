@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wy.report.R;
 import com.wy.report.base.viewholder.BaseViewHolder;
+import com.wy.report.widget.view.recycleview.SmoothScrollLayoutManager;
 
 import java.util.List;
 
@@ -24,6 +25,12 @@ public class WheelView extends RecyclerView {
 
     private LinearLayoutManager linearLayoutManager;
 
+    private int x;
+
+    private int y;
+
+    private boolean down = false;
+
     public WheelView(Context context) {
         super(context);
         initView();
@@ -35,7 +42,7 @@ public class WheelView extends RecyclerView {
     }
 
     private void initView() {
-        setLayoutManager(linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        setLayoutManager(linearLayoutManager = new SmoothScrollLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         adapter = new BaseQuickAdapter<WheelViewItem, BaseViewHolder>(R.layout.vh_wheel_item) {
             @Override
             protected void convert(BaseViewHolder helper, WheelViewItem item) {
@@ -45,10 +52,15 @@ public class WheelView extends RecyclerView {
         addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                int position = linearLayoutManager.findFirstVisibleItemPosition();
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > y) {
+                    down = true;
+                }
+                y = dy;
             }
         });
     }

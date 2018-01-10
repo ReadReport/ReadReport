@@ -22,6 +22,7 @@ import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.service.HospitalService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.widget.view.recycleview.SmoothScrollLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,33 +197,5 @@ public class NotChainUnitFragment extends PtrFragment {
                 && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewRight, header);
     }
 
-    public class SmoothScrollLayoutManager extends LinearLayoutManager {
 
-        public SmoothScrollLayoutManager(Context context, int orientation, boolean reverseLayout) {
-            super(context, orientation, reverseLayout);
-        }
-
-        @Override
-        public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, final int position) {
-
-            LinearSmoothScroller smoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
-                @Override
-                protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
-                    return 150f / displayMetrics.densityDpi;
-                }
-
-                @Override
-                public PointF computeScrollVectorForPosition(int targetPosition) {
-                    return SmoothScrollLayoutManager.this.computeScrollVectorForPosition(targetPosition);
-                }
-
-                @Override protected int getVerticalSnapPreference() {
-                    return LinearSmoothScroller.SNAP_TO_START;
-                }
-            };
-
-            smoothScroller.setTargetPosition(position);
-            startSmoothScroll(smoothScroller);
-        }
-    }
 }
