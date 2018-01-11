@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="report_detail_head_title">美年大健康体检中心体检报告</string>
+    <string name="report_detail_head_name">姓&#160;&#160;&#160;&#160;名</string>
+    <string name="report_detail_head_sex">美年大健</string>
+    <string name="report_detail_head_age">美年大健康体检中心体检报告</string>
+    <string name="report_detail_head_type">美年大健康体检中心体检报告</string>
+    <string name="report_detail_head_time">美年大健康体检中心体检报告</string>
+    <string name="report_detail_head_hospital">美年大健康体检中心体检报告</string>
+</resources>
