@@ -90,4 +90,13 @@ public interface DailyDetectService {
     @FormUrlEncoded
     Observable<ResponseModel> recordBloodFat(@Field("mid") String mid, @Field("test_type") int type, @Field("chol_value") String chol,
                                              @Field("trig_value") String trig, @Field("hdl_value") String hdl, @Field("ldl_value") String ldl);
+
+
+    /**
+     * 删除测量记录
+     *
+     * @return
+     */
+    @POST
+    Observable<ResponseModel> deleteRecord(@Field("id") String mid);
 }

@@ -1,5 +1,6 @@
 package com.wy.report.business.dailydetect.fragment;
 
+import com.wy.report.R;
 import com.wy.report.base.fragment.NetworkFragment;
 
 /*
@@ -11,6 +12,11 @@ public class DailyDetectTendencyCharFragment extends NetworkFragment {
 
     @Override
     protected int contentLayoutID() {
+        return R.layout.fragment_daily_detect_tendency_chart;
+    }
+
+    @Override
+    protected int toolbarFlag() {
         return 0;
     }
 }

@@ -3,6 +3,9 @@ package com.wy.report.business.dailydetect.fragment;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.TimePicker;
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
+import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
@@ -23,6 +27,7 @@ import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.dailydetect.DailyDetectHelper;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.widget.tab.TwoTabLayoutDetect;
 import com.wy.report.widget.view.dailydetect.ValueView;
 import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 
@@ -58,6 +63,12 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
     @BindView(R.id.daily_detect_data_list_operate)
     TextView dataListOperateMode;
 
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+
+    @BindView(R.id.daily_detect_tab_container)
+    TwoTabLayoutDetect tabLayout;
+
     private boolean editMode = false;
 
     private DailyDetectTypeModel model;
@@ -77,6 +88,20 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
         super.initView(contentView);
         detectValueContainerView = createDetectValueView();
         frameLayoutContainer.addView(detectValueContainerView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+        final BaseFragment[] fragments = new BaseFragment[]{new DailyDetectTendencyCharFragment(), new DailyDetectDataListFragment()};
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments[position];
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.length;
+            }
+        });
+        viewPager.addOnPageChangeListener(tabLayout);
     }
 
     protected ViewGroup createDetectValueView() {
@@ -117,7 +142,7 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
         new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                dailyDetectDate.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                dailyDetectDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
             }
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
@@ -130,7 +155,7 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 dailyDetectTime.setText(hourOfDay + "：" + minute);
             }
-        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);
+        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show();
     }
 
     @OnClick(R.id.daily_detect_data_list_operate)

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
@@ -97,7 +100,7 @@ public class ReportUploadFragment extends NetworkFragment {
 
     private UnitModel unitModel;
 
-    private BaseQuickAdapter<PictureModel, BaseViewHolder> adapter;
+    private BaseItemDraggableAdapter<PictureModel, BaseViewHolder> adapter;
 
     private ArrayList<String> savedPictureList;
 
@@ -133,7 +136,7 @@ public class ReportUploadFragment extends NetworkFragment {
     }
 
     private void createAdapter() {
-        adapter = new BaseQuickAdapter<PictureModel, BaseViewHolder>(R.layout.vh_select_image) {
+        adapter = new BaseItemDraggableAdapter<PictureModel, BaseViewHolder>(R.layout.vh_select_image ,null) {
             @Override
             protected void convert(BaseViewHolder helper, PictureModel item) {
                 switch (item.getType()) {
@@ -196,6 +199,10 @@ public class ReportUploadFragment extends NetworkFragment {
             }
         });
         adapter.onAttachedToRecyclerView(recyclerView);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+        adapter.enableDragItem(itemTouchHelper,0,true);
     }
 
     private ArrayList<String> toPicturePath() {

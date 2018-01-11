@@ -3,11 +3,12 @@ package com.wy.report.widget.tab;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wy.report.R;
@@ -19,7 +20,7 @@ import butterknife.BindView;
  * @author cantalou
  * @date 2017-12-30 22:59
  */
-public class TwoTabLayoutDetect extends LinearLayout implements ViewPager.OnPageChangeListener{
+public class TwoTabLayoutDetect extends ConstraintLayout implements ViewPager.OnPageChangeListener {
 
     @BindView(R.id.toolbar_tab_0)
     TextView tab0;
@@ -43,7 +44,9 @@ public class TwoTabLayoutDetect extends LinearLayout implements ViewPager.OnPage
         initView();
     }
 
-    public void initView(){
+    public void initView() {
+        LayoutInflater.from(getContext())
+                      .inflate(R.layout.view_tab_layout_two_detect, this);
 
     }
 
