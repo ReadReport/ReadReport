@@ -14,8 +14,15 @@ import android.util.DisplayMetrics;
  */
 public class SmoothScrollLayoutManager extends LinearLayoutManager {
 
+    private float speed = 150f;
+
     public SmoothScrollLayoutManager(Context context, int orientation, boolean reverseLayout) {
         super(context, orientation, reverseLayout);
+    }
+
+    public SmoothScrollLayoutManager(Context context, int orientation, boolean reverseLayout, float speed) {
+        super(context, orientation, reverseLayout);
+        this.speed = speed;
     }
 
     @Override
@@ -24,7 +31,7 @@ public class SmoothScrollLayoutManager extends LinearLayoutManager {
         LinearSmoothScroller smoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
             @Override
             protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
-                return 150f / displayMetrics.densityDpi;
+                return speed / displayMetrics.densityDpi;
             }
 
             @Override

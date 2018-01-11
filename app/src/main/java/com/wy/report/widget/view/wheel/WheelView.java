@@ -7,9 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.cantalou.android.util.Log;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
-import com.wy.report.base.viewholder.BaseViewHolder;
 import com.wy.report.widget.view.recycleview.SmoothScrollLayoutManager;
 
 import java.util.List;
@@ -25,10 +26,6 @@ public class WheelView extends RecyclerView {
 
     private LinearLayoutManager linearLayoutManager;
 
-    private int x;
-
-    private int y;
-
     private boolean down = false;
 
     public WheelView(Context context) {
@@ -42,7 +39,7 @@ public class WheelView extends RecyclerView {
     }
 
     private void initView() {
-        setLayoutManager(linearLayoutManager = new SmoothScrollLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        setLayoutManager(linearLayoutManager = new SmoothScrollLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false, 200));
         adapter = new BaseQuickAdapter<WheelViewItem, BaseViewHolder>(R.layout.vh_wheel_item) {
             @Override
             protected void convert(BaseViewHolder helper, WheelViewItem item) {
@@ -52,22 +49,35 @@ public class WheelView extends RecyclerView {
         addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState != RecyclerView.SCROLL_STATE_IDLE) {
+                    return;
+                }
+
+                if (linearLayoutManager.isSmoothScrolling()) {
+                    return;
+                }
+
                 int position = linearLayoutManager.findFirstVisibleItemPosition();
+                if (position == linearLayoutManager.findFirstCompletelyVisibleItemPosition()) {
+                    return;
+                }
                 if (down) {
-                    smoothScrollToPosition(position);
+                    linearLayoutManager.scrollToPosition(position);
                 } else {
-                    smoothScrollToPosition(position + 1);
+                    linearLayoutManager.scrollToPositionWithOffset(position + 1,0);
                 }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > y) {
-                    down = true;
+                if (Math.abs(dy) < 2) {
+                    return;
                 }
-                y = dy;
+                down = dy < 0;
+                Log.d("onScrolled dy :{}, down :{}", dy, down);
             }
         });
+        setAdapter(adapter);
     }
 
     public void setData(List<WheelViewItem> data) {

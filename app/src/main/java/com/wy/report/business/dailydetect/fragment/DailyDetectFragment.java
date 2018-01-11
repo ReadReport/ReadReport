@@ -7,9 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout.LayoutParams;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -41,17 +41,25 @@ import butterknife.OnClick;
 public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMenuItemClickListener {
 
     protected DailyDetectService dailyDetectService;
+
     protected ViewGroup detectValueContainerView;
+
     protected User user;
+
     @BindView(R.id.daily_detect_framelayout_container)
     FrameLayout frameLayoutContainer;
+
     @BindView(R.id.daily_detect_date_value)
     TextView dailyDetectDate;
+
     @BindView(R.id.daily_detect_time_value)
     TextView dailyDetectTime;
+
     @BindView(R.id.daily_detect_data_list_operate)
     TextView dataListOperateMode;
+
     private boolean editMode = false;
+
     private DailyDetectTypeModel model;
 
     @Override
@@ -147,6 +155,8 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
 
 
     protected String getValue(int index) {
-        return ((ValueView)detectValueContainerView.getChildAt(index)).getWheelView().getSelectedItem().getValue();
+        return ((ValueView) detectValueContainerView.getChildAt(index)).getWheelView()
+                                                                       .getSelectedItem()
+                                                                       .getValue();
     }
 }

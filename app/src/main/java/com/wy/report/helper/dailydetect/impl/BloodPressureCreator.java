@@ -22,12 +22,14 @@ public class BloodPressureCreator implements DailyDetectValueCreator {
                                       .unit("mmhg")
                                       .start(30)
                                       .end(240)
+                                      .startIndex(50)
                                       .create();
         result.add(high);
 
         ValueType low = new Builder().name("低压")
                                      .unit("mmhg")
                                      .start(30)
+                                     .startIndex(30)
                                      .end(240)
                                      .create();
         result.add(low);
@@ -35,6 +37,7 @@ public class BloodPressureCreator implements DailyDetectValueCreator {
         ValueType bmp = new Builder().name("心率")
                                      .unit("bmp")
                                      .start(30)
+                                     .startIndex(50)
                                      .end(220)
                                      .create();
         result.add(bmp);
