@@ -20,6 +20,7 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.util.StringUtils;
 import com.wy.report.util.TimeUtils;
 
 import java.util.Calendar;
@@ -121,7 +122,7 @@ public class EditFamilyFragment extends NetworkFragment {
         if (familyItem != null) {
             name.setText(familyItem.getName());
             birthday.setText(TimeUtils.millis2String(Long.valueOf(familyItem.getBirthday()), DATE_FORMAT));
-            sex.setText(getSex2Show(familyItem.getSex()));
+            sex.setText(StringUtils.getSex2Show(familyItem.getSex()));
             relationship.setText(familyItem.getRelationship());
             phone.setText(familyItem.getMobile());
             idCard.setText(familyItem.getIdCard());
@@ -182,7 +183,7 @@ public class EditFamilyFragment extends NetworkFragment {
         final String newBirthday     = string2millis(birthday.getText().toString());
         final String newRelationship = relationship.getText().toString();
         final String newPhone        = phone.getText().toString();
-        final String newSex          = getSex2Upload(sex.getText().toString());
+        final String newSex          = StringUtils.getSex2Upload(sex.getText().toString());
         final String newIdCard       = idCard.getText().toString();
 
         if (editMode) {
@@ -222,23 +223,7 @@ public class EditFamilyFragment extends NetworkFragment {
 
     }
 
-    private String getSex2Show(String sex) {
-        if (sex.equals("1")) {
-            return "男";
-        } else if (sex.equals("2")) {
-            return "女";
-        }
-        return sex;
-    }
 
-    private String getSex2Upload(String sex) {
-        if (sex.equals("男")) {
-            return "1";
-        } else if (sex.equals("女")) {
-            return "2";
-        }
-        return sex;
-    }
 
 
     private String string2millis(String dateString) {

@@ -1,7 +1,11 @@
 package com.wy.report.business.my.fragment;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -10,9 +14,19 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.ToolbarFragment;
+import com.wy.report.base.fragment.NetworkFragment;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
+import com.wy.report.business.my.service.MyService;
+import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.StringUtils;
+import com.wy.report.util.TimeUtils;
+import com.wy.report.util.ToastUtils;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,10 +37,12 @@ import butterknife.OnClick;
  * @author cantalou
  * @date 2017-11-26 23:04
  */
-public class UserInfoFragment extends ToolbarFragment {
+public class UserInfoFragment extends NetworkFragment {
 
 
-    private static String TAG = "UserInfoFragment";
+    private static final String TIME_SPLIT = "-";
+
+    private MyService mMyService;
 
     @BindView(R.id.user_info_header)
     RoundedImageView header;
@@ -42,16 +58,27 @@ public class UserInfoFragment extends ToolbarFragment {
 
     private User user;
 
+    private String[] sexualData;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         user = UserManger.getInstance().getLoginUser();
+        sexualData = getResources().getStringArray(R.array.sex);
+        mMyService = RetrofitHelper.getInstance().create(MyService.class);
     }
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        updataInfo();
+        toolbarMenu.setText(getString(R.string.edit_family_save));
+        toolbarMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                save();
+            }
+        });
+        updateInfo();
     }
 
     @Override
@@ -66,17 +93,11 @@ public class UserInfoFragment extends ToolbarFragment {
     }
 
 
-
-    @Subscribe(tags = {@Tag(RxKey.RX_LOGOUT)})
-    public void onLogout() {
-        getActivity().finish();
-    }
-
-    private void updataInfo() {
+    private void updateInfo() {
         if (user != null) {
             name.setText(user.getName());
-            birthday.setText(String.valueOf(user.getBirthday()));
-            sex.setText(user.getSex());
+            birthday.setText(TimeUtils.millis2String(user.getBirthday()));
+            sex.setText(StringUtils.getSex2Show(user.getSex()));
             Glide.with(getActivity()).load(user.getHead()).into(header);
         }
     }
@@ -84,7 +105,7 @@ public class UserInfoFragment extends ToolbarFragment {
     /**修改头像*/
     @OnClick(R.id.user_info_header_info)
     public void modifyHeader() {
-        UserManger.getInstance().logout();
+
     }
 
     /**
@@ -92,7 +113,7 @@ public class UserInfoFragment extends ToolbarFragment {
      */
     @OnClick(R.id.user_info_user_name_info)
     public void modifyName() {
-        UserManger.getInstance().logout();
+        AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_EDIT_USERNAME);
     }
 
     /**
@@ -100,7 +121,19 @@ public class UserInfoFragment extends ToolbarFragment {
      */
     @OnClick(R.id.user_info_birthday_info)
     public void modifyBirthday() {
-        UserManger.getInstance().logout();
+        final Calendar calendar = Calendar.getInstance();
+        int            year     = calendar.get(Calendar.YEAR);
+        int            month    = calendar.get(Calendar.MONTH);
+        int            day      = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String time = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
+                birthday.setText(time);
+            }
+        }, year, month, day);
+        datePickerDialog.show();
     }
 
     /**
@@ -108,7 +141,40 @@ public class UserInfoFragment extends ToolbarFragment {
      */
     @OnClick(R.id.user_info_sex_info)
     public void modifySex() {
-        UserManger.getInstance().logout();
+        new AlertDialog.Builder(getActivity()).setItems(sexualData, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                sex.setText(sexualData[i]);
+            }
+        }).show();
+    }
+
+    private void save()
+    {
+        final String newName = name.getText().toString();
+        final String newBirthday = birthday.getText().toString();
+        final String sexy = StringUtils.getSex2Upload(sex.getText().toString());
+        final String uid = UserManger.getInstance().getLoginUser().getId();
+        mMyService.editInfo(uid,newName,newBirthday,sexy).subscribe(new NetworkSubscriber<ResponseModel>(this) {
+            @Override
+            public void onNext(ResponseModel responseModel) {
+                super.onNext(responseModel);
+                ToastUtils.showLong(R.string.user_info_success_tips);
+                User user = UserManger.getInstance().getLoginUser();
+                user.setName(newName);
+                user.setSex(StringUtils.getSex2UploadInt(sexy));
+                user.setBirthday(TimeUtils.string2Millis(newBirthday));
+                UserManger.getInstance().updateUser(user);
+                getActivity().finish();
+                rxBus.post(RxKey.RX_MODIFY_USER_INFO,user);
+            }
+        });
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_EDIT_USER_NAME)})
+    public void onNameEdit(String newName)
+    {
+        name.setText(newName);
     }
 
 }

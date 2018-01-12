@@ -15,9 +15,7 @@ package com.wy.report.util;/*
  * @date 2017-11-26 21:26
  */
 
-import android.os.SystemClock;
 import android.text.TextUtils;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class StringUtils {
@@ -170,5 +168,52 @@ public class StringUtils {
      */
     public static boolean isNotBlank(TextView str) {
         return str != null && !isBlank(str.getText());
+    }
+
+
+    /**
+     * 性别转换为文字
+     * @param sex
+     * @return
+     */
+    public static String getSex2Show(int sex) {
+        return getSex2Show(String.valueOf(sex));
+    }
+
+    /**
+     * 文字转换为性别
+     * @param sex
+     * @return
+     */
+    public static int getSex2UploadInt(String sex) {
+        if (sex.equals("男")) {
+            return 1;
+        } else if (sex.equals("女")) {
+            return 2;
+        }
+        return 1;
+    }
+
+    /**
+     * 性别转换为文字
+     * @param sex
+     * @return
+     */
+    public static String getSex2Show(String sex) {
+        if (sex.equals("1")) {
+            return "男";
+        } else if (sex.equals("2")) {
+            return "女";
+        }
+        return "男";
+    }
+
+    /**
+     * 文字转换为性别
+     * @param sex
+     * @return
+     */
+    public static String getSex2Upload(String sex) {
+        return String.valueOf(getSex2UploadInt(sex));
     }
 }

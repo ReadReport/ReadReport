@@ -72,7 +72,6 @@ public class VerifyIdentifyFragment extends NetworkFragment {
     @OnClick(R.id.verify_identify_submit)
     public void next() {
         String pwd      = verifyCode.getText().toString();
-        AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_BIND_PHONE);
 
         myService.verifyPhone(phoneNum,pwd).subscribe(new NetworkSubscriber<ResponseModel<VerifyPhoneNumMode>>(this) {
             @Override

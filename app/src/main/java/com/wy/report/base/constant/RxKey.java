@@ -30,4 +30,9 @@ public class RxKey {
     public static final String RX_FAMILY_EDIT = "RX_FAMILY_EDIT";
 
     public static final String RX_FAMILY_EDIT_ADD = "RX_FAMILY_EDIT_ADD";
+
+    public static final String RX_EDIT_USER_NAME = "RX_EDIT_USER_NAME";
+
+    public static final String RX_MODIFY_USER_INFO = "RX_MODIFY_USER_INFO";
+
 }

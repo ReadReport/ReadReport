@@ -74,9 +74,15 @@ public class MyFragment extends PtrFragment {
 
     @OnClick(R.id.home_my_header_layout)
     public void onHeaderClick() {
-        AuthRouterManager.getInstance()
-                         .getRouter()
-                         .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
+        if (UserManger.getInstance().isLogin()) {
+            AuthRouterManager.getInstance()
+                             .getRouter()
+                             .open(getActivity(), AuthRouterManager.ROUTER_USER_INFO);
+        } else {
+            AuthRouterManager.getInstance()
+                             .getRouter()
+                             .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
+        }
     }
 
 
@@ -140,5 +146,21 @@ public class MyFragment extends PtrFragment {
         Glide.with(getActivity())
              .load(R.drawable.btn_login_no)
              .into(header);
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_MODIFY_USER_INFO)})
+    public void onUserInfoModify(User user) {
+        if (user == null) {
+            return;
+        }
+        if (!StringUtils.isBlank(user.getHead())) {
+            Glide.with(getActivity())
+                 .load(user.getHead())
+                 .into(header);
+        }
+        String name     = StringUtils.isBlank(user.getName()) ? "null" : user.getName();
+        String phoneNum = StringUtils.isBlank(user.getMobile()) ? "null" : user.getMobile();
+        userName.setText(name);
+        phone.setText(phoneNum);
     }
 }
