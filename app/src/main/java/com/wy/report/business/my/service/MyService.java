@@ -148,5 +148,13 @@ public interface MyService {
     @GET("/Member/reset_password")
     Observable<ResponseModel> modifyPwd(@Query("username") String mobile, @Query("password") String pwd);
 
+    /**
+     * 绑定手机
+     *
+     * @return
+     */
+    @GET("/Member/bind_member_mob")
+    Observable<ResponseModel> bindPhone(@Query("mid") String mid,@Query("mobile") String mobile, @Query("verify") String verify);
+
 
 }

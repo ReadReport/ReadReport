@@ -38,7 +38,6 @@ public class MyFragment extends PtrFragment {
     @BindView(R.id.my_phone)
     TextView phone;
 
-    private boolean isLogin;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -75,42 +74,47 @@ public class MyFragment extends PtrFragment {
 
     @OnClick(R.id.home_my_header_layout)
     public void onHeaderClick() {
-        if (isLogin) {
-
-        } else {
-            AuthRouterManager.getInstance()
-                    .getRouter()
-                    .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
-        }
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_LOGIN);
     }
 
 
     @OnClick(R.id.home_my_message)
     public void onMessage() {
-        if (isLogin) {
-            AuthRouterManager.getInstance()
-                             .getRouter()
-                             .open(getActivity(), AuthRouterManager.ROUTER_MESSAGE);
-        }
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_MESSAGE);
     }
 
     @OnClick(R.id.home_my_family)
     public void onFamily() {
-        if (isLogin) {
-            AuthRouterManager.getInstance()
-                             .getRouter()
-                             .open(getActivity(), AuthRouterManager.ROUTER_FAMILY);
-        }
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_FAMILY);
     }
 
     @OnClick(R.id.home_my_setting)
     public void onSetting() {
-            AuthRouterManager.getInstance()
-                             .getRouter()
-                             .open(getActivity(), AuthRouterManager.ROUTER_SETTING);
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_SETTING);
     }
 
 
+    @OnClick(R.id.home_my_bind)
+    public void onBindPhone() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_VERIFY_IDENTIFY);
+    }
+
+    @OnClick(R.id.home_my_report_manage)
+    public void onReportManage() {
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
+    }
 
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
@@ -118,13 +122,12 @@ public class MyFragment extends PtrFragment {
         if (user == null) {
             return;
         }
-        isLogin = true;
         if (!StringUtils.isBlank(user.getHead())) {
             Glide.with(getActivity())
-                    .load(user.getHead())
-                    .into(header);
+                 .load(user.getHead())
+                 .into(header);
         }
-        String name = StringUtils.isBlank(user.getName()) ? "null" : user.getName();
+        String name     = StringUtils.isBlank(user.getName()) ? "null" : user.getName();
         String phoneNum = StringUtils.isBlank(user.getMobile()) ? "null" : user.getMobile();
         userName.setText(name);
         phone.setText(phoneNum);
@@ -135,8 +138,7 @@ public class MyFragment extends PtrFragment {
         userName.setText(R.string.home_my_login_register);
         phone.setText(R.string.home_my_logined_privilege);
         Glide.with(getActivity())
-                .load(R.drawable.btn_login_no)
-                .into(header);
-        isLogin = false;
+             .load(R.drawable.btn_login_no)
+             .into(header);
     }
 }
