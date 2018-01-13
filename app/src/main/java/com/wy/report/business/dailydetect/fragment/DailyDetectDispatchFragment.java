@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.wy.report.base.constant.BundleKey;
+import com.wy.report.business.dailydetect.fragment.subtype.BloodPressureFragment;
+import com.wy.report.business.dailydetect.fragment.subtype.BloodSugarFragment;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 
 /*
@@ -36,19 +38,19 @@ public class DailyDetectDispatchFragment extends Fragment {
     private DailyDetectFragment getFragment(DailyDetectTypeModel model) {
         switch (model.getId()) {
             case DailyDetectTypeModel.DETECT_TYPE_BLOOD_PRESSURE: {
-                return new DailyDetectBloodPressureFragment();
+                return new BloodPressureFragment();
             }
             case DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR: {
-                return new DailyDetectBloodSugarFragment();
+                return new BloodSugarFragment();
             }
             case DailyDetectTypeModel.DETECT_TYPE_BMI: {
-                return new DailyDetectBloodSugarFragment();
+                return new BloodSugarFragment();
             }
             case DailyDetectTypeModel.DETECT_TYPE_BODY_FAT: {
-                return new DailyDetectBloodSugarFragment();
+                return new BloodSugarFragment();
             }
             case DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT: {
-                return new DailyDetectBloodSugarFragment();
+                return new BloodSugarFragment();
             }
             default: {
                 throw new IllegalArgumentException("Unknown type " + model.getId());

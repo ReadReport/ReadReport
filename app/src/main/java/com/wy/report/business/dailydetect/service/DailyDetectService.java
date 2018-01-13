@@ -60,8 +60,8 @@ public interface DailyDetectService {
      */
     @POST
     @FormUrlEncoded
-    Observable<ResponseModel> recordHighWeight(@Field("mid") String mid, @Field("test_type") int type, @Field("hight_value") String high,
-                                               @Field("weight_value") String weight);
+    Observable<ResponseModel> recordBMI(@Field("mid") String mid, @Field("test_type") int type, @Field("hight_value") String high,
+                                        @Field("weight_value") String weight);
 
     /**
      * 6

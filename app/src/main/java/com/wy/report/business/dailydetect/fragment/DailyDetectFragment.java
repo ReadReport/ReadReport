@@ -22,6 +22,7 @@ import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.business.auth.model.User;
+import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.dailydetect.DailyDetectHelper;
@@ -166,8 +167,8 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
     }
 
     @OnClick(R.id.daily_detect_save)
-    public void saveRecord() {
-
+    public void saveRecord(DailyDetectDataModel model) {
+        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_ADD, model);
     }
 
     protected List<String> getWheelValues() {

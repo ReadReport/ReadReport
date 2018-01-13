@@ -24,8 +24,9 @@ public class RxKey {
 
     public static final String RX_MESSAGE_READED = "RX_MESSAGE_READED";
 
-    public static final String RX_DAILY_DETECT_DATA_EDIT_MODE = "RX_DAILY_DETECT_DATA_EDIT_MODE";
+    public static final String RX_DAILY_DETECT_DATA_ADD = "RX_DAILY_DETECT_DATA_ADD";
 
+    public static final String RX_DAILY_DETECT_DATA_DELETE = "RX_DAILY_DETECT_DATA_DELETE";
 
     public static final String RX_FAMILY_EDIT = "RX_FAMILY_EDIT";
 

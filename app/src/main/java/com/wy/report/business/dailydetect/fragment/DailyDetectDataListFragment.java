@@ -15,6 +15,7 @@ import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
+import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 
@@ -29,26 +30,24 @@ import butterknife.BindView;
  */
 public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectDataModel, BaseViewHolder> {
 
-    private ArrayList<DailyDetectDataModel> datas;
-
-    private boolean editMode = false;
-
     @BindView(R.id.fragment_daily_detect_data_list_title_type)
     TextView titleType;
-
+    private ArrayList<DailyDetectDataModel> data;
+    private boolean editMode = false;
     private DailyDetectService dailyDetectService;
+    private DailyDetectTypeModel typeModel;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
         Bundle arguments = getArguments();
-        if (arguments != null) {
-            datas = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_DAILY_DETECT_DATA);
-        }
+        data = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_DAILY_DETECT_DATA);
+        typeModel = arguments.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
 
         dailyDetectService = RetrofitHelper.getInstance()
                                            .create(DailyDetectService.class);
+        setTypeTitle(typeModel);
     }
 
     @Override
@@ -75,18 +74,22 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
         super.initView(contentView);
         quickAdapter.bindToRecyclerView(recyclerView);
         quickAdapter.setEmptyView(R.layout.view_daily_detect_empty);
-        quickAdapter.setNewData(datas);
+        quickAdapter.setNewData(data);
         quickAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
-                DailyDetectDataModel model = quickAdapter.getItem(position);
+                final DailyDetectDataModel model = quickAdapter.getItem(position);
                 dailyDetectService.deleteRecord(model.getId())
                                   .subscribe(new NetworkSubscriber<ResponseModel>(DailyDetectDataListFragment.this) {
                                       @Override
                                       public void handleSuccess(ResponseModel responseModel) {
                                           super.handleSuccess(responseModel);
-                                          quickAdapter.remove(position);
-                                          quickAdapter.notifyItemRemoved(position);
+                                          //处理并发删除时position不准确
+                                          int position = data.indexOf(model);
+                                          if (position > 0) {
+                                              quickAdapter.remove(position);
+                                              rxBus.post(RxKey.RX_DAILY_DETECT_DATA_DELETE, model);
+                                          }
                                       }
                                   });
             }
@@ -95,10 +98,15 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
     }
 
 
-    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_EDIT_MODE)})
+    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_OPERATE)})
     public void editMode(Boolean editMode) {
         this.editMode = editMode;
         quickAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_ADD)})
+    public void addData(DailyDetectDataModel model) {
+        quickAdapter.addData(model);
     }
 
     protected View initHeaderView() {
@@ -108,5 +116,34 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
     @Override
     protected int toolbarFlag() {
         return 0;
+    }
+
+
+    private void setTypeTitle(DailyDetectTypeModel typeModel) {
+        switch (typeModel.getId()) {
+            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_PRESSURE: {
+                titleType.setText(R.string.daily_detect_data_list_title_blood_pressure);
+                break;
+            }
+            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR: {
+                titleType.setText(R.string.daily_detect_data_list_title_blood_sugar);
+                break;
+            }
+
+            case DailyDetectTypeModel.DETECT_TYPE_BMI: {
+                titleType.setText(R.string.daily_detect_data_list_title_bmi);
+                break;
+            }
+
+            case DailyDetectTypeModel.DETECT_TYPE_BODY_FAT: {
+                titleType.setText(R.string.daily_detect_data_list_title_body_fat);
+                break;
+            }
+
+            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT: {
+                titleType.setText(R.string.daily_detect_data_list_title_blood_fat);
+                break;
+            }
+        }
     }
 }

@@ -9,8 +9,14 @@
 
     <string name="daily_detect_type_blood_pressure">血压管理</string>
     <string name="daily_detect_type_blood_sugar">血糖管理</string>
-    <string name="daily_detect_type_blood_bmi">体重管理</string>
+    <string name="daily_detect_type_bmi">体重管理</string>
     <string name="daily_detect_type_body_fat">体脂管理</string>
     <string name="daily_detect_type_blood_fat">血脂管理</string>
+
+    <string name="daily_detect_data_list_title_blood_pressure">血压</string>
+    <string name="daily_detect_data_list_title_blood_sugar">血糖</string>
+    <string name="daily_detect_data_list_title_bmi">体重</string>
+    <string name="daily_detect_data_list_title_body_fat">体脂</string>
+    <string name="daily_detect_data_list_title_blood_fat">血脂</string>
 
 </resources>
