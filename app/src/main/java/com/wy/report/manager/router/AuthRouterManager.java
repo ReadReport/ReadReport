@@ -10,7 +10,9 @@ import com.wy.report.business.dailydetect.fragment.DailyDetectDispatchFragment;
 import com.wy.report.business.family.fragment.FamilyMemberSelectFragment;
 import com.wy.report.business.home.activity.HomeActivity;
 import com.wy.report.business.my.fragment.AboutFragment;
+import com.wy.report.business.my.fragment.BindPhoneFragment;
 import com.wy.report.business.my.fragment.EditFamilyFragment;
+import com.wy.report.business.my.fragment.EditUserInfoFragment;
 import com.wy.report.business.my.fragment.FamilyFragment;
 import com.wy.report.business.my.fragment.FeedbackFragment;
 import com.wy.report.business.my.fragment.LoginFragment;
@@ -19,6 +21,8 @@ import com.wy.report.business.my.fragment.MessageFragment;
 import com.wy.report.business.my.fragment.ModifyPwdFragment;
 import com.wy.report.business.my.fragment.RegisterFragment;
 import com.wy.report.business.my.fragment.SettingFragment;
+import com.wy.report.business.my.fragment.UserInfoFragment;
+import com.wy.report.business.my.fragment.VerifyIdentifyFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
 import com.wy.report.business.other.fragment.PictureFragment;
@@ -146,6 +150,26 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_MODIFY_PWD = LOGIN_ACTIVITY_PREFIX + "ROUTER_MODIFY_PWD";
 
+    /**
+     * 验证身份
+     */
+    public static final String ROUTER_VERIFY_IDENTIFY = LOGIN_ACTIVITY_PREFIX + "ROUTER_VERIFY_IDENTIFY";
+
+    /**
+     * 修改绑定电话号码
+     */
+    public static final String ROUTER_BIND_PHONE = LOGIN_ACTIVITY_PREFIX + "ROUTER_BIND_PHONE";
+
+    /**
+     * 个人信息界面
+     */
+    public static final String ROUTER_USER_INFO = LOGIN_ACTIVITY_PREFIX + "ROUTER_USER_INFO";
+
+    /**
+     * 编辑昵称界面
+     */
+    public static final String ROUTER_EDIT_USERNAME = LOGIN_ACTIVITY_PREFIX + "ROUTER_EDIT_USERNAME";
+
     private Router router;
 
     private UserManger userManger;
@@ -199,6 +223,10 @@ public class AuthRouterManager {
         router.map(ROUTER_ABOUT, StandardActivity.class, AboutFragment.class);
         router.map(ROUTER_VERIFY_PHONE_NUM, StandardActivity.class, VerifyPhoneNumFragment.class);
         router.map(ROUTER_MODIFY_PWD, StandardActivity.class, ModifyPwdFragment.class);
+        router.map(ROUTER_BIND_PHONE, StandardActivity.class, BindPhoneFragment.class);
+        router.map(ROUTER_VERIFY_IDENTIFY, StandardActivity.class, VerifyIdentifyFragment.class);
+        router.map(ROUTER_USER_INFO, StandardActivity.class, UserInfoFragment.class);
+        router.map(ROUTER_EDIT_USERNAME, StandardActivity.class, EditUserInfoFragment.class);
     }
 
     /**

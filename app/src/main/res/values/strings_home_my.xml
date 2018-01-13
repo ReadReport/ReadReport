@@ -10,6 +10,7 @@
     <string name="home_my_setting">设置</string>
 
     <string name="user_info_title">账号信息</string>
+    <string name="user_info_success_tips">修改成功</string>
     <string name="user_info_header">头像</string>
     <string name="user_info_name">用户名</string>
     <string name="user_info_sex">性别</string>
@@ -17,6 +18,8 @@
     <string name="user_info_male">男</string>
     <string name="user_info_birthday">生日</string>
     <string name="user_quit_login">退出登录</string>
+    <string name="user_info_edit_tip">用户名限4-16个字符，一个汉字两个字符</string>
+    <string name="user_info_edit_null_tip">用户名不能为空！</string>
 
     <string name="message_title">消息</string>
     <string name="message_delete">删除</string>
@@ -67,4 +70,16 @@
     <string name="modify_pwd_tip">请确认密码相同</string>
     <string name="modify_pwd_tip2">账号验证成功，请重置密码。</string>
     <string name="modify_pwd_success_tip">密码修改成功</string>
+
+
+    <string name="verify_identify_title">身份验证</string>
+    <string name="verify_identify_bind_num">已绑定手机号：%s</string>
+    <string name="verify_identify_submit">验证身份</string>
+
+    <string name="bind_phone_title">更换手机号</string>
+    <string name="bind_phone_tip">已完成身份验证，请输入新手机号：</string>
+    <string name="bind_phone_submit">绑定</string>
+    <string name="bind_phone_success">绑定成功！</string>
+
+
 </resources>

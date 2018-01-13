@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/verify_identify_bind_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/verify_identify_bind_num"
+        android:textColor="@color/hei_333333"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.wy.report.widget.view.SuperEditText
+        android:id="@+id/verify_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:drawablePadding="15dp"
+        android:textColor="@color/hei_333333"
+        android:textSize="17sp"
+        app:ic_left="@drawable/ic_modify_verificationcode"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/get_verify_code"
+        app:layout_constraintTop_toBottomOf="@+id/verify_identify_bind_num"
+        app:left_height="15"
+        app:left_width="15"
+        app:left_x="0"
+        app:left_y="0"
+        app:linePosition="1"
+        app:right_height="15"
+        app:right_width="15"
+        app:right_x="0"
+        app:right_y="0"
+        />
+
+
+    <TextView
+        android:id="@+id/get_verify_code"
+        android:layout_width="78dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="28dp"
+        android:background="@drawable/shape_blue_corner_5"
+        android:gravity="center"
+        android:text="@string/my_verify_code_get_code"
+        android:textColor="@color/lan_30acff"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/verify_code"
+        app:layout_constraintLeft_toRightOf="@+id/verify_code"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/verify_code"
+        />
+
+    <TextView
+        android:id="@+id/verify_identify_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape_blue_corner_25_fill"
+        android:gravity="center"
+        android:text="@string/verify_identify_submit"
+        android:textColor="@color/bai_ffffff"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_code"
+        />
+
+    <TextView
+        android:id="@+id/modify_pwd_tip1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/verify_phone_num_tip_1"
+        android:textColor="@color/hui_ababab"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_identify_submit"
+        />
+
+    <TextView
+        android:id="@+id/modify_pwd_tip2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verify_phone_num_tip_2"
+        android:textColor="@color/hui_ababab"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modify_pwd_tip1"
+        />
+
+</android.support.constraint.ConstraintLayout>

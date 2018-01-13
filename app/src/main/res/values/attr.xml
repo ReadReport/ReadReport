@@ -35,6 +35,8 @@
 
         <attr name="cursor" format="reference"/>
 
+        <attr name="underline" format="boolean"/>
+
     </declare-styleable>
 
 </resources>

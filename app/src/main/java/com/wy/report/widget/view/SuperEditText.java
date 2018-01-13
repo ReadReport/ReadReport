@@ -30,13 +30,13 @@ public class SuperEditText extends AppCompatEditText {
     * */
     private Paint mPaint; // 画笔
 
-    private int ic_RightResID; // 删除图标 资源ID
+    private int      ic_RightResID; // 删除图标 资源ID
     private Drawable ic_Right; // 删除图标
-    private int right_x, right_y, right_width, right_height; // 删除图标起点(x,y)、删除图标宽、高（px）
+    private int      right_x, right_y, right_width, right_height; // 删除图标起点(x,y)、删除图标宽、高（px）
 
-    private int ic_left_ResID;    // 左侧图标 资源ID（点击 & 无点击）
+    private int      ic_left_ResID;    // 左侧图标 资源ID（点击 & 无点击）
     private Drawable ic_left; // 左侧图标（点击 & 未点击）
-    private int left_x, left_y, left_width, left_height; // 左侧图标起点（x,y）、左侧图标宽、高（px）
+    private int      left_x, left_y, left_width, left_height; // 左侧图标起点（x,y）、左侧图标宽、高（px）
 
     private int cursor; // 光标
 
@@ -51,6 +51,8 @@ public class SuperEditText extends AppCompatEditText {
 
     private Drawable ic_pwd_show, ic_pwd_dis;
     private int ic_pwd_show_id, ic_pwd_dis_id;    // 密码图标 资源ID（显示 & 不显示）
+
+    private boolean underLine;
 
 
     public SuperEditText(Context context) {
@@ -83,9 +85,11 @@ public class SuperEditText extends AppCompatEditText {
 
         // a. 点击状态的左侧图标
         // 1. 获取资源ID
-        ic_left_ResID = typedArray.getResourceId(R.styleable.SuperEditText_ic_left, R.drawable.btn_delete_normal);
+        ic_left_ResID = typedArray.getResourceId(R.styleable.SuperEditText_ic_left, 0);
         // 2. 根据资源ID获取图标资源（转化成Drawable对象）
-        ic_left = getResources().getDrawable(ic_left_ResID);
+        if (ic_left_ResID != 0) {
+            ic_left = getResources().getDrawable(ic_left_ResID);
+        }
         // 3. 设置图标大小
         // 起点(x，y)、宽= left_width、高 = left_height
         left_x = typedArray.getInteger(R.styleable.SuperEditText_left_x, 0);
@@ -96,7 +100,9 @@ public class SuperEditText extends AppCompatEditText {
         left_width = DensityUtils.dip2px(context, left_width);
         left_height = DensityUtils.dip2px(context, left_height);
 
-        ic_left.setBounds(left_x, left_y, left_width, left_height);
+        if (ic_left_ResID != 0) {
+            ic_left.setBounds(left_x, left_y, left_width, left_height);
+        }
         // Drawable.setBounds(x,y,width,height) = 设置Drawable的初始位置、宽和高等信息
         // x = 组件在容器X轴上的起点、y = 组件在容器Y轴上的起点、width=组件的长度、height = 组件的高度
 
@@ -128,6 +134,7 @@ public class SuperEditText extends AppCompatEditText {
         // 3. 设置图标大小（o & 未点击状态的大小相同）
         pwdMode = typedArray.getBoolean(R.styleable.SuperEditText_pwdMode, false);
         deleteMode = typedArray.getBoolean(R.styleable.SuperEditText_deleteMode, false);
+        underLine = typedArray.getBoolean(R.styleable.SuperEditText_underline, true);
 
         if (pwdMode) {
             ic_pwd_show_id = typedArray.getResourceId(R.styleable.SuperEditText_ic_pwd_show, R.drawable.btn_password_open);
@@ -143,10 +150,10 @@ public class SuperEditText extends AppCompatEditText {
                     , null);
         } else if (deleteMode) {
             setCompoundDrawables(ic_left, null,
-                    null, null);
+                                 null, null);
         } else {
-            setCompoundDrawables(ic_left, null,
-                    null, null);
+            setCompoundDrawables(null, null,
+                                 null, null);
         }
 
         // setCompoundDrawables(Drawable left, Drawable top, Drawable right, Drawable bottom)介绍
@@ -186,14 +193,14 @@ public class SuperEditText extends AppCompatEditText {
         mPaint.setStrokeWidth(2.0f); // 分割线粗细
 
         // 2. 设置分割线颜色（使用十六进制代码，如#333、#8e8e8e）
-        int lineColorClick_default = context.getResources().getColor(R.color.hui_d1d1d1); // 默认 = 蓝色#1296db
+        int lineColorClick_default   = context.getResources().getColor(R.color.hui_d1d1d1); // 默认 = 蓝色#1296db
         int lineColorunClick_default = context.getResources().getColor(R.color.hui_d1d1d1); // 默认 = 灰色#9b9b9b
         lineColor_click = typedArray.getColor(R.styleable.SuperEditText_lineColor_click, lineColorClick_default);
         lineColor_unclick = typedArray.getColor(R.styleable.SuperEditText_lineColor_unclick, lineColorunClick_default);
         color = lineColor_unclick;
 
         mPaint.setColor(lineColor_unclick); // 分割线默认颜色 = 灰色
-//        setTextColor(color); // 字体默认颜色 = 灰色
+        //        setTextColor(color); // 字体默认颜色 = 灰色
 
         // 3. 分割线位置
         linePosition = typedArray.getInteger(R.styleable.SuperEditText_linePosition, 1);
@@ -244,10 +251,9 @@ public class SuperEditText extends AppCompatEditText {
             // 判断动作 = 手指抬起时
             case MotionEvent.ACTION_UP:
                 if (pwdMode) {
-                    Drawable drawable = getCompoundDrawables()[2] ;
-                    if(drawable != null && event.getX() <= (getWidth() - getPaddingRight())
-                            && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width()))
-                    {
+                    Drawable drawable = getCompoundDrawables()[2];
+                    if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
+                        && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
                         if (getCompoundDrawables()[2] == ic_pwd_show) {
                             setCompoundDrawables(ic_left, null, ic_pwd_dis, null);
                             setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -259,11 +265,11 @@ public class SuperEditText extends AppCompatEditText {
                         invalidate();
 
                     }
-                } else if(deleteMode){
+                } else if (deleteMode) {
                     Drawable drawable = ic_Right;
 
                     if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
-                            && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
+                        && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
 
                         // 判断条件说明
                         // event.getX() ：抬起时的位置坐标
@@ -288,9 +294,9 @@ public class SuperEditText extends AppCompatEditText {
      */
     private void setDeleteIconVisible(boolean deleteVisible, boolean leftVisible) {
         setCompoundDrawables(leftVisible ? ic_left : ic_left, null,
-                deleteVisible ? ic_Right : null, null);
+                             deleteVisible ? ic_Right : null, null);
         color = leftVisible ? lineColor_click : lineColor_unclick;
-//        setTextColor(color);
+        //        setTextColor(color);
         invalidate();
     }
 
@@ -300,18 +306,20 @@ public class SuperEditText extends AppCompatEditText {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint.setColor(color);
-//        setTextColor(color);
-        // 绘制分割线
-        // 需要考虑：当输入长度超过输入框时，所画的线需要跟随着延伸
-        // 解决方案：线的长度 = 控件长度 + 延伸后的长度
-        int x = this.getScrollX(); // 获取延伸后的长度
-        int w = this.getMeasuredWidth(); // 获取控件长度
+        if (underLine) {
+            mPaint.setColor(color);
+            //        setTextColor(color);
+            // 绘制分割线
+            // 需要考虑：当输入长度超过输入框时，所画的线需要跟随着延伸
+            // 解决方案：线的长度 = 控件长度 + 延伸后的长度
+            int x = this.getScrollX(); // 获取延伸后的长度
+            int w = this.getMeasuredWidth(); // 获取控件长度
 
-        // 传入参数时，线的长度 = 控件长度 + 延伸后的长度
-        canvas.drawLine(0, this.getMeasuredHeight() - linePosition, w + x,
-                this.getMeasuredHeight() - linePosition, mPaint);
+            // 传入参数时，线的长度 = 控件长度 + 延伸后的长度
+            canvas.drawLine(0, this.getMeasuredHeight() - linePosition, w + x,
+                            this.getMeasuredHeight() - linePosition, mPaint);
 
+        }
     }
 
 }
