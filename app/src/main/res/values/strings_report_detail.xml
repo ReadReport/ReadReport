@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="report_detail_head_title">美年大健康体检中心体检报告</string>
-    <string name="report_detail_head_name">姓&#160;&#160;&#160;&#160;名</string>
-    <string name="report_detail_head_sex">美年大健</string>
-    <string name="report_detail_head_age">美年大健康体检中心体检报告</string>
-    <string name="report_detail_head_type">美年大健康体检中心体检报告</string>
-    <string name="report_detail_head_time">美年大健康体检中心体检报告</string>
-    <string name="report_detail_head_hospital">美年大健康体检中心体检报告</string>
+    <string name="report_detail_head_name">姓\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020名：</string>
+    <string name="report_detail_head_sex">性\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020别：</string>
+    <string name="report_detail_head_age">年\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020龄：</string>
+    <string name="report_detail_head_type">类\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020别：</string>
+    <string name="report_detail_head_time">检查时间：</string>
+    <string name="report_detail_head_hospital">检查医院：</string>
+
+    <string name="report_detail_report_pic_title">体检报告</string>
+    <string name="report_detail_report_pic_private">体检报告图片为用户隐私</string>
+
+    <string name="report_detail_user_note_title">用户备注</string>
+    <string name="report_detail_user_note_name">姓名：</string>
+
+    <string name="report_detail_score_title">健康得分</string>
+    <string name="report_detail_score_private_tip">数据来源于您的体检报告</string>
+
+    <string name="report_detail_body_title">身体机能</string>
+    <string name="report_detail_body_state_normal">正常</string>
+    <string name="report_detail_body_state_un_normal">异常（可点击查看）</string>
+    <string name="report_detail_body_1">1.呼吸系统</string>
+    <string name="report_detail_body_2">2.循环系统</string>
+    <string name="report_detail_body_3">3.运动系统</string>
+    <string name="report_detail_body_4">4.神经系统</string>
+    <string name="report_detail_body_5">5.内分泌系统</string>
+    <string name="report_detail_body_6">6.消化系统</string>
+    <string name="report_detail_body_7">7.泌尿系统</string>
+    <string name="report_detail_body_8">8.生殖系统</string>
+
+    <string name="report_detail_doctor_suggest_title">医生建议</string>
+    <string name="report_detail_doctor_suggest_export">健康专家</string>
+
+    <string name="report_detail_upload_report_2_doctor">上传报告给医生解读</string>
 </resources>
