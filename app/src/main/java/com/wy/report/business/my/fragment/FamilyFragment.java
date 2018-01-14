@@ -51,7 +51,7 @@ public class FamilyFragment extends PtrListFragment<FamilyItemMode, BaseViewHold
         recyclerView.setPadding(padding, padding, padding, 0);
         recyclerView.setBackground(getResources().getDrawable(R.drawable.shape_white_corner));
 
-        loadData();
+        ptrFrameLayout.autoRefresh();
     }
 
     @Override

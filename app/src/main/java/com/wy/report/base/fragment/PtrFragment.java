@@ -13,8 +13,10 @@ import com.wy.report.R;
 import java.util.concurrent.TimeUnit;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.PtrHandler2;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -35,7 +37,7 @@ import rx.functions.Action1;
  * @author cantalou
  * @date 2017-11-24 23:54
  */
-public abstract class PtrFragment extends NetworkFragment implements PtrHandler {
+public abstract class PtrFragment extends NetworkFragment implements PtrHandler2 {
 
     protected PtrFrameLayout ptrFrameLayout;
 
@@ -86,20 +88,35 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
         super.initView(contentView);
         ptrFrameLayout = (PtrFrameLayout) contentView.findViewById(R.id.ptr_layout);
         ptrFrameLayout.setPtrHandler(this);
+        ptrFrameLayout.setMode(PtrFrameLayout.Mode.REFRESH);
     }
 
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
         if (ptrWithoutToolbar) {
-            return PtrDefaultHandler.checkContentCanBePulledDown(frame, toolbarContentView, header);
+            return PtrDefaultHandler2.checkContentCanBePulledDown(frame, toolbarContentView, header);
         } else {
-            return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            return PtrDefaultHandler2.checkContentCanBePulledDown(frame, content, header);
+        }
+    }
+
+    @Override
+    public boolean checkCanDoLoadMore(PtrFrameLayout frame, View view, View view1) {
+        if (ptrWithoutToolbar) {
+            return PtrDefaultHandler2.checkContentCanBePulledUp(frame, toolbarContentView, view1);
+        } else {
+            return PtrDefaultHandler2.checkContentCanBePulledUp(frame, view, view1);
         }
     }
 
     @Override
     public void onRefreshBegin(final PtrFrameLayout frame) {
         loadData();
+    }
+
+    @Override
+    public void onLoadMoreBegin(PtrFrameLayout ptrFrameLayout) {
+        loadNext();
     }
 
     @Override
@@ -143,5 +160,16 @@ public abstract class PtrFragment extends NetworkFragment implements PtrHandler 
                           handlePtrSuccess(null);
                       }
                   });
+    }
+
+    protected void loadNext() {
+        Observable.timer(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        handlePtrSuccess(null);
+                    }
+                });
     }
 }

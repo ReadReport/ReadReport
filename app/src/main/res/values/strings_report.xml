@@ -44,4 +44,21 @@
     <string name="report_query_success_tips1">已收到您的获取报告请求</string>
     <string name="report_query_success_tips2">我们将尽快处理</string>
 
+    <string name="report_manage_title">报告管理</string>
+    <string name="report_manage_menu">全部</string>
+    <string name="report_manage_upload_time">上传时间：%s</string>
+    <string name="report_manage_state_uncommit">未提交</string>
+    <string name="report_manage_state_unread">未解读</string>
+    <string name="report_manage_state_getting">获取中</string>
+    <string name="report_manage_state_get_failed">获取失败</string>
+    <string name="report_manage_state_readed">已解读</string>
+    <string name="report_manage_waiting_tip">请耐心等待</string>
+    <string name="report_manage_reget">请重新获取</string>
+    <string name="report_manage_submit_to_doctor">提交给医生</string>
+    <string name="report_manage_score">健康指数：%s</string>
+    <string name="report_manage_add_report">添加报告</string>
+
+
+    <string name="report_not_more_data">无更多数据了</string>
+
 </resources>

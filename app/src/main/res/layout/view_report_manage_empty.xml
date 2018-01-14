@@ -18,7 +18,7 @@
         >
 
         <ImageView
-            android:id="@+id/state_icon_img"
+            android:id="@+id/report_mange_state_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
@@ -30,27 +30,27 @@
 
 
         <TextView
-            android:id="@+id/name_tv"
+            android:id="@+id/report_manage_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="体检报告"
             android:textColor="@color/hei_333333"
             android:textSize="14sp"
-            app:layout_constraintLeft_toRightOf="@+id/state_icon_img"
-            app:layout_constraintTop_toTopOf="@+id/state_icon_img"
+            app:layout_constraintLeft_toRightOf="@+id/report_mange_state_icon"
+            app:layout_constraintTop_toTopOf="@+id/report_mange_state_icon"
             />
 
         <TextView
-            android:id="@+id/hospital_tv"
+            android:id="@+id/report_manage_hospital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="美年达健康体检中心"
             android:textColor="@color/hui_858585"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/state_icon_img"
-            app:layout_constraintLeft_toRightOf="@+id/state_icon_img"
+            app:layout_constraintBottom_toBottomOf="@+id/report_mange_state_icon"
+            app:layout_constraintLeft_toRightOf="@+id/report_mange_state_icon"
             />
 
         <ImageView

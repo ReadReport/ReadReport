@@ -166,7 +166,7 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
         rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE, Boolean.valueOf(editMode));
     }
 
-    @OnClick(R.id.daily_detect_save)
+//    @OnClick(R.id.daily_detect_save)
     public void saveRecord(DailyDetectDataModel model) {
         rxBus.post(RxKey.RX_DAILY_DETECT_DATA_ADD, model);
     }

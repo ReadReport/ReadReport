@@ -2,17 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+    <!--<data>-->
 
-        <variable
-            name="data"
-            type="android.databinding.ObservableArrayList&lt;com.wy.report.business.read.mode.ReportItemMode&gt;" />
-    </data>
+        <!--<variable-->
+            <!--name="data"-->
+            <!--type="android.databinding.ObservableArrayList&lt;com.wy.report.business.read.mode.ReportItemMode&gt;" />-->
+    <!--</data>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:data="@{data}" />
+        android:layout_height="match_parent"/>
+        <!--app:data="@{data}" />-->
 
 </layout>
