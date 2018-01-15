@@ -1,5 +1,7 @@
 package com.wy.report.business.dailydetect.fragment.subtype;
 
+import android.view.View;
+
 import com.wy.report.R;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
@@ -17,7 +19,7 @@ import static com.wy.report.business.home.model.DailyDetectTypeModel.DETECT_TYPE
 public class BloodPressureFragment extends DailyDetectFragment {
 
     @Override
-    public void saveRecord(DailyDetectDataModel model) {
+    public void saveRecord(View view) {
         dailyDetectService.recordBloodPressure(user.getId(), DETECT_TYPE_BLOOD_PRESSURE, getValue(0), getValue(1), getValue(2))
                           .subscribe(new NetworkSubscriber<ResponseModel>(this) {
                               @Override

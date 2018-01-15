@@ -1,5 +1,7 @@
 package com.wy.report.business.dailydetect.fragment.subtype;
 
+import android.view.View;
+
 import com.wy.report.R;
 import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
@@ -16,7 +18,7 @@ import static com.wy.report.business.home.model.DailyDetectTypeModel.DETECT_TYPE
 public class BloodSugarFragment extends DailyDetectFragment {
 
     @Override
-    public void saveRecord(DailyDetectDataModel model) {
+    public void saveRecord(View view) {
         dailyDetectService.recordBloodSugar(user.getId(), DETECT_TYPE_BLOOD_SUGAR, "", getValue(0), getValue(1) + "." + getValue(2));
     }
 

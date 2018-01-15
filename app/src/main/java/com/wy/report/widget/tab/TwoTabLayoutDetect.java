@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.wy.report.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /*
  *
@@ -47,7 +48,7 @@ public class TwoTabLayoutDetect extends ConstraintLayout implements ViewPager.On
     public void initView() {
         LayoutInflater.from(getContext())
                       .inflate(R.layout.view_tab_layout_two_detect, this);
-
+        ButterKnife.bind(this, this);
     }
 
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

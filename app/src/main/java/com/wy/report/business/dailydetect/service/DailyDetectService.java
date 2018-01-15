@@ -3,10 +3,13 @@ package com.wy.report.business.dailydetect.service;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 
+import java.util.List;
+
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -16,7 +19,7 @@ import rx.Observable;
 public interface DailyDetectService {
 
     @GET("/DailyMonitor/get_recordes_by_type")
-    Observable<ResponseModel<DailyDetectDataModel>> getDetectData();
+    Observable<ResponseModel<List<DailyDetectDataModel>>> getDetectData(@Query("mid") String uid, @Query("test_type")int type);
 
     /**
      * 1
@@ -28,7 +31,7 @@ public interface DailyDetectService {
      * @param pulse     心率
      * @return
      */
-    @POST
+    @POST("/DailyMonitor/do_idp_records")
     @FormUrlEncoded
     Observable<ResponseModel> recordBloodPressure(@Field("mid") String mid, @Field("test_type") int type, @Field("low_press") String lowPress,
                                                   @Field("high_press") String highPress, @Field("pulse") String pulse);

@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
@@ -13,13 +15,17 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.auth.model.User;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
+import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.manager.auth.UserManger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -32,9 +38,11 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
 
     @BindView(R.id.fragment_daily_detect_data_list_title_type)
     TextView titleType;
+
     private ArrayList<DailyDetectDataModel> data;
-    private boolean editMode = false;
+
     private DailyDetectService dailyDetectService;
+
     private DailyDetectTypeModel typeModel;
 
     @Override
@@ -47,7 +55,13 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
 
         dailyDetectService = RetrofitHelper.getInstance()
                                            .create(DailyDetectService.class);
-        setTypeTitle(typeModel);
+        dailyDetectService.getDetectData(UserManger.getUid(), typeModel.getId()).subscribe(new PtrSubscriber<ResponseModel<List<DailyDetectDataModel>>>(this){
+            @Override
+            public void handleSuccess(ResponseModel<List<DailyDetectDataModel>> dailyDetectDataModelResponseModel) {
+                super.handleSuccess(dailyDetectDataModelResponseModel);
+                quickAdapter.setNewData(dailyDetectDataModelResponseModel.getData());
+            }
+        });
     }
 
     @Override
@@ -63,8 +77,9 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
                 helper.setText(R.id.vh_daily_detect_data_list_item_value, item.getRes())
                       .setText(R.id.vh_daily_detect_data_list_item_state, item.getSuggest())
                       .setText(R.id.vh_daily_detect_data_list_item_time, item.getTestTime())
-                      .setVisible(R.id.vh_daily_detect_data_list_item_delete, editMode)
-                      .addOnClickListener(R.id.vh_daily_detect_data_list_item_delete);
+                      .addOnClickListener(R.id.bottom_wrapper);
+                SwipeLayout swipeLayout = (SwipeLayout) helper.getConvertView();
+                swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
             }
         };
     }
@@ -94,23 +109,16 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
                                   });
             }
         });
-        //quickAdapter.addHeaderView(initHeaderView());
+        setTypeTitle(typeModel);
     }
 
-
-    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_OPERATE)})
     public void editMode(Boolean editMode) {
-        this.editMode = editMode;
         quickAdapter.notifyDataSetChanged();
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_ADD)})
     public void addData(DailyDetectDataModel model) {
         quickAdapter.addData(model);
-    }
-
-    protected View initHeaderView() {
-        return null;
     }
 
     @Override

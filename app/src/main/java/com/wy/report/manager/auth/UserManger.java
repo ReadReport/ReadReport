@@ -25,6 +25,11 @@ public class UserManger {
         return InstanceHolder.INSTANCE;
     }
 
+    public static String getUid() {
+        return getInstance().isLogin() ? getInstance().getLoginUser()
+                                                      .getId() : "";
+    }
+
     private void loadUser() {
         loginUser = preferenceManager.getValue(Key.LOGINED_USER_INFO, User.class);
     }
@@ -54,7 +59,8 @@ public class UserManger {
     public void logout() {
         preferenceManager.delete(Key.LOGINED_USER_INFO);
         loginUser = null;
-        RxBus.get().post(RxKey.RX_LOGOUT,new Object());
+        RxBus.get()
+             .post(RxKey.RX_LOGOUT, new Object());
     }
 
     private static class InstanceHolder {

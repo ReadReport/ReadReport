@@ -3,6 +3,7 @@ package com.wy.report.business.dailydetect.fragment;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -32,7 +33,9 @@ import com.wy.report.widget.tab.TwoTabLayoutDetect;
 import com.wy.report.widget.view.dailydetect.ValueView;
 import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,27 +54,20 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
     protected ViewGroup detectValueContainerView;
 
     protected User user;
-
+    protected DailyDetectDataModel dataModel;
     @BindView(R.id.daily_detect_framelayout_container)
     FrameLayout frameLayoutContainer;
-
     @BindView(R.id.daily_detect_date_value)
     TextView dailyDetectDate;
-
     @BindView(R.id.daily_detect_time_value)
     TextView dailyDetectTime;
-
     @BindView(R.id.daily_detect_data_list_operate)
     TextView dataListOperateMode;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
     @BindView(R.id.daily_detect_tab_container)
     TwoTabLayoutDetect tabLayout;
-
     private boolean editMode = false;
-
     private DailyDetectTypeModel model;
 
     @Override
@@ -91,6 +87,12 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
         frameLayoutContainer.addView(detectValueContainerView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         final BaseFragment[] fragments = new BaseFragment[]{new DailyDetectTendencyCharFragment(), new DailyDetectDataListFragment()};
+        for (BaseFragment fragment : fragments) {
+            Bundle arg = new Bundle();
+            arg.putParcelableArrayList(BundleKey.BUNDLE_KEY_DAILY_DETECT_DATA, null);
+            arg.putParcelable(BundleKey.BUNDLE_KEY_MODEL, model);
+            fragment.setArguments(arg);
+        }
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -163,12 +165,11 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
     public void dataListOperateClick() {
         editMode = !editMode;
         dataListOperateMode.setText(editMode ? R.string.done : R.string.edit);
-        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_OPERATE, Boolean.valueOf(editMode));
     }
 
-//    @OnClick(R.id.daily_detect_save)
-    public void saveRecord(DailyDetectDataModel model) {
-        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_ADD, model);
+    @OnClick(R.id.daily_detect_save)
+    public void saveRecord(View view) {
+        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_ADD, dataModel);
     }
 
     protected List<String> getWheelValues() {
