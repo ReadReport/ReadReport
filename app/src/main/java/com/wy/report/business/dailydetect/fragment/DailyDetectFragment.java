@@ -54,20 +54,18 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
     protected ViewGroup detectValueContainerView;
 
     protected User user;
+
     protected DailyDetectDataModel dataModel;
+
     @BindView(R.id.daily_detect_framelayout_container)
     FrameLayout frameLayoutContainer;
-    @BindView(R.id.daily_detect_date_value)
-    TextView dailyDetectDate;
-    @BindView(R.id.daily_detect_time_value)
-    TextView dailyDetectTime;
-    @BindView(R.id.daily_detect_data_list_operate)
-    TextView dataListOperateMode;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
     @BindView(R.id.daily_detect_tab_container)
     TwoTabLayoutDetect tabLayout;
-    private boolean editMode = false;
+
     private DailyDetectTypeModel model;
 
     @Override
@@ -139,47 +137,10 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
         return false;
     }
 
-    @OnClick({R.id.daily_detect_date_title, R.id.daily_detect_date_value})
-    public void detectDateClick() {
-        Calendar cal = Calendar.getInstance();
-        new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                dailyDetectDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-            }
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    @OnClick({R.id.daily_detect_time_value, R.id.daily_detect_time_icon})
-    public void detectTimeClick() {
-        Calendar cal = Calendar.getInstance();
-        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                dailyDetectTime.setText(hourOfDay + "：" + minute);
-            }
-        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show();
-    }
-
-    @OnClick(R.id.daily_detect_data_list_operate)
-    public void dataListOperateClick() {
-        editMode = !editMode;
-        dataListOperateMode.setText(editMode ? R.string.done : R.string.edit);
-    }
-
     @OnClick(R.id.daily_detect_save)
     public void saveRecord(View view) {
         rxBus.post(RxKey.RX_DAILY_DETECT_DATA_ADD, dataModel);
     }
-
-    protected List<String> getWheelValues() {
-        if (detectValueContainerView instanceof ValueViewContainer) {
-            return ((ValueViewContainer) detectValueContainerView).getWheelValues();
-        }
-        throw new IllegalStateException("detectValueContainerView can not cast to ValueViewContainer, you must override getWheelValues() " +
-                "method to create values.");
-    }
-
 
     protected String getValue(int index) {
         return ((ValueView) detectValueContainerView.getChildAt(index)).getWheelView()

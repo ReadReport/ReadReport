@@ -24,24 +24,27 @@
         tools:text="单位"/>
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="174dp">
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        android:layout_gravity="center_horizontal">
 
         <com.wy.report.widget.view.wheel.WheelViewWrapper
             android:id="@+id/view_daily_detect_value_item_wv"
-            android:layout_width="40dp"
+            android:layout_width="45dp"
             android:layout_height="174dp"
             android:layout_gravity="center_horizontal"/>
 
         <View
             android:layout_width="40dp"
             android:layout_height="0.5dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="68dp"
             android:background="@color/hui_e0e0e0"/>
 
         <View
             android:layout_width="40dp"
             android:layout_height="0.5dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="102dp"
             android:background="@color/hui_e0e0e0"/>
     </FrameLayout>

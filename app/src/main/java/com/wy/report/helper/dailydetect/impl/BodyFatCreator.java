@@ -24,6 +24,7 @@ public class BodyFatCreator implements DailyDetectValueCreator {
                                                       .unit("%")
                                                       .start(1)
                                                       .end(100)
+                                                      .startIndex(20)
                                                       .create();
         result.add(dailyDetectValueType);
         return result;

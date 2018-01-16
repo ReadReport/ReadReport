@@ -25,6 +25,7 @@ public class BMICreator implements DailyDetectValueCreator {
                                         .unit("kg")
                                         .start(30)
                                         .end(300)
+                                        .startIndex(30)
                                         .create();
         result.add(weight);
 
@@ -32,6 +33,7 @@ public class BMICreator implements DailyDetectValueCreator {
                                         .unit("cm")
                                         .start(80)
                                         .end(250)
+                                        .startIndex(80)
                                         .create();
         result.add(height);
 

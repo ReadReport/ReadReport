@@ -37,17 +37,4 @@ public class ValueViewContainer extends LinearLayout {
             view.setData(type);
         }
     }
-
-    public List<String> getWheelValues() {
-        ArrayList<String> values = new ArrayList<>();
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (child instanceof ValueView) {
-                WheelViewItem item = ((ValueView) child).getWheelView()
-                                                        .getSelectedItem();
-                values.add(item.getValue());
-            }
-        }
-        return values;
-    }
 }
