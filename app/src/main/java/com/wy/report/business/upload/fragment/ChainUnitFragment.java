@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -57,12 +58,7 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
 
     @Override
     protected BaseQuickAdapter createAdapter() {
-        return new BaseQuickAdapter<UnitModel, BaseViewHolder>(R.layout.vh_hospital_unit) {
-            @Override
-            protected void convert(BaseViewHolder helper, UnitModel item) {
-                helper.setText(R.id.vh_hospital_title, item.getTitle());
-            }
-        };
+        return new HospitalAdapter(null);
     }
 
     @Override
@@ -74,5 +70,19 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
     @Override
     protected int toolbarFlag() {
         return 0;
+    }
+
+    private class HospitalAdapter extends BaseMultiItemQuickAdapter<UnitModel, BaseViewHolder> {
+
+        public HospitalAdapter(List<UnitModel> data) {
+            super(data);
+            addItemType(UnitModel.TYPE_TITLE, R.layout.vh_hospital_unit);
+            addItemType(UnitModel.TYPE_HOSPITAL, R.layout.vh_hospital_unit);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, UnitModel item) {
+            helper.setText(R.id.vh_hospital_title, item.getTitle());
+        }
     }
 }
