@@ -26,6 +26,7 @@ import com.wy.report.business.my.fragment.VerifyIdentifyFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
 import com.wy.report.business.other.fragment.PictureFragment;
+import com.wy.report.business.read.fragment.ReportDetailFragment;
 import com.wy.report.business.read.fragment.ReportManageFragment;
 import com.wy.report.business.upload.fragment.HospitalListFragment;
 import com.wy.report.business.upload.fragment.ReportQueryFragment;
@@ -170,6 +171,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_EDIT_USERNAME = LOGIN_ACTIVITY_PREFIX + "ROUTER_EDIT_USERNAME";
 
+    /**
+     * 报告详细界面
+     */
+    public static final String ROUTER_REPORT_DETAIL = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_DETAIL";
+
     private Router router;
 
     private UserManger userManger;
@@ -227,6 +233,7 @@ public class AuthRouterManager {
         router.map(ROUTER_VERIFY_IDENTIFY, StandardActivity.class, VerifyIdentifyFragment.class);
         router.map(ROUTER_USER_INFO, StandardActivity.class, UserInfoFragment.class);
         router.map(ROUTER_EDIT_USERNAME, StandardActivity.class, EditUserInfoFragment.class);
+        router.map(ROUTER_REPORT_DETAIL, StandardActivity.class, ReportDetailFragment.class);
     }
 
     /**

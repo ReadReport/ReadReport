@@ -1,33 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="20dp"
         android:text="@string/report_detail_report_pic_title"
         android:textColor="@color/hei_333333"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        />
 
+    <!--体检报告私有界面-->
     <LinearLayout
+        android:id="@+id/report_detail_report_pic_info_private_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_details_secrecy"
+            />
 
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/report_detail_report_pic_private"
+            android:textColor="@color/hui_858585"
+            android:textSize="13sp"
+            />
     </LinearLayout>
 
+    <!--体检报告界面-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/report_detail_report_pic_info_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        >
 
+        <ImageView
+            android:id="@+id/report_detail_report_pic_info_pic1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/img_details_secrecy"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/report_detail_report_pic_info_pic2"
+            />
 
+        <ImageView
+            android:id="@+id/report_detail_report_pic_info_pic2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/img_details_secrecy"
+            app:layout_constraintLeft_toRightOf="@+id/report_detail_report_pic_info_pic1"
+            app:layout_constraintRight_toLeftOf="@+id/report_detail_report_pic_info_pic3"
+            />
 
+        <ImageView
+            android:id="@+id/report_detail_report_pic_info_pic3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/img_details_secrecy"
+            app:layout_constraintLeft_toRightOf="@+id/report_detail_report_pic_info_pic2"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+    </android.support.constraint.ConstraintLayout>
 
 
 </LinearLayout>

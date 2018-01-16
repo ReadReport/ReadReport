@@ -39,4 +39,34 @@
 
     </declare-styleable>
 
+
+    <declare-styleable name="ColorArcProgressBar">
+        <attr name="back_color" format="color"/>
+        <attr name="front_color1" format="color"/>
+        <attr name="front_color2" format="color"/>
+        <attr name="back_width" format="dimension"/>
+        <attr name="front_width" format="dimension"/>
+        <attr name="is_need_title" format="boolean"/>
+        <attr name="is_need_content" format="boolean"/>
+        <attr name="is_need_unit" format="boolean"/>
+        <attr name="is_need_dial" format="boolean"/>
+        <attr name="string_title" format="string"/>
+        <attr name="string_unit" format="string"/>
+        <attr name="total_engle" format="integer"/>
+        <attr name="current_value" format="float"/>
+        <attr name="max_value" format="float"/>
+        <attr name="diameter" format="dimension"/>
+        <attr name="content_size" format="dimension"/>
+        <attr name="content_color" format="color"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="BodyItemView">
+        <attr name="title" format="string"/>
+        <attr name="icon_normal" format="reference"/>
+        <attr name="icon_un_normal" format="reference"/>
+        <attr name="rotate" format="boolean"/>
+    </declare-styleable>
+
+
 </resources>

@@ -4,10 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
 
     <color name="lan_30acff">#30acff</color>
+    <color name="lan_53b3f3">#53b3f3</color>
+    <color name="lan_897cef">#897cef</color>
     <color name="lan_24aaff">#24aaff</color>
     <color name="lan_c7e9ff">#c7e9ff</color>
 
     <color name="hui_858585">#858585</color>
+    <color name="hui_8d8d8d">#8d8d8d</color>
     <color name="hui_575757">#575757</color>
     <color name="hui_ababab">#ababab</color>
     <color name="hui_f9f9f9">#f9f9f9</color>
@@ -27,6 +30,7 @@
 
     <color name="hong_f84d4d">#f84d4d</color>
     <color name="hong_f54f52">#f54f52</color>
+    <color name="hong_e60012">#e60012</color>
 
     <color name="lv_00bf4e">#00bf4e</color>
 

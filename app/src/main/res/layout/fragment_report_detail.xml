@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wy.report.widget.ObservableScrollView
+    android:id="@+id/report_detail_sv"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <include layout="@layout/view_report_detail_body_info"/>
+    </LinearLayout>
+
+
+</com.wy.report.widget.ObservableScrollView>
