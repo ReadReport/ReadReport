@@ -19,6 +19,7 @@ import com.wy.report.business.read.view.ManagePopMenu;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.ToastUtils;
 import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.HorizontalGravity;
@@ -289,7 +290,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ReportItemMode item = (ReportItemMode) adapter.getItem(position);
         if(item.getParseState() == ReportItemMode.READ_STATE_READED)
         {
-
+            AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_DETAIL);
         }
     }
 }
