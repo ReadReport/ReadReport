@@ -124,16 +124,19 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
                          View dataListView = viewPager.findViewById(R.id.recycle_view);
                          View titleView = viewPager.findViewById(R.id.fragment_daily_detect_data_list_title);
                          int totalHeight = dataListView.getMeasuredHeight() + titleView.getMeasuredHeight();
-                         if (totalHeight > originalHeight && totalHeight != measuredHeight) {
-                             viewPager.getLayoutParams().height = totalHeight;
-                             viewPager.requestLayout();
-                         } else if (totalHeight > originalHeight && totalHeight < measuredHeight) {
-                             viewPager.getLayoutParams().height = totalHeight;
-                             viewPager.requestLayout();
+
+                         if (totalHeight == measuredHeight) {
+                             return;
                          }
 
+                         if (totalHeight < originalHeight) {
+                             return;
+                         }
+                         viewPager.getLayoutParams().height = totalHeight;
+                         viewPager.requestLayout();
                      }
                  });
+        viewPager.setNestedScrollingEnabled(true);
         tabLayout.setUpWithViewPager(viewPager);
         loadData();
     }
