@@ -1,10 +1,8 @@
 package com.wy.report.business.read.service;
 
 import com.wy.report.base.model.ResponseModel;
-import com.wy.report.business.read.mode.ReportItemMode;
+import com.wy.report.business.read.mode.DoctorMode;
 import com.wy.report.business.read.mode.ReportListMode;
-
-import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -33,5 +31,12 @@ public interface ReadService {
      */
     @GET("/Report/do_submit_my_report")
     Observable<ResponseModel> sumbitReport2Doctor(@Query("rep_id") String reportId);
+
+    /**
+     * 获取医生信息
+     * @return
+     */
+    @GET("/Doctor/get_doctor_info")
+    Observable<ResponseModel<DoctorMode>> getDoctorInfo(@Query("doc_id") String docId);
 
 }

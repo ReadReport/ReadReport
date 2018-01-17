@@ -33,4 +33,15 @@
     <string name="report_detail_doctor_suggest_export">健康专家</string>
 
     <string name="report_detail_upload_report_2_doctor">上传报告给医生解读</string>
+
+    <string name="doctor_detail_title">医生详情</string>
+    <string name="doctor_detail_good">好评率：%s</string>
+    <string name="doctor_detail_server">服务数：%s</string>
+    <string name="doctor_detail_good_at_title">擅长</string>
+    <string name="doctor_detail_summary_title">简介</string>
+    <string name="doctor_detail_service_content">服务内容</string>
+    <string name="doctor_detail_service_content_report_parse">报告解读</string>
+    <string name="doctor_detail_service_content_report_parse_content">体检报告解析，健康状况分析</string>
+    <string name="doctor_detail_service_content_instruction">服务说明</string>
+    <string name="doctor_detail_service_content_instruction_content">本站医生根据您提供的体检报告数据，进行相关的系统性知道建议。网上交流不能代表医生面诊，医生的知道建议仅供参考，具体诊疗请一定到医院在专业医生指导下进行。本站医生言论仅代表个人观点，不代表本站同意其说法。</string>
 </resources>

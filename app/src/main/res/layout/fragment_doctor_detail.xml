@@ -1,130 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<com.wy.report.widget.ObservableScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     >
 
-    <ImageView
-        android:id="@+id/doctor_detail_bg"
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:background="@drawable/img_me_bg"
-        />
-
     <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="70dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent"
         >
-
+        <!--兰色背景-->
         <ImageView
-            android:id="@+id/doctor_detail_head_bg"
+            android:id="@+id/doctor_detail_bg"
             android:layout_width="match_parent"
-            android:layout_height="186dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/selector_white_bg_corner"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="214dp"
+            android:background="@drawable/img_me_bg"
             />
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/doctor_detail_head_icon"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/btn_login_no"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="40dp"
-            app:riv_mutate_background="true"
-            />
-
-        <TextView
-            android:id="@+id/doctor_detail_name"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/doctor_detail_head_cl"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:textColor="@color/hei_333333"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/doctor_detail_head_icon"
-            />
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="70dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
-        <TextView
-            android:id="@+id/doctor_detail_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:textColor="@color/hui_858585"
-            android:textSize="13sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/doctor_detail_name"
-            />
+            <ImageView
+                android:id="@+id/doctor_detail_head_bg"
+                android:layout_width="match_parent"
+                android:layout_height="186dp"
+                android:layout_marginTop="45dp"
+                android:background="@drawable/selector_white_bg_corner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <!--头像-->
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/doctor_detail_head_icon"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_login_no"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="40dp"
+                app:riv_mutate_background="true"
+                />
+            <!--医生名字-->
+            <TextView
+                android:id="@+id/doctor_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/hei_333333"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_head_icon"
+                />
+            <!--医生评级-->
+            <TextView
+                android:id="@+id/doctor_detail_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/hui_858585"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_name"
+                />
+
+            <ImageView
+                android:id="@+id/doctor_detail_vip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/doctors_vip_icon"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_level"
+                />
+            <!--好评率-->
+            <LinearLayout
+                android:id="@+id/doctor_detail_good_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/doctor_detail_server_ll"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_vip"
+                >
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_good"
+                    />
+
+                <TextView
+                    android:id="@+id/doctor_detail_good_at_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="@string/doctor_detail_good"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+            <!--服务数-->
+            <LinearLayout
+                android:id="@+id/doctor_detail_server_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintLeft_toRightOf="@+id/doctor_detail_good_ll"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_vip"
+                >
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_quantity"
+                    />
+
+                <TextView
+                    android:id="@+id/doctor_detail_server_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="@string/doctor_detail_server"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/doctor_detail_good_ll"
-            android:layout_width="wrap_content"
+            android:id="@+id/doctor_detail_good_at_summary_ll"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/doctor_detail_head_cl"
+            >
+            <!--擅长-->
+            <LinearLayout
+                android:id="@+id/doctor_detail_good_at_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical"
+                >
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/doctor_detail_good_at_icon"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_goodat"
+                        />
+
+                    <TextView
+                        android:id="@+id/doctor_detail_good_at_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:text="@string/doctor_detail_good_at_title"
+                        android:textColor="@color/hei_333333"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/doctor_detail_good_at_icon"
+                        app:layout_constraintLeft_toRightOf="@+id/doctor_detail_good_at_icon"
+                        app:layout_constraintTop_toTopOf="@+id/doctor_detail_good_at_icon"
+                        />
+
+                    <TextView
+                        android:id="@+id/doctor_detail_good_at"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/hui_575757"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@+id/doctor_detail_good_at_icon"
+                        />
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+            <!--简介-->
+            <LinearLayout
+                android:id="@+id/doctor_detail_summary_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_good_at_ll"
+                >
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/doctor_detail_summary_icon"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_introduction"
+                        />
+
+                    <TextView
+                        android:id="@+id/doctor_detail_summary_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:text="@string/doctor_detail_summary_title"
+                        android:textColor="@color/hei_333333"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/doctor_detail_summary_icon"
+                        app:layout_constraintLeft_toRightOf="@+id/doctor_detail_summary_icon"
+                        app:layout_constraintTop_toTopOf="@+id/doctor_detail_summary_icon"
+                        />
+
+                    <TextView
+                        android:id="@+id/doctor_detail_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/hui_575757"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@+id/doctor_detail_summary_icon"
+                        />
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!--服务内容-->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/doctor_detail_server_content_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/doctor_detail_good_at_summary_ll"
+            >
+
+            <ImageView
+                android:id="@+id/doctor_detail_server_content_icon"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_dption"
+                />
+
+            <!--服务内容-->
+            <TextView
+                android:id="@+id/doctor_detail_server_content_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="@string/report_detail_doctor_suggest_title"
+                android:textColor="@color/hei_333333"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/doctor_detail_server_content_icon"
+                app:layout_constraintLeft_toRightOf="@+id/doctor_detail_server_content_icon"
+                app:layout_constraintTop_toTopOf="@+id/doctor_detail_server_content_icon"
+                />
+
+            <!--报告解析-->
+            <TextView
+                android:id="@+id/doctor_detail_parse_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/doctor_detail_service_content_report_parse"
+                android:textColor="@color/hei_333333"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/doctor_detail_server_content_icon"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_icon"
+                />
+
+            <TextView
+                android:id="@+id/doctor_detail_parse_report_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/doctor_detail_service_content_report_parse_content"
+                android:textColor="@color/hui_575757"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_parse_report"
+                />
+
+            <!--服务说明-->
+            <TextView
+                android:id="@+id/doctor_detail_server_instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/doctor_detail_service_content_instruction"
+                android:textColor="@color/hei_333333"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/doctor_detail_parse_report_content"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_parse_report_content"
+                />
+
+            <TextView
+                android:id="@+id/doctor_detail_server_instruction_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/doctor_detail_service_content_instruction_content"
+                android:textColor="@color/hui_575757"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_instruction"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/doctor_detail_upload_report_2_doctor"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/shape_blue_fill"
             android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/doctor_detail_server_ll"
-            app:layout_constraintTop_toBottomOf="@+id/doctor_detail_level"
-            >
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/ic_good"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="急急急"
-                android:textColor="@color/hei_333333"
-                android:textSize="14sp"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/doctor_detail_server_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintLeft_toRightOf="@+id/doctor_detail_good_ll"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/doctor_detail_level"
-            >
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/ic_good"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="急急急"
-                android:textColor="@color/hei_333333"
-                android:textSize="14sp"
-                />
-        </LinearLayout>
+            android:text="@string/report_detail_upload_report_2_doctor"
+            android:textColor="@color/bai_ffffff"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_ll"
+            />
     </android.support.constraint.ConstraintLayout>
-
-
-</android.support.constraint.ConstraintLayout>
+</com.wy.report.widget.ObservableScrollView>
