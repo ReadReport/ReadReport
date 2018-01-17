@@ -71,6 +71,7 @@ public class NotChainUnitFragment extends PtrFragment {
                 province.setText(item.getProvince());
                 Resources res = getResources();
                 province.setTextColor(item.isSelected() ? res.getColor(R.color.lan_30acff) : res.getColor(R.color.hei_333333));
+                helper.setImageResource(R.id.vh_hospital_province_right, (item.isSelected() ? R.drawable.img_bg_press : R.drawable.img_bg_normal));
             }
         };
         adapterLeft.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

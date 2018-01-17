@@ -47,6 +47,7 @@ import com.wy.report.manager.router.Router;
 import com.wy.report.util.PhotoUtil;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.SystemIntentUtil;
+import com.wy.report.util.ToastUtils;
 import com.wy.report.util.ViewUtils;
 import com.wy.report.widget.view.recycleview.NestedGridLayoutManager;
 
@@ -73,7 +74,9 @@ public class ReportUploadFragment extends NetworkFragment {
 
     private static final String SAVED_PICTURE_LIST = "picture_list";
 
-    private static final int MAX_PICTURE_NUM = 6;
+    private static final int MAX_PICTURE_NUM = 12;
+
+    private static final int MAX_REMARK_NUM = 200;
 
     @BindView(R.id.report_upload_medical_examiner_name)
     TextView name;
@@ -136,7 +139,7 @@ public class ReportUploadFragment extends NetworkFragment {
     }
 
     private void createAdapter() {
-        adapter = new BaseItemDraggableAdapter<PictureModel, BaseViewHolder>(R.layout.vh_select_image ,null) {
+        adapter = new BaseItemDraggableAdapter<PictureModel, BaseViewHolder>(R.layout.vh_select_image, null) {
             @Override
             protected void convert(BaseViewHolder helper, PictureModel item) {
                 switch (item.getType()) {
@@ -173,6 +176,8 @@ public class ReportUploadFragment extends NetworkFragment {
                     AuthRouterManager.getInstance()
                                      .getRouter()
                                      .open(getActivity(), AuthRouterManager.ROUTER_OTHER_PICTURE_PREVIEW, bundleKey);
+                } else if (adapter.getItemCount() == MAX_PICTURE_NUM + 1) {
+                    ToastUtils.showLong(R.string.report_upload_picture_limit);
                 } else {
                     startActivityForResult(SystemIntentUtil.createJumpIntoSystemAlbumIntent(), ActivityRequestCode.CODE_OPEN_ALBUM);
                 }
@@ -202,7 +207,7 @@ public class ReportUploadFragment extends NetworkFragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(adapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        adapter.enableDragItem(itemTouchHelper,0,true);
+        adapter.enableDragItem(itemTouchHelper, 0, true);
     }
 
     private ArrayList<String> toPicturePath() {
@@ -288,16 +293,17 @@ public class ReportUploadFragment extends NetworkFragment {
         switch (requestCode) {
             case CODE_OPEN_ALBUM: {
                 String picturePath = PhotoUtil.onActivityResult(getActivity(), requestCode, resultCode, data);
-                List<PictureModel> list = adapter.getData();
-                int size = list.size();
-                adapter.addData(size - 1, new PictureModel(picturePath));
-                size++;
-                if (size == MAX_PICTURE_NUM + 1) {
-                    adapter.remove(MAX_PICTURE_NUM);
+                if (TextUtils.isEmpty(picturePath)) {
+                    return;
                 }
-
+                for (PictureModel pictureModel : adapter.getData()) {
+                    if (picturePath.equals(pictureModel.getPath())) {
+                        ToastUtils.showLong(R.string.report_upload_picture_duplicate);
+                        return;
+                    }
+                }
+                adapter.addData(adapter.getItemCount(), new PictureModel(picturePath));
                 updateSelectedPictureInfo();
-
                 break;
             }
         }
@@ -344,6 +350,12 @@ public class ReportUploadFragment extends NetworkFragment {
             return;
         }
 
+        String remarkStr = ViewUtils.getText(remark);
+        if (remarkStr.length() > MAX_REMARK_NUM) {
+            ToastUtils.showLong(R.string.report_upload_remark_limit);
+            return;
+        }
+
         final ArrayList<File> files = new ArrayList<>();
         for (PictureModel pictureModel : adapter.getData()) {
             if (pictureModel.getType() != PictureModel.TYPE_NORMAL) {
@@ -352,7 +364,7 @@ public class ReportUploadFragment extends NetworkFragment {
             files.add(new File(pictureModel.getPath()));
         }
         User user = userManger.getLoginUser();
-        reportService.submitReport(user.getId(), "android", unitModel.getId(), ViewUtils.getText(time), ViewUtils.getText(remark), PartUtils.convertFile2Part(files))
+        reportService.submitReport(user.getId(), "android", unitModel.getId(), ViewUtils.getText(time), remarkStr, PartUtils.convertFile2Part(files))
                      .subscribe(new NetworkSubscriber<ResponseModel<UploadModel>>(this) {
                          @Override
                          public void handleError(Throwable t) {

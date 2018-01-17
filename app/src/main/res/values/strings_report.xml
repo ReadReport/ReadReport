@@ -25,6 +25,12 @@
     <string name="report_upload_lack_info_tips2">你确认要离开？</string>
     <string name="report_upload_lack_info_leave">离开</string>
     <string name="report_upload_lack_info_continue">继续填写</string>
+    <string name="report_upload_picture_duplicate">请不要上传重复的图片</string>
+    <string name="report_upload_picture_limit">您选择的图片数量已达上限</string>
+    <string name="report_upload_remark_limit">备注不得超过200个字</string>
+
+
+
 
     <string-array name="report_hospital_tab">
         <item>医院</item>
