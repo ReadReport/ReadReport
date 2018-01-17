@@ -1,6 +1,7 @@
 package com.wy.report.business.upload.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.wy.report.base.model.BaseModel;
 
 /*
@@ -8,7 +9,11 @@ import com.wy.report.base.model.BaseModel;
  * @author cantalou
  * @date 2017-12-11 22:27
  */
-public class UnitModel extends BaseModel {
+public class UnitModel extends BaseModel implements MultiItemEntity {
+
+    public static final int TYPE_TITLE = 0;
+
+    public static final int TYPE_HOSPITAL = 1;
 
     private String id;
 
@@ -20,6 +25,8 @@ public class UnitModel extends BaseModel {
     private String province;
 
     private String city;
+
+    private int type;
 
     private String szm;
 
@@ -61,6 +68,19 @@ public class UnitModel extends BaseModel {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    @Override
+    public int getItemType() {
+        return type;
     }
 
     public String getSzm() {

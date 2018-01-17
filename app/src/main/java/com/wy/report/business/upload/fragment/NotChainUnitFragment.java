@@ -1,16 +1,13 @@
 package com.wy.report.business.upload.fragment;
 
-import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
@@ -87,12 +84,7 @@ public class NotChainUnitFragment extends PtrFragment {
         recycleViewLeft.setAdapter(adapterLeft);
         recycleViewLeft.setItemAnimator(null);
 
-        adapterRight = new BaseQuickAdapter<UnitModel, BaseViewHolder>(R.layout.vh_hospital_unit) {
-            @Override
-            protected void convert(BaseViewHolder helper, UnitModel item) {
-                helper.setText(R.id.vh_hospital_title, item.getTitle());
-            }
-        };
+        adapterRight = new RightAdapter(null);
         adapterRight.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -197,5 +189,20 @@ public class NotChainUnitFragment extends PtrFragment {
                 && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewRight, header);
     }
 
+    private static class RightAdapter extends BaseMultiItemQuickAdapter<UnitModel, BaseViewHolder> {
+
+        public RightAdapter(List<UnitModel> data) {
+            super(data);
+            addItemType(UnitModel.TYPE_TITLE, R.layout.vh_hospital_unit);
+            addItemType(UnitModel.TYPE_HOSPITAL, R.layout.vh_hospital_unit);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, UnitModel item) {
+            helper.setText(R.id.vh_hospital_title, item.getTitle());
+        }
+    }
+
+    ;
 
 }
