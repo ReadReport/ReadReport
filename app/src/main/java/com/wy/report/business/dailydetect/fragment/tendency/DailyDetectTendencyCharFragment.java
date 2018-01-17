@@ -1,4 +1,4 @@
-package com.wy.report.business.dailydetect.fragment;
+package com.wy.report.business.dailydetect.fragment.tendency;
 
 import android.graphics.Color;
 import android.os.Bundle;

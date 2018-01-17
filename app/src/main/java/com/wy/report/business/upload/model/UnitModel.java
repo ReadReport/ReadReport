@@ -21,6 +21,8 @@ public class UnitModel extends BaseModel {
 
     private String city;
 
+    private String szm;
+
     public String getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class UnitModel extends BaseModel {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getSzm() {
+        return szm;
+    }
+
+    public void setSzm(String szm) {
+        this.szm = szm;
     }
 }

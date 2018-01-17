@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.wy.report.base.constant.BundleKey;
-import com.wy.report.business.dailydetect.fragment.subtype.BloodPressureFragment;
-import com.wy.report.business.dailydetect.fragment.subtype.BloodSugarFragment;
+import com.wy.report.business.dailydetect.fragment.type.BloodPressureFragment;
+import com.wy.report.business.dailydetect.fragment.type.BloodSugarFragment;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 
 /*

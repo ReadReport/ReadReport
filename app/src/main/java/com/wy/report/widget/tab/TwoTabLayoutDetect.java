@@ -15,6 +15,7 @@ import com.wy.report.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /*
  *
@@ -34,6 +35,8 @@ public class TwoTabLayoutDetect extends ConstraintLayout implements ViewPager.On
 
     @BindView(R.id.toolbar_tab_line_1)
     View tabLine1;
+
+    private ViewPager viewPager;
 
     public TwoTabLayoutDetect(Context context) {
         super(context);
@@ -77,8 +80,23 @@ public class TwoTabLayoutDetect extends ConstraintLayout implements ViewPager.On
         }
     }
 
+    @OnClick(R.id.toolbar_tab_0)
+    public void clickTab0() {
+        viewPager.setCurrentItem(0, true);
+    }
+
+    @OnClick(R.id.toolbar_tab_1)
+    public void clickTab1() {
+        viewPager.setCurrentItem(1, true);
+    }
+
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    public void setUpWithViewPager(ViewPager viewPager) {
+        this.viewPager = viewPager;
+        viewPager.addOnPageChangeListener(this);
     }
 }

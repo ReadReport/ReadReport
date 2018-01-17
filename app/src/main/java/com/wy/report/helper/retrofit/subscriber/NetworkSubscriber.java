@@ -22,10 +22,13 @@ import rx.Subscriber;
 public abstract class NetworkSubscriber<T> extends Subscriber<T> {
 
     protected SoftReference<NetworkFragment> handler;
+
     private Context context = ReportApplication.getGlobalContext();
 
     public NetworkSubscriber(NetworkFragment networkFragment) {
-        this.handler = new SoftReference<>(networkFragment);
+        if (networkFragment != null) {
+            this.handler = new SoftReference<>(networkFragment);
+        }
     }
 
     @Override
@@ -36,6 +39,9 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
     }
 
     public void handleStart() {
+        if (handler == null) {
+            return;
+        }
         NetworkFragment fragment = handler.get();
         if (fragment != null) {
             fragment.handleStart();
@@ -61,6 +67,9 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
     }
 
     public void handleError(Throwable t) {
+        if (handler == null) {
+            return;
+        }
         NetworkFragment fragment = handler.get();
         if (fragment != null) {
             fragment.handleError(t);
@@ -74,6 +83,9 @@ public abstract class NetworkSubscriber<T> extends Subscriber<T> {
     }
 
     public void handleSuccess(T t) {
+        if (handler == null) {
+            return;
+        }
         NetworkFragment fragment = handler.get();
         if (fragment != null) {
             fragment.handleSuccess(t);

@@ -1,12 +1,12 @@
-package com.wy.report.business.dailydetect.fragment;
+package com.wy.report.business.dailydetect.fragment.data;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
@@ -15,17 +15,16 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
-import com.wy.report.business.auth.model.User;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
-import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
-import com.wy.report.manager.auth.UserManger;
+import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -34,34 +33,28 @@ import butterknife.BindView;
  * @author cantalou
  * @date 2017-12-31 14:50
  */
-public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectDataModel, BaseViewHolder> {
+public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyDetectDataModel, BaseViewHolder> {
 
     @BindView(R.id.fragment_daily_detect_data_list_title_type)
     TextView titleType;
 
-    private ArrayList<DailyDetectDataModel> data;
+    protected ArrayList<DailyDetectDataModel> data;
 
-    private DailyDetectService dailyDetectService;
+    protected DailyDetectService dailyDetectService;
 
-    private DailyDetectTypeModel typeModel;
+    protected DailyDetectTypeModel typeModel;
+
+    protected SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
         Bundle arguments = getArguments();
-        data = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_DAILY_DETECT_DATA);
         typeModel = arguments.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
 
         dailyDetectService = RetrofitHelper.getInstance()
                                            .create(DailyDetectService.class);
-        dailyDetectService.getDetectData(UserManger.getUid(), typeModel.getId()).subscribe(new PtrSubscriber<ResponseModel<List<DailyDetectDataModel>>>(this){
-            @Override
-            public void handleSuccess(ResponseModel<List<DailyDetectDataModel>> dailyDetectDataModelResponseModel) {
-                super.handleSuccess(dailyDetectDataModelResponseModel);
-                quickAdapter.setNewData(dailyDetectDataModelResponseModel.getData());
-            }
-        });
     }
 
     @Override
@@ -74,14 +67,20 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
         return new BaseQuickAdapter<DailyDetectDataModel, BaseViewHolder>(R.layout.vh_daily_detect_data_list_item) {
             @Override
             protected void convert(BaseViewHolder helper, DailyDetectDataModel item) {
-                helper.setText(R.id.vh_daily_detect_data_list_item_value, item.getRes())
-                      .setText(R.id.vh_daily_detect_data_list_item_state, item.getSuggest())
-                      .setText(R.id.vh_daily_detect_data_list_item_time, item.getTestTime())
+                String[] values = item.getValues();
+                helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(values))
+                      .setText(R.id.vh_daily_detect_data_list_item_state, item.getDescribe())
+                      .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()))
                       .addOnClickListener(R.id.bottom_wrapper);
                 SwipeLayout swipeLayout = (SwipeLayout) helper.getConvertView();
                 swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
             }
         };
+    }
+
+    @NonNull
+    protected String createShowValue(String[] values) {
+        return values[0] + "/" + values[1];
     }
 
     @Override
@@ -109,16 +108,27 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
                                   });
             }
         });
-        setTypeTitle(typeModel);
+        ptrFrameLayout.setEnabled(false);
     }
 
-    public void editMode(Boolean editMode) {
-        quickAdapter.notifyDataSetChanged();
+    @Override
+    protected void initRecycleView() {
+        recyclerView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(true);
+        quickAdapter = createAdapter();
+        recyclerView.setAdapter(quickAdapter);
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_LOADED)})
+    public void dataLoaded(ArrayList<DailyDetectDataModel> data) {
+        quickAdapter.setNewData(data);
+        recyclerView.getParent().requestLayout();
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_ADD)})
     public void addData(DailyDetectDataModel model) {
-        quickAdapter.addData(model);
+        quickAdapter.addData(0, model);
     }
 
     @Override
@@ -126,32 +136,7 @@ public class DailyDetectDataListFragment extends PtrListFragment<DailyDetectData
         return 0;
     }
 
-
-    private void setTypeTitle(DailyDetectTypeModel typeModel) {
-        switch (typeModel.getId()) {
-            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_PRESSURE: {
-                titleType.setText(R.string.daily_detect_data_list_title_blood_pressure);
-                break;
-            }
-            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR: {
-                titleType.setText(R.string.daily_detect_data_list_title_blood_sugar);
-                break;
-            }
-
-            case DailyDetectTypeModel.DETECT_TYPE_BMI: {
-                titleType.setText(R.string.daily_detect_data_list_title_bmi);
-                break;
-            }
-
-            case DailyDetectTypeModel.DETECT_TYPE_BODY_FAT: {
-                titleType.setText(R.string.daily_detect_data_list_title_body_fat);
-                break;
-            }
-
-            case DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT: {
-                titleType.setText(R.string.daily_detect_data_list_title_blood_fat);
-                break;
-            }
-        }
+    protected String formatDate(long time) {
+        return format.format(new Date(time * 1000));
     }
 }

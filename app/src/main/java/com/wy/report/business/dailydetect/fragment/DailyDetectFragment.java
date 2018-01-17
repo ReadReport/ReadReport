@@ -1,9 +1,6 @@
 package com.wy.report.business.dailydetect.fragment;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,31 +8,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.fragment.NetworkFragment;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
-import com.wy.report.helper.dailydetect.DailyDetectHelper;
 import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.widget.tab.TwoTabLayoutDetect;
 import com.wy.report.widget.view.dailydetect.ValueView;
-import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,7 +39,7 @@ import butterknife.OnClick;
  * @author cantalou
  * @date 2017-12-26 21:14
  */
-public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMenuItemClickListener {
+public abstract class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMenuItemClickListener {
 
     protected DailyDetectService dailyDetectService;
 
@@ -66,7 +58,9 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
     @BindView(R.id.daily_detect_tab_container)
     TwoTabLayoutDetect tabLayout;
 
-    private DailyDetectTypeModel model;
+    protected DailyDetectTypeModel model;
+
+    protected int originalHeight = 0;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -79,12 +73,28 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
     }
 
     @Override
+    protected void loadData() {
+        dailyDetectService.getDetectData(UserManger.getUid(), model.getId())
+                          .subscribe(new NetworkSubscriber<ResponseModel<List<DailyDetectDataModel>>>(null) {
+                              @Override
+                              public void handleSuccess(ResponseModel<List<DailyDetectDataModel>> dailyDetectDataModelResponseModel) {
+                                  super.handleSuccess(dailyDetectDataModelResponseModel);
+                                  List<DailyDetectDataModel> data = dailyDetectDataModelResponseModel.getData();
+                                  for (DailyDetectDataModel model : data) {
+                                      model.setValues(parseResValue(model));
+                                  }
+                                  rxBus.post(RxKey.RX_DAILY_DETECT_DATA_LOADED, data);
+                              }
+                          });
+    }
+
+    @Override
     protected void initView(View contentView) {
         super.initView(contentView);
         detectValueContainerView = createDetectValueView();
         frameLayoutContainer.addView(detectValueContainerView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        final BaseFragment[] fragments = new BaseFragment[]{new DailyDetectTendencyCharFragment(), new DailyDetectDataListFragment()};
+        final BaseFragment[] fragments = getFragments();
         for (BaseFragment fragment : fragments) {
             Bundle arg = new Bundle();
             arg.putParcelableArrayList(BundleKey.BUNDLE_KEY_DAILY_DETECT_DATA, null);
@@ -102,14 +112,37 @@ public class DailyDetectFragment extends NetworkFragment implements Toolbar.OnMe
                 return fragments.length;
             }
         });
-        viewPager.addOnPageChangeListener(tabLayout);
+        viewPager.getViewTreeObserver()
+                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                     @Override
+                     public void onGlobalLayout() {
+                         int measuredHeight = viewPager.getMeasuredHeight();
+                         if (originalHeight == 0 && measuredHeight > 0) {
+                             originalHeight = measuredHeight;
+                         }
+
+                         View dataListView = viewPager.findViewById(R.id.recycle_view);
+                         View titleView = viewPager.findViewById(R.id.fragment_daily_detect_data_list_title);
+                         int totalHeight = dataListView.getMeasuredHeight() + titleView.getMeasuredHeight();
+                         if (totalHeight > originalHeight && totalHeight != measuredHeight) {
+                             viewPager.getLayoutParams().height = totalHeight;
+                             viewPager.requestLayout();
+                         } else if (totalHeight > originalHeight && totalHeight < measuredHeight) {
+                             viewPager.getLayoutParams().height = totalHeight;
+                             viewPager.requestLayout();
+                         }
+
+                     }
+                 });
+        tabLayout.setUpWithViewPager(viewPager);
+        loadData();
     }
 
-    protected ViewGroup createDetectValueView() {
-        ValueViewContainer detectValueContainerView = new ValueViewContainer(getActivity());
-        detectValueContainerView.setData(DailyDetectHelper.getTypes(model));
-        return detectValueContainerView;
-    }
+    protected abstract BaseFragment[] getFragments();
+
+    protected abstract ViewGroup createDetectValueView();
+
+    protected abstract String[] parseResValue(DailyDetectDataModel model);
 
     @Override
     protected int contentLayoutID() {

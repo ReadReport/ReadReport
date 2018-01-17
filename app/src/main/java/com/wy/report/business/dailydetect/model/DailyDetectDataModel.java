@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.wy.report.base.model.BaseModel;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author cantalou
@@ -57,7 +59,7 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
      * 测试时间
      */
     @JSONField(name = "test_time")
-    private String testTime;
+    private long testTime;
 
     /**
      * 建议
@@ -79,6 +81,7 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
     @JSONField(name = "device_type")
     private String deviceType;
 
+    private String[] values;
 
     public DailyDetectDataModel() {
     }
@@ -139,11 +142,11 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
         this.describe = describe;
     }
 
-    public String getTestTime() {
+    public long getTestTime() {
         return testTime;
     }
 
-    public void setTestTime(String testTime) {
+    public void setTestTime(long testTime) {
         this.testTime = testTime;
     }
 
@@ -171,6 +174,14 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
         this.deviceType = deviceType;
     }
 
+    public String[] getValues() {
+        return values;
+    }
+
+    public void setValues(String[] values) {
+        this.values = values;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -185,10 +196,11 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
         dest.writeString(this.res);
         dest.writeString(this.message);
         dest.writeString(this.describe);
-        dest.writeString(this.testTime);
+        dest.writeLong(this.testTime);
         dest.writeString(this.suggest);
         dest.writeString(this.collectType);
         dest.writeString(this.deviceType);
+        dest.writeStringArray(this.values);
     }
 
     protected DailyDetectDataModel(Parcel in) {
@@ -199,10 +211,11 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
         this.res = in.readString();
         this.message = in.readString();
         this.describe = in.readString();
-        this.testTime = in.readString();
+        this.testTime = in.readLong();
         this.suggest = in.readString();
         this.collectType = in.readString();
         this.deviceType = in.readString();
+        this.values = in.createStringArray();
     }
 
     public static final Creator<DailyDetectDataModel> CREATOR = new Creator<DailyDetectDataModel>() {

@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cantalou.android.util.ReflectUtil;
 import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
+import com.wy.report.helper.rxbus.EnhanceFinder;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.manager.router.Router;
 
@@ -23,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
-    protected Bus rxBus;
+    protected static Bus rxBus;
 
     protected View contentView;
 
@@ -47,9 +49,10 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
         if (rxBus == null) {
             rxBus = RxBus.get();
-            if (!rxBus.hasRegistered(this)) {
-                rxBus.register(this);
-            }
+            ReflectUtil.set(rxBus, "finder", EnhanceFinder.ANNOTATED);
+        }
+        if (!rxBus.hasRegistered(this)) {
+            rxBus.register(this);
         }
     }
 

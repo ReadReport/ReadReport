@@ -34,4 +34,5 @@ public class RxKey {
 
     public static final String RX_MODIFY_USER_INFO = "RX_MODIFY_USER_INFO";
 
+    public static final String RX_DAILY_DETECT_DATA_LOADED = "RX_DAILY_DETECT_DATA_LOADED";
 }
