@@ -48,19 +48,14 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
     protected User user;
 
     protected DailyDetectDataModel dataModel;
-
+    protected DailyDetectTypeModel model;
+    protected int originalHeight = 0;
     @BindView(R.id.daily_detect_framelayout_container)
     FrameLayout frameLayoutContainer;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
     @BindView(R.id.daily_detect_tab_container)
     TwoTabLayoutDetect tabLayout;
-
-    protected DailyDetectTypeModel model;
-
-    protected int originalHeight = 0;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -145,7 +140,7 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
 
     @OnClick(R.id.daily_detect_save)
     public void saveRecord(View view) {
-        rxBus.post(RxKey.RX_DAILY_DETECT_DATA_ADD, dataModel);
+        loadData();
     }
 
     protected String getValue(int index) {

@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 
@@ -43,9 +44,7 @@ import butterknife.BindView;
  */
 public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyDetectDataModel, BaseViewHolder> {
 
-    @BindView(R.id.fragment_daily_detect_data_list_title_type)
-    TextView titleType;
-
+    private static final String[] exceptionValue = new String[]{"偏", "异", "高", "低", "不", "胖", "瘦"};
     protected ArrayList<DailyDetectDataModel> data;
 
     protected DailyDetectService dailyDetectService;
@@ -53,6 +52,8 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
     protected DailyDetectTypeModel typeModel;
 
     protected SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    @BindView(R.id.fragment_daily_detect_data_list_title_type)
+    TextView titleType;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -120,11 +121,6 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
         quickAdapter.setNewData(data);
     }
 
-    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_ADD)})
-    public void addData(DailyDetectDataModel model) {
-        quickAdapter.addData(0, model);
-    }
-
     @Override
     protected int toolbarFlag() {
         return 0;
@@ -134,7 +130,16 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
         return format.format(new Date(time * 1000));
     }
 
-    private class SwipeAdapter extends BaseQuickAdapter<DailyDetectDataModel, BaseViewHolder> implements SwipeItemMangerInterface, SwipeAdapterInterface {
+    protected boolean isException(String describe) {
+        for (String s : exceptionValue) {
+            if (describe.contains(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private class SwipeAdapter extends BaseQuickAdapter<DailyDetectDataModel, BaseViewHolder> {
 
         public SwipeAdapter(int layoutResId) {
             super(layoutResId);
@@ -142,8 +147,10 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
 
         @Override
         protected void convert(BaseViewHolder helper, DailyDetectDataModel item) {
+            String describe = item.getDescribe();
             helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
-                  .setText(R.id.vh_daily_detect_data_list_item_state, item.getDescribe())
+                  .setText(R.id.vh_daily_detect_data_list_item_state, describe)
+                  .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
                   .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()))
                   .addOnClickListener(R.id.bottom_wrapper);
             SwipeLayout swipeLayout = helper.getView(R.id.swipe);
@@ -161,53 +168,6 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
                     Log.d("onClose");
                 }
             });
-        }
-
-        public SwipeItemRecyclerMangerImpl mItemManger = new SwipeItemRecyclerMangerImpl(this);
-
-        public void openItem(int position) {
-            this.mItemManger.openItem(position);
-        }
-
-        public void closeItem(int position) {
-            this.mItemManger.closeItem(position);
-        }
-
-        public void closeAllExcept(SwipeLayout layout) {
-            this.mItemManger.closeAllExcept(layout);
-        }
-
-        public void closeAllItems() {
-            this.mItemManger.closeAllItems();
-        }
-
-        public List<Integer> getOpenItems() {
-            return this.mItemManger.getOpenItems();
-        }
-
-        public List<SwipeLayout> getOpenLayouts() {
-            return this.mItemManger.getOpenLayouts();
-        }
-
-        public void removeShownLayouts(SwipeLayout layout) {
-            this.mItemManger.removeShownLayouts(layout);
-        }
-
-        public boolean isOpen(int position) {
-            return this.mItemManger.isOpen(position);
-        }
-
-        public Attributes.Mode getMode() {
-            return this.mItemManger.getMode();
-        }
-
-        public void setMode(Attributes.Mode mode) {
-            this.mItemManger.setMode(mode);
-        }
-
-        @Override
-        public int getSwipeLayoutResourceId(int i) {
-            return R.id.swipe;
         }
     }
 }

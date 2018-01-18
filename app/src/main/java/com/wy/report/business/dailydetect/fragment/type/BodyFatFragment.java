@@ -5,9 +5,11 @@ import android.view.ViewGroup;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.BaseFragment;
+import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
 import com.wy.report.business.dailydetect.fragment.data.BodyFatDataFragment;
 import com.wy.report.business.dailydetect.fragment.tendency.DailyDetectTendencyCharFragment;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.widget.view.dailydetect.ValueType;
 import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 
@@ -24,8 +26,15 @@ import static com.wy.report.business.home.model.DailyDetectTypeModel.DETECT_TYPE
 public class BodyFatFragment extends DailyDetectFragment {
 
     @Override
-    public void saveRecord(View view) {
-        dailyDetectService.recordBodyFat(user.getId(), DETECT_TYPE_BODY_FAT, getValue(0));
+    public void saveRecord(final View view) {
+        dailyDetectService.recordBodyFat(user.getId(), DETECT_TYPE_BODY_FAT, getValue(0))
+                          .subscribe(new NetworkSubscriber<ResponseModel>(this) {
+                              @Override
+                              public void handleSuccess(ResponseModel responseModel) {
+                                  super.handleSuccess(responseModel);
+                                  BodyFatFragment.super.saveRecord(view);
+                              }
+                          });
     }
 
     @Override

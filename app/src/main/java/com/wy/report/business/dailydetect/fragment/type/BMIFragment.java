@@ -27,12 +27,13 @@ import static com.wy.report.business.home.model.DailyDetectTypeModel.DETECT_TYPE
 public class BMIFragment extends DailyDetectFragment {
 
     @Override
-    public void saveRecord(View view) {
+    public void saveRecord(final View view) {
         dailyDetectService.recordBMI(user.getId(), DETECT_TYPE_BMI, getValue(0), getValue(1))
                           .subscribe(new NetworkSubscriber<ResponseModel>(this) {
                               @Override
                               public void handleSuccess(ResponseModel responseModel) {
                                   super.handleSuccess(responseModel);
+                                  BMIFragment.super.saveRecord(view);
                               }
                           });
     }

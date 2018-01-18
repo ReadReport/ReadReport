@@ -27,12 +27,13 @@ import static com.wy.report.business.home.model.DailyDetectTypeModel.DETECT_TYPE
 public class BloodPressureFragment extends DailyDetectFragment {
 
     @Override
-    public void saveRecord(View view) {
+    public void saveRecord(final View view) {
         dailyDetectService.recordBloodPressure(user.getId(), DETECT_TYPE_BLOOD_PRESSURE, getValue(0), getValue(1), getValue(2))
                           .subscribe(new NetworkSubscriber<ResponseModel>(this) {
                               @Override
                               public void handleSuccess(ResponseModel responseModel) {
                                   super.handleSuccess(responseModel);
+                                  BloodPressureFragment.super.saveRecord(view);
                               }
                           });
     }

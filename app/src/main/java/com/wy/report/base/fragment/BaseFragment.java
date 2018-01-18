@@ -3,6 +3,7 @@ package com.wy.report.base.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import com.cantalou.android.util.ReflectUtil;
 import com.hwangjr.rxbus.Bus;
 import com.hwangjr.rxbus.RxBus;
+import com.wy.report.R;
 import com.wy.report.helper.rxbus.EnhanceFinder;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.manager.router.Router;
@@ -104,5 +106,9 @@ public abstract class BaseFragment extends Fragment {
 
     public boolean onBackPressed() {
         return false;
+    }
+
+    public int getColor(int color) {
+        return getResources().getColor(color);
     }
 }

@@ -32,10 +32,6 @@ public class DailyDetectTendencyCharFragment extends NetworkFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            data = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_DAILY_DETECT_DATA);
-        }
     }
 
     @Override
@@ -48,9 +44,9 @@ public class DailyDetectTendencyCharFragment extends NetworkFragment {
         return 0;
     }
 
-    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_ADD)})
-    public void addData(DailyDetectDataModel model) {
-        data.remove(model);
+    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_LOADED)})
+    public void dataLoaded(ArrayList<DailyDetectDataModel> data) {
+        this.data = data;
         updateTendencyChar();
     }
 
