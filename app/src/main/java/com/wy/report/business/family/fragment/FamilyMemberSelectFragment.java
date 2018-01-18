@@ -15,9 +15,11 @@ import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.business.family.model.FamilyMemberModel;
 import com.wy.report.business.family.service.FamilyMemberService;
+import com.wy.report.business.my.model.FamilyItemMode;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
 
 import java.util.List;
 
@@ -72,6 +74,13 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
     protected void initToolbar() {
         super.initToolbar();
         setTitle(R.string.family_member_select_title);
+        toolbarMenu.setText(getString(R.string.family_add));
+        toolbarMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_EDIT_FAMILY);
+            }
+        });
     }
 
     @Override
@@ -98,7 +107,7 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_FAMILY_MEMBER_ADD)})
-    public void addMember(FamilyMemberModel model) {
-        quickAdapter.addData(model);
+    public void addMember(FamilyItemMode model) {
+        loadData();
     }
 }
