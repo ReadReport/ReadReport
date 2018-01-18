@@ -87,17 +87,4 @@ public class BloodFatFragment extends DailyDetectFragment {
         return detectValueContainerView;
     }
 
-    /**
-     * 1.60mmol-4.20mmol-1.50mmol-3.10mmol
-     *
-     * @param model
-     * @return
-     */
-    @Override
-    protected String[] parseResValue(DailyDetectDataModel model) {
-        return model.getRes()
-                    .replace("mmol", "")
-                    .split("-");
-
-    }
 }

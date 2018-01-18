@@ -80,9 +80,6 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
                               public void handleSuccess(ResponseModel<List<DailyDetectDataModel>> dailyDetectDataModelResponseModel) {
                                   super.handleSuccess(dailyDetectDataModelResponseModel);
                                   List<DailyDetectDataModel> data = dailyDetectDataModelResponseModel.getData();
-                                  for (DailyDetectDataModel model : data) {
-                                      model.setValues(parseResValue(model));
-                                  }
                                   rxBus.post(RxKey.RX_DAILY_DETECT_DATA_LOADED, data);
                               }
                           });
@@ -112,31 +109,6 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
                 return fragments.length;
             }
         });
-        viewPager.getViewTreeObserver()
-                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                     @Override
-                     public void onGlobalLayout() {
-                         int measuredHeight = viewPager.getMeasuredHeight();
-                         if (originalHeight == 0 && measuredHeight > 0) {
-                             originalHeight = measuredHeight;
-                         }
-
-                         View dataListView = viewPager.findViewById(R.id.recycle_view);
-                         View titleView = viewPager.findViewById(R.id.fragment_daily_detect_data_list_title);
-                         int totalHeight = dataListView.getMeasuredHeight() + titleView.getMeasuredHeight();
-
-                         if (totalHeight == measuredHeight) {
-                             return;
-                         }
-
-                         if (totalHeight < originalHeight) {
-                             return;
-                         }
-                         viewPager.getLayoutParams().height = totalHeight;
-                         viewPager.requestLayout();
-                     }
-                 });
-        viewPager.setNestedScrollingEnabled(true);
         tabLayout.setUpWithViewPager(viewPager);
         loadData();
     }
@@ -144,8 +116,6 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
     protected abstract BaseFragment[] getFragments();
 
     protected abstract ViewGroup createDetectValueView();
-
-    protected abstract String[] parseResValue(DailyDetectDataModel model);
 
     @Override
     protected int contentLayoutID() {

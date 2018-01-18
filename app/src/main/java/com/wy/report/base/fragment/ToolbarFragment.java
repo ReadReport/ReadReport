@@ -38,6 +38,8 @@ public abstract class ToolbarFragment extends BaseFragment {
 
     protected ViewGroup toolbarContainer;
 
+    protected ImageView statusBarBg;
+
     @Nullable
     @Override
     public View createView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public abstract class ToolbarFragment extends BaseFragment {
                                     .getDimensionPixelOffset(R.dimen.toolbar_height);
         int statusBarHeight = DeviceUtils.getStatusBarHeight(activity);
 
-        ImageView statusBarBg = new ImageView(getActivity());
+        statusBarBg = new ImageView(getActivity());
         statusBarBg.setImageResource(R.color.translucent_15);
         statusBarBg.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, statusBarHeight));
 
@@ -85,9 +87,9 @@ public abstract class ToolbarFragment extends BaseFragment {
             if ((TOOL_BAR_FLAG_OVERLAY & toolbarFlag()) == TOOL_BAR_FLAG_OVERLAY) {
                 toolbar.setPadding(toolbar.getPaddingLeft(), statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
                 toolbar.getLayoutParams().height = toolbarHeight + statusBarHeight;
-                toolbarContainer.addView(statusBarBg, 0);
+                toolbarContainer.addView(statusBarBg, toolbarContainer.getChildCount());
+                statusBarBg.setVisibility(View.GONE);
             } else {
-                statusBarBg.setBackgroundDrawable(toolbar.getBackground());
                 toolbarContainer.addView(statusBarBg, 0);
             }
         }

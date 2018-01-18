@@ -86,18 +86,4 @@ public class BloodPressureFragment extends DailyDetectFragment {
         return detectValueContainerView;
     }
 
-
-    /**
-     * 60mmHg-80mmHg-80次/分
-     *
-     * @param model
-     */
-    @Override
-    protected String[] parseResValue(DailyDetectDataModel model) {
-        return model.getRes()
-                    .replace("mmHg", "")
-                    .replace("次/分", "")
-                    .split("-");
-
-    }
 }

@@ -18,7 +18,7 @@ import rx.Observable;
  */
 public interface DailyDetectService {
 
-    @GET("/DailyMonitor/get_recordes_by_type")
+    @GET("/DailyMonitor/get_recordes_by_type2")
     Observable<ResponseModel<List<DailyDetectDataModel>>> getDetectData(@Query("mid") String uid, @Query("test_type")int type);
 
     /**

@@ -41,7 +41,7 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
     /**
      * 结果
      */
-    private String res;
+    private DailyDetectValueModel res;
 
     /**
      * 消息（弹窗展示）
@@ -118,11 +118,11 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
         this.testType = testType;
     }
 
-    public String getRes() {
+    public DailyDetectValueModel getRes() {
         return res;
     }
 
-    public void setRes(String res) {
+    public void setRes(DailyDetectValueModel res) {
         this.res = res;
     }
 
@@ -193,7 +193,7 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
         dest.writeString(this.memberId);
         dest.writeString(this.no);
         dest.writeString(this.testType);
-        dest.writeString(this.res);
+        dest.writeParcelable(this.res, 0);
         dest.writeString(this.message);
         dest.writeString(this.describe);
         dest.writeLong(this.testTime);
@@ -208,7 +208,7 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
         this.memberId = in.readString();
         this.no = in.readString();
         this.testType = in.readString();
-        this.res = in.readString();
+        this.res = in.readParcelable(DailyDetectValueModel.class.getClassLoader());
         this.message = in.readString();
         this.describe = in.readString();
         this.testTime = in.readLong();

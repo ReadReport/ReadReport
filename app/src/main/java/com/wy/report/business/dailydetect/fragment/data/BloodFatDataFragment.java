@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.wy.report.R;
+import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 
 /**
  * @author cantalou
@@ -18,7 +19,7 @@ public class BloodFatDataFragment extends DailyDetectDataListFragment {
 
     @NonNull
     @Override
-    protected String createShowValue(String[] values) {
-        return values[0];
+    protected String createShowValue(DailyDetectValueModel valueModel) {
+        return valueModel.getCholValue();
     }
 }

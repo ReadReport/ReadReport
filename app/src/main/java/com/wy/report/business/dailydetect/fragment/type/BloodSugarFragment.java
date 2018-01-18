@@ -74,15 +74,4 @@ public class BloodSugarFragment extends DailyDetectFragment {
         return new BaseFragment[]{new DailyDetectTendencyCharFragment(), new BloodSugarDataFragment()};
     }
 
-    /**
-     * 2-0-3.9mmol/L
-     *
-     * @param model
-     */
-    @Override
-    protected String[] parseResValue(DailyDetectDataModel model) {
-        return model.getRes()
-                    .replace("mmol/L", "")
-                    .split("-");
-    }
 }

@@ -8,7 +8,6 @@ import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
 import com.wy.report.business.dailydetect.fragment.data.BodyFatDataFragment;
 import com.wy.report.business.dailydetect.fragment.tendency.DailyDetectTendencyCharFragment;
-import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.widget.view.dailydetect.ValueType;
 import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 
@@ -57,10 +56,4 @@ public class BodyFatFragment extends DailyDetectFragment {
         return detectValueContainerView;
     }
 
-    @Override
-    protected String[] parseResValue(DailyDetectDataModel model) {
-        return model.getRes()
-                    .replace("%", "")
-                    .split("-");
-    }
 }

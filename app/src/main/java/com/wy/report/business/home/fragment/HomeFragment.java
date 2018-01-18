@@ -83,6 +83,8 @@ public class HomeFragment extends PtrFragment {
         toolbarBackground.setAlpha(0);
         final int white = getResources().getColor(android.R.color.white);
         final int black = getResources().getColor(android.R.color.black);
+        statusBarBg.setAlpha(0);
+        statusBarBg.setVisibility(View.VISIBLE);
         scrollView.setOnScrollChangeListener(new ObservableScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -91,6 +93,7 @@ public class HomeFragment extends PtrFragment {
                     ratio = 1;
                 }
                 toolbarBackground.setAlpha((int) (255 * ratio));
+                statusBarBg.setAlpha((int) (255 * ratio));
                 final float half = 0.5f;
                 if (ratio < half) {
                     ratio = (half - ratio) / half;

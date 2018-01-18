@@ -73,12 +73,5 @@ public class BMIFragment extends DailyDetectFragment {
         return detectValueContainerView;
     }
 
-    @Override
-    protected String[] parseResValue(DailyDetectDataModel model) {
-        return model.getRes()
-                    .replace("cm", "")
-                    .replace("kg", "")
-                    .split("-");
 
-    }
 }

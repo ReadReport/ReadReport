@@ -5,8 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.wy.report.base.constant.BundleKey;
+import com.wy.report.business.dailydetect.fragment.type.BMIFragment;
+import com.wy.report.business.dailydetect.fragment.type.BloodFatFragment;
 import com.wy.report.business.dailydetect.fragment.type.BloodPressureFragment;
 import com.wy.report.business.dailydetect.fragment.type.BloodSugarFragment;
+import com.wy.report.business.dailydetect.fragment.type.BodyFatFragment;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 
 /*
@@ -44,13 +47,13 @@ public class DailyDetectDispatchFragment extends Fragment {
                 return new BloodSugarFragment();
             }
             case DailyDetectTypeModel.DETECT_TYPE_BMI: {
-                return new BloodSugarFragment();
+                return new BMIFragment();
             }
             case DailyDetectTypeModel.DETECT_TYPE_BODY_FAT: {
-                return new BloodSugarFragment();
+                return new BodyFatFragment();
             }
             case DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT: {
-                return new BloodSugarFragment();
+                return new BloodFatFragment();
             }
             default: {
                 throw new IllegalArgumentException("Unknown type " + model.getId());
