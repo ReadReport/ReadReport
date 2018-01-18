@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
@@ -32,6 +33,8 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
 
     private User user;
 
+    private FamilyMemberModel preSelected;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -41,6 +44,11 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
                          .getLoginUser();
         loadData();
         ptrWithoutToolbar = true;
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            preSelected = arguments.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
+        }
     }
 
     @Override
@@ -50,6 +58,11 @@ public class FamilyMemberSelectFragment extends PtrListFragment<FamilyMemberMode
                                @Override
                                public void onNext(ResponseModel<List<FamilyMemberModel>> listResponseModel) {
                                    super.onNext(listResponseModel);
+                                   for (FamilyMemberModel model : listResponseModel.getData()) {
+                                       if (model.equals(preSelected)) {
+                                           model.setSelected(true);
+                                       }
+                                   }
                                    quickAdapter.setNewData(listResponseModel.getData());
                                }
                            });

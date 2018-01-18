@@ -35,6 +35,7 @@ public class FamilyMemberModel extends User {
     protected FamilyMemberModel(Parcel in) {
         super(in);
         this.idCard = in.readString();
+        this.selected = in.readByte() != 0;
     }
 
     public String getIdCard() {
@@ -62,5 +63,6 @@ public class FamilyMemberModel extends User {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.idCard);
+        dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
     }
 }

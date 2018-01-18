@@ -10,7 +10,7 @@ import com.wy.report.base.model.BaseModel;
  * @author cantalou
  * @date 2017年11月30日 14:36
  */
-public class User extends BaseModel implements Parcelable{
+public class User extends BaseModel implements Parcelable {
 
     public static final int GENDER_MALE = 1;
 
@@ -51,6 +51,19 @@ public class User extends BaseModel implements Parcelable{
      * 用户生日的时间戳
      */
     private long birthday;
+
+    public User() {
+    }
+
+    protected User(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.sex = in.readInt();
+        this.head = in.readString();
+        this.mobile = in.readString();
+        this.relationship = in.readString();
+        this.birthday = in.readLong();
+    }
 
     public String getId() {
         return id;
@@ -108,10 +121,6 @@ public class User extends BaseModel implements Parcelable{
         this.birthday = birthday;
     }
 
-
-    public User() {
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -128,23 +137,19 @@ public class User extends BaseModel implements Parcelable{
         dest.writeLong(this.birthday);
     }
 
-    protected User(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.sex = in.readInt();
-        this.head = in.readString();
-        this.mobile = in.readString();
-        this.relationship = in.readString();
-        this.birthday = in.readLong();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id.equals(user.id);
+
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

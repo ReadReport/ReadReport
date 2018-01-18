@@ -248,7 +248,9 @@ public class ReportUploadFragment extends NetworkFragment {
 
     @OnClick({R.id.report_upload_medical_examiner})
     public void nameClick() {
-        router.open(getActivity(), AuthRouterManager.ROUTER_FAMILY_MEMBER_SELECT);
+        Bundle param = new Bundle();
+        param.putParcelable(BundleKey.BUNDLE_KEY_MODEL, familyMemberModel);
+        router.open(getActivity(), AuthRouterManager.ROUTER_FAMILY_MEMBER_SELECT, param);
     }
 
     @OnClick({R.id.report_upload_examine_time})
@@ -284,7 +286,6 @@ public class ReportUploadFragment extends NetworkFragment {
         hospital.setText(model.getTitle());
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
@@ -302,7 +303,7 @@ public class ReportUploadFragment extends NetworkFragment {
                         return;
                     }
                 }
-                adapter.addData(adapter.getItemCount(), new PictureModel(picturePath));
+                adapter.addData(adapter.getItemCount() - 1, new PictureModel(picturePath));
                 updateSelectedPictureInfo();
                 break;
             }
