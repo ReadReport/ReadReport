@@ -3,6 +3,7 @@ package com.wy.report.business.dailydetect.fragment.data;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.cantalou.android.util.Log;
@@ -39,6 +40,7 @@ import butterknife.BindView;
 public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyDetectDataModel, BaseViewHolder> {
 
     private static final String[] exceptionValue = new String[]{"偏", "异", "高", "低", "不", "胖", "瘦"};
+
     protected ArrayList<DailyDetectDataModel> data;
 
     protected DailyDetectService dailyDetectService;
@@ -147,19 +149,11 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
                   .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
                   .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()))
                   .addOnClickListener(R.id.bottom_wrapper);
-            SwipeLayout swipeLayout = helper.getView(R.id.swipe);
-            swipeLayout.addDrag(SwipeLayout.DragEdge.Left, helper.getView(R.id.bottom_wrapper));
-            swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            final SwipeLayout sl = helper.getView(R.id.swipe);
+            sl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
-                public void onOpen(SwipeLayout layout) {
-                    super.onOpen(layout);
-                    Log.d("onOpen");
-                }
+                public void onGlobalLayout() {
 
-                @Override
-                public void onClose(SwipeLayout layout) {
-                    super.onClose(layout);
-                    Log.d("onClose");
                 }
             });
         }

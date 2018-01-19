@@ -1,15 +1,18 @@
 package com.wy.report.helper.retrofit;
 
+import com.wy.report.ReportApplication;
 import com.wy.report.helper.retrofit.converter.json.FastJsonConverterFactory;
 import com.wy.report.helper.retrofit.converter.part.PartConverterFactory;
 import com.wy.report.helper.retrofit.interceptor.AuthInterceptor;
 
+import java.io.File;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -29,6 +32,11 @@ public class RetrofitHelper {
     private HashMap<Class, Object> serviceProxyCache = new HashMap<>();
 
     private RetrofitHelper() {
+
+        ReportApplication context = ReportApplication.getGlobalContext();
+        File httpCacheDirectory = new File(context.getCacheDir(), "responses");
+        Cache cache = new Cache(httpCacheDirectory, 20 * 1024 * 1024);
+
 
         okHttpClient = new OkHttpClient().newBuilder()
                                          .connectTimeout(30, TimeUnit.SECONDS)
