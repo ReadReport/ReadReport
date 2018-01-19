@@ -10,10 +10,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
-import com.daimajia.swipe.interfaces.SwipeAdapterInterface;
-import com.daimajia.swipe.interfaces.SwipeItemMangerInterface;
-import com.daimajia.swipe.util.Attributes;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
@@ -32,8 +28,6 @@ import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 

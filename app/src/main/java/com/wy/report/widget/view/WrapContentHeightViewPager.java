@@ -49,7 +49,6 @@ public class WrapContentHeightViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 mX = ev.getX();
@@ -98,7 +97,13 @@ public class WrapContentHeightViewPager extends ViewPager {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return super.onTouchEvent(ev);
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);
     }
+
 }
