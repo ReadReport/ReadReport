@@ -343,7 +343,8 @@
         <TextView
             android:id="@+id/doctor_detail_upload_report_2_doctor"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/shape_blue_fill"
             android:gravity="center"
             android:text="@string/report_detail_upload_report_2_doctor"

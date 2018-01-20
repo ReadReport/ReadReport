@@ -2,19 +2,51 @@
 <com.wy.report.widget.ObservableScrollView
     android:id="@+id/report_detail_sv"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:fillViewport="true"
     >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
 
-        <include layout="@layout/view_report_detail_body_info"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="vertical"
+            >
+
+            <!--用户信息-->
+            <include layout="@layout/view_report_detail_user_info"/>
+            <!--体检报告-->
+            <include layout="@layout/view_report_detail_report_pic_info"/>
+            <!--用户备注-->
+            <include layout="@layout/view_report_detail_user_note"/>
+            <!--健康得分-->
+            <include layout="@layout/view_report_detail_score"/>
+            <!--身体机能-->
+            <include layout="@layout/view_report_detail_body_info"/>
+            <!--医生建议-->
+            <include layout="@layout/view_report_detail_doctor_suggest"/>
+
+        </LinearLayout>
+
+        <!--上传给医生-->
+        <TextView
+            android:id="@+id/report_detail_upload_report_2_doctor"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_blue_fill"
+            android:gravity="center"
+            android:text="@string/report_detail_upload_report_2_doctor"
+            android:textColor="@color/bai_ffffff"
+            android:textSize="15sp"
+            />
     </LinearLayout>
-
-
 </com.wy.report.widget.ObservableScrollView>

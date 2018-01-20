@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="report_detail_head_title">美年大健康体检中心体检报告</string>
-    <string name="report_detail_head_name">姓\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020名：</string>
-    <string name="report_detail_head_sex">性\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020别：</string>
-    <string name="report_detail_head_age">年\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020龄：</string>
-    <string name="report_detail_head_type">类\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020别：</string>
+    <string name="report_detail_head_name">姓\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020名：</string>
+    <string name="report_detail_head_sex">性\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020别：</string>
+    <string name="report_detail_head_age">年\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020龄：</string>
+    <string name="report_detail_head_type">类\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020别：</string>
     <string name="report_detail_head_time">检查时间：</string>
     <string name="report_detail_head_hospital">检查医院：</string>
 
     <string name="report_detail_report_pic_title">体检报告</string>
     <string name="report_detail_report_pic_private">体检报告图片为用户隐私</string>
+    <string name="report_detail_quota_private">指标说明为用户隐私</string>
 
     <string name="report_detail_user_note_title">用户备注</string>
     <string name="report_detail_user_note_name">姓名：</string>
@@ -31,6 +32,13 @@
 
     <string name="report_detail_doctor_suggest_title">医生建议</string>
     <string name="report_detail_doctor_suggest_export">健康专家</string>
+    <string name="report_detail_doctor_quota_title">指标说明</string>
+    <string name="report_detail_doctor_quota_normal">|\u0020\u0020\u0020\u0020正常指标</string>
+    <string name="report_detail_doctor_quota_un_normal">|\u0020\u0020\u0020\u0020异常指标</string>
+    <string name="report_detail_doctor_health_suggestion_title">健康建议</string>
+    <string name="report_detail_doctor_check_suggestion">|\u0020\u0020\u0020\u0020检查建议</string>
+    <string name="report_detail_doctor_eat_suggestion">|\u0020\u0020\u0020\u0020饮食建议</string>
+    <string name="report_detail_doctor_sport_suggestion">|\u0020\u0020\u0020\u0020运动建议</string>
 
     <string name="report_detail_upload_report_2_doctor">上传报告给医生解读</string>
 

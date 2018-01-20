@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
+              android:layout_marginTop="@dimen/dp_10"
     >
 
     <TextView
@@ -61,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         >
 
         <!--4.神经系统-->
@@ -90,6 +92,7 @@
             android:id="@+id/report_detail_body_body"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintTop_toBottomOf="@+id/report_detail_body_st_top"
             android:src="@drawable/yc_st"
             android:layout_width="wrap_content"
@@ -103,6 +106,7 @@
             app:layout_constraintTop_toBottomOf="@+id/report_detail_body_body"
             android:src="@drawable/yc_st_bottom"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_height="wrap_content"
             />
         <!--8.生殖系统-->
@@ -115,7 +119,7 @@
             app:layout_constraintTop_toBottomOf="@+id/report_detail_body_st_bottom"
             app:icon_normal="@drawable/szxt"
             app:icon_un_normal="@drawable/szxt_red"
-            app:title="@string/report_detail_body_4"
+            app:title="@string/report_detail_body_8"
             />
         <!--左分割-->
         <ImageView
