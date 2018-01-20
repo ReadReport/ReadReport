@@ -37,10 +37,10 @@ public class RetrofitHelper {
         File httpCacheDirectory = new File(context.getCacheDir(), "responses");
         Cache cache = new Cache(httpCacheDirectory, 20 * 1024 * 1024);
 
-
         okHttpClient = new OkHttpClient().newBuilder()
                                          .connectTimeout(30, TimeUnit.SECONDS)
                                          .addNetworkInterceptor(new AuthInterceptor())
+                                         .cache(cache)
                                          .build();
 
         retrofit = new Retrofit.Builder().baseUrl("http://api.vip120.com")

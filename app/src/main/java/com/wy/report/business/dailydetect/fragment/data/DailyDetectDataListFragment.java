@@ -2,21 +2,20 @@ package com.wy.report.business.dailydetect.fragment.data;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cantalou.android.util.Log;
+import com.cantalou.android.util.DeviceUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.daimajia.swipe.SimpleSwipeListener;
-import com.daimajia.swipe.SwipeLayout;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.PtrListFragment;
+import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
@@ -24,7 +23,7 @@ import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
-import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
+import com.wy.report.util.DensityUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ import butterknife.BindView;
  * @author cantalou
  * @date 2017-12-31 14:50
  */
-public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyDetectDataModel, BaseViewHolder> {
+public abstract class DailyDetectDataListFragment extends NetworkFragment {
 
     private static final String[] exceptionValue = new String[]{"偏", "异", "高", "低", "不", "胖", "瘦"};
 
@@ -48,8 +47,12 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
     protected DailyDetectTypeModel typeModel;
 
     protected SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
     @BindView(R.id.fragment_daily_detect_data_list_title_type)
     TextView titleType;
+
+    @BindView(R.id.daily_detect_data_list_container)
+    LinearLayout dataListContainer;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -67,54 +70,57 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
         return R.layout.fragment_daily_detect_data_list;
     }
 
-    @Override
-    protected BaseQuickAdapter createAdapter() {
-        return new SwipeAdapter(R.layout.vh_daily_detect_data_list_item);
-    }
-
     @NonNull
     protected abstract String createShowValue(DailyDetectValueModel valueModel);
 
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        quickAdapter.bindToRecyclerView(recyclerView);
-        quickAdapter.setEmptyView(R.layout.view_daily_detect_empty);
-        quickAdapter.setNewData(data);
-        quickAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
-                final DailyDetectDataModel model = quickAdapter.getItem(position);
-                dailyDetectService.deleteRecord(model.getId())
-                                  .subscribe(new NetworkSubscriber<ResponseModel>(DailyDetectDataListFragment.this) {
-                                      @Override
-                                      public void handleSuccess(ResponseModel responseModel) {
-                                          super.handleSuccess(responseModel);
-                                          //处理并发删除时position不准确
-                                          int position = data.indexOf(model);
-                                          if (position > 0) {
-                                              quickAdapter.remove(position);
-                                              rxBus.post(RxKey.RX_DAILY_DETECT_DATA_DELETE, model);
-                                          }
-                                      }
-                                  });
-            }
-        });
-        ptrFrameLayout.setEnabled(false);
     }
 
-    @Override
-    protected void initRecycleView() {
-        recyclerView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setHasFixedSize(true);
-        quickAdapter = createAdapter();
-        recyclerView.setAdapter(quickAdapter);
-    }
 
     @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_LOADED)})
     public void dataLoaded(ArrayList<DailyDetectDataModel> data) {
-        quickAdapter.setNewData(data);
+        dataListContainer.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        for (DailyDetectDataModel item : data) {
+            View itemView = inflater.inflate(R.layout.vh_daily_detect_data_list_item, dataListContainer, false);
+            BaseViewHolder helper = new BaseViewHolder(itemView);
+            String describe = item.getDescribe();
+            helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
+                  .setText(R.id.vh_daily_detect_data_list_item_state, describe)
+                  .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
+                  .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()));
+
+            helper.getView(R.id.vh_daily_detect_data_list_content)
+                  .getLayoutParams().width = DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20);
+
+            View deleteView = helper.getView(R.id.vh_daily_detect_data_list_delete);
+            deleteView.setTag(item);
+            deleteView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final DailyDetectDataModel item = (DailyDetectDataModel) v.getTag();
+                    dailyDetectService.deleteRecord(item.getId())
+                                      .subscribe(new NetworkSubscriber<ResponseModel>(DailyDetectDataListFragment.this) {
+                                          @Override
+                                          public void handleSuccess(ResponseModel responseModel) {
+                                              super.handleSuccess(responseModel);
+                                              //处理并发删除时position不准确
+                                              for (int i = 0; i < dataListContainer.getChildCount(); i++) {
+                                                  if (dataListContainer.getChildAt(i)
+                                                                       .getTag()
+                                                                       .equals(item)) {
+                                                      dataListContainer.removeViewAt(i);
+                                                  }
+                                              }
+                                              rxBus.post(RxKey.RX_DAILY_DETECT_DATA_DELETE, item);
+                                          }
+                                      });
+                }
+            });
+            dataListContainer.addView(itemView);
+        }
     }
 
     @Override
@@ -135,27 +141,5 @@ public abstract class DailyDetectDataListFragment extends PtrListFragment<DailyD
         return false;
     }
 
-    private class SwipeAdapter extends BaseQuickAdapter<DailyDetectDataModel, BaseViewHolder> {
 
-        public SwipeAdapter(int layoutResId) {
-            super(layoutResId);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, DailyDetectDataModel item) {
-            String describe = item.getDescribe();
-            helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
-                  .setText(R.id.vh_daily_detect_data_list_item_state, describe)
-                  .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
-                  .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()))
-                  .addOnClickListener(R.id.bottom_wrapper);
-            final SwipeLayout sl = helper.getView(R.id.swipe);
-            sl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-
-                }
-            });
-        }
-    }
 }

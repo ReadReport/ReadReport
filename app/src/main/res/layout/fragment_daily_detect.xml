@@ -58,7 +58,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <com.wy.report.widget.view.WrapContentHeightViewPager
+            <com.wy.report.widget.view.DailyDetectDataListViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

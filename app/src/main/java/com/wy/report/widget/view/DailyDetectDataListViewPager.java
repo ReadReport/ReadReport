@@ -13,17 +13,17 @@ import com.wy.report.R;
  * @author cantalou
  * @date 2018年01月18日 8:56
  */
-public class WrapContentHeightViewPager extends ViewPager {
+public class DailyDetectDataListViewPager extends ViewPager {
 
     private float mX;
 
     private float mY;
 
-    public WrapContentHeightViewPager(Context context) {
+    public DailyDetectDataListViewPager(Context context) {
         super(context);
     }
 
-    public WrapContentHeightViewPager(Context context, AttributeSet attrs) {
+    public DailyDetectDataListViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -35,7 +35,7 @@ public class WrapContentHeightViewPager extends ViewPager {
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             View titleView = findViewById(R.id.fragment_daily_detect_data_list_title);
             if (titleView != null) {
-                View dataListView = findViewById(R.id.recycle_view);
+                View dataListView = findViewById(R.id.daily_detect_data_list_container);
                 int totalHeight = dataListView.getMeasuredHeight() + titleView.getMeasuredHeight();
                 if (totalHeight > height) height = totalHeight;
             } else {
