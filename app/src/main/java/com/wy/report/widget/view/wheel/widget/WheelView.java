@@ -142,6 +142,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
                                 .WHEEL_SMOOTH_SCROLL_DURATION);
                     }
                 }
+                requestDisallowInterceptTouchEvent(false);
             }
         }
 
