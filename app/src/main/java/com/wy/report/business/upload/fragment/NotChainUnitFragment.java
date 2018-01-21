@@ -11,14 +11,18 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
+import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.upload.model.HospitalProvinceModel;
 import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.service.HospitalService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
+import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.util.StringUtils;
 import com.wy.report.widget.view.recycleview.SmoothScrollLayoutManager;
 
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * @author cantalou
  * @date 2017-12-10 23:02
  */
-public class NotChainUnitFragment extends PtrFragment {
+public class NotChainUnitFragment extends NetworkFragment {
 
     @BindView(R.id.recycle_view_left)
     RecyclerView recycleViewLeft;
@@ -53,12 +57,18 @@ public class NotChainUnitFragment extends PtrFragment {
 
     private List<UnitModel> allUnits = new ArrayList<>();
 
+    private UnitModel unitModel;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         hospitalService = RetrofitHelper.getInstance()
                                         .create(HospitalService.class);
-        ptrWithoutToolbar = false;
+        Bundle argument = getArguments();
+        if (argument != null) {
+            unitModel = argument.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
+        }
+        loadData();
     }
 
     @Override
@@ -108,14 +118,22 @@ public class NotChainUnitFragment extends PtrFragment {
     @Override
     protected void loadData() {
         hospitalService.getNotChainUnits()
-                       .subscribe(new PtrSubscriber<ResponseModel<List<HospitalProvinceModel>>>(this) {
+                       .subscribe(new NetworkSubscriber<ResponseModel<List<HospitalProvinceModel>>>(this) {
                            @Override
                            public void onNext(ResponseModel<List<HospitalProvinceModel>> listResponseModel) {
                                super.onNext(listResponseModel);
 
                                provinces = listResponseModel.getData();
-                               provinces.get(0)
-                                        .setSelected(true);
+                               if (unitModel != null) {
+                                   for (HospitalProvinceModel province : provinces) {
+                                       if (StringUtils.equals(unitModel.getProvince(), province.getProvince())) {
+                                           province.setSelected(true);
+                                       }
+                                   }
+                               } else {
+                                   provinces.get(0)
+                                            .setSelected(true);
+                               }
                                adapterLeft.setNewData(provinces);
 
                                allUnits.clear();
@@ -184,13 +202,7 @@ public class NotChainUnitFragment extends PtrFragment {
         return 0;
     }
 
-    @Override
-    public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-        return super.checkCanDoRefresh(frame, content, header) && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewLeft, header)
-                && PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleViewRight, header);
-    }
-
-    private static class RightAdapter extends BaseMultiItemQuickAdapter<UnitModel, BaseViewHolder> {
+    private class RightAdapter extends BaseMultiItemQuickAdapter<UnitModel, BaseViewHolder> {
 
         public RightAdapter(List<UnitModel> data) {
             super(data);
@@ -200,10 +212,9 @@ public class NotChainUnitFragment extends PtrFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, UnitModel item) {
-            helper.setText(R.id.vh_hospital_title, item.getTitle());
+            helper.setText(R.id.vh_hospital_title, item.getTitle())
+                  .setTextColor(R.id.vh_hospital_title, item.equals(unitModel) ? getColor(R.color.lan_30acff) : getColor(R.color.hei_575757));
         }
     }
-
-    ;
 
 }

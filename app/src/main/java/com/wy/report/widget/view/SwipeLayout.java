@@ -1,8 +1,6 @@
 package com.wy.report.widget.view;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;

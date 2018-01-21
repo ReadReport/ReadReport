@@ -1,7 +1,10 @@
 package com.wy.report.business.dailydetect.fragment.type;
 
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.BaseFragment;
@@ -18,6 +21,8 @@ import com.wy.report.widget.view.wheel.WheelViewItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 import static com.wy.report.business.home.model.DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR;
 
 /**
@@ -26,6 +31,8 @@ import static com.wy.report.business.home.model.DailyDetectTypeModel.DETECT_TYPE
  * <p>
  */
 public class BloodSugarFragment extends DailyDetectFragment {
+
+    ValueViewContainer valueViewContainer;
 
     @Override
     public void saveRecord(final View view) {
@@ -60,22 +67,36 @@ public class BloodSugarFragment extends DailyDetectFragment {
             add(new WheelViewItem("8", "夜间"));
             add(new WheelViewItem("0", "随机"));
         }};
-        ValueType time = new ValueType.Builder().name("时间段")
-                                                .unit("- -")
-                                                .values(values)
+        ValueType time = new ValueType.Builder().values(values)
+                                                .startIndex(2)
                                                 .create();
         result.add(time);
 
-        ValueType number = new ValueType.Builder().unit("血糖值")
-                                                  .start(0)
-                                                  .end(30)
-                                                  .fraction("0.0")
+        ValueType number1 = new ValueType.Builder().start(3)
+                                                  .end(11)
                                                   .create();
-        result.add(number);
+        result.add(number1);
 
-        ValueViewContainer detectValueContainerView = new ValueViewContainer(getActivity());
-        detectValueContainerView.setData(result);
-        return detectValueContainerView;
+        ValueType number2 = new ValueType.Builder().start(1)
+                                                   .end(9)
+                                                   .create();
+        result.add(number2);
+
+
+        ViewGroup resultView = (ViewGroup) LayoutInflater.from(getActivity())
+                                                         .inflate(R.layout.view_daily_detect_blood_sugar_value, null, false);
+        valueViewContainer = (ValueViewContainer)resultView.findViewById(R.id.view_daily_detect_blood_sugar_value_container);
+        valueViewContainer.setData(result);
+
+        TextView textView = new TextView(getActivity());
+        textView.setText(".");
+        textView.setTextColor(getColor(R.color.hei_333333));
+        textView.setTextSize(24);
+        textView.setGravity(Gravity.CENTER);
+
+        valueViewContainer.addView(textView, valueViewContainer.getChildCount() - 1);
+
+        return resultView;
     }
 
     @Override

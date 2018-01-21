@@ -1,5 +1,6 @@
 package com.wy.report.business.upload.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.wy.report.R;
 import com.wy.report.base.fragment.ToolbarFragment;
+import com.wy.report.widget.tab.TwoTabLayoutDetect;
+import com.wy.report.widget.tab.TwoTabLayoutHospital;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,17 +27,13 @@ public class HospitalListFragment extends ToolbarFragment {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
+    @BindView(R.id.two_tab_layout_hospital)
+    TwoTabLayoutHospital twoTabLayoutHospital;
+
     FragmentPagerAdapter pagerAdapter;
 
-    @BindView(R.id.toolbar_tab_0)
-    TextView tab0;
-    @BindView(R.id.toolbar_tab_line_0)
-    View tabLine0;
-    @BindView(R.id.toolbar_tab_1)
-    TextView tab1;
-    @BindView(R.id.toolbar_tab_line_1)
-    View tabLine1;
     private String[] tabTitles;
+
     private Fragment[] fragments;
 
     @Override
@@ -42,6 +41,9 @@ public class HospitalListFragment extends ToolbarFragment {
         super.initData(savedInstanceState);
         fragments = new Fragment[]{new NotChainUnitFragment(), new ChainUnitFragment()};
         tabTitles = getResources().getStringArray(R.array.report_hospital_tab);
+        for (Fragment fragment : fragments) {
+            fragment.setArguments(getArguments());
+        }
     }
 
     @Override
@@ -65,32 +67,13 @@ public class HospitalListFragment extends ToolbarFragment {
         };
         viewPager.setOffscreenPageLimit(fragments.length);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        twoTabLayoutHospital.setUpWithViewPager(viewPager);
+    }
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    tab0.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.hospital_tab_selected));
-                    tab1.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.hospital_tab));
-                    tabLine0.setVisibility(View.VISIBLE);
-                    tabLine1.setVisibility(View.GONE);
-                } else {
-                    tab0.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.hospital_tab));
-                    tab1.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.hospital_tab_selected));
-                    tabLine0.setVisibility(View.GONE);
-                    tabLine1.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        setTitle(R.string.report_hospital_title);
     }
 
     @OnClick(R.id.toolbar_tab_0)
@@ -108,8 +91,4 @@ public class HospitalListFragment extends ToolbarFragment {
         return R.layout.fragment_hospital_list;
     }
 
-    @Override
-    protected int toolbarLayoutID() {
-        return R.layout.view_hospital_list_toolbar;
-    }
 }

@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
@@ -47,13 +46,14 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
 
     protected User user;
 
-    protected DailyDetectDataModel dataModel;
     protected DailyDetectTypeModel model;
-    protected int originalHeight = 0;
+
     @BindView(R.id.daily_detect_framelayout_container)
     FrameLayout frameLayoutContainer;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
     @BindView(R.id.daily_detect_tab_container)
     TwoTabLayoutDetect tabLayout;
 

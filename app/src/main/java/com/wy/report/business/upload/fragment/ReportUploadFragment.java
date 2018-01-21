@@ -266,7 +266,11 @@ public class ReportUploadFragment extends NetworkFragment {
 
     @OnClick({R.id.report_upload_examine_hospital})
     public void hospitalClick() {
-        router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_HOSPITAL_LIST);
+        Bundle param = new Bundle();
+        if (unitModel != null) {
+            param.putParcelable(BundleKey.BUNDLE_KEY_MODEL, unitModel);
+        }
+        router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_HOSPITAL_LIST, param);
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_REPORT_UPLOAD_DELETE_PICTURE)})

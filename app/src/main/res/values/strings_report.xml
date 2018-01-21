@@ -38,6 +38,7 @@
     </string-array>
     <string name="report_hospital_tab_hospital">医院</string>
     <string name="report_hospital_tab_unit">连锁机构</string>
+    <string name="report_hospital_title">体检医院机构</string>
 
     <string name="report_account">账\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020号:</string>
     <string name="report_account_hint">请输入医院提供的查询账号</string>

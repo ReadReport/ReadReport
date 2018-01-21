@@ -17,12 +17,14 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.auth.model.User;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.util.DensityUtils;
 
 import java.text.SimpleDateFormat;
@@ -54,6 +56,8 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
     @BindView(R.id.daily_detect_data_list_container)
     LinearLayout dataListContainer;
 
+    private User user;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -63,6 +67,8 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
 
         dailyDetectService = RetrofitHelper.getInstance()
                                            .create(DailyDetectService.class);
+        user = UserManger.getInstance()
+                         .getLoginUser();
     }
 
     @Override
@@ -85,6 +91,7 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         for (DailyDetectDataModel item : data) {
             View itemView = inflater.inflate(R.layout.vh_daily_detect_data_list_item, dataListContainer, false);
+            itemView.setTag(item);
             BaseViewHolder helper = new BaseViewHolder(itemView);
             String describe = item.getDescribe();
             helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
@@ -101,16 +108,14 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
                 @Override
                 public void onClick(View v) {
                     final DailyDetectDataModel item = (DailyDetectDataModel) v.getTag();
-                    dailyDetectService.deleteRecord(item.getId())
+                    dailyDetectService.deleteRecord(user.getId(), item.getId())
                                       .subscribe(new NetworkSubscriber<ResponseModel>(DailyDetectDataListFragment.this) {
                                           @Override
                                           public void handleSuccess(ResponseModel responseModel) {
                                               super.handleSuccess(responseModel);
-                                              //处理并发删除时position不准确
                                               for (int i = 0; i < dataListContainer.getChildCount(); i++) {
-                                                  if (dataListContainer.getChildAt(i)
-                                                                       .getTag()
-                                                                       .equals(item)) {
+                                                  View view = dataListContainer.getChildAt(i);
+                                                  if (item.equals(view.getTag())) {
                                                       dataListContainer.removeViewAt(i);
                                                   }
                                               }
