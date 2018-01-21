@@ -16,12 +16,12 @@ public class ReportDetailMode {
      * 报告信息
      */
     @JSONField(name = "rep_info")
-    private ReportInfo                  reprotInfo;
+    private ReportInfo reportInfo;
     /**
      * 用户信息
      */
     @JSONField(name = "rep_userinfo")
-    private UserInfo                  UserInfo;
+    private UserInfo userInfo;
     /**
      * 图片信息
      */
@@ -33,20 +33,20 @@ public class ReportDetailMode {
     @JSONField(name = "rep_system")
     private List<BodySystem> mBodySystems;
 
-    public ReportInfo getReprotInfo() {
-        return reprotInfo;
+    public ReportInfo getReportInfo() {
+        return reportInfo;
     }
 
-    public void setReprotInfo(ReportInfo reprotInfo) {
-        this.reprotInfo = reprotInfo;
+    public void setReportInfo(ReportInfo reportInfo) {
+        this.reportInfo = reportInfo;
     }
 
     public ReportDetailMode.UserInfo getUserInfo() {
-        return UserInfo;
+        return userInfo;
     }
 
     public void setUserInfo(ReportDetailMode.UserInfo userInfo) {
-        UserInfo = userInfo;
+        this.userInfo = userInfo;
     }
 
     public List<ImgInfo> getImgs() {
@@ -139,7 +139,7 @@ public class ReportDetailMode {
         @JSONField(name = "id")
         private String id;
         @JSONField(name = "read_date")
-        private String readDate;
+        private long readDate;
         @JSONField(name = "jl")
         private String jl;
         @JSONField(name = "doctor_id")
@@ -168,11 +168,11 @@ public class ReportDetailMode {
             this.id = id;
         }
 
-        public String getReadDate() {
+        public long getReadDate() {
             return readDate;
         }
 
-        public void setReadDate(String readDate) {
+        public void setReadDate(long readDate) {
             this.readDate = readDate;
         }
 
@@ -326,11 +326,21 @@ public class ReportDetailMode {
     /**
      * 身体机能项目
      */
-    public class BodySystem {
+    public static class BodySystem {
+
+        public final static int BODY_1 = 1;
+        public final static int BODY_2 = 2;
+        public final static int BODY_3 = 3;
+        public final static int BODY_4 = 4;
+        public final static int BODY_5 = 5;
+        public final static int BODY_6 = 6;
+        public final static int BODY_7 = 7;
+        public final static int BODY_8 = 8;
+
         @JSONField(name = "id")
         private String        id;
         @JSONField(name = "esys_id")
-        private String        systemId;
+        private int        systemId;
         @JSONField(name = "system_name")
         private String        systemName;
         @JSONField(name = "ill_items")
@@ -344,11 +354,11 @@ public class ReportDetailMode {
             this.id = id;
         }
 
-        public String getSystemId() {
+        public int getSystemId() {
             return systemId;
         }
 
-        public void setSystemId(String systemId) {
+        public void setSystemId(int systemId) {
             this.systemId = systemId;
         }
 
@@ -371,7 +381,7 @@ public class ReportDetailMode {
         /**
          * 异常项目
          */
-        public class IllItem {
+        public static class IllItem {
             @JSONField(name = "esys_id")
             private String systemId;
             @JSONField(name = "item_name")
@@ -382,6 +392,11 @@ public class ReportDetailMode {
             private String detail;
             @JSONField(name = "reference_range")
             private String referenceRange;
+
+            public IllItem()
+            {
+
+            }
 
 
             public String getSystemId() {
