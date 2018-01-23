@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import com.cantalou.android.util.Log;
 import com.wy.report.R;
@@ -19,12 +20,21 @@ public class DailyDetectDataListViewPager extends ViewPager {
 
     private float mY;
 
+    private int touchSlop;
+
     public DailyDetectDataListViewPager(Context context) {
         super(context);
+        init();
     }
 
     public DailyDetectDataListViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    private void init(){
+        touchSlop = ViewConfiguration.get(getContext())
+                                     .getScaledTouchSlop();
     }
 
     @Override
@@ -53,15 +63,13 @@ public class DailyDetectDataListViewPager extends ViewPager {
             case MotionEvent.ACTION_DOWN: {
                 mX = ev.getX();
                 mY = ev.getY();
-                getParent().requestDisallowInterceptTouchEvent(true);
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
                 float deltaX = ev.getX() - mX;
                 float deltaY = Math.abs(ev.getY() - mY);
-                int curPosition = this.getCurrentItem();
 
-                if (deltaY > Math.abs(deltaX) && deltaY > 20) {
+                if (deltaY > Math.abs(deltaX) && deltaY > touchSlop) {
                     getParent().requestDisallowInterceptTouchEvent(false);
                     return false;
                 }

@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cantalou.android.util.DeviceUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
@@ -90,19 +90,12 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
         dataListContainer.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         for (DailyDetectDataModel item : data) {
-            View itemView = inflater.inflate(R.layout.vh_daily_detect_data_list_item, dataListContainer, false);
-            itemView.setTag(item);
-            BaseViewHolder helper = new BaseViewHolder(itemView);
-            String describe = item.getDescribe();
-            helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
-                  .setText(R.id.vh_daily_detect_data_list_item_state, describe)
-                  .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
-                  .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()));
+            View itemView = createItemView(inflater, dataListContainer, item);
 
-            helper.getView(R.id.vh_daily_detect_data_list_content)
-                  .getLayoutParams().width = DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20);
+            itemView.findViewById(R.id.vh_daily_detect_data_list_content)
+                    .getLayoutParams().width = DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20);
 
-            View deleteView = helper.getView(R.id.vh_daily_detect_data_list_delete);
+            View deleteView = itemView.findViewById(R.id.vh_daily_detect_data_list_delete);
             deleteView.setTag(item);
             deleteView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,6 +119,19 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
             });
             dataListContainer.addView(itemView);
         }
+    }
+
+    @NonNull
+    protected View createItemView(LayoutInflater inflater, ViewGroup parent, DailyDetectDataModel item) {
+        View itemView = inflater.inflate(R.layout.vh_daily_detect_data_list_item, parent, false);
+        itemView.setTag(item);
+        BaseViewHolder helper = new BaseViewHolder(itemView);
+        String describe = item.getDescribe();
+        helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
+              .setText(R.id.vh_daily_detect_data_list_item_state, describe)
+              .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
+              .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()));
+        return itemView;
     }
 
     @Override

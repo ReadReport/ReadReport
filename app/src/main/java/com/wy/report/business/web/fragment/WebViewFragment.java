@@ -9,6 +9,7 @@ import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.business.web.WebChromeClient;
+import com.wy.report.business.web.WebViewClient;
 
 import butterknife.BindView;
 
@@ -64,6 +65,7 @@ public class WebViewFragment extends NetworkFragment {
         webView.setScrollbarFadingEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.setWebChromeClient(webChromeClient = new WebChromeClient(this, webView));
+        webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
     }
 

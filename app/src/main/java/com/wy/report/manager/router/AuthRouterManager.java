@@ -256,7 +256,18 @@ public class AuthRouterManager {
         router.open(context, ROUTER_HOME);
     }
 
-    public void openWebView(Context context, String url ,String title) {
+    public void openWebView(Context context, String url, String title) {
+        Bundle bundle = new Bundle();
+        bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_URL, url);
+        bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_TITLE, title);
+        router.open(context, ROUTER_WEBVIEW, bundle);
+    }
+
+    public void openLoginWebView(Context context, String url, String title) {
+        if (!userManger.isLogin()) {
+            router.open(ReportApplication.getCurrentActivity(), ROUTER_LOGIN);
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_URL, url);
         bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_TITLE, title);
