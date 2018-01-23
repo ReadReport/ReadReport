@@ -1,6 +1,7 @@
 package com.wy.report.business.read.mode;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.wy.report.util.TimeUtils;
 
 /**
  * @author: ZangSong
@@ -39,4 +40,72 @@ public class AskItemMode {
      */
     @JSONField(name = "at")
     private long time;
+
+
+    public boolean isDoctor() {
+        if (memberId == null) {
+            return true;
+        }
+        return memberId.equals("0");
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getRepId() {
+        return repId;
+    }
+
+    public void setRepId(String repId) {
+        this.repId = repId;
+    }
+
+    public String getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(String conversation) {
+        this.conversation = conversation;
+    }
+
+    public int getIfReaded() {
+        return ifReaded;
+    }
+
+    public void setIfReaded(int ifReaded) {
+        this.ifReaded = ifReaded;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public String getShowTime() {
+        return TimeUtils.millis2String(time);
+    }
 }

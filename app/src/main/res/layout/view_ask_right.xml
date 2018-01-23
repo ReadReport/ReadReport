@@ -14,23 +14,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="right"
         >
-
         <TextView
+            android:id="@+id/ask_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/hui_ababab"
+            android:textSize="10sp"
+            />
+        <TextView
+            android:layout_marginLeft="@dimen/dp_10"
             android:id="@+id/ask_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/hei_333333"
             android:textSize="14sp"
-            />
-
-        <TextView
-            android:id="@+id/ask_date"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/hui_ababab"
-            android:textSize="10sp"
             />
     </LinearLayout>
 
@@ -39,26 +38,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_detail_note_title"
         >
-
+        <TextView
+            android:id="@+id/ask_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_bg_right"
+            android:text="@string/doctor_detail_service_content_instruction_content"
+            android:textColor="@color/hei_333333"
+            android:textSize="14sp"
+            />
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ask_head_icon"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:src="@drawable/img_details_man"
-            />
-
-        <TextView
-            android:id="@+id/ask_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dialog_bg_left"
-            android:text="@string/doctor_detail_service_content_instruction_content"
-            android:textColor="@color/hei_333333"
-            android:textSize="14sp"
             />
     </LinearLayout>
 

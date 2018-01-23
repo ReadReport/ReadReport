@@ -1,8 +1,8 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="toolbar_height">48dp</dimen>
-    <dimen name="hospital_tab">18sp</dimen>
-    <dimen name="hospital_tab_selected">20sp</dimen>
+    <dimen name="hospital_tab">19sp</dimen>
+    <dimen name="hospital_tab_selected">25sp</dimen>
 
     <dimen name="daily_detect_tab">15sp</dimen>
     <dimen name="daily_detect_tab_selected">16sp</dimen>

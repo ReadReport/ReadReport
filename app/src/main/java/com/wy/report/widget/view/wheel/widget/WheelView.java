@@ -15,6 +15,7 @@
  */
 package com.wy.report.widget.view.wheel.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,7 +38,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
+import com.wy.report.R;
 import com.wy.report.widget.view.wheel.adapter.ArrayWheelAdapter;
 import com.wy.report.widget.view.wheel.adapter.BaseWheelAdapter;
 import com.wy.report.widget.view.wheel.adapter.SimpleWheelAdapter;
@@ -117,7 +118,8 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
     private OnTouchListener mTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            v.getParent().requestDisallowInterceptTouchEvent(true);
+            v.getParent()
+             .requestDisallowInterceptTouchEvent(true);
             return false;
         }
     };
@@ -141,6 +143,14 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
                         smoothScrollBy(d, WheelConstants
                                 .WHEEL_SMOOTH_SCROLL_DURATION);
                     }
+                }
+                requestDisallowInterceptTouchEvent(false);
+                clearFocus();
+
+                NestedScrollView scrollView = (NestedScrollView) ((Activity) getContext()).findViewById(R.id.nested_scroll_view);
+                if (scrollView != null) {
+                    MotionEvent motionEvent = MotionEvent.obtain(System.currentTimeMillis(), System.currentTimeMillis(), MotionEvent.ACTION_CANCEL, 0, 0, 0);
+                    scrollView.dispatchTouchEvent(motionEvent);
                 }
             }
         }
@@ -211,7 +221,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         setFadingEdgeLength(0);
         setOverScrollMode(OVER_SCROLL_NEVER);
         setDividerHeight(0);
-        setOnItemClickListener(mOnItemClickListener);
+        //setOnItemClickListener(mOnItemClickListener);
         setOnScrollListener(mOnScrollListener);
         setOnTouchListener(mTouchListener);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -475,7 +485,10 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
     public void setWheelAdapter(BaseWheelAdapter<T> adapter) {
         super.setAdapter(adapter);
         mWheelAdapter = adapter;
-        mWheelAdapter.setData(mList).setWheelSize(mWheelSize).setLoop(mLoop).setClickable(mClickable);
+        mWheelAdapter.setData(mList)
+                     .setWheelSize(mWheelSize)
+                     .setLoop(mLoop)
+                     .setClickable(mClickable);
     }
 
     /**

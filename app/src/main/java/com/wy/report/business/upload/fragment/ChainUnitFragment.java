@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.fragment.PtrListFragment;
@@ -31,12 +32,25 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
 
     private HospitalService hospitalService;
 
+    private UnitModel selectedModel;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         hospitalService = RetrofitHelper.getInstance()
                                         .create(HospitalService.class);
         ptrWithoutToolbar = false;
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            selectedModel = arguments.getParcelable(BundleKey.BUNDLE_KEY_MODEL);
+        }
+    }
+
+    @Override
+    protected void initView(View contentView) {
+        super.initView(contentView);
+        ptrFrameLayout.setEnabled(false);
     }
 
     @Override
@@ -76,13 +90,14 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
 
         public HospitalAdapter(List<UnitModel> data) {
             super(data);
-            addItemType(UnitModel.TYPE_TITLE, R.layout.vh_hospital_unit);
+            addItemType(UnitModel.TYPE_TITLE, R.layout.vh_hospital_unit_title);
             addItemType(UnitModel.TYPE_HOSPITAL, R.layout.vh_hospital_unit);
         }
 
         @Override
         protected void convert(BaseViewHolder helper, UnitModel item) {
-            helper.setText(R.id.vh_hospital_title, item.getTitle());
+            helper.setText(R.id.vh_hospital_title, item.getTitle())
+                  .setTextColor(R.id.vh_hospital_title, item.equals(selectedModel) ? getColor(R.color.lan_30acff) : getColor(R.color.hei_575757));
         }
     }
 }

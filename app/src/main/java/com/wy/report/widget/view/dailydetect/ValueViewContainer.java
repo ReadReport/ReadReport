@@ -3,6 +3,7 @@ package com.wy.report.widget.view.dailydetect;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -26,6 +27,7 @@ public class ValueViewContainer extends LinearLayout {
     public ValueViewContainer(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setOrientation(LinearLayout.HORIZONTAL);
+        setGravity(Gravity.CENTER);
     }
 
     public void setData(List<ValueType> types) {

@@ -1,8 +1,6 @@
 package com.wy.report.widget.view;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -121,10 +119,43 @@ public class SwipeLayout extends HorizontalScrollView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
 
         int scrollX = getScrollX();
         Log.d("onTouchEvent scrollX:{}", scrollX);
+        if (Math.abs(scrollX) != 0) {
+            return super.onInterceptTouchEvent(ev);
+        }
+
+        final int action = ev.getAction();
+
+        switch (action & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_MOVE: {
+                Log.d("onTouchEvent ev.getX():{}, x:{}, {}, touchSlop:{}", ev.getX(), x, ev.getX() - x, touchSlop);
+                if (Math.abs(scrollX) == 0 && ev.getX() - x > touchSlop) {
+                    requestDisallowInterceptTouchEvent(false);
+                    return false;
+                }
+                break;
+            }
+
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                requestDisallowInterceptTouchEvent(false);
+                break;
+        }
+
+        /*
+        * The only time we want to intercept motion events is if we are in the
+        * drag mode.
+        */
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+
+        int scrollX = getScrollX();
         if (Math.abs(scrollX) != 0) {
             return super.onTouchEvent(ev);
         }
@@ -151,7 +182,7 @@ public class SwipeLayout extends HorizontalScrollView {
 
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-
+                requestDisallowInterceptTouchEvent(false);
                 break;
         }
 

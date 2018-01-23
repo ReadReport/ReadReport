@@ -143,7 +143,7 @@ public class FindFragment extends PtrFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HealthKnowledgeModel model = (HealthKnowledgeModel) adapter.getItem(position);
-                authRouterManager.openWebView(getActivity(), model.getUrl(), model.getTitle());
+                authRouterManager.openLoginWebView(getActivity(), model.getUrl(), model.getTitle());
             }
         });
         healthKnowledgeRecycleView.setAdapter(healthKnowledgeAdapter);

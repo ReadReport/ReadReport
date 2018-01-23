@@ -111,4 +111,5 @@ public abstract class BaseFragment extends Fragment {
     public int getColor(int color) {
         return getResources().getColor(color);
     }
+
 }

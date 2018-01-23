@@ -26,6 +26,7 @@ import com.wy.report.business.my.fragment.VerifyIdentifyFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
 import com.wy.report.business.other.fragment.PictureFragment;
+import com.wy.report.business.read.fragment.AskFragment;
 import com.wy.report.business.read.fragment.DoctorDetailFragment;
 import com.wy.report.business.read.fragment.ReportDetailFragment;
 import com.wy.report.business.read.fragment.ReportManageFragment;
@@ -182,6 +183,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_DOCTOR_DETAIL = LOGIN_ACTIVITY_PREFIX + "ROUTER_DOCTOR_DETAIL";
 
+    /**
+     * 追问详细界面
+     */
+    public static final String ROUTER_ASK = LOGIN_ACTIVITY_PREFIX + "ROUTER_ASK";
+
     private Router router;
 
     private UserManger userManger;
@@ -241,6 +247,7 @@ public class AuthRouterManager {
         router.map(ROUTER_EDIT_USERNAME, StandardActivity.class, EditUserInfoFragment.class);
         router.map(ROUTER_REPORT_DETAIL, StandardActivity.class, ReportDetailFragment.class);
         router.map(ROUTER_DOCTOR_DETAIL, StandardActivity.class, DoctorDetailFragment.class);
+        router.map(ROUTER_ASK, StandardActivity.class, AskFragment.class);
     }
 
     /**
@@ -256,7 +263,18 @@ public class AuthRouterManager {
         router.open(context, ROUTER_HOME);
     }
 
-    public void openWebView(Context context, String url ,String title) {
+    public void openWebView(Context context, String url, String title) {
+        Bundle bundle = new Bundle();
+        bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_URL, url);
+        bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_TITLE, title);
+        router.open(context, ROUTER_WEBVIEW, bundle);
+    }
+
+    public void openLoginWebView(Context context, String url, String title) {
+        if (!userManger.isLogin()) {
+            router.open(ReportApplication.getCurrentActivity(), ROUTER_LOGIN);
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_URL, url);
         bundle.putString(BundleKey.BUNDLE_KEY_WEB_VIEW_TITLE, title);

@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cantalou.android.util.DeviceUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
@@ -17,12 +17,14 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.auth.model.User;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.util.DensityUtils;
 
 import java.text.SimpleDateFormat;
@@ -54,6 +56,8 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
     @BindView(R.id.daily_detect_data_list_container)
     LinearLayout dataListContainer;
 
+    private User user;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -63,6 +67,8 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
 
         dailyDetectService = RetrofitHelper.getInstance()
                                            .create(DailyDetectService.class);
+        user = UserManger.getInstance()
+                         .getLoginUser();
     }
 
     @Override
@@ -84,33 +90,25 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
         dataListContainer.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         for (DailyDetectDataModel item : data) {
-            View itemView = inflater.inflate(R.layout.vh_daily_detect_data_list_item, dataListContainer, false);
-            BaseViewHolder helper = new BaseViewHolder(itemView);
-            String describe = item.getDescribe();
-            helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
-                  .setText(R.id.vh_daily_detect_data_list_item_state, describe)
-                  .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
-                  .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()));
+            View itemView = createItemView(inflater, dataListContainer, item);
 
-            helper.getView(R.id.vh_daily_detect_data_list_content)
-                  .getLayoutParams().width = DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20);
+            itemView.findViewById(R.id.vh_daily_detect_data_list_content)
+                    .getLayoutParams().width = DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20);
 
-            View deleteView = helper.getView(R.id.vh_daily_detect_data_list_delete);
+            View deleteView = itemView.findViewById(R.id.vh_daily_detect_data_list_delete);
             deleteView.setTag(item);
             deleteView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final DailyDetectDataModel item = (DailyDetectDataModel) v.getTag();
-                    dailyDetectService.deleteRecord(item.getId())
+                    dailyDetectService.deleteRecord(user.getId(), item.getId())
                                       .subscribe(new NetworkSubscriber<ResponseModel>(DailyDetectDataListFragment.this) {
                                           @Override
                                           public void handleSuccess(ResponseModel responseModel) {
                                               super.handleSuccess(responseModel);
-                                              //处理并发删除时position不准确
                                               for (int i = 0; i < dataListContainer.getChildCount(); i++) {
-                                                  if (dataListContainer.getChildAt(i)
-                                                                       .getTag()
-                                                                       .equals(item)) {
+                                                  View view = dataListContainer.getChildAt(i);
+                                                  if (item.equals(view.getTag())) {
                                                       dataListContainer.removeViewAt(i);
                                                   }
                                               }
@@ -121,6 +119,19 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
             });
             dataListContainer.addView(itemView);
         }
+    }
+
+    @NonNull
+    protected View createItemView(LayoutInflater inflater, ViewGroup parent, DailyDetectDataModel item) {
+        View itemView = inflater.inflate(R.layout.vh_daily_detect_data_list_item, parent, false);
+        itemView.setTag(item);
+        BaseViewHolder helper = new BaseViewHolder(itemView);
+        String describe = item.getDescribe();
+        helper.setText(R.id.vh_daily_detect_data_list_item_value, createShowValue(item.getRes()))
+              .setText(R.id.vh_daily_detect_data_list_item_state, describe)
+              .setTextColor(R.id.vh_daily_detect_data_list_item_state, !isException(describe) ? getColor(R.color.hui_575757) : getColor(R.color.hong_f84d4d))
+              .setText(R.id.vh_daily_detect_data_list_item_time, formatDate(item.getTestTime()));
+        return itemView;
     }
 
     @Override

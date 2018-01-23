@@ -2,6 +2,7 @@ package com.wy.report.business.dailydetect.service;
 
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
+import com.wy.report.business.dailydetect.model.RecordResultModel;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import rx.Observable;
 public interface DailyDetectService {
 
     @GET("/DailyMonitor/get_recordes_by_type2")
-    Observable<ResponseModel<List<DailyDetectDataModel>>> getDetectData(@Query("mid") String uid, @Query("test_type")int type);
+    Observable<ResponseModel<RecordResultModel>> getDetectData(@Query("mid") String uid, @Query("test_type") int type);
 
     /**
      * 1
@@ -100,6 +101,6 @@ public interface DailyDetectService {
      *
      * @return
      */
-    @POST
-    Observable<ResponseModel> deleteRecord(@Field("id") String mid);
+    @GET("/DailyMonitor/member_idp_record_delete")
+    Observable<ResponseModel> deleteRecord(@Query("member_id") String uid, @Query("id") String mid);
 }

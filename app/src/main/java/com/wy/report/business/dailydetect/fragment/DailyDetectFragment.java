@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
@@ -19,7 +18,7 @@ import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
-import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
+import com.wy.report.business.dailydetect.model.RecordResultModel;
 import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
@@ -27,8 +26,6 @@ import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.widget.tab.TwoTabLayoutDetect;
 import com.wy.report.widget.view.dailydetect.ValueView;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,15 +44,18 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
 
     protected User user;
 
-    protected DailyDetectDataModel dataModel;
     protected DailyDetectTypeModel model;
-    protected int originalHeight = 0;
+
     @BindView(R.id.daily_detect_framelayout_container)
     FrameLayout frameLayoutContainer;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
     @BindView(R.id.daily_detect_tab_container)
     TwoTabLayoutDetect tabLayout;
+
+    private RecordResultModel recordResultModel;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -70,12 +70,12 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
     @Override
     protected void loadData() {
         dailyDetectService.getDetectData(UserManger.getUid(), model.getId())
-                          .subscribe(new NetworkSubscriber<ResponseModel<List<DailyDetectDataModel>>>(null) {
+                          .subscribe(new NetworkSubscriber<ResponseModel<RecordResultModel>>(null) {
                               @Override
-                              public void handleSuccess(ResponseModel<List<DailyDetectDataModel>> dailyDetectDataModelResponseModel) {
+                              public void handleSuccess(ResponseModel<RecordResultModel> dailyDetectDataModelResponseModel) {
                                   super.handleSuccess(dailyDetectDataModelResponseModel);
-                                  List<DailyDetectDataModel> data = dailyDetectDataModelResponseModel.getData();
-                                  rxBus.post(RxKey.RX_DAILY_DETECT_DATA_LOADED, data);
+                                  recordResultModel = dailyDetectDataModelResponseModel.getData();
+                                  rxBus.post(RxKey.RX_DAILY_DETECT_DATA_LOADED, recordResultModel.getData());
                               }
                           });
     }
@@ -132,6 +132,7 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.find_daily_detect_more: {
+                authRouterManager.openWebView(getActivity(), recordResultModel.getLinkDetail(), "健康知识");
                 break;
             }
         }
