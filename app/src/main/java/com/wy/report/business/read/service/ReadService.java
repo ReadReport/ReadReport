@@ -1,9 +1,12 @@
 package com.wy.report.business.read.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.read.mode.AskItemMode;
 import com.wy.report.business.read.mode.DoctorMode;
 import com.wy.report.business.read.mode.ReportDetailMode;
 import com.wy.report.business.read.mode.ReportListMode;
+
+import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -48,4 +51,11 @@ public interface ReadService {
     @GET("/Report/get_my_member_report_details")
     Observable<ResponseModel<ReportDetailMode>> getReportDetail(@Query("rep_id") String reportId, @Query("report_status") String reportStatus);
 
+
+    /**
+     * 获取聊天详细信息
+     * @return
+     */
+    @GET("/Report/get_user_doctor_conversation")
+    Observable<ResponseModel<List<AskItemMode>>> getAskList(@Query("rep_id") String repId, @Query("page") int page);
 }
