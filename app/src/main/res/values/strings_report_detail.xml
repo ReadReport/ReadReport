@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="report_detail_head_title">美年大健康体检中心体检报告</string>
+    <string name="report_detail_title">报告详情</string>
     <string name="report_detail_head_name">姓\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020名：</string>
     <string name="report_detail_head_sex">性\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020别：</string>
     <string name="report_detail_head_age">年\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020龄：</string>
@@ -39,8 +39,12 @@
     <string name="report_detail_doctor_check_suggestion">|\u0020\u0020\u0020\u0020检查建议</string>
     <string name="report_detail_doctor_eat_suggestion">|\u0020\u0020\u0020\u0020饮食建议</string>
     <string name="report_detail_doctor_sport_suggestion">|\u0020\u0020\u0020\u0020运动建议</string>
+    <string name="report_detail_bottom_dialog_title">异常项目</string>
+    <string name="report_detail_bottom_dialog_item_title">%1$d.%2$s</string>
 
-    <string name="report_detail_upload_report_2_doctor">上传报告给医生解读</string>
+    <string name="report_detail_bottom_btn_readed">追问</string>
+    <string name="report_detail_bottom_btn_unread">报告正在解读，请耐心等待...</string>
+    <string name="report_detail_bottom_btn_un_submit">提交报告</string>
 
     <string name="doctor_detail_title">医生详情</string>
     <string name="doctor_detail_good">好评率：%s</string>

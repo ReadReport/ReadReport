@@ -347,7 +347,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/shape_blue_fill"
             android:gravity="center"
-            android:text="@string/report_detail_upload_report_2_doctor"
+            android:text="@string/report_detail_bottom_btn_readed"
             android:textColor="@color/bai_ffffff"
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_ll"
