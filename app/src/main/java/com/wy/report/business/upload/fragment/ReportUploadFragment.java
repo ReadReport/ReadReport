@@ -387,6 +387,7 @@ public class ReportUploadFragment extends NetworkFragment {
                              }, new DialogInterface.OnClickListener() {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
+                                     router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD_SUCCESS);
                                  }
                              });
                          }

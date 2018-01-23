@@ -38,6 +38,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cantalou.android.util.ReflectUtil;
 import com.wy.report.R;
 import com.wy.report.widget.view.wheel.adapter.ArrayWheelAdapter;
 import com.wy.report.widget.view.wheel.adapter.BaseWheelAdapter;
@@ -147,10 +148,9 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
                 requestDisallowInterceptTouchEvent(false);
                 clearFocus();
 
-                NestedScrollView scrollView = (NestedScrollView) ((Activity) getContext()).findViewById(R.id.nested_scroll_view);
+                android.support.v4.widget.NestedScrollView scrollView = (android.support.v4.widget.NestedScrollView) ((Activity) getContext()).findViewById(R.id.nested_scroll_view);
                 if (scrollView != null) {
-                    MotionEvent motionEvent = MotionEvent.obtain(System.currentTimeMillis(), System.currentTimeMillis(), MotionEvent.ACTION_CANCEL, 0, 0, 0);
-                    scrollView.dispatchTouchEvent(motionEvent);
+                    ReflectUtil.set(scrollView, "mParentHelper.mNestedScrollAxes", 0);
                 }
             }
         }
