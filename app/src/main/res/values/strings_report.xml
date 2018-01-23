@@ -68,4 +68,9 @@
 
     <string name="report_not_more_data">无更多数据了</string>
 
+    <string name="report_upload_success_title">健康状况调查</string>
+    <string name="report_upload_success_tip">报告提交成功!</string>
+    <string name="report_upload_success_tip2">医生将在3个工作日内完成解读。</string>
+    <string name="report_upload_success_tip3">简述健康状况，可使报告解读更全面</string>
+
 </resources>
