@@ -60,6 +60,16 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
                            @Override
                            public void onNext(ResponseModel<List<UnitModel>> listResponseModel) {
                                super.onNext(listResponseModel);
+                               List<UnitModel> data = listResponseModel.getData();
+                               String previousChar = "";
+                               for (int i = 0; i < data.size(); i++) {
+                                   UnitModel unitModel = data.get(i);
+                                   String szm = unitModel.getSzm();
+                                   if (!previousChar.equals(szm)) {
+                                       previousChar = szm;
+                                       data.add(i, new UnitModel(szm, UnitModel.TYPE_TITLE));
+                                   }
+                               }
                                quickAdapter.setNewData(listResponseModel.getData());
                            }
                        });
@@ -96,8 +106,12 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
 
         @Override
         protected void convert(BaseViewHolder helper, UnitModel item) {
-            helper.setText(R.id.vh_hospital_title, item.getTitle())
-                  .setTextColor(R.id.vh_hospital_title, item.equals(selectedModel) ? getColor(R.color.lan_30acff) : getColor(R.color.hei_575757));
+            if (item.getType() == UnitModel.TYPE_TITLE) {
+                helper.setText(R.id.vh_hospital_title, item.getTitle());
+            } else {
+                helper.setText(R.id.vh_hospital_title, item.getTitle())
+                      .setTextColor(R.id.vh_hospital_title, item.equals(selectedModel) ? getColor(R.color.lan_30acff) : getColor(R.color.hei_575757));
+            }
         }
     }
 }

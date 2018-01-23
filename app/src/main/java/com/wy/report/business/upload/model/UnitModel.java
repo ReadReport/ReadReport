@@ -14,9 +14,9 @@ import com.wy.report.base.model.BaseModel;
  */
 public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable {
 
-    public static final int TYPE_TITLE = 0;
+    public static final int TYPE_TITLE = 1;
 
-    public static final int TYPE_HOSPITAL = 1;
+    public static final int TYPE_HOSPITAL = 0;
     public static final Creator<UnitModel> CREATOR = new Creator<UnitModel>() {
         @Override
         public UnitModel createFromParcel(Parcel source) {
@@ -38,6 +38,12 @@ public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable 
     private String szm;
 
     public UnitModel() {
+    }
+
+    public UnitModel(String title, int type) {
+        this.province = title;
+        this.title = title;
+        this.type = type;
     }
 
     protected UnitModel(Parcel in) {

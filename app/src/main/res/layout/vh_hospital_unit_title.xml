@@ -4,11 +4,10 @@
           android:id="@+id/vh_hospital_title"
           android:layout_width="match_parent"
           android:layout_height="20dp"
-          android:layout_marginLeft="15dp"
           android:background="@color/hui_f9f9f9"
           android:gravity="left|center_vertical"
-          android:paddingRight="10dp"
-          android:textColor="@color/hei_575757"
+          android:paddingLeft="15dp"
+          android:textColor="@color/hui_ababab"
           android:textSize="12sp"
           tools:text="美年大健康体检中心">
 

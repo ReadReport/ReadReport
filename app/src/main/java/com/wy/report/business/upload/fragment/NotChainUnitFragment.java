@@ -14,14 +14,12 @@ import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
-import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.upload.model.HospitalProvinceModel;
 import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.service.HospitalService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
-import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.util.StringUtils;
 import com.wy.report.widget.view.recycleview.SmoothScrollLayoutManager;
 
@@ -29,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /*
  *
@@ -58,6 +54,8 @@ public class NotChainUnitFragment extends NetworkFragment {
     private List<UnitModel> allUnits = new ArrayList<>();
 
     private UnitModel unitModel;
+
+    private String pendingProvince;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -88,6 +86,22 @@ public class NotChainUnitFragment extends NetworkFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HospitalProvinceModel provinceModel = provinces.get(position);
+//                LinearLayoutManager rightLayoutManager = (LinearLayoutManager) recycleViewRight.getLayoutManager();
+//                LinearLayoutManager leftLayoutManager = (LinearLayoutManager) recycleViewLeft.getLayoutManager();
+//                if (rightLayoutManager.findLastVisibleItemPosition() == rightLayoutManager.getItemCount() - 1 && position != selectedProvince &&
+//                        leftLayoutManager.findLastVisibleItemPosition() == leftLayoutManager.getItemCount() - 1) {
+//                    provinceModel.setSelected(true);
+//                    adapterLeft.notifyItemChanged(position);
+//
+//                    provinceModel = adapterLeft.getItem(selectedProvince);
+//                    provinceModel.setSelected(false);
+//                    adapterLeft.notifyItemChanged(selectedProvince);
+//                    selectedProvince = position;
+//                } else {
+//                    pendingProvince = provinceModel.getProvince();
+//                    rightShowProvince(provinceModel.getProvince());
+//                }
+
                 rightShowProvince(provinceModel.getProvince());
             }
         });
@@ -99,8 +113,11 @@ public class NotChainUnitFragment extends NetworkFragment {
         adapterRight.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                rxBus.post(RxKey.RX_HOSPITAL_UNIT_SELECT, adapterRight.getItem(position));
-                getActivity().finish();
+                UnitModel unitModel = adapterRight.getItem(position);
+                if (unitModel.getType() == UnitModel.TYPE_HOSPITAL) {
+                    rxBus.post(RxKey.RX_HOSPITAL_UNIT_SELECT, unitModel);
+                    getActivity().finish();
+                }
             }
         });
         recycleViewRight.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -138,6 +155,7 @@ public class NotChainUnitFragment extends NetworkFragment {
 
                                allUnits.clear();
                                for (HospitalProvinceModel provinceModel : listResponseModel.getData()) {
+                                   allUnits.add(new UnitModel(provinceModel.getProvince(), UnitModel.TYPE_TITLE));
                                    allUnits.addAll(provinceModel.getUnits());
                                }
                                adapterRight.setNewData(allUnits);
@@ -147,6 +165,11 @@ public class NotChainUnitFragment extends NetworkFragment {
 
 
     private void leftShowProvince(String province) {
+
+        if (pendingProvince != null) {
+            province = pendingProvince;
+            pendingProvince = null;
+        }
 
         int pendingPosition = 0;
         List<HospitalProvinceModel> provinces = adapterLeft.getData();
@@ -185,7 +208,7 @@ public class NotChainUnitFragment extends NetworkFragment {
             UnitModel unit = allUnits.get(i);
             if (province.equals(unit.getProvince())) {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recycleViewRight.getLayoutManager();
-                layoutManager.scrollToPositionWithOffset(i + 1, 0);
+                layoutManager.scrollToPositionWithOffset(i, 0);
                 layoutManager.setStackFromEnd(true);
                 break;
             }
@@ -206,14 +229,18 @@ public class NotChainUnitFragment extends NetworkFragment {
 
         public RightAdapter(List<UnitModel> data) {
             super(data);
-            addItemType(UnitModel.TYPE_TITLE, R.layout.vh_hospital_unit);
+            addItemType(UnitModel.TYPE_TITLE, R.layout.vh_hospital_unit_title);
             addItemType(UnitModel.TYPE_HOSPITAL, R.layout.vh_hospital_unit);
         }
 
         @Override
         protected void convert(BaseViewHolder helper, UnitModel item) {
-            helper.setText(R.id.vh_hospital_title, item.getTitle())
-                  .setTextColor(R.id.vh_hospital_title, item.equals(unitModel) ? getColor(R.color.lan_30acff) : getColor(R.color.hei_575757));
+            if (item.getType() == UnitModel.TYPE_TITLE) {
+                helper.setText(R.id.vh_hospital_title, item.getTitle());
+            } else {
+                helper.setText(R.id.vh_hospital_title, item.getTitle())
+                      .setTextColor(R.id.vh_hospital_title, item.equals(unitModel) ? getColor(R.color.lan_30acff) : getColor(R.color.hei_575757));
+            }
         }
     }
 
