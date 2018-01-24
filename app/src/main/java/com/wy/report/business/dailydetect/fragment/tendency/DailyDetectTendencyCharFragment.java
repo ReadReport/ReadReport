@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
@@ -72,15 +74,26 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         lineChart.setDrawBorders(false);
         lineChart.setScaleEnabled(false);
         lineChart.setPinchZoom(false);
-        lineChart.getXAxis()
-                 .setValueFormatter(new IAxisValueFormatter() {
-                     @Override
-                     public String getFormattedValue(float v, AxisBase axisBase) {
-                         long milliseconds = data.get((int) v)
-                                                 .getTestTime() * 1000;
-                         return new SimpleDateFormat("MM-dd").format(new Date(milliseconds));
-                     }
-                 });
+
+        XAxis leftXAxis = lineChart.getXAxis();
+        leftXAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float v, AxisBase axisBase) {
+                long milliseconds = data.get((int) v)
+                                        .getTestTime() * 1000;
+                return new SimpleDateFormat("MM-dd").format(new Date(milliseconds));
+            }
+        });
+        leftXAxis.setLabelCount(data.size());
+        leftXAxis.setLabelRotationAngle(30);
+        leftXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        leftXAxis.setAvoidFirstLastClipping(true);
+
+        YAxis rightYAxis = lineChart.getAxisRight();
+        rightYAxis.setEnabled(false);
+
+        lineChart.setTouchEnabled(false);
+        lineChart.setDragDecelerationEnabled(false);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         for (LineDataSet set : getDataSet()) {
@@ -92,7 +105,6 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
             dataSets.add(set);
         }
         lineChart.setData(new LineData(dataSets));
-
 
     }
 

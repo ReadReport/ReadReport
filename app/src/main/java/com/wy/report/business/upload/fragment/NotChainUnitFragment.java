@@ -86,22 +86,6 @@ public class NotChainUnitFragment extends NetworkFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HospitalProvinceModel provinceModel = provinces.get(position);
-//                LinearLayoutManager rightLayoutManager = (LinearLayoutManager) recycleViewRight.getLayoutManager();
-//                LinearLayoutManager leftLayoutManager = (LinearLayoutManager) recycleViewLeft.getLayoutManager();
-//                if (rightLayoutManager.findLastVisibleItemPosition() == rightLayoutManager.getItemCount() - 1 && position != selectedProvince &&
-//                        leftLayoutManager.findLastVisibleItemPosition() == leftLayoutManager.getItemCount() - 1) {
-//                    provinceModel.setSelected(true);
-//                    adapterLeft.notifyItemChanged(position);
-//
-//                    provinceModel = adapterLeft.getItem(selectedProvince);
-//                    provinceModel.setSelected(false);
-//                    adapterLeft.notifyItemChanged(selectedProvince);
-//                    selectedProvince = position;
-//                } else {
-//                    pendingProvince = provinceModel.getProvince();
-//                    rightShowProvince(provinceModel.getProvince());
-//                }
-
                 rightShowProvince(provinceModel.getProvince());
             }
         });

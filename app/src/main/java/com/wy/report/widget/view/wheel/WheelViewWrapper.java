@@ -23,12 +23,12 @@ import java.util.List;
  */
 public class WheelViewWrapper extends com.wy.report.widget.view.wheel.widget.WheelView<WheelViewItem> {
 
+    private BaseWheelAdapter adapter;
+
     public WheelViewWrapper(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
-    private BaseWheelAdapter adapter;
 
     private void init() {
         adapter = new BaseWheelAdapter<WheelViewItem>() {
@@ -75,25 +75,22 @@ public class WheelViewWrapper extends com.wy.report.widget.view.wheel.widget.Whe
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        super.requestDisallowInterceptTouchEvent(true);
+        super.onInterceptTouchEvent(ev);
+        requestDisallowInterceptTouchEvent(true);
         return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-
         boolean result = super.onTouchEvent(ev);
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE: {
-                break;
-            }
-            default:{
-                super.requestDisallowInterceptTouchEvent(false);
+            case MotionEvent.ACTION_UP: {
+                requestDisallowInterceptTouchEvent(false);
                 android.support.v4.widget.NestedScrollView scrollView = (android.support.v4.widget.NestedScrollView) ((Activity) getContext()).findViewById(R.id.nested_scroll_view);
                 if (scrollView != null) {
                     ReflectUtil.set(scrollView, "mParentHelper.mNestedScrollAxes", 0);
                 }
+                break;
             }
         }
         return result;

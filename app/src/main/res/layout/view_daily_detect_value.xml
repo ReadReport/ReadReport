@@ -30,7 +30,7 @@
 
         <com.wy.report.widget.view.wheel.WheelViewWrapper
             android:id="@+id/view_daily_detect_value_item_wv"
-            android:layout_width="45dp"
+            android:layout_width="75dp"
             android:layout_height="174dp"
             android:layout_gravity="center_horizontal"
             android:nestedScrollingEnabled="true"/>
