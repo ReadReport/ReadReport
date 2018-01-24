@@ -11,6 +11,7 @@ import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
 import com.wy.report.business.dailydetect.fragment.data.BloodSugarDataFragment;
+import com.wy.report.business.dailydetect.fragment.tendency.BloodSugarTendencyChartFragment;
 import com.wy.report.business.dailydetect.fragment.tendency.DailyDetectTendencyCharFragment;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
@@ -101,7 +102,7 @@ public class BloodSugarFragment extends DailyDetectFragment {
 
     @Override
     protected BaseFragment[] getFragments() {
-        return new BaseFragment[]{new DailyDetectTendencyCharFragment(), new BloodSugarDataFragment()};
+        return new BaseFragment[]{new BloodSugarTendencyChartFragment(), new BloodSugarDataFragment()};
     }
 
 }

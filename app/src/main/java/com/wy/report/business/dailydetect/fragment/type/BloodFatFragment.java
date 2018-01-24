@@ -9,6 +9,7 @@ import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
 import com.wy.report.business.dailydetect.fragment.data.BloodFatDataFragment;
+import com.wy.report.business.dailydetect.fragment.tendency.BloodFatTendencyChartFragment;
 import com.wy.report.business.dailydetect.fragment.tendency.DailyDetectTendencyCharFragment;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
@@ -47,7 +48,7 @@ public class BloodFatFragment extends DailyDetectFragment {
 
     @NonNull
     protected BaseFragment[] getFragments() {
-        return new BaseFragment[]{new DailyDetectTendencyCharFragment(), new BloodFatDataFragment()};
+        return new BaseFragment[]{new BloodFatTendencyChartFragment(), new BloodFatDataFragment()};
     }
 
     protected ViewGroup createDetectValueView() {

@@ -147,11 +147,6 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
                 }
                 requestDisallowInterceptTouchEvent(false);
                 clearFocus();
-
-                android.support.v4.widget.NestedScrollView scrollView = (android.support.v4.widget.NestedScrollView) ((Activity) getContext()).findViewById(R.id.nested_scroll_view);
-                if (scrollView != null) {
-                    ReflectUtil.set(scrollView, "mParentHelper.mNestedScrollAxes", 0);
-                }
             }
         }
 
