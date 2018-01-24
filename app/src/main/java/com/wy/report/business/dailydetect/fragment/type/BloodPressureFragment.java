@@ -8,6 +8,7 @@ import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.dailydetect.fragment.DailyDetectFragment;
 import com.wy.report.business.dailydetect.fragment.data.BloodPressureDataFragment;
+import com.wy.report.business.dailydetect.fragment.tendency.BloodPressureTendencyChartFragment;
 import com.wy.report.business.dailydetect.fragment.tendency.DailyDetectTendencyCharFragment;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
@@ -46,7 +47,7 @@ public class BloodPressureFragment extends DailyDetectFragment {
 
     @Override
     protected BaseFragment[] getFragments() {
-        return new BaseFragment[]{new DailyDetectTendencyCharFragment(), new BloodPressureDataFragment()};
+        return new BaseFragment[]{new BloodPressureTendencyChartFragment(), new BloodPressureDataFragment()};
     }
 
 

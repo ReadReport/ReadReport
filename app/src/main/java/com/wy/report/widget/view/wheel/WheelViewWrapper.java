@@ -1,13 +1,16 @@
 package com.wy.report.widget.view.wheel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cantalou.android.util.ReflectUtil;
 import com.wy.report.R;
 import com.wy.report.widget.view.wheel.adapter.BaseWheelAdapter;
 
@@ -68,5 +71,31 @@ public class WheelViewWrapper extends com.wy.report.widget.view.wheel.widget.Whe
         } else {    // 未选中
             setTextView(itemView, textView, res.getColor(R.color.hui_ababab), 13, 1);
         }
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        super.requestDisallowInterceptTouchEvent(true);
+        return true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+
+        boolean result = super.onTouchEvent(ev);
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE: {
+                break;
+            }
+            default:{
+                super.requestDisallowInterceptTouchEvent(false);
+                android.support.v4.widget.NestedScrollView scrollView = (android.support.v4.widget.NestedScrollView) ((Activity) getContext()).findViewById(R.id.nested_scroll_view);
+                if (scrollView != null) {
+                    ReflectUtil.set(scrollView, "mParentHelper.mNestedScrollAxes", 0);
+                }
+            }
+        }
+        return result;
     }
 }
