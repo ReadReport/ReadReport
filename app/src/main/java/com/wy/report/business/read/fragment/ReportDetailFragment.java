@@ -3,10 +3,8 @@ package com.wy.report.business.read.fragment;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -26,13 +24,11 @@ import com.wy.report.business.read.service.ReadService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.router.AuthRouterManager;
-import com.wy.report.util.DensityUtils;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.TimeUtils;
 import com.wy.report.widget.ObservableScrollView;
 import com.wy.report.widget.view.BodyItemView;
 import com.wy.report.widget.view.ColorArcProgressBar;
-import com.wy.report.widget.view.recycleview.NestedGridLayoutManager;
 import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
 
 import java.util.ArrayList;
@@ -462,6 +458,9 @@ public class ReportDetailFragment extends PtrFragment {
                 break;
             case ReportItemMode.READ_STATE_READED:
                 //已解读
+                Bundle bundle = new Bundle();
+                bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID,reportId);
+                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_ASK,bundle);
                 break;
             default:
                 break;

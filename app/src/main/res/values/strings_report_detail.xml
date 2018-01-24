@@ -56,4 +56,6 @@
     <string name="doctor_detail_service_content_report_parse_content">体检报告解析，健康状况分析</string>
     <string name="doctor_detail_service_content_instruction">服务说明</string>
     <string name="doctor_detail_service_content_instruction_content">本站医生根据您提供的体检报告数据，进行相关的系统性知道建议。网上交流不能代表医生面诊，医生的知道建议仅供参考，具体诊疗请一定到医院在专业医生指导下进行。本站医生言论仅代表个人观点，不代表本站同意其说法。</string>
+
+    <string name="report_ask_title">追问</string>
 </resources>

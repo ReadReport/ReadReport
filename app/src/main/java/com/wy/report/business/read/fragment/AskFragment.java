@@ -2,11 +2,13 @@ package com.wy.report.business.read.fragment;
 
 import android.os.Bundle;
 import android.util.SparseIntArray;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.read.mode.AskItemMode;
@@ -26,13 +28,23 @@ public class AskFragment extends PtrListFragment {
 
     private AskAdapter  mAskAdapter;
     private ReadService mReadService;
+    private String reportId;
 
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        reportId = getActivity().getIntent().getStringExtra(BundleKey.BUNDLE_KEY_REPORT_ID);
+        ptrWithoutToolbar = true;
         mAskAdapter = new AskAdapter();
         mReadService = RetrofitHelper.getInstance().create(ReadService.class);
+    }
+
+    @Override
+    protected void initView(View contentView) {
+        super.initView(contentView);
+        setTitle(R.string.report_ask_title);
+        ptrFrameLayout.autoRefresh();
     }
 
     @Override
@@ -43,7 +55,7 @@ public class AskFragment extends PtrListFragment {
     @Override
     protected void loadData() {
         super.loadData();
-        mReadService.getAskList("1", 1).subscribe(new PtrSubscriber<ResponseModel<List<AskItemMode>>>(this)
+        mReadService.getAskList(reportId, 1).subscribe(new PtrSubscriber<ResponseModel<List<AskItemMode>>>(this)
         {
             @Override
             public void onNext(ResponseModel<List<AskItemMode>> listResponseModel) {
@@ -51,6 +63,11 @@ public class AskFragment extends PtrListFragment {
                 mAskAdapter.setNewData(listResponseModel.getData());
             }
         });
+    }
+
+    @Override
+    protected int contentLayoutID() {
+        return R.layout.fragment_ask_fragment;
     }
 
     public class AskAdapter extends BaseQuickAdapter<AskItemMode, BaseViewHolder> {
