@@ -302,7 +302,7 @@ public class ReportUploadFragment extends NetworkFragment {
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_REPORT_UPLOAD_DELETE_PICTURE)})
-    public void pictureDelete(int index) {
+    public void pictureDelete(Integer index) {
         adapter.remove(index);
     }
 

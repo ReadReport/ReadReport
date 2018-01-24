@@ -1,8 +1,10 @@
 package com.wy.report.business.other.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -11,11 +13,13 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import uk.co.senab.photoview.PhotoView;
 
 /*
@@ -32,6 +36,8 @@ public class PictureFragment extends ToolbarFragment {
 
     private int index;
 
+    private PagerAdapter adapter;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -43,7 +49,7 @@ public class PictureFragment extends ToolbarFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        viewPager.setAdapter(new PagerAdapter() {
+        adapter = new PagerAdapter() {
             @Override
             public int getCount() {
                 return paths.size();
@@ -68,9 +74,15 @@ public class PictureFragment extends ToolbarFragment {
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((View)object);
+                container.removeView((View) object);
             }
-        });
+
+            @Override
+            public int getItemPosition(Object object) {
+                return object.hashCode();
+            }
+        };
+        viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(index);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -94,6 +106,7 @@ public class PictureFragment extends ToolbarFragment {
     protected void initToolbar() {
         super.initToolbar();
         setTitle((index + 1) + "/" + paths.size());
+        statusBarBg.setImageResource(R.color.hei_1e1e1e);
     }
 
     @Override
@@ -104,5 +117,35 @@ public class PictureFragment extends ToolbarFragment {
     @Override
     protected int toolbarLayoutID() {
         return R.layout.view_picture_toolbar;
+    }
+
+    @OnClick(R.id.toolbar_delete)
+    public void deleteClick() {
+        new AlertDialog.Builder(getActivity()).setTitle("是否删除图片")
+                                              .setCancelable(true)
+                                              .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(DialogInterface dialog, int which) {
+                                                      dialog.dismiss();
+                                                  }
+                                              })
+                                              .setPositiveButton("删除图片", new DialogInterface.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(DialogInterface dialog, int which) {
+                                                      int currentIndex = viewPager.getCurrentItem();
+                                                      rxBus.post(RxKey.RX_REPORT_UPLOAD_DELETE_PICTURE, currentIndex);
+                                                      paths.remove(currentIndex);
+                                                      if (paths.size() == 0) {
+                                                          getActivity().finish();
+                                                          return;
+                                                      }
+                                                      viewPager.setAdapter(adapter);
+                                                      viewPager.setCurrentItem(currentIndex);
+                                                      setTitle((currentIndex + 1) + "/" + paths.size());
+                                                      dialog.dismiss();
+                                                  }
+                                              })
+                                              .create()
+                                              .show();
     }
 }
