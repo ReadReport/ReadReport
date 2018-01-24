@@ -2,17 +2,14 @@ package com.wy.report.business.upload.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -140,8 +137,27 @@ public class ReportUploadFragment extends NetworkFragment {
 
     private void createAdapter() {
         adapter = new BaseItemDraggableAdapter<PictureModel, BaseViewHolder>(R.layout.vh_select_image, null) {
+
+
+            /**
+             * To bind different types of holder and solve different the bind events
+             *
+             * @param holder
+             * @param position
+             * @see #getDefItemViewType(int)
+             */
+            @Override
+            public void onBindViewHolder(BaseViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                PictureModel item = getItem(position);
+                if (item.getType() == PictureModel.TYPE_ADD) {
+                    holder.itemView.setOnLongClickListener(null);
+                }
+            }
+
             @Override
             protected void convert(BaseViewHolder helper, PictureModel item) {
+                helper.setAssociatedObject(item);
                 switch (item.getType()) {
                     case PictureModel.TYPE_ADD: {
                         ImageView iv = helper.getView(R.id.vh_select_image_image);
@@ -164,6 +180,7 @@ public class ReportUploadFragment extends NetworkFragment {
                     }
                 }
             }
+
         };
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -205,7 +222,18 @@ public class ReportUploadFragment extends NetworkFragment {
         });
         adapter.onAttachedToRecyclerView(recyclerView);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(adapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(adapter) {
+            @Override
+            public boolean canDropOver(RecyclerView recyclerView, RecyclerView.ViewHolder current, RecyclerView.ViewHolder target) {
+                if (target instanceof BaseViewHolder) {
+                    PictureModel model = (PictureModel) ((BaseViewHolder) target).getAssociatedObject();
+                    if (model != null && model.getType() == PictureModel.TYPE_ADD) {
+                        return false;
+                    }
+                }
+                return super.canDropOver(recyclerView, current, target);
+            }
+        });
         itemTouchHelper.attachToRecyclerView(recyclerView);
         adapter.enableDragItem(itemTouchHelper, 0, true);
     }
