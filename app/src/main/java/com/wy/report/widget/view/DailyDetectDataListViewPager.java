@@ -59,48 +59,28 @@ public class DailyDetectDataListViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                mX = ev.getX();
-                mY = ev.getY();
-                break;
-            }
-            case MotionEvent.ACTION_MOVE: {
-                float deltaX = ev.getX() - mX;
-                float deltaY = Math.abs(ev.getY() - mY);
-
-                if (deltaY > Math.abs(deltaX) && deltaY > touchSlop) {
-                    getParent().requestDisallowInterceptTouchEvent(false);
-                    return false;
-                }
-//                getParent().requestDisallowInterceptTouchEvent(true);
-//                // >>
-//                if (deltaX >= 20 && deltaX > deltaY) {
-//                    getParent().requestDisallowInterceptTouchEvent(true);
-//                    Log.d("onInterceptTouchEvent deltaX:{},deltaY:{},return {}", deltaX, deltaY, true);
-//                    return true;
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN: {
+//                mX = ev.getX();
+//                mY = ev.getY();
+//                break;
+//            }
+//            case MotionEvent.ACTION_MOVE: {
+//                float deltaX = ev.getX() - mX;
+//                float deltaY = Math.abs(ev.getY() - mY);
+//
+//                if (deltaY > Math.abs(deltaX) && deltaY > touchSlop) {
+//                    getParent().requestDisallowInterceptTouchEvent(false);
+//                    return false;
 //                }
 //
-//                // <<
-//                int count = getAdapter().getCount();
-//                if (deltaX < 0 && Math.abs(deltaX) > 20 && Math.abs(deltaX) > deltaY) {
-//                    getParent().requestDisallowInterceptTouchEvent(true);
-//                    if (curPosition == count - 1) {
-//                        Log.d("onInterceptTouchEvent deltaX:{},deltaY:{},return {}", deltaX, deltaY, false);
-//                        return false;
-//                    } else {
-//                        Log.d("onInterceptTouchEvent deltaX:{},deltaY:{},return {}", deltaX, deltaY, true);
-//                        return true;
-//                    }
-//                }
+//                break;
+//            }
+//            case MotionEvent.ACTION_UP: {
 //                getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-            }
-            case MotionEvent.ACTION_UP: {
-                getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-            }
-        }
+//                break;
+//            }
+//        }
         return super.onInterceptTouchEvent(ev);
     }
 

@@ -12,38 +12,57 @@ import com.wy.report.base.model.BaseModel;
 public class DailyDetectValueModel extends BaseModel implements Parcelable {
 
     /**
-     * 低
+     * 低压
      */
     private String lowValue;
 
     /**
-     * 高
+     * 高压
      */
     private String highValue;
 
     /**
-     * 高
+     * 心率
      */
     private String pulseValue;
 
+    /**
+     * 血糖
+     */
     private String sugarValue;
 
     private String typeCode;
 
     private String typeDetailCode;
 
-    private String bmi;
-
+    /**
+     * 身高
+     */
     private String hightValue;
 
+    /**
+     * 体重
+     */
     private String weightValue;
 
+    /**
+     * 总胆固醇 : 体脂率
+     */
     private String cholValue;
 
+    /**
+     * 高胆固醇
+     */
     private String hdlValue;
 
+    /**
+     * 低胆固醇
+     */
     private String ldlValue;
 
+    /**
+     * 甘油三酯
+     */
     private String trigValue;
 
     public String getLowValue() {
@@ -92,14 +111,6 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
 
     public void setTypeDetailCode(String typeDetailCode) {
         this.typeDetailCode = typeDetailCode;
-    }
-
-    public String getBmi() {
-        return bmi;
-    }
-
-    public void setBmi(String bmi) {
-        this.bmi = bmi;
     }
 
     public String getHightValue() {
@@ -164,7 +175,6 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
         dest.writeString(this.sugarValue);
         dest.writeString(this.typeCode);
         dest.writeString(this.typeDetailCode);
-        dest.writeString(this.bmi);
         dest.writeString(this.hightValue);
         dest.writeString(this.weightValue);
         dest.writeString(this.cholValue);
@@ -183,7 +193,6 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
         this.sugarValue = in.readString();
         this.typeCode = in.readString();
         this.typeDetailCode = in.readString();
-        this.bmi = in.readString();
         this.hightValue = in.readString();
         this.weightValue = in.readString();
         this.cholValue = in.readString();

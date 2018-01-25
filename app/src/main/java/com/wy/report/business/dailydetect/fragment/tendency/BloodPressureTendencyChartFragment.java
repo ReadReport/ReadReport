@@ -40,16 +40,26 @@ public class BloodPressureTendencyChartFragment extends DailyDetectTendencyCharF
         high.setCircleColor(Color.BLUE);
         result.add(high);
 
-        LineDataSet low = new LineDataSet(highEntry, "低压");
+        LineDataSet low = new LineDataSet(lowEntry, "低压");
         low.setColor(Color.BLACK);
         low.setCircleColor(Color.BLACK);
         result.add(low);
 
-        LineDataSet pulse = new LineDataSet(highEntry, "心率");
+        LineDataSet pulse = new LineDataSet(pulseEntry, "心率");
         pulse.setColor(Color.RED);
         pulse.setCircleColor(Color.RED);
         result.add(pulse);
 
         return result;
+    }
+
+    @Override
+    protected float getYMaxValue() {
+        return 240;
+    }
+
+    @Override
+    protected float getYMinValue() {
+        return 30;
     }
 }

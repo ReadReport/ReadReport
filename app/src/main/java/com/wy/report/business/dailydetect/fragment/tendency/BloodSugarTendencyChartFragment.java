@@ -34,7 +34,7 @@ public class BloodSugarTendencyChartFragment extends DailyDetectTendencyCharFrag
             pulseEntry.add(new Entry(i, Float.parseFloat(valueModel.getPulseValue())));
         }
 
-        LineDataSet high = new LineDataSet(highEntry, "高压");
+        LineDataSet high = new LineDataSet(highEntry, "血糖");
         high.setColor(Color.BLACK);
         high.setCircleColor(Color.BLACK);
         result.add(high);
@@ -50,5 +50,15 @@ public class BloodSugarTendencyChartFragment extends DailyDetectTendencyCharFrag
         result.add(pulse);
 
         return result;
+    }
+
+    @Override
+    protected float getYMaxValue() {
+        return 0;
+    }
+
+    @Override
+    protected float getYMinValue() {
+        return 0;
     }
 }

@@ -22,33 +22,30 @@ public class BodyFatTendencyChartFragment extends DailyDetectTendencyCharFragmen
         ArrayList<LineDataSet> result = new ArrayList<>();
 
         int size = data.size();
-        List<Entry> highEntry = new ArrayList<>(size);
-        List<Entry> lowEntry = new ArrayList<>(size);
-        List<Entry> pulseEntry = new ArrayList<>(size);
+        List<Entry> cholEntry = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             DailyDetectValueModel valueModel = data.get(i)
                                                    .getRes();
-            highEntry.add(new Entry(i, Float.parseFloat(valueModel.getHighValue())));
-            lowEntry.add(new Entry(i, Float.parseFloat(valueModel.getLowValue())));
-            pulseEntry.add(new Entry(i, Float.parseFloat(valueModel.getPulseValue())));
+            cholEntry.add(new Entry(i, Float.parseFloat(valueModel.getPulseValue())));
         }
 
-        LineDataSet high = new LineDataSet(highEntry, "高压");
-        high.setColor(Color.BLACK);
-        high.setCircleColor(Color.BLACK);
-        result.add(high);
-
-        LineDataSet low = new LineDataSet(highEntry, "低压");
-        low.setColor(Color.BLACK);
-        low.setCircleColor(Color.BLACK);
-        result.add(low);
-
-        LineDataSet pulse = new LineDataSet(highEntry, "心率");
-        pulse.setColor(Color.BLACK);
-        pulse.setCircleColor(Color.BLACK);
-        result.add(pulse);
+        LineDataSet chol = new LineDataSet(cholEntry, "体脂率");
+        chol.setColor(Color.BLACK);
+        chol.setCircleColor(Color.BLACK);
+        result.add(chol);
 
         return result;
+    }
+
+
+    @Override
+    protected float getYMaxValue() {
+        return 100;
+    }
+
+    @Override
+    protected float getYMinValue() {
+        return 1;
     }
 }
