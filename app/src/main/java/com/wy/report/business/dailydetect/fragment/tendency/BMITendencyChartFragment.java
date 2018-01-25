@@ -22,32 +22,25 @@ public class BMITendencyChartFragment extends DailyDetectTendencyCharFragment {
         ArrayList<LineDataSet> result = new ArrayList<>();
 
         int size = data.size();
-        List<Entry> highEntry = new ArrayList<>(size);
-        List<Entry> lowEntry = new ArrayList<>(size);
-        List<Entry> pulseEntry = new ArrayList<>(size);
+        List<Entry> heightEntry = new ArrayList<>(size);
+        List<Entry> weightEntry = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             DailyDetectValueModel valueModel = data.get(i)
                                                    .getRes();
-            highEntry.add(new Entry(i, Float.parseFloat(valueModel.getHighValue())));
-            lowEntry.add(new Entry(i, Float.parseFloat(valueModel.getLowValue())));
-            pulseEntry.add(new Entry(i, Float.parseFloat(valueModel.getPulseValue())));
+            heightEntry.add(new Entry(i, Float.parseFloat(valueModel.getHightValue())));
+            weightEntry.add(new Entry(i, Float.parseFloat(valueModel.getWeightValue())));
         }
 
-        LineDataSet high = new LineDataSet(highEntry, "高压");
-        high.setColor(Color.BLACK);
-        high.setCircleColor(Color.BLACK);
-        result.add(high);
+        LineDataSet height = new LineDataSet(heightEntry, "身高");
+        height.setColor(Color.BLACK);
+        height.setCircleColor(Color.BLACK);
+        result.add(height);
 
-        LineDataSet low = new LineDataSet(highEntry, "低压");
-        low.setColor(Color.BLACK);
-        low.setCircleColor(Color.BLACK);
-        result.add(low);
-
-        LineDataSet pulse = new LineDataSet(highEntry, "心率");
-        pulse.setColor(Color.BLACK);
-        pulse.setCircleColor(Color.BLACK);
-        result.add(pulse);
+        LineDataSet weight = new LineDataSet(weightEntry, "体重");
+        weight.setColor(Color.BLACK);
+        weight.setCircleColor(Color.BLACK);
+        result.add(weight);
 
         return result;
     }

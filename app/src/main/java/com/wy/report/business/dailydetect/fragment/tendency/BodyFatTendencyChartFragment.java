@@ -27,7 +27,7 @@ public class BodyFatTendencyChartFragment extends DailyDetectTendencyCharFragmen
         for (int i = 0; i < size; i++) {
             DailyDetectValueModel valueModel = data.get(i)
                                                    .getRes();
-            cholEntry.add(new Entry(i, Float.parseFloat(valueModel.getPulseValue())));
+            cholEntry.add(new Entry(i, Float.parseFloat(valueModel.getCholValue())));
         }
 
         LineDataSet chol = new LineDataSet(cholEntry, "体脂率");

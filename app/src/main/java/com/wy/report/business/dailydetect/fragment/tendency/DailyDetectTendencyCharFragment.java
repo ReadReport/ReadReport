@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
@@ -78,6 +79,7 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         lineChart.setTouchEnabled(false);
         lineChart.setDragDecelerationEnabled(false);
         lineChart.offsetLeftAndRight(DensityUtils.dip2px(getActivity(), 10));
+        lineChart.getLegend().setDirection(Legend.LegendDirection.LEFT_TO_RIGHT);
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -102,9 +104,9 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         YAxis rightYAxis = lineChart.getAxisRight();
         rightYAxis.setEnabled(false);
 
-        YAxis leftYAxis = lineChart.getAxisRight();
+        YAxis leftYAxis = lineChart.getAxisLeft();
         leftYAxis.setDrawGridLines(false);
-        leftYAxis.setAxisLineWidth(3);
+        leftYAxis.setAxisLineWidth(2);
         leftYAxis.setAxisLineColor(getColor(R.color.hui_575757));
         leftYAxis.setAxisMaximum(getYMaxValue());
         leftYAxis.setAxisMinimum(getYMinValue());
