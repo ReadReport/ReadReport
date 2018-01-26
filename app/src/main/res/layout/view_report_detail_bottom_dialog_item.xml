@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
+    android:orientation="vertical"
     >
+
     <TextView
         android:id="@+id/report_detail_bottom_dialog_item_title"
-        android:textSize="14sp"
-        android:textColor="@color/hei_333333"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/report_detail_bottom_dialog_item_content"
-        android:textSize="13sp"
-        android:layout_marginTop="@dimen/dp_10"
-        android:textColor="@color/hei_333333"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/hei_333333"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/report_detail_bottom_dialog_item_content1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:lines="1"
+        android:textColor="@color/hei_333333"
+        android:textSize="13sp"
+        />
+
+    <TextView
+        android:id="@+id/report_detail_bottom_dialog_item_content2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:lines="1"
+        android:textColor="@color/hei_333333"
+        android:textSize="13sp"
         />
 
 </LinearLayout>

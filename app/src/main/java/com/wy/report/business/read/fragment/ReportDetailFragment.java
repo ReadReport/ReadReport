@@ -48,9 +48,9 @@ public class ReportDetailFragment extends PtrFragment {
     ObservableScrollView mScrollView;
 
     private ReadService mReadService;
-    private boolean isMale;
-    private int reportStatus;
-    private String reportId;
+    private boolean     isMale;
+    private int         reportStatus;
+    private String      reportId;
 
     /**********************************界面************************************/
     //-----用户信息------
@@ -69,55 +69,55 @@ public class ReportDetailFragment extends PtrFragment {
 
     //-----体检报告------
     @BindView(R.id.report_detail_report_pic_info_private_ll)
-    LinearLayout picContentPrivate;
+    LinearLayout        picContentPrivate;
     @BindView(R.id.report_detail_report_pic_content_ll)
-    LinearLayout picContentView;
+    LinearLayout        picContentView;
     //-----用户备注------
     @BindView(R.id.report_detail_note_head_icon)
-    ImageView userNoteHeader;
+    ImageView           userNoteHeader;
     @BindView(R.id.report_detail_note_content)
-    TextView userNoteContent;
+    TextView            userNoteContent;
     //-----健康得分------
     @BindView(R.id.report_detail_score_ll)
-    LinearLayout scoreView;
+    LinearLayout        scoreView;
     @BindView(R.id.report_detail_score_pb)
     ColorArcProgressBar score;
     //-----身体机能------
     @BindView(R.id.report_detail_body_ll)
-    LinearLayout bodyView;
+    LinearLayout        bodyView;
     @BindView(R.id.report_detail_body_item_1)
-    BodyItemView body1;
+    BodyItemView        body1;
     @BindView(R.id.report_detail_body_item_2)
-    BodyItemView body2;
+    BodyItemView        body2;
     @BindView(R.id.report_detail_body_item_3)
-    BodyItemView body3;
+    BodyItemView        body3;
     @BindView(R.id.report_detail_body_item_4)
-    BodyItemView body4;
+    BodyItemView        body4;
     @BindView(R.id.report_detail_body_item_5)
-    BodyItemView body5;
+    BodyItemView        body5;
     @BindView(R.id.report_detail_body_item_6)
-    BodyItemView body6;
+    BodyItemView        body6;
     @BindView(R.id.report_detail_body_item_7)
-    BodyItemView body7;
+    BodyItemView        body7;
     @BindView(R.id.report_detail_body_item_8)
-    BodyItemView body8Male;
+    BodyItemView        body8Male;
     @BindView(R.id.report_detail_body_item_8_female)
-    BodyItemView body8Female;
+    BodyItemView        body8Female;
     @BindView(R.id.report_detail_body_body)
-    ImageView body;
+    ImageView           body;
     //-----医生建议------
     @BindView(R.id.report_detail_suggestion_ll)
-    LinearLayout suggestionView;
+    LinearLayout        suggestionView;
     @BindView(R.id.report_detail_quota_normal)
-    TextView quotaNormal;
+    TextView            quotaNormal;
     @BindView(R.id.report_detail_quota_un_normal)
-    TextView quotaUnNormal;
+    TextView            quotaUnNormal;
     @BindView(R.id.report_detail_doctor_check_suggestion)
-    TextView checkSuggestion;
+    TextView            checkSuggestion;
     @BindView(R.id.report_detail_doctor_eat_suggestion)
-    TextView eatSuggestion;
+    TextView            eatSuggestion;
     @BindView(R.id.report_detail_doctor_sport_suggestion)
-    TextView sportSuggestion;
+    TextView            sportSuggestion;
 
     @BindView(R.id.report_detail_doctor_name)
     TextView doctorName;
@@ -217,7 +217,7 @@ public class ReportDetailFragment extends PtrFragment {
 
         //更新报告图片信息
         List<ReportDetailMode.ImgInfo> imgs = detailMode.getImgs();
-        ArrayList<String> urls = new ArrayList<>();
+        ArrayList<String>              urls = new ArrayList<>();
         for (ReportDetailMode.ImgInfo imgInfo : imgs) {
             urls.add(imgInfo.getUrl());
         }
@@ -257,7 +257,7 @@ public class ReportDetailFragment extends PtrFragment {
     private void updateBodyInfo(ReportDetailMode detailMode) {
         List<ReportDetailMode.BodySystem> bodySystems = detailMode.getBodySystems();
 
-        final List<BodyItemView> illItems = new ArrayList<>();
+        final List<BodyItemView>                illItems   = new ArrayList<>();
         final List<ReportDetailMode.BodySystem> illSystems = new ArrayList<>();
 
         for (final ReportDetailMode.BodySystem system : bodySystems) {
@@ -401,7 +401,7 @@ public class ReportDetailFragment extends PtrFragment {
      */
     private void createPopDialog(List<ReportDetailMode.BodySystem.IllItem> illItems) {
         final Dialog dialog = new Dialog(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.view_report_detail_bottom_dialog, null);
+        View         view   = getActivity().getLayoutInflater().inflate(R.layout.view_report_detail_bottom_dialog, null);
         view.findViewById(R.id.report_detail_bottom_dialog_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -412,13 +412,16 @@ public class ReportDetailFragment extends PtrFragment {
         //异常项目
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.report_detail_bottom_dialog_recyclerview);
         recyclerView.setLayoutManager(new NestedLinearLayoutManager(getActivity()));
-        BaseQuickAdapter<ReportDetailMode.BodySystem.IllItem,BaseViewHolder> quickAdapter = new BaseQuickAdapter<ReportDetailMode.BodySystem.IllItem, BaseViewHolder>(R.layout.view_report_detail_bottom_dialog_item) {
+        BaseQuickAdapter<ReportDetailMode.BodySystem.IllItem, BaseViewHolder> quickAdapter = new BaseQuickAdapter<ReportDetailMode.BodySystem.IllItem, BaseViewHolder>(R.layout.view_report_detail_bottom_dialog_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, ReportDetailMode.BodySystem.IllItem illItem) {
-                int position = baseViewHolder.getAdapterPosition()+1;
-                String title = String.format(getString(R.string.report_detail_bottom_dialog_item_title),position,illItem.getItemName());
-                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_title,title);
-                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content,illItem.getDetail());
+                int    position = baseViewHolder.getAdapterPosition() + 1;
+                String title    = String.format(getString(R.string.report_detail_bottom_dialog_item_title), position, illItem.getItemName());
+                String refer    = String.format(getString(R.string.report_detail_bottom_dialog_item_refer), illItem.getReferenceRange());
+                String actual   = String.format(getString(R.string.report_detail_bottom_dialog_item_actual), illItem.getResZb());
+                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_title, title);
+                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content1, refer);
+                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content2, actual);
             }
         };
         recyclerView.setAdapter(quickAdapter);
@@ -459,8 +462,8 @@ public class ReportDetailFragment extends PtrFragment {
             case ReportItemMode.READ_STATE_READED:
                 //已解读
                 Bundle bundle = new Bundle();
-                bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID,reportId);
-                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_ASK,bundle);
+                bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID, reportId);
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_ASK, bundle);
                 break;
             default:
                 break;
