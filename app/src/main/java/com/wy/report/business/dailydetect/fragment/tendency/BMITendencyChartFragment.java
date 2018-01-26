@@ -48,11 +48,11 @@ public class BMITendencyChartFragment extends DailyDetectTendencyCharFragment {
 
     @Override
     protected float getYMaxValue() {
-        return 0;
+        return 310;
     }
 
     @Override
     protected float getYMinValue() {
-        return 0;
+        return 20;
     }
 }

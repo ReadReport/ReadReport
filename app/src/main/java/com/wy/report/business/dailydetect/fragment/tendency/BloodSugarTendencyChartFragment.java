@@ -41,11 +41,11 @@ public class BloodSugarTendencyChartFragment extends DailyDetectTendencyCharFrag
 
     @Override
     protected float getYMaxValue() {
-        return 12;
+        return 13;
     }
 
     @Override
     protected float getYMinValue() {
-        return 2;
+        return 1;
     }
 }

@@ -261,12 +261,18 @@ public class FindFragment extends PtrFragment {
 
     @OnClick(R.id.home_find_health_test_more)
     public void clickHealthTestMore() {
+        if (model == null) {
+            return;
+        }
         HomeFindHealthyTestModel testModel = model.getHomeFindHealthyTestModel();
         authRouterManager.openWebView(getActivity(), testModel.getMore(), "");
     }
 
     @OnClick(R.id.home_find_health_knowledge_more)
     public void clickHealthKnowledgeMore() {
+        if (model == null) {
+            return;
+        }
         HomeFindHealthyKnowledgeModel knowledgeModel = model.getHomeFindHealthyKnowledgeModel();
         authRouterManager.openWebView(getActivity(), knowledgeModel.getMore(), "");
     }

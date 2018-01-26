@@ -88,7 +88,6 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float v, AxisBase axisBase) {
-                v--;
                 if (v >= data.size()) {
                     return Float.toString(v);
                 }
@@ -102,16 +101,17 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAvoidFirstLastClipping(true);
         xAxis.setDrawGridLines(false);
-        xAxis.setAxisLineWidth(2);
-        xAxis.setAxisLineColor(getColor(R.color.hui_858585));
+        xAxis.setAxisLineWidth(1.5f);
+        xAxis.setAxisLineColor(getColor(R.color.hui_ababab));
+        xAxis.setXOffset(20);
 
         YAxis rightYAxis = lineChart.getAxisRight();
         rightYAxis.setEnabled(false);
 
         YAxis leftYAxis = lineChart.getAxisLeft();
         leftYAxis.setDrawGridLines(false);
-        leftYAxis.setAxisLineWidth(2);
-        leftYAxis.setAxisLineColor(getColor(R.color.hui_858585));
+        leftYAxis.setAxisLineWidth(1.5f);
+        leftYAxis.setAxisLineColor(getColor(R.color.hui_ababab));
         leftYAxis.setAxisMaximum(getYMaxValue());
         leftYAxis.setAxisMinimum(getYMinValue());
 

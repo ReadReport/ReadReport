@@ -1,6 +1,5 @@
 package com.wy.report.business.dailydetect.fragment.tendency;
 
-import android.graphics.Color;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -42,11 +41,11 @@ public class BodyFatTendencyChartFragment extends DailyDetectTendencyCharFragmen
 
     @Override
     protected float getYMaxValue() {
-        return 100;
+        return 105;
     }
 
     @Override
     protected float getYMinValue() {
-        return 1;
+        return 0;
     }
 }
