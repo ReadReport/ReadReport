@@ -51,6 +51,7 @@ public class ReportDetailFragment extends PtrFragment {
     private boolean     isMale;
     private int         reportStatus;
     private String      reportId;
+    private boolean     fromHome;
 
     /**********************************界面************************************/
     //-----用户信息------
@@ -141,12 +142,17 @@ public class ReportDetailFragment extends PtrFragment {
         ptrWithoutToolbar = true;
         mReadService = RetrofitHelper.getInstance().create(ReadService.class);
 
+        Bundle argument = getArguments();
+        if(argument != null){
+            reportId = argument.getString(BundleKey.BUNDLE_KEY_REPORT_ID);
+            fromHome = argument.getBoolean(BundleKey.BUNDLE_KEY_REPORT_FROM_HOME);
+        }
     }
 
     @Override
     protected void loadData() {
         super.loadData();
-        mReadService.getReportDetail("1", "4").subscribe(new PtrSubscriber<ResponseModel<ReportDetailMode>>(this) {
+        mReadService.getReportDetail(reportId, "4").subscribe(new PtrSubscriber<ResponseModel<ReportDetailMode>>(this) {
             @Override
             public void onNext(ResponseModel<ReportDetailMode> reportDetailModeResponseModel) {
                 super.onNext(reportDetailModeResponseModel);

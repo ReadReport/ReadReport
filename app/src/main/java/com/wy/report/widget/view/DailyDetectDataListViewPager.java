@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import com.cantalou.android.util.Log;
 import com.wy.report.R;
 
 /**
@@ -20,7 +19,7 @@ public class DailyDetectDataListViewPager extends ViewPager {
 
     private float mY;
 
-    private int touchSlop;
+    private double touchSlop;
 
     public DailyDetectDataListViewPager(Context context) {
         super(context);
@@ -32,9 +31,9 @@ public class DailyDetectDataListViewPager extends ViewPager {
         init();
     }
 
-    private void init(){
+    private void init() {
         touchSlop = ViewConfiguration.get(getContext())
-                                     .getScaledTouchSlop();
+                                     .getScaledTouchSlop() * 0.8;
     }
 
     @Override
@@ -57,8 +56,39 @@ public class DailyDetectDataListViewPager extends ViewPager {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_MOVE: {
+//                float deltaX = ev.getX() - mX;
+//                float deltaY = Math.abs(ev.getY() - mY);
+//
+//                if (deltaY > Math.abs(deltaX) && deltaY > touchSlop) {
+//                    getParent().requestDisallowInterceptTouchEvent(false);
+//                    return false;
+//                }
+//
+//                if (Math.abs(deltaY) > touchSlop) {
+//                    getParent().requestDisallowInterceptTouchEvent(true);
+//                }
+//
+//                break;
+//            }
+//            case MotionEvent.ACTION_UP: {
+//                getParent().requestDisallowInterceptTouchEvent(false);
+//                break;
+//            }
+//            case MotionEvent.ACTION_DOWN:{
+//                mX = ev.getX();
+//                mY = ev.getY();
+//                break;
+//            }
+//        }
+//        return super.onInterceptTouchEvent(ev);
+//    }
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
 //        switch (ev.getAction()) {
 //            case MotionEvent.ACTION_DOWN: {
 //                mX = ev.getX();
@@ -74,6 +104,10 @@ public class DailyDetectDataListViewPager extends ViewPager {
 //                    return false;
 //                }
 //
+//                if (Math.abs(deltaX) > touchSlop) {
+//                    getParent().requestDisallowInterceptTouchEvent(true);
+//                }
+//
 //                break;
 //            }
 //            case MotionEvent.ACTION_UP: {
@@ -81,13 +115,8 @@ public class DailyDetectDataListViewPager extends ViewPager {
 //                break;
 //            }
 //        }
-        return super.onInterceptTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        return super.onTouchEvent(ev);
-    }
+//        return super.onTouchEvent(ev);
+//    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

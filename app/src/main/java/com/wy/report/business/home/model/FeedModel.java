@@ -8,6 +8,11 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class FeedModel {
 
+    /**
+     * 报告id
+     */
+    @JSONField(name = "report_id")
+    private String reportId;
 
     /**
      * 手机号码
@@ -37,5 +42,13 @@ public class FeedModel {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public String getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(String reportId) {
+        this.reportId = reportId;
     }
 }

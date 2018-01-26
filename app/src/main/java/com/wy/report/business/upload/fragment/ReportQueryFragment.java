@@ -1,9 +1,7 @@
 package com.wy.report.business.upload.fragment;
 
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -12,10 +10,7 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
-import com.wy.report.base.fragment.PtrFragment;
-import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.base.model.ResponseModel;
-import com.wy.report.business.auth.model.User;
 import com.wy.report.business.family.model.FamilyMemberModel;
 import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.model.UploadModel;
@@ -23,12 +18,8 @@ import com.wy.report.business.upload.service.ReportService;
 import com.wy.report.helper.dialog.DialogHelper;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
-import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
-import com.wy.report.manager.router.Router;
 import com.wy.report.util.ViewUtils;
-
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,24 +33,27 @@ public class ReportQueryFragment extends NetworkFragment {
 
     @BindView(R.id.report_query_medical_examiner_name)
     TextView name;
+
     @BindView(R.id.report_query_hospital_name)
     TextView hospital;
+
     @BindView(R.id.report_query_account_name)
     EditText account;
+
     @BindView(R.id.report_query_password_name)
     EditText password;
+
     private ReportService reportService;
+
     private FamilyMemberModel familyMemberModel;
+
     private UnitModel unitModel;
-    private Router router;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         reportService = RetrofitHelper.getInstance()
                                       .create(ReportService.class);
-        router = AuthRouterManager.getInstance()
-                                  .getRouter();
     }
 
     @Override
@@ -73,12 +67,12 @@ public class ReportQueryFragment extends NetworkFragment {
         return R.layout.fragment_report_query;
     }
 
-    @OnClick({R.id.report_upload_medical_examiner})
+    @OnClick({R.id.report_query_medical_examiner})
     public void nameClick() {
         router.open(getActivity(), AuthRouterManager.ROUTER_FAMILY_MEMBER_SELECT);
     }
 
-    @OnClick({R.id.report_upload_examine_hospital})
+    @OnClick({R.id.report_query_hospital})
     public void hospitalClick() {
         router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_HOSPITAL_LIST);
     }
@@ -94,6 +88,11 @@ public class ReportQueryFragment extends NetworkFragment {
     public void hospitalUnitSelected(UnitModel model) {
         unitModel = model;
         hospital.setText(model.getTitle());
+    }
+
+    @OnClick(R.id.report_query_not_found)
+    public void reportNotFoundClick() {
+        authRouterManager.openWebView(getActivity(), "http://dbg.vip120.com/Report/thirdParty_search_fail", "");
     }
 
     @OnClick({R.id.report_query_submit})

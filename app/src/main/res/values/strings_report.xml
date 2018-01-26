@@ -73,4 +73,8 @@
     <string name="report_upload_success_tip2">医生将在3个工作日内完成解读。</string>
     <string name="report_upload_success_tip3">简述健康状况，可使报告解读更全面</string>
 
+    <string name="report_query_success_tip">查询账号提交成功!</string>
+    <string name="report_query_success_tip2">如果账号正确，我们将在3个工作日内帮您获取报告。</string>
+    <string name="report_query_success_tip3">简述健康状况，可使报告解读更全面</string>
+
 </resources>

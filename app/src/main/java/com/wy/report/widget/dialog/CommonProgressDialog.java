@@ -3,24 +3,20 @@ package com.wy.report.widget.dialog;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cantalou.android.util.DeviceUtils;
 import com.wy.report.R;
 
-
 @SuppressLint("InflateParams")
 public class CommonProgressDialog extends AlertDialog {
-
-    private static final String TAG = "CommonProgressDialog";
 
     /**
      * The m message.
@@ -30,7 +26,7 @@ public class CommonProgressDialog extends AlertDialog {
     /**
      * The m progress.
      */
-    private ProgressBar mProgress;
+    private ImageView mProgress;
 
     /**
      * The m message view.
@@ -88,7 +84,8 @@ public class CommonProgressDialog extends AlertDialog {
      */
     private void findViews(View view) {
         mMessageView = (TextView) view.findViewById(R.id.common_progress_content);
-        mProgress = (ProgressBar) view.findViewById(R.id.common_progress_bar);
+        mProgress = (ImageView) view.findViewById(R.id.common_progress_bar);
+        ((AnimationDrawable) mProgress.getDrawable()).start();
     }
 
     /**

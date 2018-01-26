@@ -12,6 +12,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
+import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
@@ -26,7 +27,7 @@ import butterknife.OnClick;
  * @author cantalou
  * @date 2017-11-26 23:04
  */
-public class MyFragment extends PtrFragment {
+public class MyFragment extends ToolbarFragment {
 
 
     @BindView(R.id.my_header)
@@ -42,7 +43,6 @@ public class MyFragment extends PtrFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        ptrWithoutToolbar = true;
     }
 
     @Override
@@ -59,6 +59,8 @@ public class MyFragment extends PtrFragment {
         super.initToolbar();
         Drawable toolbarBackground = toolbar.getBackground();
         toolbarBackground.setAlpha(0);
+        toolbarBack.setVisibility(View.GONE);
+        toolbarTitle.setTextColor(getColor(R.color.bai_ffffff));
     }
 
     @Override
