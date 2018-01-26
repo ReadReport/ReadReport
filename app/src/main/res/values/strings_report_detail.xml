@@ -41,6 +41,8 @@
     <string name="report_detail_doctor_sport_suggestion">|\u0020\u0020\u0020\u0020运动建议</string>
     <string name="report_detail_bottom_dialog_title">异常项目</string>
     <string name="report_detail_bottom_dialog_item_title">%1$d.%2$s</string>
+    <string name="report_detail_bottom_dialog_item_refer">参考值：%s</string>
+    <string name="report_detail_bottom_dialog_item_actual">实际值：%s</string>
 
     <string name="report_detail_bottom_btn_readed">追问</string>
     <string name="report_detail_bottom_btn_unread">报告正在解读，请耐心等待...</string>

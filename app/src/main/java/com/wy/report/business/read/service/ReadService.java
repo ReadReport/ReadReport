@@ -58,4 +58,11 @@ public interface ReadService {
      */
     @GET("/Report/get_user_doctor_conversation")
     Observable<ResponseModel<List<AskItemMode>>> getAskList(@Query("rep_id") String repId, @Query("page") int page);
+
+    /**
+     * 追问
+     * @return
+     */
+    @GET("/Report/user_more_conversation")
+    Observable<ResponseModel> ask(@Query("rep_id") String repId, @Query("member_id") String page, @Query("content") String content);
 }

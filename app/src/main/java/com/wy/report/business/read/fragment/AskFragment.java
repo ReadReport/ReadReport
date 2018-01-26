@@ -3,6 +3,7 @@ package com.wy.report.business.read.fragment;
 import android.os.Bundle;
 import android.util.SparseIntArray;
 import android.view.View;
+import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -15,8 +16,14 @@ import com.wy.report.business.read.mode.AskItemMode;
 import com.wy.report.business.read.service.ReadService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.StringUtils;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author: ZangSong
@@ -28,13 +35,16 @@ public class AskFragment extends PtrListFragment {
 
     private AskAdapter  mAskAdapter;
     private ReadService mReadService;
-    private String reportId;
+    private String      mReportId;
+
+    @BindView(R.id.input_content)
+    EditText    mContent;
 
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        reportId = getActivity().getIntent().getStringExtra(BundleKey.BUNDLE_KEY_REPORT_ID);
+        mReportId = getActivity().getIntent().getStringExtra(BundleKey.BUNDLE_KEY_REPORT_ID);
         ptrWithoutToolbar = true;
         mAskAdapter = new AskAdapter();
         mReadService = RetrofitHelper.getInstance().create(ReadService.class);
@@ -55,7 +65,7 @@ public class AskFragment extends PtrListFragment {
     @Override
     protected void loadData() {
         super.loadData();
-        mReadService.getAskList(reportId, 1).subscribe(new PtrSubscriber<ResponseModel<List<AskItemMode>>>(this)
+        mReadService.getAskList(mReportId, 1).subscribe(new PtrSubscriber<ResponseModel<List<AskItemMode>>>(this)
         {
             @Override
             public void onNext(ResponseModel<List<AskItemMode>> listResponseModel) {
@@ -76,7 +86,7 @@ public class AskFragment extends PtrListFragment {
         private SparseIntArray                 mLayouts;
 
         public AskAdapter() {
-            super(R.layout.view_ask_left);
+            super(0);
             mLayouts = new SparseIntArray();
             mLayouts.append(0, R.layout.view_ask_left);
             mLayouts.append(1, R.layout.view_ask_right);
@@ -102,4 +112,36 @@ public class AskFragment extends PtrListFragment {
         }
     }
 
+    @OnClick(R.id.input_submit)
+    public void submit()
+    {
+        String       uid     = UserManger.getInstance().getLoginUser().getId();
+        final String name    = UserManger.getInstance().getLoginUser().getName();
+        final String content = mContent.getText().toString();
+        if(StringUtils.isNotBlank(mContent))
+        {
+            AskItemMode askItemMode = new AskItemMode();
+            askItemMode.setConversation(content);
+            askItemMode.setDoctorId(name);
+            mAskAdapter.addData(askItemMode);
+
+//            mReadService.ask(mReportId,uid,content).subscribe(new PtrSubscriber<ResponseModel>(this)
+//            {
+//                @Override
+//                public void onNext(ResponseModel responseModel) {
+//                    super.onNext(responseModel);
+//                    AskItemMode askItemMode = new AskItemMode();
+//                    askItemMode.setConversation(content);
+//                    askItemMode.setDoctorId(name);
+//                    mAskAdapter.addData(askItemMode);
+//                }
+//            });
+        }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        super.onItemClick(adapter, view, position);
+        AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_DOCTOR_DETAIL);
+    }
 }

@@ -1,7 +1,6 @@
 package com.wy.report.business.read.view;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
+import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
 import com.zyyoona7.lib.BaseCustomPopup;
 
 import java.util.ArrayList;
@@ -35,12 +35,12 @@ public class ManagePopMenu extends BaseCustomPopup
     @Override
     protected void initAttributes() {
         recyclerView = new RecyclerView(getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        recyclerView.setLayoutManager(new NestedLinearLayoutManager(getContext()));
         createAdapter();
         recyclerView.setAdapter(quickAdapter);
 
-        setContentView(recyclerView,
-                       ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setContentView(recyclerView);
         setBackgroundDimEnable(false);
         setOutsideTouchable(true);
         setFocusAndOutsideEnable(true);
@@ -54,7 +54,7 @@ public class ManagePopMenu extends BaseCustomPopup
 
     @Override
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-
+        dismiss();
     }
 
 
@@ -63,10 +63,10 @@ public class ManagePopMenu extends BaseCustomPopup
         items = new ArrayList<>();
         PopItem item1 = new PopItem();
         item1.setId("1");
-        item1.setContent("jhfdsaaf");
+        item1.setContent("父亲");
         PopItem item2 = new PopItem();
         item2.setId("1");
-        item2.setContent("jhfdsaaf");
+        item2.setContent("儿子");
         items.add(item1);
         items.add(item2);
     }
