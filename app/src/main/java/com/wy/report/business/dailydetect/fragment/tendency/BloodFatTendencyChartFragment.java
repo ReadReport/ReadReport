@@ -1,9 +1,8 @@
 package com.wy.report.business.dailydetect.fragment.tendency;
 
-import android.graphics.Color;
-
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.wy.report.R;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 
@@ -38,23 +37,23 @@ public class BloodFatTendencyChartFragment extends DailyDetectTendencyCharFragme
         }
 
         LineDataSet hdl = new LineDataSet(hdlEntry, "高胆固醇");
-        hdl.setColor(Color.BLUE);
-        hdl.setCircleColor(Color.BLUE);
+        hdl.setColor(getColor(R.color.lan_26f0df));
+        hdl.setCircleColor(getColor(R.color.lan_26f0df));
         result.add(hdl);
 
         LineDataSet ldl = new LineDataSet(ldlEntry, "低胆固醇");
-        ldl.setColor(Color.BLACK);
-        ldl.setCircleColor(Color.BLACK);
+        ldl.setColor(getColor(R.color.huang_ffe720));
+        ldl.setCircleColor(getColor(R.color.huang_ffe720));
         result.add(ldl);
 
         LineDataSet chol = new LineDataSet(cholEntry, "总胆固醇 ");
-        chol.setColor(Color.RED);
-        chol.setCircleColor(Color.RED);
+        chol.setColor(getColor(R.color.hong_f54f52));
+        chol.setCircleColor(getColor(R.color.hong_f54f52));
         result.add(chol);
 
         LineDataSet trig = new LineDataSet(trigEntry, "甘油三酯");
-        trig.setColor(Color.RED);
-        trig.setCircleColor(Color.RED);
+        trig.setColor(getColor(R.color.lan_30acff));
+        trig.setCircleColor(getColor(R.color.lan_30acff));
         result.add(trig);
 
         return result;

@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.wy.report.R;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class BodyFatTendencyChartFragment extends DailyDetectTendencyCharFragmen
         }
 
         LineDataSet chol = new LineDataSet(cholEntry, "体脂率");
-        chol.setColor(Color.BLACK);
-        chol.setCircleColor(Color.BLACK);
+        chol.setColor(getColor(R.color.lan_30acff));
+        chol.setCircleColor(getColor(R.color.lan_30acff));
         result.add(chol);
 
         return result;

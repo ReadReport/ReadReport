@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.wy.report.R;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 
@@ -36,18 +37,18 @@ public class BloodPressureTendencyChartFragment extends DailyDetectTendencyCharF
         }
 
         LineDataSet high = new LineDataSet(highEntry, "高压");
-        high.setColor(Color.BLUE);
-        high.setCircleColor(Color.BLUE);
+        high.setColor(getColor(R.color.lan_30acff));
+        high.setCircleColor(getColor(R.color.lan_30acff));
         result.add(high);
 
         LineDataSet low = new LineDataSet(lowEntry, "低压");
-        low.setColor(Color.BLACK);
-        low.setCircleColor(Color.BLACK);
+        low.setColor(getColor(R.color.lan_26f0df));
+        low.setCircleColor(getColor(R.color.lan_26f0df));
         result.add(low);
 
         LineDataSet pulse = new LineDataSet(pulseEntry, "心率");
-        pulse.setColor(Color.RED);
-        pulse.setCircleColor(Color.RED);
+        pulse.setColor(getColor(R.color.huang_ffe720));
+        pulse.setCircleColor(getColor(R.color.huang_ffe720));
         result.add(pulse);
 
         return result;

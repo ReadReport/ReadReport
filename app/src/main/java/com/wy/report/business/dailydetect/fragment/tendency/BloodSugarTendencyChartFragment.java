@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.wy.report.R;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class BloodSugarTendencyChartFragment extends DailyDetectTendencyCharFrag
         }
 
         LineDataSet high = new LineDataSet(sugarEntry, "血糖");
-        high.setColor(Color.BLACK);
-        high.setCircleColor(Color.BLACK);
+        high.setColor(getColor(R.color.lan_30acff));
+        high.setCircleColor(getColor(R.color.lan_30acff));
         result.add(high);
 
         return result;

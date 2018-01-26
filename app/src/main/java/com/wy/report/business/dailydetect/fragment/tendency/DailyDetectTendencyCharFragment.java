@@ -79,12 +79,16 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         lineChart.setTouchEnabled(false);
         lineChart.setDragDecelerationEnabled(false);
         lineChart.offsetLeftAndRight(DensityUtils.dip2px(getActivity(), 10));
-        lineChart.getLegend().setDirection(Legend.LegendDirection.LEFT_TO_RIGHT);
+        Legend legend = lineChart.getLegend();
+        legend.setDirection(Legend.LegendDirection.LEFT_TO_RIGHT);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float v, AxisBase axisBase) {
+                v--;
                 if (v >= data.size()) {
                     return Float.toString(v);
                 }
@@ -99,7 +103,7 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         xAxis.setAvoidFirstLastClipping(true);
         xAxis.setDrawGridLines(false);
         xAxis.setAxisLineWidth(2);
-        xAxis.setAxisLineColor(getColor(R.color.hui_575757));
+        xAxis.setAxisLineColor(getColor(R.color.hui_858585));
 
         YAxis rightYAxis = lineChart.getAxisRight();
         rightYAxis.setEnabled(false);
@@ -107,7 +111,7 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         YAxis leftYAxis = lineChart.getAxisLeft();
         leftYAxis.setDrawGridLines(false);
         leftYAxis.setAxisLineWidth(2);
-        leftYAxis.setAxisLineColor(getColor(R.color.hui_575757));
+        leftYAxis.setAxisLineColor(getColor(R.color.hui_858585));
         leftYAxis.setAxisMaximum(getYMaxValue());
         leftYAxis.setAxisMinimum(getYMinValue());
 

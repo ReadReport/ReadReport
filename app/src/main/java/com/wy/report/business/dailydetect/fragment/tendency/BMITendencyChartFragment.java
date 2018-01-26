@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.wy.report.R;
 import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 
 import java.util.ArrayList;
@@ -33,13 +34,13 @@ public class BMITendencyChartFragment extends DailyDetectTendencyCharFragment {
         }
 
         LineDataSet height = new LineDataSet(heightEntry, "身高");
-        height.setColor(Color.BLACK);
-        height.setCircleColor(Color.BLACK);
+        height.setColor(getColor(R.color.lan_30acff));
+        height.setCircleColor(getColor(R.color.lan_30acff));
         result.add(height);
 
         LineDataSet weight = new LineDataSet(weightEntry, "体重");
-        weight.setColor(Color.BLACK);
-        weight.setCircleColor(Color.BLACK);
+        weight.setColor(getColor(R.color.lan_26f0df));
+        weight.setCircleColor(getColor(R.color.lan_26f0df));
         result.add(weight);
 
         return result;
