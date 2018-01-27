@@ -96,7 +96,7 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
                 return new SimpleDateFormat("MM-dd").format(new Date(milliseconds));
             }
         });
-        xAxis.setLabelCount(data.size());
+        xAxis.setLabelCount(data.size() - 1);
         xAxis.setLabelRotationAngle(30);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAvoidFirstLastClipping(true);

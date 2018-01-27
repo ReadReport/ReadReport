@@ -276,4 +276,9 @@ public class FindFragment extends PtrFragment {
         HomeFindHealthyKnowledgeModel knowledgeModel = model.getHomeFindHealthyKnowledgeModel();
         authRouterManager.openWebView(getActivity(), knowledgeModel.getMore(), "");
     }
+
+    @OnClick(R.id.toolbar_msg_icon)
+    public void msgClick() {
+        router.open(getActivity(), AuthRouterManager.ROUTER_MESSAGE);
+    }
 }

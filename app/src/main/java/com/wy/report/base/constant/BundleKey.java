@@ -27,4 +27,6 @@ public final class BundleKey {
     public static final String BUNDLE_KEY_MODIFY_PWD_USERNAME = "BUNDLE_KEY_MODIFY_PWD_USERNAME";
 
     public static final String BUNDLE_KEY_REPORT_ID = "BUNDLE_KEY_REPORT_ID";
+
+    public static final String BUNDLE_KEY_REPORT_FROM_HOME = "BUNDLE_KEY_REPORT_FROM_HOME";
 }

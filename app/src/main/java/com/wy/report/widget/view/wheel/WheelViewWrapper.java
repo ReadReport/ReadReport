@@ -3,6 +3,7 @@ package com.wy.report.widget.view.wheel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -78,21 +79,5 @@ public class WheelViewWrapper extends com.wy.report.widget.view.wheel.widget.Whe
         super.onInterceptTouchEvent(ev);
         requestDisallowInterceptTouchEvent(true);
         return true;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        boolean result = super.onTouchEvent(ev);
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_UP: {
-                requestDisallowInterceptTouchEvent(false);
-                android.support.v4.widget.NestedScrollView scrollView = (android.support.v4.widget.NestedScrollView) ((Activity) getContext()).findViewById(R.id.nested_scroll_view);
-                if (scrollView != null) {
-                    ReflectUtil.set(scrollView, "mParentHelper.mNestedScrollAxes", 0);
-                }
-                break;
-            }
-        }
-        return result;
     }
 }

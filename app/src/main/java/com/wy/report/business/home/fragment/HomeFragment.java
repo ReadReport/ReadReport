@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
@@ -23,6 +24,7 @@ import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.widget.ObservableScrollView;
+import com.wy.report.widget.view.ptr.HeaderLoadingView;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -61,7 +63,10 @@ public class HomeFragment extends PtrFragment {
     private MessageManager messageManager;
 
     private boolean toolbarOverHalf;
+
     private HomeReportModel homeReportModel;
+
+    private HeaderLoadingView headerLoadingView;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -74,6 +79,9 @@ public class HomeFragment extends PtrFragment {
     @Override
     protected void initView(View content) {
         super.initView(content);
+        headerLoadingView = new HeaderLoadingView(getActivity());
+        ptrFrameLayout.setHeaderView(headerLoadingView);
+        ptrFrameLayout.addPtrUIHandler(headerLoadingView);
     }
 
     @Override
@@ -155,6 +163,17 @@ public class HomeFragment extends PtrFragment {
 
             TextView time = (TextView) itemView.findViewById(R.id.home_feed_time);
             time.setText(StringUtils.formatTime(model.getTime() * 1000));
+
+            final String reportId = model.getReportId();
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle param = new Bundle();
+                    param.putString(BundleKey.BUNDLE_KEY_REPORT_ID, reportId);
+                    param.putBoolean(BundleKey.BUNDLE_KEY_REPORT_FROM_HOME, true);
+                    router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_DETAIL, param);
+                }
+            });
         }
     }
 
@@ -195,5 +214,10 @@ public class HomeFragment extends PtrFragment {
     @OnClick(R.id.home_self_interpretation)
     public void selfInterpretationClick() {
         authRouterManager.openWebView(getActivity(), homeReportModel.getZwjd(), getString(R.string.home_self_interpretation));
+    }
+
+    @OnClick(R.id.toolbar_msg_icon)
+    public void msgClick() {
+        router.open(getActivity(), AuthRouterManager.ROUTER_MESSAGE);
     }
 }

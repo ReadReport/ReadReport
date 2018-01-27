@@ -229,7 +229,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:gravity="center"
+        android:gravity="left"
         android:text="@string/report_tips"
         android:textColor="@color/hong_f54f52"
         android:textSize="10sp"
