@@ -63,7 +63,7 @@
         />
 
 
-    <TextView
+    <com.wy.report.widget.view.CountDownTextView
         android:id="@+id/get_verify_code"
         android:layout_width="78dp"
         android:layout_height="30dp"

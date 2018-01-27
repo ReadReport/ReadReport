@@ -30,6 +30,8 @@ public class FeedbackFragment extends NetworkFragment {
 
     MyService myService;
 
+    private final int SUGGEST_NUM = 200;
+
     @Override
     protected int contentLayoutID() {
         return R.layout.fragment_feedback;
@@ -52,6 +54,10 @@ public class FeedbackFragment extends NetworkFragment {
         if (StringUtils.isNotBlank(content)) {
             String id  = String.valueOf(UserManger.getInstance().getLoginUser().getId());
             String con = content.getText().toString();
+            if (con.length() > SUGGEST_NUM) {
+                ToastUtils.showLong(R.string.feedback_empty_out_long);
+                return;
+            }
             myService.feedback(id, con).subscribe(new NetworkSubscriber<ResponseModel>(this) {
                 @Override
                 public void onNext(ResponseModel responseModel) {

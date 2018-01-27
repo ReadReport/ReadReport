@@ -55,6 +55,7 @@
     <string name="feedback_hint">欢迎您提出对我们的感受和建议</string>
     <string name="feedback_commit">发表</string>
     <string name="feedback_empty_tip">请输入内容哦～</string>
+    <string name="feedback_empty_out_long">意见内容不超过200个字哦～</string>
     <string name="feedback_success_tip">提交成功～</string>
 
     <string name="about_title">关于我们</string>
