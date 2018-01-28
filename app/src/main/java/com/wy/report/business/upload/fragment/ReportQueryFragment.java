@@ -111,6 +111,7 @@ public class ReportQueryFragment extends NetworkFragment {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
                                      getActivity().finish();
+                                     router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY_SUCCESS);
                                  }
                              });
                          }
