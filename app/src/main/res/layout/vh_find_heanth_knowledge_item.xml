@@ -5,9 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="15dp"
+    android:background="@drawable/selector_white_bg"
     android:paddingBottom="15dp"
-    android:background="@drawable/selector_white_bg">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="15dp">
 
     <ImageView
         android:id="@+id/home_find_health_knowledge_item_icon"

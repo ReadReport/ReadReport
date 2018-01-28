@@ -7,6 +7,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/selector_white_bg"
     android:paddingBottom="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:paddingTop="15dp">
 
     <ImageView

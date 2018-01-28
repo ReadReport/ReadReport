@@ -70,15 +70,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shape_white_corner"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:background="@drawable/shape_white_corner">
 
             <ImageView
                 android:id="@+id/home_find_health_test_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
                 android:src="@drawable/ic_find_test"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -103,6 +102,7 @@
                 android:includeFontPadding="false"
                 android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
+                android:paddingRight="10dp"
                 android:paddingTop="5dp"
                 android:text="@string/more"
                 android:textColor="@color/hui_858585"
@@ -130,14 +130,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_white_corner"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+
+            >
 
             <ImageView
                 android:id="@+id/home_find_health_knowledge_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
                 android:src="@drawable/ic_find_health"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -162,6 +163,7 @@
                 android:includeFontPadding="false"
                 android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
+                android:paddingRight="10dp"
                 android:paddingTop="5dp"
                 android:text="@string/more"
                 android:textColor="@color/hui_858585"
