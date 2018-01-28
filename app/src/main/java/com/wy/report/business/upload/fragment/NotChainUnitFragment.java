@@ -142,6 +142,9 @@ public class NotChainUnitFragment extends NetworkFragment {
                                    allUnits.add(new UnitModel(provinceModel.getProvince(), UnitModel.TYPE_TITLE));
                                    allUnits.addAll(provinceModel.getUnits());
                                }
+                               for (UnitModel unit : allUnits) {
+                                   unit.setHospitalType(UnitModel.TYPE_HOSPITAL_NOT_CHAIN);
+                               }
                                adapterRight.setNewData(allUnits);
                            }
                        });

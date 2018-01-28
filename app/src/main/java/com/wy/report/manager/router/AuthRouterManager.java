@@ -32,6 +32,7 @@ import com.wy.report.business.read.fragment.ReportDetailFragment;
 import com.wy.report.business.read.fragment.ReportManageFragment;
 import com.wy.report.business.upload.fragment.HospitalListFragment;
 import com.wy.report.business.upload.fragment.ReportQueryFragment;
+import com.wy.report.business.upload.fragment.ReportQuerySuccessFragment;
 import com.wy.report.business.upload.fragment.ReportUploadFragment;
 import com.wy.report.business.upload.fragment.ReportUploadQueryFragment;
 import com.wy.report.business.upload.fragment.ReportUploadSuccessFragment;
@@ -194,6 +195,11 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_REPORT_UPLOAD_SUCCESS = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_UPLOAD_SUCCESS";
 
+    /**
+     * 报告查询成功
+     */
+    public static final String ROUTER_REPORT_QUERY_SUCCESS = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_QUERY_SUCCESS";
+
 
     private Router router;
 
@@ -256,7 +262,7 @@ public class AuthRouterManager {
         router.map(ROUTER_DOCTOR_DETAIL, StandardActivity.class, DoctorDetailFragment.class);
         router.map(ROUTER_ASK, StandardActivity.class, AskFragment.class);
         router.map(ROUTER_REPORT_UPLOAD_SUCCESS, StandardActivity.class, ReportUploadSuccessFragment.class);
-
+        router.map(ROUTER_REPORT_QUERY_SUCCESS, StandardActivity.class, ReportQuerySuccessFragment.class);
     }
 
     /**

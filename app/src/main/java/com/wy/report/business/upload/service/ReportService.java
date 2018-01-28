@@ -33,8 +33,8 @@ public interface ReportService {
     Observable<ResponseModel<UploadModel>> submitReport(@Part("mid") String uid, @Part("upload_from") String uploadFrom, @Part("tj_hospital") String hospitalId,
                                                         @Part("tj_date") String date, @Part("remark") String remark, @Part MultipartBody.Part[] parts);
 
-    @GET("/Report/do_upload_report")
-    @Multipart
-    Observable<ResponseModel<UploadModel>> queryReport(@Part("mid") String uid, @Part("tj_hospital") String hospitalId,
-                                                        @Part("tj_date") String account, @Part("remark") String password);
+    @POST("/Report/do_user_pwd_hospital_report")
+    @FormUrlEncoded
+    Observable<ResponseModel<UploadModel>> queryReport(@Field("mid") String uid, @Field("tj_hospital_id") String hospitalId, @Field("tj_hospital") String hospital,
+                                                       @Field("gl_zh") String account, @Field("gl_pwd") String password, @Field("if_chain") int ifChain);
 }

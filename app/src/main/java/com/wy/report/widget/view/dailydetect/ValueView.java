@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wy.report.R;
+import com.wy.report.util.DensityUtils;
 import com.wy.report.widget.view.wheel.WheelViewWrapper;
 
 import butterknife.BindView;
@@ -53,14 +54,12 @@ public class ValueView extends LinearLayout {
     public void setData(final ValueType type) {
         if (TextUtils.isEmpty(type.getName())) {
             name.setVisibility(View.GONE);
-        } else {
-            name.setText(type.getName());
-        }
-        if (TextUtils.isEmpty(type.getName())) {
             unit.setVisibility(View.GONE);
         } else {
+            name.setText(type.getName());
             unit.setText(type.getUnit());
         }
+
         wheelView.setData(type.getValues());
         wheelView.setSelection(type.getStartIndex());
     }

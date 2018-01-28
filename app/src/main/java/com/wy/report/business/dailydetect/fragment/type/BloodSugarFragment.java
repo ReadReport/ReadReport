@@ -16,6 +16,7 @@ import com.wy.report.business.dailydetect.fragment.tendency.DailyDetectTendencyC
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.widget.view.dailydetect.ValueType;
+import com.wy.report.widget.view.dailydetect.ValueView;
 import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 import com.wy.report.widget.view.wheel.WheelViewItem;
 
@@ -37,7 +38,7 @@ public class BloodSugarFragment extends DailyDetectFragment {
 
     @Override
     public void saveRecord(final View view) {
-        dailyDetectService.recordBloodSugar(user.getId(), DETECT_TYPE_BLOOD_SUGAR, "", getValue(0), getValue(1) + "." + getValue(2))
+        dailyDetectService.recordBloodSugar(user.getId(), DETECT_TYPE_BLOOD_SUGAR, "", getValue(0), getValue(1) + "." + getValue(3))
                           .subscribe(new NetworkSubscriber<ResponseModel>(this) {
                               @Override
                               public void handleSuccess(ResponseModel responseModel) {
@@ -105,4 +106,9 @@ public class BloodSugarFragment extends DailyDetectFragment {
         return new BaseFragment[]{new BloodSugarTendencyChartFragment(), new BloodSugarDataFragment()};
     }
 
+    protected String getValue(int index) {
+        return ((ValueView) valueViewContainer.getChildAt(index)).getWheelView()
+                                                                       .getSelectedItem()
+                                                                       .getValue();
+    }
 }

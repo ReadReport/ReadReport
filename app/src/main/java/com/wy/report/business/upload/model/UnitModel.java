@@ -17,6 +17,10 @@ public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable 
     public static final int TYPE_TITLE = 1;
 
     public static final int TYPE_HOSPITAL = 0;
+
+    public static final int TYPE_HOSPITAL_CHAIN = 1;
+
+    public static final int TYPE_HOSPITAL_NOT_CHAIN = 0;
     public static final Creator<UnitModel> CREATOR = new Creator<UnitModel>() {
         @Override
         public UnitModel createFromParcel(Parcel source) {
@@ -36,6 +40,7 @@ public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable 
     private String city;
     private int type;
     private String szm;
+    private int hospitalType;
 
     public UnitModel() {
     }
@@ -46,6 +51,17 @@ public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable 
         this.type = type;
     }
 
+    public UnitModel(String id, String title, String provinceId, String province, String city, int type, String szm, int hospitalType) {
+        this.id = id;
+        this.title = title;
+        this.provinceId = provinceId;
+        this.province = province;
+        this.city = city;
+        this.type = type;
+        this.szm = szm;
+        this.hospitalType = hospitalType;
+    }
+
     protected UnitModel(Parcel in) {
         this.id = in.readString();
         this.title = in.readString();
@@ -54,6 +70,7 @@ public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable 
         this.city = in.readString();
         this.type = in.readInt();
         this.szm = in.readString();
+        this.hospitalType = in.readInt();
     }
 
     public String getId() {
@@ -117,6 +134,19 @@ public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable 
         this.szm = szm;
     }
 
+    public int getHospitalType() {
+        return hospitalType;
+    }
+
+    public void setHospitalType(int hospitalType) {
+        this.hospitalType = hospitalType;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -131,21 +161,7 @@ public class UnitModel extends BaseModel implements MultiItemEntity, Parcelable 
         dest.writeString(this.city);
         dest.writeInt(this.type);
         dest.writeString(this.szm);
+        dest.writeInt(this.hospitalType);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UnitModel unitModel = (UnitModel) o;
-
-        return id.equals(unitModel.id);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }
