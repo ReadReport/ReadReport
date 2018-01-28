@@ -196,7 +196,7 @@ public class AuthRouterManager {
     public static final String ROUTER_REPORT_UPLOAD_SUCCESS = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_UPLOAD_SUCCESS";
 
     /**
-     * 查询报告成功
+     * 报告查询成功
      */
     public static final String ROUTER_REPORT_QUERY_SUCCESS = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_QUERY_SUCCESS";
 
@@ -263,7 +263,6 @@ public class AuthRouterManager {
         router.map(ROUTER_ASK, StandardActivity.class, AskFragment.class);
         router.map(ROUTER_REPORT_UPLOAD_SUCCESS, StandardActivity.class, ReportUploadSuccessFragment.class);
         router.map(ROUTER_REPORT_QUERY_SUCCESS, StandardActivity.class, ReportQuerySuccessFragment.class);
-
     }
 
     /**

@@ -47,7 +47,7 @@ public interface DailyDetectService {
      * @param sugar          血糖值，单位mmol/L
      * @return
      */
-    @POST
+    @POST("/DailyMonitor/do_idp_records")
     @FormUrlEncoded
     Observable<ResponseModel> recordBloodSugar(@Field("mid") String mid, @Field("test_type") int type, @Field("type_code") String typeCode,
                                                @Field("type_detail_code") String typeDetailCode, @Field("sugar_value") String sugar);
@@ -62,7 +62,7 @@ public interface DailyDetectService {
      * @param weight 体重
      * @return
      */
-    @POST
+    @POST("/DailyMonitor/do_idp_records")
     @FormUrlEncoded
     Observable<ResponseModel> recordBMI(@Field("mid") String mid, @Field("test_type") int type, @Field("hight_value") String high,
                                         @Field("weight_value") String weight);
@@ -75,7 +75,7 @@ public interface DailyDetectService {
      * @param bodyFat 体脂率
      * @return
      */
-    @POST
+    @POST("/DailyMonitor/do_idp_records")
     @FormUrlEncoded
     Observable<ResponseModel> recordBodyFat(@Field("mid") String mid, @Field("test_type") int type, @Field("body_fat_value") String bodyFat);
 
@@ -90,7 +90,7 @@ public interface DailyDetectService {
      * @param ldl  低密度
      * @return
      */
-    @POST
+    @POST("/DailyMonitor/do_idp_records")
     @FormUrlEncoded
     Observable<ResponseModel> recordBloodFat(@Field("mid") String mid, @Field("test_type") int type, @Field("chol_value") String chol,
                                              @Field("trig_value") String trig, @Field("hdl_value") String hdl, @Field("ldl_value") String ldl);

@@ -97,12 +97,9 @@ public class ReportQueryFragment extends NetworkFragment {
 
     @OnClick({R.id.report_query_submit})
     public void submit() {
-        reportService.queryReport(familyMemberModel.getId(), unitModel.getId(), ViewUtils.getText(account), ViewUtils.getText(password))
+        reportService.queryReport(familyMemberModel.getId(), unitModel.getId(), unitModel.getTitle(), ViewUtils.getText(account),
+                ViewUtils.getText(password), unitModel.getHospitalType())
                      .subscribe(new NetworkSubscriber<ResponseModel<UploadModel>>(this) {
-                         @Override
-                         public void handleError(Throwable t) {
-                             super.handleError(t);
-                         }
 
                          @Override
                          public void handleSuccess(ResponseModel<UploadModel> uploadModelResponseModel) {
@@ -110,7 +107,6 @@ public class ReportQueryFragment extends NetworkFragment {
                              DialogHelper.showReportQueryConfirmDialog(getActivity(), new DialogInterface.OnClickListener() {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
-                                     getActivity().finish();
                                      router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY_SUCCESS);
                                  }
                              });
