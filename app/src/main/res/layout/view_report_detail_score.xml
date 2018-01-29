@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/report_detail_score_private_tip"
+                android:text="@string/report_detail_score_tip"
                 android:textColor="@color/hui_858585"
                 android:textSize="13sp" />
 
@@ -66,6 +66,7 @@
                 android:layout_height="20dp"
                 android:layout_marginLeft="3dp"
                 android:scaleType="centerInside"
+                android:visibility="gone"
                 android:src="@drawable/ic_score_open" />
         </LinearLayout>
 

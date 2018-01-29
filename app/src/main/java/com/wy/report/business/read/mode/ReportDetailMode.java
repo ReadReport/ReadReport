@@ -1,6 +1,7 @@
 package com.wy.report.business.read.mode;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.wy.report.util.StringUtils;
 
 import java.util.List;
 
@@ -16,12 +17,12 @@ public class ReportDetailMode {
      * 报告信息
      */
     @JSONField(name = "rep_info")
-    private ReportInfo reportInfo;
+    private ReportInfo       reportInfo;
     /**
      * 用户信息
      */
     @JSONField(name = "rep_userinfo")
-    private UserInfo userInfo;
+    private UserInfo         userInfo;
     /**
      * 图片信息
      */
@@ -139,7 +140,7 @@ public class ReportDetailMode {
         @JSONField(name = "id")
         private String id;
         @JSONField(name = "read_date")
-        private long readDate;
+        private long   readDate;
         @JSONField(name = "jl")
         private String jl;
         @JSONField(name = "doctor_id")
@@ -340,7 +341,7 @@ public class ReportDetailMode {
         @JSONField(name = "id")
         private String        id;
         @JSONField(name = "esys_id")
-        private int        systemId;
+        private int           systemId;
         @JSONField(name = "system_name")
         private String        systemName;
         @JSONField(name = "ill_items")
@@ -393,8 +394,7 @@ public class ReportDetailMode {
             @JSONField(name = "reference_range")
             private String referenceRange;
 
-            public IllItem()
-            {
+            public IllItem() {
 
             }
 
@@ -416,6 +416,9 @@ public class ReportDetailMode {
             }
 
             public String getResZb() {
+                if (StringUtils.isBlank(resZb)) {
+                    resZb = "无";
+                }
                 return resZb;
             }
 
@@ -432,6 +435,9 @@ public class ReportDetailMode {
             }
 
             public String getReferenceRange() {
+                if (StringUtils.isBlank(referenceRange)) {
+                    referenceRange = "无";
+                }
                 return referenceRange;
             }
 

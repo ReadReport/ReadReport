@@ -16,7 +16,7 @@
     <string name="report_detail_user_note_name">姓名：</string>
 
     <string name="report_detail_score_title">健康得分</string>
-    <string name="report_detail_score_private_tip">数据来源于您的体检报告</string>
+    <string name="report_detail_score_tip">得分来源于体检报告各项指标</string>
 
     <string name="report_detail_body_title">身体机能</string>
     <string name="report_detail_body_state_normal">正常</string>
