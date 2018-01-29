@@ -106,8 +106,7 @@ public class FindFragment extends PtrFragment {
                      .load(item.getImage())
                      .into((ImageView) helper.getView(R.id.vh_find_health_test_item_icon));
                 helper.setText(R.id.vh_find_health_test_item_title, item.getTitle())
-                      .setText(R.id.vh_find_health_test_item_test_num, item.getTestedNum())
-                      .addOnClickListener(R.id.vh_find_health_test_item_do_test);
+                      .setText(R.id.vh_find_health_test_item_test_num, item.getTestedNum());
             }
         };
         healthTestAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -117,12 +116,7 @@ public class FindFragment extends PtrFragment {
                 authRouterManager.openWebView(getActivity(), model.getId(), model.getTitle());
             }
         });
-        healthTestAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
-            }
-        });
         healthTestRecycleView.setAdapter(healthTestAdapter);
         healthTestRecycleView.setHasFixedSize(true);
         healthTestRecycleView.setNestedScrollingEnabled(false);

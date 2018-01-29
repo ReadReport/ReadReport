@@ -61,6 +61,7 @@ public class BloodFatFragment extends DailyDetectFragment {
                                               .end(9.9)
                                               .fraction("0.0")
                                               .delta(0.1)
+                                              .startIndex(2)
                                               .create();
         result.add(tc);
 
@@ -70,6 +71,7 @@ public class BloodFatFragment extends DailyDetectFragment {
                                               .end(3.00)
                                               .fraction("0.0")
                                               .delta(0.1)
+                                              .startIndex(2)
                                               .create();
         result.add(tg);
 
@@ -80,6 +82,7 @@ public class BloodFatFragment extends DailyDetectFragment {
                                                .end(9.9)
                                                .fraction("0.00")
                                                .delta(0.01)
+                                               .startIndex(2)
                                                .create();
         result.add(hdl);
 
@@ -89,6 +92,7 @@ public class BloodFatFragment extends DailyDetectFragment {
                                                .end(3.1)
                                                .fraction("0.0")
                                                .delta(0.1)
+                                               .startIndex(2)
                                                .create();
         result.add(ldl);
 

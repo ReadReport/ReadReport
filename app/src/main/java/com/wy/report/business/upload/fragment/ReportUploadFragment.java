@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -73,7 +76,7 @@ public class ReportUploadFragment extends NetworkFragment {
 
     private static final int MAX_PICTURE_NUM = 12;
 
-    private static final int MAX_REMARK_NUM = 200;
+    private static final int MAX_REMARK_NUM = 100;
 
     @BindView(R.id.report_upload_medical_examiner_name)
     TextView name;
@@ -82,7 +85,7 @@ public class ReportUploadFragment extends NetworkFragment {
     TextView time;
 
     @BindView(R.id.report_upload_examine_hospital_name)
-    TextView hospital;
+    EditText hospital;
 
     @BindView(R.id.report_upload_remark_name)
     EditText remark;
@@ -96,9 +99,10 @@ public class ReportUploadFragment extends NetworkFragment {
     @BindView(R.id.report_upload_image_num)
     TextView pictureNum;
 
-    private FamilyMemberModel familyMemberModel;
+    @BindView(R.id.report_upload_remark_name_len)
+    TextView remarkTextLen;
 
-    private UnitModel unitModel;
+    private FamilyMemberModel familyMemberModel;
 
     private BaseItemDraggableAdapter<PictureModel, BaseViewHolder> adapter;
 
@@ -131,8 +135,33 @@ public class ReportUploadFragment extends NetworkFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
+        recyclerView.getItemAnimator()
+                    .setSupportsChangeAnimations(false);
         restorePictureModel();
         updateSelectedPictureInfo();
+
+        remark.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > MAX_REMARK_NUM) {
+                    ToastUtils.showLong(R.string.report_upload_remark_limit);
+                    s.delete(MAX_REMARK_NUM, s.length());
+                } else {
+                    remarkTextLen.setText(Integer.toString(MAX_REMARK_NUM - s.length()));
+                }
+            }
+        });
+        remarkTextLen.setText(Integer.toString(MAX_REMARK_NUM));
     }
 
     private void createAdapter() {
@@ -284,21 +313,15 @@ public class ReportUploadFragment extends NetworkFragment {
     @OnClick({R.id.report_upload_examine_time})
     public void timeClick() {
         Calendar cal = Calendar.getInstance();
-        new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 time.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
             }
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    @OnClick({R.id.report_upload_examine_hospital})
-    public void hospitalClick() {
-        Bundle param = new Bundle();
-        if (unitModel != null) {
-            param.putParcelable(BundleKey.BUNDLE_KEY_MODEL, unitModel);
-        }
-        router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_HOSPITAL_LIST, param);
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        dialog.getDatePicker()
+              .setMaxDate(cal.getTimeInMillis());
+        dialog.show();
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_REPORT_UPLOAD_DELETE_PICTURE)})
@@ -310,12 +333,6 @@ public class ReportUploadFragment extends NetworkFragment {
     public void familyMemberSelected(FamilyMemberModel model) {
         familyMemberModel = model;
         name.setText(model.getName());
-    }
-
-    @Subscribe(tags = {@Tag(RxKey.RX_HOSPITAL_UNIT_SELECT)})
-    public void hospitalUnitSelected(UnitModel model) {
-        unitModel = model;
-        hospital.setText(model.getTitle());
     }
 
     @Override
@@ -336,6 +353,9 @@ public class ReportUploadFragment extends NetworkFragment {
                     }
                 }
                 adapter.addData(adapter.getItemCount() - 1, new PictureModel(picturePath));
+                if (adapter.getItemCount() > MAX_PICTURE_NUM) {
+                    adapter.remove(adapter.getItemCount() - 1);
+                }
                 updateSelectedPictureInfo();
                 break;
             }
@@ -375,11 +395,8 @@ public class ReportUploadFragment extends NetworkFragment {
     @OnClick(R.id.upload_report)
     public void upload() {
 
-        if (unitModel == null) {
-            return;
-        }
-
         if (time == null) {
+            ToastUtils.showLong(R.string.report_upload_time_not_empty);
             return;
         }
 
@@ -397,7 +414,7 @@ public class ReportUploadFragment extends NetworkFragment {
             files.add(new File(pictureModel.getPath()));
         }
         User user = userManger.getLoginUser();
-        reportService.submitReport(user.getId(), "android", unitModel.getId(), ViewUtils.getText(time), remarkStr, PartUtils.convertFile2Part(files))
+        reportService.submitReport(user.getId(), "android", ViewUtils.getText(hospital), ViewUtils.getText(time), remarkStr, PartUtils.convertFile2Part(files))
                      .subscribe(new NetworkSubscriber<ResponseModel<UploadModel>>(this) {
                          @Override
                          public void handleError(Throwable t) {
@@ -410,6 +427,7 @@ public class ReportUploadFragment extends NetworkFragment {
                              DialogHelper.showReportUploadSuccessDialog(getActivity(), new DialogInterface.OnClickListener() {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
+                                     router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
                                      getActivity().finish();
                                  }
                              }, new DialogInterface.OnClickListener() {
@@ -424,7 +442,7 @@ public class ReportUploadFragment extends NetworkFragment {
 
     @Override
     public boolean onBackPressed() {
-        if (familyMemberModel != null || unitModel != null || StringUtils.isNotBlank(time) || StringUtils.isNotBlank(remark) || adapter.getItemCount() > 1) {
+        if (familyMemberModel != null || StringUtils.isNotBlank(hospital) || StringUtils.isNotBlank(time) || StringUtils.isNotBlank(remark) || adapter.getItemCount() > 1) {
             DialogHelper.showReportUploadConfirmDialog(getActivity(), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

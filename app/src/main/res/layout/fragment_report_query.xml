@@ -189,6 +189,7 @@
                 android:ellipsize="end"
                 android:gravity="left|center_vertical"
                 android:hint="@string/report_password_hint"
+                android:inputType="textPassword"
                 android:singleLine="true"
                 android:textSize="14sp"/>
         </LinearLayout>

@@ -39,17 +39,17 @@ public class SplashActivity extends AppCompatActivity {
                           finish();
                       }
                   });
-        RetrofitHelper.getInstance()
-                      .create(AuthService.class)
-                      .login("18046042250", "111111")
-                      .subscribe(new NetworkSubscriber<ResponseModel<User>>(null) {
-                          @Override
-                          public void onNext(ResponseModel<User> userResponseModel) {
-                              super.onNext(userResponseModel);
-                              UserManger.getInstance()
-                                        .updateUser(userResponseModel.getData());
-                          }
-                      });
+//        RetrofitHelper.getInstance()
+//                      .create(AuthService.class)
+//                      .login("18046042250", "111111")
+//                      .subscribe(new NetworkSubscriber<ResponseModel<User>>(null) {
+//                          @Override
+//                          public void onNext(ResponseModel<User> userResponseModel) {
+//                              super.onNext(userResponseModel);
+//                              UserManger.getInstance()
+//                                        .updateUser(userResponseModel.getData());
+//                          }
+//                      });
     }
 }
 

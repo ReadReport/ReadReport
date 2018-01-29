@@ -23,7 +23,7 @@ public class ReportQuerySuccessFragment extends ToolbarFragment {
         setTitle(R.string.report_upload_success_title);
     }
 
-    @OnClick(R.id.fragment_report_upload_success_start)
+    @OnClick(R.id.fragment_report_query_success_start)
     public void startSurvey() {
         authRouterManager.openWebView(getActivity(), "http://www.baidu.com", "");
     }

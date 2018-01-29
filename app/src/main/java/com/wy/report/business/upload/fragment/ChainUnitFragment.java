@@ -64,6 +64,7 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
                                String previousChar = "";
                                for (int i = 0; i < data.size(); i++) {
                                    UnitModel unitModel = data.get(i);
+                                   unitModel.setHospitalType(UnitModel.TYPE_HOSPITAL_CHAIN);
                                    String szm = unitModel.getSzm();
                                    if (!previousChar.equals(szm)) {
                                        previousChar = szm;

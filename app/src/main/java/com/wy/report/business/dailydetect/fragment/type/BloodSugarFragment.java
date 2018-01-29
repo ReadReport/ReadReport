@@ -16,6 +16,7 @@ import com.wy.report.business.dailydetect.fragment.tendency.DailyDetectTendencyC
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.widget.view.dailydetect.ValueType;
+import com.wy.report.widget.view.dailydetect.ValueView;
 import com.wy.report.widget.view.dailydetect.ValueViewContainer;
 import com.wy.report.widget.view.wheel.WheelViewItem;
 
@@ -37,7 +38,7 @@ public class BloodSugarFragment extends DailyDetectFragment {
 
     @Override
     public void saveRecord(final View view) {
-        dailyDetectService.recordBloodSugar(user.getId(), DETECT_TYPE_BLOOD_SUGAR, "", getValue(0), getValue(1) + "." + getValue(2))
+        dailyDetectService.recordBloodSugar(user.getId(), DETECT_TYPE_BLOOD_SUGAR, "", getValue(0), getValue(1) + "." + getValue(3))
                           .subscribe(new NetworkSubscriber<ResponseModel>(this) {
                               @Override
                               public void handleSuccess(ResponseModel responseModel) {
@@ -74,19 +75,21 @@ public class BloodSugarFragment extends DailyDetectFragment {
         result.add(time);
 
         ValueType number1 = new ValueType.Builder().start(3)
-                                                  .end(11)
-                                                  .create();
+                                                   .end(11)
+                                                   .startIndex(2)
+                                                   .create();
         result.add(number1);
 
         ValueType number2 = new ValueType.Builder().start(1)
                                                    .end(9)
+                                                   .startIndex(2)
                                                    .create();
         result.add(number2);
 
 
         ViewGroup resultView = (ViewGroup) LayoutInflater.from(getActivity())
                                                          .inflate(R.layout.view_daily_detect_blood_sugar_value, null, false);
-        valueViewContainer = (ValueViewContainer)resultView.findViewById(R.id.view_daily_detect_blood_sugar_value_container);
+        valueViewContainer = (ValueViewContainer) resultView.findViewById(R.id.view_daily_detect_blood_sugar_value_container);
         valueViewContainer.setData(result);
 
         TextView textView = new TextView(getActivity());
@@ -105,4 +108,9 @@ public class BloodSugarFragment extends DailyDetectFragment {
         return new BaseFragment[]{new BloodSugarTendencyChartFragment(), new BloodSugarDataFragment()};
     }
 
+    protected String getValue(int index) {
+        return ((ValueView) valueViewContainer.getChildAt(index)).getWheelView()
+                                                                 .getSelectedItem()
+                                                                 .getValue();
+    }
 }
