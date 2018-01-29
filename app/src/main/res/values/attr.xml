@@ -68,5 +68,10 @@
         <attr name="rotate" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="CloseTitleLayout">
+        <attr name="show_title" format="string"/>
+        <attr name="control_id" format="integer"/>
+    </declare-styleable>
+
 
 </resources>
