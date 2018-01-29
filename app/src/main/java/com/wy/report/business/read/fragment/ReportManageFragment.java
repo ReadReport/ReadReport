@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.read.mode.ReportListMode;
@@ -41,8 +42,8 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
     @BindView(R.id.toolbar_pop)
     TextView toolBarPop;
     private String uid;
-    private int pageConut;
-    private int page;
+    private int    pageConut;
+    private int    page;
 
 
     @Override
@@ -50,7 +51,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         super.initData(savedInstanceState);
         ptrWithoutToolbar = true;
         readService = RetrofitHelper.getInstance()
-                .create(ReadService.class);
+                                    .create(ReadService.class);
         uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
 
     }
@@ -97,11 +98,9 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 reportItemModeBaseViewHolder.setOnClickListener(R.id.report_manage_submit_to_hospital, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(reportItemMode.getParseState() == ReportItemMode.READ_STATE_UNSUBMIT)
-                        {
+                        if (reportItemMode.getParseState() == ReportItemMode.READ_STATE_UNSUBMIT) {
                             submit2Doctor(reportItemMode);
-                        }else if(reportItemMode.getParseState() == ReportItemMode.READ_STATE_GETFAILED)
-                        {
+                        } else if (reportItemMode.getParseState() == ReportItemMode.READ_STATE_GETFAILED) {
                             getSingleReport(reportItemMode);
                         }
                     }
@@ -255,16 +254,13 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
     }
 
     private void submit2Doctor(final ReportItemMode mode) {
-        readService.sumbitReport2Doctor(mode.getId()).subscribe(new PtrSubscriber<ResponseModel>(this)
-        {
+        readService.sumbitReport2Doctor(mode.getId()).subscribe(new PtrSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
                 ToastUtils.showLong("已提交");
-                for(ReportItemMode mode1:quickAdapter.getData())
-                {
-                    if(mode1.getId().equals(mode.getId()))
-                    {
+                for (ReportItemMode mode1 : quickAdapter.getData()) {
+                    if (mode1.getId().equals(mode.getId())) {
                         mode1.setParseState(ReportItemMode.READ_STATE_UNREAD);
                         quickAdapter.notifyDataSetChanged();
                         break;
@@ -288,9 +284,23 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         super.onItemClick(adapter, view, position);
         ReportItemMode item = (ReportItemMode) adapter.getItem(position);
-        if(item.getParseState() == ReportItemMode.READ_STATE_READED)
-        {
-            AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_DETAIL);
+
+        switch (item.getParseState()) {
+            case ReportItemMode.READ_STATE_GETFAILED:
+                ToastUtils.showLong(R.string.report_manage_get_failed_tips);
+                break;
+            case ReportItemMode.READ_STATE_UNGTE:
+                ToastUtils.showLong(R.string.report_manage_getting_tips);
+                break;
+            case ReportItemMode.READ_STATE_UNSUBMIT:
+            case ReportItemMode.READ_STATE_UNREAD:
+            case ReportItemMode.READ_STATE_READED:
+                Bundle bundle = new Bundle();
+                bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID, item.getId());
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_DETAIL,bundle);
+                break;
+            default:
+                break;
         }
     }
 }

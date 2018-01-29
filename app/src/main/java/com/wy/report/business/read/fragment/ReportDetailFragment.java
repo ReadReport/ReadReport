@@ -27,6 +27,7 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.TimeUtils;
+import com.wy.report.util.ToastUtils;
 import com.wy.report.widget.ObservableScrollView;
 import com.wy.report.widget.view.BodyItemView;
 import com.wy.report.widget.view.ColorArcProgressBar;
@@ -447,11 +448,12 @@ public class ReportDetailFragment extends PtrFragment {
                     @Override
                     public void onNext(ResponseModel responseModel) {
                         super.onNext(responseModel);
-                        bottomBtn.setText("已提交");
+                        bottomBtn.setText(R.string.report_detail_bottom_btn_submited);
                     }
                 });
                 break;
             case ReportItemMode.READ_STATE_UNREAD:
+                ToastUtils.showLong(R.string.report_detail_bottom_btn_unread);
                 //未解读
                 break;
             case ReportItemMode.READ_STATE_READED:

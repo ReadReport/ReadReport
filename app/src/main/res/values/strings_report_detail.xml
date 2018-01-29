@@ -47,6 +47,7 @@
     <string name="report_detail_bottom_btn_readed">追问</string>
     <string name="report_detail_bottom_btn_unread">报告正在解读，请耐心等待...</string>
     <string name="report_detail_bottom_btn_un_submit">提交报告</string>
+    <string name="report_detail_bottom_btn_submited">已提交</string>
 
     <string name="doctor_detail_title">医生详情</string>
     <string name="doctor_detail_good">好评率：%s</string>
