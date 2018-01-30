@@ -11,7 +11,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.business.family.model.FamilyMemberModel;
 import com.wy.report.business.upload.model.PictureModel;
-import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.model.UploadModel;
 import com.wy.report.business.upload.service.ReportService;
 import com.wy.report.helper.dialog.DialogHelper;
@@ -428,7 +426,14 @@ public class ReportUploadFragment extends NetworkFragment {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
                                      router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
-                                     getActivity().finish();
+                                     Observable.timer(300, TimeUnit.MILLISECONDS)
+                                               .observeOn(AndroidSchedulers.mainThread())
+                                               .subscribe(new Action1<Long>() {
+                                                   @Override
+                                                   public void call(Long aLong) {
+                                                       getActivity().finish();
+                                                   }
+                                               });
                                  }
                              }, new DialogInterface.OnClickListener() {
                                  @Override

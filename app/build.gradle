@@ -8,9 +8,9 @@ freeline {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.wy.report"
+        applicationId "com.wy.report1"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -37,14 +37,15 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            minifyEnabled false
+            minifyEnabled true
             zipAlignEnabled false
             shrinkResources false
+            proguardFiles 'config/proguard-android.txt', 'config/proguard-rules.pro'
         }
         release {
             signingConfig signingConfigs.release
-            minifyEnabled false
-            proguardFiles 'config/proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles 'config/proguard-android.txt', 'config/proguard-rules.pro'
             zipAlignEnabled true
             shrinkResources true
         }
@@ -53,6 +54,11 @@ android {
     dataBinding {
         enabled = true
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
 }
 
 dependencies {

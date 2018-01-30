@@ -38,8 +38,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cantalou.android.util.ReflectUtil;
-import com.wy.report.R;
 import com.wy.report.widget.view.wheel.adapter.ArrayWheelAdapter;
 import com.wy.report.widget.view.wheel.adapter.BaseWheelAdapter;
 import com.wy.report.widget.view.wheel.adapter.SimpleWheelAdapter;
