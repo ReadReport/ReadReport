@@ -25,6 +25,6 @@ public class ReportQuerySuccessFragment extends ToolbarFragment {
 
     @OnClick(R.id.fragment_report_query_success_start)
     public void startSurvey() {
-        authRouterManager.openWebView(getActivity(), "http://www.baidu.com", "");
+        authRouterManager.openWebView(getActivity(), "http://m.viptijian.com/Custom/index.html", "");
     }
 }
