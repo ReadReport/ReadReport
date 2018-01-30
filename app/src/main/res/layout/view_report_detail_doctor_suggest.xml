@@ -5,8 +5,6 @@
     android:id="@+id/report_detail_suggestion_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginRight="@dimen/dp_10"
     android:layout_marginTop="@dimen/dp_10"
     android:orientation="vertical"
     >
@@ -88,15 +86,14 @@
     </android.support.constraint.ConstraintLayout>
 
     <!--指标说明title-->
-    <TextView
-        android:id="@+id/report_detail_quota_title"
-        android:layout_width="wrap_content"
+    <com.wy.report.widget.view.CloseTitleLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/report_detail_doctor_quota_title"
-        android:textColor="@color/lan_30acff"
-        android:textSize="14sp"
+        app:show_title="@string/report_detail_doctor_quota_title"
+        app:control_id="@+id/report_detail_quota_ll"
         />
+
     <!--指标说明content-->
     <LinearLayout
         android:id="@+id/report_detail_quota_ll"
@@ -177,16 +174,16 @@
 
 
     <!--健康建议title-->
-    <TextView
-        android:layout_width="wrap_content"
+    <com.wy.report.widget.view.CloseTitleLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/report_detail_doctor_health_suggestion_title"
-        android:textColor="@color/lan_30acff"
-        android:textSize="14sp"
+        app:show_title="@string/report_detail_doctor_health_suggestion_title"
+        app:control_id="@+id/report_detail_suggestion_content_ll"
         />
     <!--健康建议content-->
     <LinearLayout
+        android:id="@+id/report_detail_suggestion_content_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

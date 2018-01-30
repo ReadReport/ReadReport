@@ -2,6 +2,7 @@ package com.wy.report.business.read.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -26,9 +27,11 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.TimeUtils;
+import com.wy.report.util.ToastUtils;
 import com.wy.report.widget.ObservableScrollView;
 import com.wy.report.widget.view.BodyItemView;
 import com.wy.report.widget.view.ColorArcProgressBar;
+import com.wy.report.widget.view.recycleview.NestedGridLayoutManager;
 import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
 
 import java.util.ArrayList;
@@ -71,8 +74,8 @@ public class ReportDetailFragment extends PtrFragment {
     //-----体检报告------
     @BindView(R.id.report_detail_report_pic_info_private_ll)
     LinearLayout        picContentPrivate;
-    @BindView(R.id.report_detail_report_pic_content_ll)
-    LinearLayout        picContentView;
+    @BindView(R.id.report_detail_report_pic_rv)
+    RecyclerView        picRecyleView;
     //-----用户备注------
     @BindView(R.id.report_detail_note_head_icon)
     ImageView           userNoteHeader;
@@ -143,7 +146,7 @@ public class ReportDetailFragment extends PtrFragment {
         mReadService = RetrofitHelper.getInstance().create(ReadService.class);
 
         Bundle argument = getArguments();
-        if(argument != null){
+        if (argument != null) {
             reportId = argument.getString(BundleKey.BUNDLE_KEY_REPORT_ID);
             fromHome = argument.getBoolean(BundleKey.BUNDLE_KEY_REPORT_FROM_HOME);
         }
@@ -184,7 +187,6 @@ public class ReportDetailFragment extends PtrFragment {
         updateUserInfo(detailMode);
         updateReportInfo(detailMode);
         updateBodyInfo(detailMode);
-        updateUserInfo(detailMode);
     }
 
     /**
@@ -223,13 +225,23 @@ public class ReportDetailFragment extends PtrFragment {
 
         //更新报告图片信息
         List<ReportDetailMode.ImgInfo> imgs = detailMode.getImgs();
-        ArrayList<String>              urls = new ArrayList<>();
+        final ArrayList<String>        urls = new ArrayList<>();
         for (ReportDetailMode.ImgInfo imgInfo : imgs) {
             urls.add(imgInfo.getUrl());
         }
-        for (int i = 0; i < imgs.size(); i++) {
-            addPic(imgs.get(i).getUrl(), i, urls);
-        }
+        ReportPicAdapter reportPicAdapter = new ReportPicAdapter(urls);
+        picRecyleView.setLayoutManager(new NestedGridLayoutManager(getActivity(), 3));
+        picRecyleView.setAdapter(reportPicAdapter);
+        reportPicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, urls);
+                bundle.putInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX, position);
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_OTHER_PICTURE_PREVIEW, bundle);
+            }
+        });
+
 
         //更新用户备注
         userNoteContent.setText(reportInfo.getRemark());
@@ -318,30 +330,6 @@ public class ReportDetailFragment extends PtrFragment {
         }
 
     }
-
-
-    /**
-     * 报告view添加图片
-     *
-     * @param url
-     */
-    private void addPic(final String url, final int index, final ArrayList<String> urls) {
-        getActivity().getLayoutInflater().inflate(R.layout.view_report_detail_report_pic_item, picContentView, true);
-        ImageView photo = (ImageView) picContentView.getChildAt(picContentView.getChildCount() - 1);
-        Glide.with(getActivity()).load(url).into(photo);
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, urls);
-                bundle.putInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX, index);
-                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_OTHER_PICTURE_PREVIEW, bundle);
-            }
-        });
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) picContentView.getChildAt(0).getLayoutParams();
-        layoutParams.setMargins(0, 0, 0, 0);
-    }
-
 
     /**
      * 根据性别更新view显示
@@ -440,10 +428,12 @@ public class ReportDetailFragment extends PtrFragment {
         WindowManager.LayoutParams lp = window.getAttributes();
         window.setGravity(Gravity.BOTTOM);
         window.setBackgroundDrawableResource(android.R.color.transparent);
-        lp.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95); // 宽度
+        // 宽度
+        lp.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
         view.measure(0, 0);
         lp.height = view.getMeasuredHeight();
-        lp.alpha = 9f; // 透明度
+        // 透明度
+        lp.alpha = 9f;
         window.setAttributes(lp);
         dialog.show();
 
@@ -458,11 +448,12 @@ public class ReportDetailFragment extends PtrFragment {
                     @Override
                     public void onNext(ResponseModel responseModel) {
                         super.onNext(responseModel);
-                        bottomBtn.setText("已提交");
+                        bottomBtn.setText(R.string.report_detail_bottom_btn_submited);
                     }
                 });
                 break;
             case ReportItemMode.READ_STATE_UNREAD:
+                ToastUtils.showLong(R.string.report_detail_bottom_btn_unread);
                 //未解读
                 break;
             case ReportItemMode.READ_STATE_READED:
@@ -473,6 +464,19 @@ public class ReportDetailFragment extends PtrFragment {
                 break;
             default:
                 break;
+        }
+    }
+
+    private class ReportPicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+
+        public ReportPicAdapter(@Nullable List<String> data) {
+            super(R.layout.view_report_detail_report_pic_item, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, final String item) {
+            ImageView pic = helper.getView(R.id.view_report_detail_report_pic_img);
+            Glide.with(getActivity()).load(item).into(pic);
         }
     }
 

@@ -16,7 +16,7 @@
     <string name="report_detail_user_note_name">姓名：</string>
 
     <string name="report_detail_score_title">健康得分</string>
-    <string name="report_detail_score_private_tip">数据来源于您的体检报告</string>
+    <string name="report_detail_score_tip">得分来源于体检报告各项指标</string>
 
     <string name="report_detail_body_title">身体机能</string>
     <string name="report_detail_body_state_normal">正常</string>
@@ -47,6 +47,7 @@
     <string name="report_detail_bottom_btn_readed">追问</string>
     <string name="report_detail_bottom_btn_unread">报告正在解读，请耐心等待...</string>
     <string name="report_detail_bottom_btn_un_submit">提交报告</string>
+    <string name="report_detail_bottom_btn_submited">已提交</string>
 
     <string name="doctor_detail_title">医生详情</string>
     <string name="doctor_detail_good">好评率：%s</string>

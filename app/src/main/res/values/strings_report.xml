@@ -62,6 +62,10 @@
     <string name="report_manage_state_readed">已解读</string>
     <string name="report_manage_waiting_tip">请耐心等待</string>
     <string name="report_manage_reget">请重新获取</string>
+
+    <string name="report_manage_get_failed_tips">您输入的账号或密码有误，请重新查询</string>
+    <string name="report_manage_getting_tips">报告正在获取，请稍后</string>
+
     <string name="report_manage_submit_to_doctor">提交给医生</string>
     <string name="report_manage_score">健康指数：%s</string>
     <string name="report_manage_add_report">添加报告</string>

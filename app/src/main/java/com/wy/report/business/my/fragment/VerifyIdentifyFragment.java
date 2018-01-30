@@ -16,6 +16,7 @@ import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.ToastUtils;
+import com.wy.report.widget.view.CountDownTextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -90,12 +91,13 @@ public class VerifyIdentifyFragment extends NetworkFragment {
 
 
     @OnClick(R.id.get_verify_code)
-    public void getVerifyCode() {
+    public void getVerifyCode(final CountDownTextView textView) {
         myService.getVerifyCode(phoneNum).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
                 ToastUtils.showLong(getResources().getString(R.string.my_verify_code_send));
+                textView.startCountDown();
             }
         });
     }

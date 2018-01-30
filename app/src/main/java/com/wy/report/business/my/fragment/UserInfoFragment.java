@@ -71,13 +71,6 @@ public class UserInfoFragment extends NetworkFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        toolbarMenu.setText(getString(R.string.edit_family_save));
-        toolbarMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save();
-            }
-        });
         updateInfo();
     }
 
