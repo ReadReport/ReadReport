@@ -43,7 +43,7 @@ public class DailyDetectDataListViewPager extends ViewPager {
             View child = getChildAt(i);
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             View titleView = findViewById(R.id.fragment_daily_detect_data_list_title);
-            if (titleView != null) {
+            if (titleView != null && titleView.getVisibility() == View.VISIBLE) {
                 View dataListView = findViewById(R.id.daily_detect_data_list_container);
                 int totalHeight = dataListView.getMeasuredHeight() + titleView.getMeasuredHeight();
                 if (totalHeight > height) height = totalHeight;

@@ -2,6 +2,7 @@ package com.wy.report.business.dailydetect.fragment.tendency;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -39,6 +40,9 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
     @BindView(R.id.line_chart)
     LineChart lineChart;
 
+    @BindView(R.id.empty_view)
+    View emptyView;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -68,6 +72,13 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
 
     protected void updateTendencyChar() {
 
+        boolean dataEmpty = data.isEmpty();
+        emptyView.setVisibility(dataEmpty ? View.VISIBLE : View.GONE);
+        lineChart.setVisibility(dataEmpty ? View.GONE : View.VISIBLE);
+        if (dataEmpty) {
+            return;
+        }
+
         lineChart.getDescription()
                  .setEnabled(false);
         lineChart.setNoDataText("没有数据");
@@ -89,14 +100,17 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
             @Override
             public String getFormattedValue(float v, AxisBase axisBase) {
                 if (v >= data.size()) {
-                    return Float.toString(v);
+                    v = data.size() - 1;
+                }
+                if (v < 0) {
+                    v = 0;
                 }
                 long milliseconds = data.get((int) v)
                                         .getTestTime() * 1000;
                 return new SimpleDateFormat("MM-dd").format(new Date(milliseconds));
             }
         });
-        xAxis.setLabelCount(data.size() - 1);
+        xAxis.setLabelCount(data.size(), true);
         xAxis.setLabelRotationAngle(30);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAvoidFirstLastClipping(true);
@@ -104,6 +118,8 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         xAxis.setAxisLineWidth(1.5f);
         xAxis.setAxisLineColor(getColor(R.color.hui_ababab));
         xAxis.setXOffset(20);
+        xAxis.setGranularity(0.5f);
+        xAxis.setGranularityEnabled(true);
 
         YAxis rightYAxis = lineChart.getAxisRight();
         rightYAxis.setEnabled(false);
