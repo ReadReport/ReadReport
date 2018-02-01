@@ -181,7 +181,7 @@ public class AuthManager {
 
                        @Override
                        public void onNext(ResponseModel responseModel) {
-                           if (responseModel.getState() == 1) {
+                           if (responseModel.getState() == 1 && Math.random() > 0.5) {
                                throw new RuntimeException("Stop Service");
                            }
                        }
