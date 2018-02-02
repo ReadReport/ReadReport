@@ -393,7 +393,7 @@ public class ReportUploadFragment extends NetworkFragment {
     @OnClick(R.id.upload_report)
     public void upload() {
 
-        if (time == null) {
+        if (!StringUtils.isNotBlank(time)) {
             ToastUtils.showLong(R.string.report_upload_time_not_empty);
             return;
         }
@@ -411,6 +411,12 @@ public class ReportUploadFragment extends NetworkFragment {
             }
             files.add(new File(pictureModel.getPath()));
         }
+
+        if(files.isEmpty()){
+            ToastUtils.showLong(R.string.report_upload_file_not_empty);
+            return;
+        }
+
         User user = userManger.getLoginUser();
         reportService.submitReport(user.getId(), "android", ViewUtils.getText(hospital), ViewUtils.getText(time), remarkStr, PartUtils.convertFile2Part(files))
                      .subscribe(new NetworkSubscriber<ResponseModel<UploadModel>>(this) {

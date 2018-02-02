@@ -29,6 +29,7 @@
     <string name="report_upload_picture_limit">您选择的图片数量已达上限</string>
     <string name="report_upload_remark_limit">备注不得超过100个字</string>
     <string name="report_upload_time_not_empty">报告时间不能为空</string>
+    <string name="report_upload_file_not_empty">请上传报告图片</string>
 
 
 
