@@ -95,11 +95,6 @@ public class UserInfoFragment extends NetworkFragment {
         }
     }
 
-    /**修改头像*/
-    @OnClick(R.id.user_info_header_info)
-    public void modifyHeader() {
-
-    }
 
     /**
      * 修改名字
@@ -168,6 +163,12 @@ public class UserInfoFragment extends NetworkFragment {
     public void onNameEdit(String newName)
     {
         name.setText(newName);
+    }
+
+
+    public interface OnHeaderClick
+    {
+        void onHeaderClick();
     }
 
 }

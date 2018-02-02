@@ -13,7 +13,7 @@ import com.wy.report.base.fragment.BaseFragment;
  */
 public class StandardActivity extends BaseActivity {
 
-    Fragment fragment;
+    protected Fragment fragment;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
