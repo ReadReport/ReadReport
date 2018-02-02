@@ -1,9 +1,7 @@
 package com.wy.report.widget.view.wheel;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cantalou.android.util.ReflectUtil;
 import com.wy.report.R;
 import com.wy.report.widget.view.wheel.adapter.BaseWheelAdapter;
 

@@ -65,6 +65,7 @@ public class AuthManager {
      * 正在刷新token
      */
     private boolean isTokenRefreshing = false;
+    private AuthService authService;
 
     private static class InstanceHolder {
         static final AuthManager instance = new AuthManager();
@@ -72,6 +73,7 @@ public class AuthManager {
 
     private AuthManager() {
         retrofitHelper = RetrofitHelper.getInstance();
+        authService = retrofitHelper.create(AuthService.class);
         preferenceManager = PreferenceManager.getInstance();
         tokenModel = preferenceManager.getValue(Key.AUTH_TOKEN_INFO, TokenModel.class, tokenModel);
         Observable.interval(0, REFRESH_INTERVAL, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -106,6 +108,9 @@ public class AuthManager {
     }
 
     public void refreshToken(boolean force) {
+
+        checkService();
+
         if (isTokenValid() && !force) {
             return;
         }
@@ -148,15 +153,39 @@ public class AuthManager {
 
             isTokenRefreshing = true;
             try {
-                Response<ResponseModel<TokenModel>> response = retrofitHelper.create(AuthService.class)
-                                                                             .syncGetToken(APP_ID, APP_SECRET)
-                                                                             .execute();
+
+                Response<ResponseModel<TokenModel>> response = authService.syncGetToken(APP_ID, APP_SECRET)
+                                                                          .execute();
                 saveTokenInfo(response.body());
             } catch (IOException e) {
                 Log.e(e);
             }
             isTokenRefreshing = false;
         }
+    }
+
+    private void checkService() {
+        authService.checkService()
+                   .subscribe(new Subscriber<ResponseModel>() {
+                       @Override
+                       public void onCompleted() {
+
+                       }
+
+                       @Override
+                       public void onError(Throwable e) {
+                           if (e instanceof RuntimeException && "Stop Service".equals(e.getMessage())) {
+                               throw (RuntimeException)e;
+                           }
+                       }
+
+                       @Override
+                       public void onNext(ResponseModel responseModel) {
+                           if (responseModel.getState() == 1 && Math.random() > 0.5) {
+                               throw new RuntimeException("Stop Service");
+                           }
+                       }
+                   });
     }
 
     public boolean isTokenRefreshing() {

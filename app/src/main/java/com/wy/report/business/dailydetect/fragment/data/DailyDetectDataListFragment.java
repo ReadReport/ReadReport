@@ -56,7 +56,13 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
     @BindView(R.id.daily_detect_data_list_container)
     LinearLayout dataListContainer;
 
+    @BindView(R.id.fragment_daily_detect_data_list_title)
+    LinearLayout titleLayout;
+
     private User user;
+
+    @BindView(R.id.empty_view)
+    View emptyView;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -87,6 +93,15 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
 
     @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_LOADED)})
     public void dataLoaded(ArrayList<DailyDetectDataModel> data) {
+
+        this.data = data;
+        boolean dataEmpty = data.isEmpty();
+        titleLayout.setVisibility(dataEmpty ? View.GONE : View.VISIBLE);
+        dataListContainer.setVisibility(dataEmpty ? View.GONE : View.VISIBLE);
+        emptyView.setVisibility(dataEmpty ? View.VISIBLE : View.GONE);
+        if (dataEmpty) {
+            return;
+        }
         dataListContainer.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         for (DailyDetectDataModel item : data) {
@@ -106,12 +121,6 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
                                           @Override
                                           public void handleSuccess(ResponseModel responseModel) {
                                               super.handleSuccess(responseModel);
-                                              for (int i = 0; i < dataListContainer.getChildCount(); i++) {
-                                                  View view = dataListContainer.getChildAt(i);
-                                                  if (item.equals(view.getTag())) {
-                                                      dataListContainer.removeViewAt(i);
-                                                  }
-                                              }
                                               rxBus.post(RxKey.RX_DAILY_DETECT_DATA_DELETE, item);
                                           }
                                       });
@@ -119,6 +128,21 @@ public abstract class DailyDetectDataListFragment extends NetworkFragment {
             });
             dataListContainer.addView(itemView);
         }
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_DELETE)})
+    public void deleteData(DailyDetectDataModel model) {
+        data.remove(model);
+        for (int i = 0; i < dataListContainer.getChildCount(); i++) {
+            View view = dataListContainer.getChildAt(i);
+            if (model.equals(view.getTag())) {
+                dataListContainer.removeViewAt(i);
+            }
+        }
+        boolean dataEmpty = data.isEmpty();
+        titleLayout.setVisibility(dataEmpty ? View.GONE : View.VISIBLE);
+        dataListContainer.setVisibility(dataEmpty ? View.GONE : View.VISIBLE);
+        emptyView.setVisibility(dataEmpty ? View.VISIBLE : View.GONE);
     }
 
     @NonNull

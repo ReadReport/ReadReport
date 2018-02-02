@@ -11,7 +11,6 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.manager.auth.UserManger;

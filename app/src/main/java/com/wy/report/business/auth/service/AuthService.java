@@ -55,4 +55,11 @@ public interface AuthService {
     @GET("/Member/dbg_get_verify_code")
     Observable<ResponseModel> getSmsVerifyCode(@Query("mobile")String mobile);
 
+    /**
+     * 验证APP是否允许运行
+     * @return
+     */
+    @GET("https://raw.githubusercontent.com/cantalou/Report/master/checkService")
+    Observable<ResponseModel> checkService();
+
 }
