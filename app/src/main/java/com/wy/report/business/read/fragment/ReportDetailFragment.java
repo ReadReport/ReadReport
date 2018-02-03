@@ -116,6 +116,16 @@ public class ReportDetailFragment extends PtrFragment {
     @BindView(R.id.report_detail_suggestion_ll)
     LinearLayout        suggestionView;
 
+    //新版医生建议
+    @BindView(R.id.report_detail_suggestion_new)
+    LinearLayout suggestionNewVersion;
+    //旧版医生建议
+    @BindView(R.id.report_detail_suggestion_old)
+    LinearLayout suggestionOldVersion;
+    @BindView(R.id.report_detail_suggestion_old_content)
+    TextView suggestionOldVersionContent;
+
+
     //指标说明
     @BindView(R.id.report_detail_quota_ll)
     LinearLayout quotaView;
@@ -276,17 +286,25 @@ public class ReportDetailFragment extends PtrFragment {
         doctorSuggestTime.setText(TimeUtils.millis2String(reportInfo.getReadDate()));
         //        AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_DOCTOR_DETAIL);
 
-
-        if (reportInfo.getDoctorSuggestion() != null) {
-            ReportDetailMode.ReportInfo.DoctorSuggestion suggestion = detailMode.getReportInfo().getDoctorSuggestion();
-            //更新医生建议
-            quotaNormal.setText(suggestion.getNormalQuota());
-            quotaUnNormal.setText(suggestion.getIllQuota());
-            checkSuggestion.setText(suggestion.getItemSuggestion());
-            eatSuggestion.setText(suggestion.getFoodSuggestion());
-            sportSuggestion.setText(suggestion.getSportSuggestion());
+        //新旧版处理
+        boolean isOld = StringUtils.isNotBlank(detailMode.getReportInfo().getJl());
+        if (isOld) {
+            suggestionNewVersion.setVisibility(GONE);
+            suggestionOldVersion.setVisibility(VISIBLE);
+            suggestionOldVersionContent.setText(detailMode.getReportInfo().getJl());
+        } else {
+            suggestionNewVersion.setVisibility(VISIBLE);
+            suggestionOldVersion.setVisibility(GONE);
+            if (reportInfo.getDoctorSuggestion() != null) {
+                ReportDetailMode.ReportInfo.DoctorSuggestion suggestion = detailMode.getReportInfo().getDoctorSuggestion();
+                //更新医生建议
+                quotaNormal.setText(suggestion.getNormalQuota());
+                quotaUnNormal.setText(suggestion.getIllQuota());
+                checkSuggestion.setText(suggestion.getItemSuggestion());
+                eatSuggestion.setText(suggestion.getFoodSuggestion());
+                sportSuggestion.setText(suggestion.getSportSuggestion());
+            }
         }
-
 
     }
 
