@@ -148,11 +148,12 @@ public class SuperEditText extends AppCompatEditText {
 
             setCompoundDrawables(ic_left, null, ic_pwd_show
                     , null);
+            switchPwdState();
         } else if (deleteMode) {
             setCompoundDrawables(ic_left, null,
                                  null, null);
         } else {
-            setCompoundDrawables(null, null,
+            setCompoundDrawables(ic_left, null,
                                  null, null);
         }
 
@@ -254,14 +255,7 @@ public class SuperEditText extends AppCompatEditText {
                     Drawable drawable = getCompoundDrawables()[2];
                     if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
                         && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
-                        if (getCompoundDrawables()[2] == ic_pwd_show) {
-                            setCompoundDrawables(ic_left, null, ic_pwd_dis, null);
-                            setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-                        } else if (getCompoundDrawables()[2] == ic_pwd_dis) {
-                            setCompoundDrawables(ic_left, null, ic_pwd_show, null);
-                            setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                        }
+                        switchPwdState();
                         invalidate();
 
                     }
@@ -319,6 +313,18 @@ public class SuperEditText extends AppCompatEditText {
             canvas.drawLine(0, this.getMeasuredHeight() - linePosition, w + x,
                             this.getMeasuredHeight() - linePosition, mPaint);
 
+        }
+    }
+
+    private void switchPwdState()
+    {
+        if (getCompoundDrawables()[2] == ic_pwd_show) {
+            setCompoundDrawables(ic_left, null, ic_pwd_dis, null);
+            setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        } else if (getCompoundDrawables()[2] == ic_pwd_dis) {
+            setCompoundDrawables(ic_left, null, ic_pwd_show, null);
+            setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         }
     }
 
