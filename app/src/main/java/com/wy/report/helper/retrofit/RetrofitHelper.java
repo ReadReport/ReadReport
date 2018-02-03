@@ -33,6 +33,8 @@ import rx.schedulers.Schedulers;
 @SuppressWarnings({"unused", "unchecked"})
 public class RetrofitHelper {
 
+    public static  final String BASE_URL = "http://api.vip120.com";
+
     private OkHttpClient okHttpClient;
     private Retrofit retrofit;
     private HashMap<Class, Object> serviceProxyCache = new HashMap<>();

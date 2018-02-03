@@ -65,6 +65,18 @@ public class User extends BaseModel implements Parcelable {
         this.birthday = in.readLong();
     }
 
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public String getId() {
         return id;
     }

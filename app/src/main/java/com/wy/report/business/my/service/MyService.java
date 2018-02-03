@@ -11,10 +11,13 @@ import com.wy.report.business.my.model.VerifyPhoneNumMode;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -154,7 +157,7 @@ public interface MyService {
      * @return
      */
     @GET("/Member/bind_member_mob")
-    Observable<ResponseModel> bindPhone(@Query("mid") String mid,@Query("mobile") String mobile, @Query("verify") String verify);
+    Observable<ResponseModel> bindPhone(@Query("mid") String mid, @Query("mobile") String mobile, @Query("verify") String verify);
 
     /**
      * 编辑用户信息
@@ -163,6 +166,16 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("/Member/edit_memebr")
-    Observable<ResponseModel> editInfo(@Field("mid") String mid,@Field("username") String username, @Field("birthday") String birthday, @Field("sex") String sex);
+    Observable<ResponseModel> editInfo(@Field("mid") String mid, @Field("username") String username, @Field("birthday") String birthday, @Field("sex") String sex);
+
+
+    /**
+     * 修改用户头像
+     *
+     * @return
+     */
+    @Multipart
+    @POST("/Member/modify_member_photo")
+    Observable<ResponseModel> editHeader(@Part("mid") String mid, @Part("upload_from") String uploadFrom, @Part MultipartBody.Part header);
 
 }

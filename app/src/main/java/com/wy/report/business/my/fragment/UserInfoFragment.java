@@ -89,7 +89,7 @@ public class UserInfoFragment extends NetworkFragment {
     private void updateInfo() {
         if (user != null) {
             name.setText(user.getName());
-            birthday.setText(TimeUtils.millis2String(user.getBirthday()));
+            birthday.setText(TimeUtils.millis2StringWithoutTime(user.getBirthday()));
             sex.setText(StringUtils.getSex2Show(user.getSex()));
             Glide.with(getActivity()).load(user.getHead()).into(header);
         }
@@ -119,6 +119,7 @@ public class UserInfoFragment extends NetworkFragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String time = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
                 birthday.setText(time);
+                save();
             }
         }, year, month, day);
         datePickerDialog.show();
@@ -133,6 +134,7 @@ public class UserInfoFragment extends NetworkFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 sex.setText(sexualData[i]);
+                save();
             }
         }).show();
     }
@@ -141,19 +143,18 @@ public class UserInfoFragment extends NetworkFragment {
     {
         final String newName = name.getText().toString();
         final String newBirthday = birthday.getText().toString();
-        final String sexy = StringUtils.getSex2Upload(sex.getText().toString());
+        final int sexy = StringUtils.getSex2UploadInt(sex.getText().toString());
         final String uid = UserManger.getInstance().getLoginUser().getId();
-        mMyService.editInfo(uid,newName,newBirthday,sexy).subscribe(new NetworkSubscriber<ResponseModel>(this) {
+        mMyService.editInfo(uid,newName,newBirthday,String.valueOf(sexy)).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
                 ToastUtils.showLong(R.string.user_info_success_tips);
                 User user = UserManger.getInstance().getLoginUser();
                 user.setName(newName);
-                user.setSex(StringUtils.getSex2UploadInt(sexy));
-                user.setBirthday(TimeUtils.string2Millis(newBirthday));
+                user.setSex(sexy);
+                user.setBirthday(TimeUtils.string2Millis(newBirthday,TimeUtils.DATE_FORMAT));
                 UserManger.getInstance().updateUser(user);
-                getActivity().finish();
                 rxBus.post(RxKey.RX_MODIFY_USER_INFO,user);
             }
         });
@@ -163,12 +164,9 @@ public class UserInfoFragment extends NetworkFragment {
     public void onNameEdit(String newName)
     {
         name.setText(newName);
+        save();
     }
 
 
-    public interface OnHeaderClick
-    {
-        void onHeaderClick();
-    }
 
 }

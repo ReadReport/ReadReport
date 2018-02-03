@@ -154,14 +154,20 @@ public class MyFragment extends ToolbarFragment {
         if (user == null) {
             return;
         }
-        if (!StringUtils.isBlank(user.getHead())) {
+        //头像
+        if (StringUtils.isNotBlank(user.getHead())) {
             Glide.with(getActivity())
                  .load(user.getHead())
                  .into(header);
         }
-        String name     = StringUtils.isBlank(user.getName()) ? "null" : user.getName();
-        String phoneNum = StringUtils.isBlank(user.getMobile()) ? "null" : user.getMobile();
-        userName.setText(name);
-        phone.setText(phoneNum);
+        //名字
+        if (StringUtils.isNotBlank(user.getName())) {
+            userName.setText(user.getName());
+        }
+        //电话
+        if (StringUtils.isNotBlank(user.getMobile())) {
+            phone.setText(user.getMobile());
+        }
     }
+
 }
