@@ -271,6 +271,7 @@ public class ReportDetailFragment extends PtrFragment {
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, urls);
                 bundle.putInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX, position);
+                bundle.putBoolean(BundleKey.BUNDLE_KEY_PICTURE_NEED_DELETE, false);
                 AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_OTHER_PICTURE_PREVIEW, bundle);
             }
         });

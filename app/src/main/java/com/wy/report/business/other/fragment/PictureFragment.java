@@ -38,12 +38,18 @@ public class PictureFragment extends ToolbarFragment {
 
     private PagerAdapter adapter;
 
+    private boolean needDelete;
+
+    @BindView(R.id.toolbar_delete)
+    ImageView toolBarDelete;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         Bundle bundle = getArguments();
         paths = bundle.getStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
         index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
+        needDelete = bundle.getBoolean(BundleKey.BUNDLE_KEY_PICTURE_NEED_DELETE,true);
     }
 
     @Override
@@ -107,6 +113,8 @@ public class PictureFragment extends ToolbarFragment {
         super.initToolbar();
         setTitle((index + 1) + "/" + paths.size());
         statusBarBg.setImageResource(R.color.hei_1e1e1e);
+        int visiable = needDelete ? View.VISIBLE : View.GONE;
+        toolBarDelete.setVisibility(visiable);
     }
 
     @Override
