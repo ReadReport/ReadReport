@@ -42,6 +42,9 @@ import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 /**
  * 报告详细
  */
@@ -112,16 +115,23 @@ public class ReportDetailFragment extends PtrFragment {
     //-----医生建议------
     @BindView(R.id.report_detail_suggestion_ll)
     LinearLayout        suggestionView;
+
+    //指标说明
+    @BindView(R.id.report_detail_quota_ll)
+    LinearLayout quotaView;
+    @BindView(R.id.report_detail_quota_private_ll)
+    LinearLayout quotaPrivateView;
+
     @BindView(R.id.report_detail_quota_normal)
-    TextView            quotaNormal;
+    TextView quotaNormal;
     @BindView(R.id.report_detail_quota_un_normal)
-    TextView            quotaUnNormal;
+    TextView quotaUnNormal;
     @BindView(R.id.report_detail_doctor_check_suggestion)
-    TextView            checkSuggestion;
+    TextView checkSuggestion;
     @BindView(R.id.report_detail_doctor_eat_suggestion)
-    TextView            eatSuggestion;
+    TextView eatSuggestion;
     @BindView(R.id.report_detail_doctor_sport_suggestion)
-    TextView            sportSuggestion;
+    TextView sportSuggestion;
 
     @BindView(R.id.report_detail_doctor_name)
     TextView doctorName;
@@ -184,9 +194,22 @@ public class ReportDetailFragment extends PtrFragment {
      * @param detailMode
      */
     private void update(ReportDetailMode detailMode) {
+
         updateUserInfo(detailMode);
         updateReportInfo(detailMode);
         updateBodyInfo(detailMode);
+
+        updateUserPrivate(fromHome);
+    }
+
+    private void updateUserPrivate(boolean isPrivate) {
+        if (isPrivate) {
+            userName.setText("******");
+            picContentPrivate.setVisibility(VISIBLE);
+            picRecyleView.setVisibility(GONE);
+            quotaView.setVisibility(GONE);
+            quotaPrivateView.setVisibility(VISIBLE);
+        }
     }
 
     /**
@@ -340,13 +363,13 @@ public class ReportDetailFragment extends PtrFragment {
         if (isMale) {
             userNoteHeader.setImageResource(R.drawable.img_details_man);
             body.setImageResource(R.drawable.yc_st);
-            body8Male.setVisibility(View.VISIBLE);
-            body8Female.setVisibility(View.GONE);
+            body8Male.setVisibility(VISIBLE);
+            body8Female.setVisibility(GONE);
         } else {
             userNoteHeader.setImageResource(R.drawable.img_details_female);
             body.setImageResource(R.drawable.female_st);
-            body8Male.setVisibility(View.GONE);
-            body8Female.setVisibility(View.VISIBLE);
+            body8Male.setVisibility(GONE);
+            body8Female.setVisibility(VISIBLE);
         }
 
     }
@@ -360,28 +383,28 @@ public class ReportDetailFragment extends PtrFragment {
         this.reportStatus = reportStatus;
         switch (reportStatus) {
             case ReportItemMode.READ_STATE_UNSUBMIT:
-                scoreView.setVisibility(View.GONE);
-                bodyView.setVisibility(View.GONE);
-                suggestionView.setVisibility(View.GONE);
+                scoreView.setVisibility(GONE);
+                bodyView.setVisibility(GONE);
+                suggestionView.setVisibility(GONE);
                 bottomBtn.setText(R.string.report_detail_bottom_btn_un_submit);
                 break;
             case ReportItemMode.READ_STATE_UNREAD:
-                scoreView.setVisibility(View.GONE);
-                bodyView.setVisibility(View.GONE);
-                suggestionView.setVisibility(View.GONE);
+                scoreView.setVisibility(GONE);
+                bodyView.setVisibility(GONE);
+                suggestionView.setVisibility(GONE);
                 bottomBtn.setText(R.string.report_detail_bottom_btn_unread);
                 break;
             case ReportItemMode.READ_STATE_UNGTE:
             case ReportItemMode.READ_STATE_GETFAILED:
-                scoreView.setVisibility(View.GONE);
-                bodyView.setVisibility(View.GONE);
-                suggestionView.setVisibility(View.GONE);
+                scoreView.setVisibility(GONE);
+                bodyView.setVisibility(GONE);
+                suggestionView.setVisibility(GONE);
                 bottomBtn.setText(R.string.report_detail_bottom_btn_readed);
                 break;
             case ReportItemMode.READ_STATE_READED:
-                scoreView.setVisibility(View.VISIBLE);
-                bodyView.setVisibility(View.VISIBLE);
-                suggestionView.setVisibility(View.VISIBLE);
+                scoreView.setVisibility(VISIBLE);
+                bodyView.setVisibility(VISIBLE);
+                suggestionView.setVisibility(VISIBLE);
                 bottomBtn.setText(R.string.report_detail_bottom_btn_readed);
                 break;
             default:
