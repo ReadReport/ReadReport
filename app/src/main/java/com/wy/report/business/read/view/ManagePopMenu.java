@@ -1,117 +1,108 @@
 package com.wy.report.business.read.view;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
-import com.wy.report.widget.view.recycleview.NestedLinearLayoutManager;
-import com.zyyoona7.lib.BaseCustomPopup;
+import com.wy.report.business.my.model.FamilyItemMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by BHM on 17/12/17.
  */
-public class ManagePopMenu extends BaseCustomPopup
+public class ManagePopMenu extends PopupWindow
         implements BaseQuickAdapter.OnItemClickListener {
 
-    private List<PopItem> items;
 
     private static final String TAG = "ManagePopMenu";
 
     private RecyclerView recyclerView;
+    private final int MAX_ITEM_COUNT = 5;
 
-    protected BaseQuickAdapter<PopItem,BaseViewHolder> quickAdapter;
+    protected BaseQuickAdapter<FamilyItemMode, BaseViewHolder> quickAdapter;
+
+    private Context getContext;
+
+    private int itemWitdh;
+    private int itemHeight;
+
+    private OnPopItemClick mOnPopItemClick;
 
     public ManagePopMenu(Context context) {
         super(context);
+        getContext = context;
+        initAttributes();
     }
 
-    @Override
     protected void initAttributes() {
-        recyclerView = new RecyclerView(getContext());
-        recyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        recyclerView.setLayoutManager(new NestedLinearLayoutManager(getContext()));
+        recyclerView = new RecyclerView(getContext);
+        recyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext));
         createAdapter();
         recyclerView.setAdapter(quickAdapter);
-
         setContentView(recyclerView);
-        setBackgroundDimEnable(false);
+
+        View item = LayoutInflater.from(getContext).inflate(R.layout.view_report_manage_pop_item_new, null);
+        item.measure(0, 0);
+
+        itemWitdh = item.getMeasuredWidth();
+        itemHeight = item.getMeasuredHeight();
+        setHeight(0);
+        setWidth(0);
+
         setOutsideTouchable(true);
-        setFocusAndOutsideEnable(true);
-    }
-
-    @Override
-    protected void initViews(View view) {
-
     }
 
 
     @Override
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
         dismiss();
+        if(mOnPopItemClick != null)
+        {
+            mOnPopItemClick.onPopItemClick((FamilyItemMode) baseQuickAdapter.getData().get(i));
+        }
     }
 
 
-    public void initData()
-    {
-        items = new ArrayList<>();
-        PopItem item1 = new PopItem();
-        item1.setId("1");
-        item1.setContent("父亲");
-        PopItem item2 = new PopItem();
-        item2.setId("1");
-        item2.setContent("儿子");
-        items.add(item1);
-        items.add(item2);
-    }
-
-    private void createAdapter()
-    {
-        initData();
-        quickAdapter = new PopAdapter(R.layout.view_report_manage_pop_item);
+    private void createAdapter() {
+        quickAdapter = new PopAdapter(R.layout.view_report_manage_pop_item_new);
         quickAdapter.setOnItemClickListener(this);
         quickAdapter.onAttachedToRecyclerView(recyclerView);
-        quickAdapter.addData(items);
     }
 
-    public class PopItem
-    {
-        private String id;
-        private String content;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
+    public void setNewData(List<FamilyItemMode> newData) {
+        int newCol = newData.size() > MAX_ITEM_COUNT ? MAX_ITEM_COUNT : newData.size();
+        setWidth(itemWitdh);
+        setHeight(itemHeight * newCol);
+        quickAdapter.setNewData(newData);
     }
 
-    public class PopAdapter extends BaseQuickAdapter<PopItem, BaseViewHolder>
-    {
+    public class PopAdapter extends BaseQuickAdapter<FamilyItemMode, BaseViewHolder> {
 
         public PopAdapter(int layoutResId) {
             super(layoutResId);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PopItem item) {
-            helper.setText(R.id.pop_item_tv,item.getContent());
+        protected void convert(BaseViewHolder helper, FamilyItemMode item) {
+            helper.setText(R.id.pop_item_tv, item.getName());
         }
+    }
+
+    public void setOnPopItemClick(OnPopItemClick onPopItemClick) {
+        mOnPopItemClick = onPopItemClick;
+    }
+
+    public interface OnPopItemClick
+    {
+        void onPopItemClick(FamilyItemMode item);
     }
 }

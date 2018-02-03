@@ -3,9 +3,9 @@ package com.wy.report.business.read.fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -13,8 +13,10 @@ import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.fragment.PtrListFragment;
 import com.wy.report.base.model.ResponseModel;
-import com.wy.report.business.read.mode.ReportListMode;
+import com.wy.report.business.my.model.FamilyItemMode;
+import com.wy.report.business.my.service.MyService;
 import com.wy.report.business.read.mode.ReportItemMode;
+import com.wy.report.business.read.mode.ReportListMode;
 import com.wy.report.business.read.service.ReadService;
 import com.wy.report.business.read.view.ManagePopMenu;
 import com.wy.report.helper.retrofit.RetrofitHelper;
@@ -22,12 +24,13 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.ToastUtils;
-import com.zyyoona7.lib.EasyPopup;
-import com.zyyoona7.lib.HorizontalGravity;
-import com.zyyoona7.lib.VerticalGravity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import rx.Subscriber;
 
 
 public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseViewHolder> {
@@ -38,12 +41,17 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
     private boolean isPop;
 
     private ReadService readService;
+    private MyService   myService;
 
     @BindView(R.id.toolbar_pop)
     TextView toolBarPop;
     private String uid;
     private int    pageConut;
     private int    page;
+    //0单个 1所有
+    private int    ifAll;
+    private final int ALL = 1;
+    private final int ONE = 0;
 
 
     @Override
@@ -52,8 +60,10 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ptrWithoutToolbar = true;
         readService = RetrofitHelper.getInstance()
                                     .create(ReadService.class);
+        myService = RetrofitHelper.getInstance()
+                                  .create(MyService.class);
         uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
-
+        ifAll = ALL;
     }
 
     @Override
@@ -65,10 +75,11 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         toolBarPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isPop) {
-                    mPopMenu.dismiss();
-                } else {
-                    mPopMenu.showAtAnchorView(toolbar, VerticalGravity.BELOW, HorizontalGravity.ALIGN_RIGHT, 0, 0);
+                if (!isPop) {
+                    mPopMenu.showAsDropDown(toolbar, toolbar.getMeasuredWidth() - mPopMenu.getWidth()
+                            , 0);
+                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
+                    isPop = true;
                 }
             }
         });
@@ -112,20 +123,37 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
 
     @Override
     protected void loadData() {
+        toolBarPop.setText("全部");
         page = 0;
-        readService.getReportList(uid, page, 0).subscribe(new PtrSubscriber<ResponseModel<ReportListMode>>(this) {
+        ifAll = ALL;
+        uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
+        getList(uid, page, ifAll);
+        myService.getFamily(uid).subscribe(new Subscriber<ResponseModel<List<FamilyItemMode>>>() {
             @Override
-            public void onNext(ResponseModel<ReportListMode> listResponseModel) {
-                super.onNext(listResponseModel);
-                quickAdapter.setNewData(listResponseModel.getData().getData());
-                pageConut = listResponseModel.getData().getCount();
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseModel<List<FamilyItemMode>> listResponseModel) {
+                FamilyItemMode familyItemMode = new FamilyItemMode();
+                familyItemMode.setId("-1");
+                familyItemMode.setName("全部");
+                List<FamilyItemMode> newData = new ArrayList<>();
+                newData.add(familyItemMode);
+                newData.addAll(listResponseModel.getData());
+                mPopMenu.setNewData(newData);
             }
         });
     }
 
     private void initPopMenu() {
         mPopMenu = new ManagePopMenu(getActivity());
-        mPopMenu.createPopup();
         mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -133,11 +161,20 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 isPop = false;
             }
         });
-        mPopMenu.setOnAttachedWindowListener(new EasyPopup.OnAttachedWindowListener() {
+        mPopMenu.setOnPopItemClick(new ManagePopMenu.OnPopItemClick() {
             @Override
-            public void onAttachedWindow(int i, int i1, EasyPopup easyPopup) {
-                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
-                isPop = true;
+            public void onPopItemClick(FamilyItemMode item) {
+                toolBarPop.setText(item.getName());
+                //所有
+                if (item.getId().equals("-1")) {
+                    loadData();
+                } else {
+                    //单个
+                    uid = item.getId();
+                    page = 0;
+                    ifAll = ONE;
+                    getList(uid, page, ifAll);
+                }
             }
         });
     }
@@ -180,7 +217,8 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         //提交摁钮
         TextView sub2Doctor = reportItemModeBaseViewHolder.getView(R.id.report_manage_submit_to_hospital);
         //消息数量
-        TextView messageNum = reportItemModeBaseViewHolder.getView(R.id.report_manage_message_num);
+        TextView     messageNum   = reportItemModeBaseViewHolder.getView(R.id.report_manage_message_num);
+        LinearLayout messageNumLl = reportItemModeBaseViewHolder.getView(R.id.report_manage_message_num_ll);
         switch (reportItemMode.getParseState()) {
             case ReportItemMode.READ_STATE_UNSUBMIT:
                 stateIcon.setImageResource(R.drawable.list_unsubmitted);
@@ -190,7 +228,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
 
                 stateTip.setVisibility(View.INVISIBLE);
 
-                messageNum.setVisibility(View.INVISIBLE);
+                messageNumLl.setVisibility(View.INVISIBLE);
 
                 sub2Doctor.setVisibility(View.VISIBLE);
                 sub2Doctor.setText(getString(R.string.report_manage_submit_to_doctor));
@@ -204,7 +242,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 stateTip.setVisibility(View.VISIBLE);
                 stateTip.setText(getString(R.string.report_manage_waiting_tip));
 
-                messageNum.setVisibility(View.INVISIBLE);
+                messageNumLl.setVisibility(View.INVISIBLE);
 
                 sub2Doctor.setVisibility(View.INVISIBLE);
                 break;
@@ -217,7 +255,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 stateTip.setVisibility(View.VISIBLE);
                 stateTip.setText(getString(R.string.report_manage_waiting_tip));
 
-                messageNum.setVisibility(View.INVISIBLE);
+                messageNumLl.setVisibility(View.INVISIBLE);
 
                 sub2Doctor.setVisibility(View.INVISIBLE);
                 break;
@@ -229,7 +267,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
 
                 stateTip.setVisibility(View.INVISIBLE);
 
-                messageNum.setVisibility(View.INVISIBLE);
+                messageNumLl.setVisibility(View.INVISIBLE);
 
                 sub2Doctor.setVisibility(View.VISIBLE);
                 sub2Doctor.setText(getString(R.string.report_manage_reget));
@@ -243,8 +281,12 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 stateTip.setVisibility(View.VISIBLE);
                 stateTip.setText(String.format(getString(R.string.report_manage_score), reportItemMode.getScore()));
 
-                messageNum.setVisibility(View.VISIBLE);
-                messageNum.setText(String.valueOf(reportItemMode.getUnReadMsgNum()));
+                if (reportItemMode.getUnReadMsgNum() > 0) {
+                    messageNumLl.setVisibility(View.VISIBLE);
+                    messageNum.setText(String.valueOf(reportItemMode.getUnReadMsgNum()));
+                } else {
+                    messageNumLl.setVisibility(View.GONE);
+                }
 
                 sub2Doctor.setVisibility(View.INVISIBLE);
                 break;
@@ -297,10 +339,27 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
             case ReportItemMode.READ_STATE_READED:
                 Bundle bundle = new Bundle();
                 bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID, item.getId());
-                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_DETAIL,bundle);
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_DETAIL, bundle);
                 break;
             default:
                 break;
         }
+    }
+
+
+    /**
+     * @param uid
+     * @param page
+     * @param ifAll 0单个成员 1所有成员
+     */
+    private void getList(String uid, int page, int ifAll) {
+        readService.getReportList(uid, page, ifAll).subscribe(new PtrSubscriber<ResponseModel<ReportListMode>>(this) {
+            @Override
+            public void onNext(ResponseModel<ReportListMode> listResponseModel) {
+                super.onNext(listResponseModel);
+                quickAdapter.setNewData(listResponseModel.getData().getData());
+                pageConut = listResponseModel.getData().getCount();
+            }
+        });
     }
 }
