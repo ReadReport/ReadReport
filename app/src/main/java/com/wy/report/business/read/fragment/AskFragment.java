@@ -123,8 +123,9 @@ public class AskFragment extends PtrListFragment {
             AskItemMode askItemMode = new AskItemMode();
             askItemMode.setConversation(content);
             askItemMode.setDoctorId(name);
+            askItemMode.setTime(System.currentTimeMillis());
             mAskAdapter.addData(askItemMode);
-
+            mContent.getText().clear();
 //            mReadService.ask(mReportId,uid,content).subscribe(new PtrSubscriber<ResponseModel>(this)
 //            {
 //                @Override

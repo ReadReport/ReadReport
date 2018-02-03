@@ -60,6 +60,13 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".business.read.activity.AskActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:screenOrientation="portrait">
+        </activity>
+
+
     </application>
 
 </manifest>
