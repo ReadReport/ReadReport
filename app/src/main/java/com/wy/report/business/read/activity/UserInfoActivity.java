@@ -24,7 +24,9 @@ import com.wy.report.BuildConfig;
 import com.wy.report.R;
 import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.base.constant.BundleKey;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.my.model.EditHeadMode;
 import com.wy.report.business.my.service.MyService;
 import com.wy.report.business.read.fragment.ClipImageFragment;
 import com.wy.report.helper.retrofit.RetrofitHelper;
@@ -219,7 +221,7 @@ public class UserInfoActivity extends StandardActivity {
                     //上传服务器
                     MultipartBody.Part part = PartUtils.convertBitmap2Part(bitMap);
                     String             uid  = UserManger.getInstance().getLoginUser().getId();
-                    mMyService.editHeader(uid, "android", part).subscribe(new Subscriber<ResponseModel>() {
+                    mMyService.editHeader(uid, "android", part).subscribe(new Subscriber<ResponseModel<EditHeadMode>>() {
 
                                                                               @Override
                                                                               public void onCompleted() {
@@ -233,9 +235,14 @@ public class UserInfoActivity extends StandardActivity {
                                                                               }
 
                                                                               @Override
-                                                                              public void onNext(ResponseModel responseModel) {
+                                                                              public void onNext(ResponseModel<EditHeadMode> responseModel) {
                                                                                   mHeader.setImageBitmap(bitMap);
                                                                                   //TODO 更新头像 服务器返回地址
+                                                                                  EditHeadMode editHeadMode = responseModel.getData();
+
+                                                                                  UserManger.getInstance().getLoginUser().setHead(editHeadMode.getPhoto());
+                                                                                  UserManger.getInstance().updateUser(UserManger.getInstance().getLoginUser());
+                                                                                  rxBus.post(RxKey.RX_MODIFY_USER_INFO,UserManger.getInstance().getLoginUser());
                                                                               }
                                                                           }
                                                                          );

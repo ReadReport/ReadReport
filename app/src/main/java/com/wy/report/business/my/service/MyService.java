@@ -3,6 +3,7 @@ package com.wy.report.business.my.service;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.home.model.MsgNumModel;
 import com.wy.report.business.my.model.AddMemberMode;
+import com.wy.report.business.my.model.EditHeadMode;
 import com.wy.report.business.my.model.FamilyItemMode;
 import com.wy.report.business.my.model.MessageItemMode;
 import com.wy.report.business.my.model.MessageListMode;
@@ -177,7 +178,7 @@ public interface MyService {
      */
     @Multipart
     @POST("/Member/modify_member_photo")
-    Observable<ResponseModel> editHeader(@Part("mid") String mid, @Part("upload_from") String uploadFrom, @Part MultipartBody.Part header);
+    Observable<ResponseModel<EditHeadMode>> editHeader(@Part("mid") String mid, @Part("upload_from") String uploadFrom, @Part MultipartBody.Part header);
 
 
     /**
