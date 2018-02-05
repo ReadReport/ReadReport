@@ -2,7 +2,6 @@ package com.wy.report.business.read.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -22,6 +21,7 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
+import com.wy.report.widget.SoftKeyboardStateWatcher;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -56,10 +56,16 @@ public class AskFragment extends PtrListFragment {
         super.initView(contentView);
         setTitle(R.string.report_ask_title);
         ptrFrameLayout.autoRefresh();
-        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        new SoftKeyboardStateWatcher(contentView, getActivity()).addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
-            public void onGlobalLayout() {
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
                 recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
+
+            }
+
+            @Override
+            public void onSoftKeyboardClosed() {
+
             }
         });
     }
@@ -143,7 +149,7 @@ public class AskFragment extends PtrListFragment {
         if (askItemMode.isDoctor()) {
             Bundle bundle = new Bundle();
             bundle.putString(BundleKey.BUNDLE_KEY_DOCTOR_ID, askItemMode.getDoctorId());
-            AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_DOCTOR_DETAIL,bundle);
+            AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_DOCTOR_DETAIL, bundle);
         }
     }
 
