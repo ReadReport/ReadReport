@@ -1,6 +1,7 @@
 package com.wy.report.business.read.mode;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.wy.report.util.TimeUtils;
 
 /**
@@ -9,7 +10,10 @@ import com.wy.report.util.TimeUtils;
  * @date: 18-1-17 下午7:57
  * @description: ReadReport
  */
-public class AskItemMode {
+public class AskItemMode implements MultiItemEntity {
+
+    public static final int DOCTOR_LAYOUT_TYPE = 0;
+    public static final int USER_LAYOUT_TYPE   = 1;
 
     @JSONField(name = "id")
     private String id;
@@ -20,9 +24,6 @@ public class AskItemMode {
     @JSONField(name = "doctor_id")
     private String doctorId;
 
-    @JSONField(name = "rep_id")
-    private String repId;
-
     /**
      * 回复内容
      */
@@ -30,16 +31,24 @@ public class AskItemMode {
     private String conversation;
 
     /**
-     * 读状态 0表示未阅读，1表示已阅读
-     */
-    @JSONField(name = "if_readed")
-    private int ifReaded;
-
-    /**
      * 创建时间戳
      */
     @JSONField(name = "at")
     private long time;
+
+    @JSONField(name = "mobile")
+    private String mobile;
+
+    @JSONField(name = "doctor_name")
+    private String doctorName;
+
+    @JSONField(name = "name")
+    private String name;
+
+    @JSONField(name = "doctor_img")
+    private String doctorImage;
+    @JSONField(name = "user_img")
+    private String userImage;
 
 
     public boolean isDoctor() {
@@ -73,28 +82,12 @@ public class AskItemMode {
         this.doctorId = doctorId;
     }
 
-    public String getRepId() {
-        return repId;
-    }
-
-    public void setRepId(String repId) {
-        this.repId = repId;
-    }
-
     public String getConversation() {
         return conversation;
     }
 
     public void setConversation(String conversation) {
         this.conversation = conversation;
-    }
-
-    public int getIfReaded() {
-        return ifReaded;
-    }
-
-    public void setIfReaded(int ifReaded) {
-        this.ifReaded = ifReaded;
     }
 
     public long getTime() {
@@ -105,7 +98,55 @@ public class AskItemMode {
         this.time = time;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDoctorImage() {
+        return doctorImage;
+    }
+
+    public void setDoctorImage(String doctorImage) {
+        this.doctorImage = doctorImage;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
     public String getShowTime() {
         return TimeUtils.millis2String(time);
+    }
+
+    @Override
+    public int getItemType() {
+        if (isDoctor()) {
+            return DOCTOR_LAYOUT_TYPE;
+        }
+        return USER_LAYOUT_TYPE;
     }
 }
