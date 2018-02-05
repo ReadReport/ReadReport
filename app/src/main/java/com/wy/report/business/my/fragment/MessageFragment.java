@@ -20,6 +20,7 @@ import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.DensityUtils;
 import com.wy.report.util.TimeUtils;
@@ -70,6 +71,7 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
                     item.setViewed(true);
                 }
                 quickAdapter.setNewData(messageData.getAll());
+                MessageManager.getInstance().notifyAllMessageRead();
             }
         });
     }
@@ -96,7 +98,7 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
                 layout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Bundle          bundle = new Bundle();
+                        Bundle bundle = new Bundle();
                         bundle.putString(BundleKey.BUNDLE_KEY_MESSAGE_MID, item.getId());
                         AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_MESSAGE_DETAIL, bundle);
                     }
@@ -129,6 +131,7 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
 
     /**
      * 删除
+     *
      * @param item
      */
     private void deleteItem(final MessageItemMode item) {

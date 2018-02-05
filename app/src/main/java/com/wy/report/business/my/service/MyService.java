@@ -1,6 +1,7 @@
 package com.wy.report.business.my.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.home.model.MsgNumModel;
 import com.wy.report.business.my.model.AddMemberMode;
 import com.wy.report.business.my.model.FamilyItemMode;
 import com.wy.report.business.my.model.MessageItemMode;
@@ -178,4 +179,11 @@ public interface MyService {
     @POST("/Member/modify_member_photo")
     Observable<ResponseModel> editHeader(@Part("mid") String mid, @Part("upload_from") String uploadFrom, @Part MultipartBody.Part header);
 
+
+    /**
+     * 获取用户未读消息数
+     * @return
+     */
+    @GET("/Message/app_dbg_messages_unread_count")
+    Observable<ResponseModel<MsgNumModel>> getUnreadMsgNum(@Query("mid") String mid);
 }

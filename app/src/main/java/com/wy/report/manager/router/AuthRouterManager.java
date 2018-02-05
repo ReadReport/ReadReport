@@ -213,6 +213,12 @@ public class AuthRouterManager {
 
     private UserManger userManger;
 
+    //体检预约
+    public static String TJYY_URL;
+
+    //自我解读
+    public static String ZWJD_URL;
+
     /**
      * Instantiates a new router manager.
      */
