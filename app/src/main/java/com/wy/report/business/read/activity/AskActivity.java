@@ -9,6 +9,7 @@ import com.wy.report.R;
 import com.wy.report.base.activity.StandardActivity;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.business.read.fragment.AskFragment;
+import com.wy.report.util.SoftHideKeyBoardUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +30,7 @@ public class AskActivity extends StandardActivity {
     @Override
     protected void initView() {
         super.initView();
+        SoftHideKeyBoardUtil.assistActivity(this);
         Intent intent            = getIntent();
         String fragmentClassName = intent.getStringExtra(BundleKey.BUNDLE_KEY_FRAGMENT_CLASS_NAME);
         try {

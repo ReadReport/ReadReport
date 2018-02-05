@@ -2,6 +2,7 @@ package com.wy.report.business.read.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -55,6 +56,12 @@ public class AskFragment extends PtrListFragment {
         super.initView(contentView);
         setTitle(R.string.report_ask_title);
         ptrFrameLayout.autoRefresh();
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
+            }
+        });
     }
 
 
