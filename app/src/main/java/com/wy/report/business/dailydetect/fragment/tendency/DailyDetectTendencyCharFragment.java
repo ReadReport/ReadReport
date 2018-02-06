@@ -19,8 +19,10 @@ import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
+import com.wy.report.business.dailydetect.model.DailyDetectValueModel;
 import com.wy.report.util.DensityUtils;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -128,7 +130,31 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
         leftYAxis.setDrawGridLines(false);
         leftYAxis.setAxisLineWidth(1.5f);
         leftYAxis.setAxisLineColor(getColor(R.color.hui_ababab));
-        leftYAxis.setAxisMaximum(getYMaxValue());
+
+        float maxValue = getYMaxValue();
+        if (data != null) {
+            Field[] fields = DailyDetectValueModel.class.getDeclaredFields();
+            float mayValue = 0;
+            for (DailyDetectDataModel model : data) {
+                DailyDetectValueModel valueModel = model.getRes();
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    try {
+                        String value = (String) field.get(valueModel);
+                        if (value == null) {
+                            continue;
+                        }
+                        mayValue = Float.parseFloat(value);
+                    } catch (Exception e) {
+                    }
+
+                    if (mayValue > maxValue) {
+                        maxValue = mayValue + 5;
+                    }
+                }
+            }
+        }
+        leftYAxis.setAxisMaximum(maxValue);
         leftYAxis.setAxisMinimum(getYMinValue());
 
 

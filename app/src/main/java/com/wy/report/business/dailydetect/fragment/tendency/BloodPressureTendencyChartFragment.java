@@ -56,22 +56,7 @@ public class BloodPressureTendencyChartFragment extends DailyDetectTendencyCharF
 
     @Override
     protected float getYMaxValue() {
-        float maxValue = 190;
-        if(data != null){
-            for (DailyDetectDataModel model : data) {
-                DailyDetectValueModel valueModel = model.getRes();
-                float mayValue = Float.parseFloat(valueModel.getHighValue());
-                if(mayValue > maxValue){
-                    maxValue = mayValue;
-                }
-
-                mayValue = Float.parseFloat(valueModel.getLowValue());
-                if(mayValue > maxValue){
-                    maxValue = mayValue;
-                }
-            }
-        }
-        return maxValue;
+        return 190;
     }
 
     @Override
