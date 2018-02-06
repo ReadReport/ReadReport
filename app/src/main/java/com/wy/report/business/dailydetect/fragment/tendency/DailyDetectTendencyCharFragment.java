@@ -149,7 +149,7 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
                     }
 
                     if (mayValue > maxValue) {
-                        maxValue = mayValue + 5;
+                        maxValue = mayValue * 1.1f;
                     }
                 }
             }
