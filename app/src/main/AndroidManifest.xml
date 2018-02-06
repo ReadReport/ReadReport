@@ -56,13 +56,17 @@
         </activity>
 
         <activity
-            android:name=".business.read.activity.ReportListActivity"
+            android:name=".business.read.activity.UserInfoActivity"
             android:screenOrientation="portrait">
         </activity>
+
         <activity
-            android:name=".business.read.activity.ReadReportActivity"
+            android:name=".business.read.activity.AskActivity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
+
+
     </application>
 
 </manifest>

@@ -187,6 +187,8 @@ public class HomeFragment extends PtrFragment {
                            homeReportModel = totalNumberResponseModel.getData();
                            useReportNum.setText(new DecimalFormat("#,###").format(homeReportModel.getTotalNumber()));
                            fillFeed(homeReportModel.getReportInfo());
+                           AuthRouterManager.TJYY_URL = homeReportModel.getTjyy();
+                           AuthRouterManager.ZWJD_URL = homeReportModel.getZwjd();
                        }
                    });
     }

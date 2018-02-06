@@ -29,4 +29,8 @@ public final class BundleKey {
     public static final String BUNDLE_KEY_REPORT_ID = "BUNDLE_KEY_REPORT_ID";
 
     public static final String BUNDLE_KEY_REPORT_FROM_HOME = "BUNDLE_KEY_REPORT_FROM_HOME";
+
+    public static final String BUNDLE_KEY_PICTURE_NEED_DELETE = "BUNDLE_KEY_PICTURE_NEED_DELETE";
+
+    public static final String BUNDLE_KEY_DOCTOR_ID = "BUNDLE_KEY_DOCTOR_ID";
 }

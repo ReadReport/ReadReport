@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
+import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.read.mode.DoctorMode;
@@ -58,6 +59,8 @@ public class DoctorDetailFragment extends PtrFragment {
         super.initData(savedInstanceState);
         ptrWithoutToolbar = true;
         readService = RetrofitHelper.getInstance().create(ReadService.class);
+
+        docId = getArguments().getString(BundleKey.BUNDLE_KEY_DOCTOR_ID);
     }
 
     @Override
