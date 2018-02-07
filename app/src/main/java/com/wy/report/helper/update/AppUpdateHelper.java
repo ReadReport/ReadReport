@@ -151,7 +151,7 @@ public class AppUpdateHelper {
             OutputStream outputStream = null;
 
             try {
-                byte[] fileReader = new byte[4096];
+                byte[] fileReader = new byte[1024];
 
                 long fileSize           = body.contentLength();
                 long fileSizeDownloaded = 0;
