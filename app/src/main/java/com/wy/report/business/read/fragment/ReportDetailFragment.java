@@ -214,7 +214,7 @@ public class ReportDetailFragment extends PtrFragment {
 
     private void updateUserPrivate(boolean isPrivate) {
         if (isPrivate) {
-            userName.setText("******");
+            userName.setText("***");
             picContentPrivate.setVisibility(VISIBLE);
             picRecyleView.setVisibility(GONE);
             quotaView.setVisibility(GONE);
