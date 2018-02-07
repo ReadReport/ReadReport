@@ -1,6 +1,7 @@
 package com.wy.report.business.home.service;
 
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.home.model.AppUpdateMode;
 import com.wy.report.business.home.model.HomeFindModel;
 import com.wy.report.business.home.model.HomeReportModel;
 
@@ -18,5 +19,8 @@ public interface HomeService {
 
     @GET("/DailyMonitor/findKnowledge")
     Observable<ResponseModel<HomeFindModel>> getFindInfo();
+
+    @GET("/App/app_andriod_info")
+    Observable<ResponseModel<AppUpdateMode>> getUpdateInfo();
 
 }

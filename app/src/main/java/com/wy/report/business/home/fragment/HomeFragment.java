@@ -15,11 +15,13 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
 import com.wy.report.base.model.ResponseModel;
+import com.wy.report.business.home.model.AppUpdateMode;
 import com.wy.report.business.home.model.FeedModel;
 import com.wy.report.business.home.model.HomeReportModel;
 import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.helper.update.AppUpdateHelper;
 import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
@@ -33,6 +35,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import rx.Subscriber;
 
 /*
  * 首页
@@ -191,6 +194,24 @@ public class HomeFragment extends PtrFragment {
                            AuthRouterManager.ZWJD_URL = homeReportModel.getZwjd();
                        }
                    });
+
+        //获取更新信息
+        homeService.getUpdateInfo().subscribe(new Subscriber<ResponseModel<AppUpdateMode>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseModel<AppUpdateMode> responseModel) {
+                new AppUpdateHelper(getActivity()).checkUpdate(responseModel.getData());
+            }
+        });
     }
 
     @OnClick(R.id.home_report_upload)
