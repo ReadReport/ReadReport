@@ -40,7 +40,7 @@ import butterknife.BindView;
  */
 public abstract class DailyDetectDataListFragment extends NetworkFragment {
 
-    private static final String[] exceptionValue = new String[]{"偏", "异", "高", "低", "不", "胖", "瘦"};
+    private static final String[] exceptionValue = new String[]{"偏", "异", "过", "低", "不", "胖", "瘦" };
 
     protected ArrayList<DailyDetectDataModel> data;
 
