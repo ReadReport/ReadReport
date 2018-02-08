@@ -10,4 +10,6 @@ public final class Key {
 
     public static final String LOGINED_USER_INFO = "LOGINED_USER_INFO";
 
+    public static final String FIRST_LAUNCH = "FIRST_LAUNCH";
+
 }
