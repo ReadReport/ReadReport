@@ -50,13 +50,13 @@ public class AppUpdateHelper {
 
     public void checkUpdate(AppUpdateMode appUpdateMode) {
         int versionCode = getVersionCode(mContext);
-//        if (versionCode < 0) {
+        if (versionCode < 0) {
             return;
-//        }
-//        int serverCode = appUpdateMode.getVersionCode();
-//        if (serverCode > versionCode) {
-//            showDialog(appUpdateMode);
-//        }
+        }
+        int serverCode = appUpdateMode.getVersionCode();
+        if (serverCode > versionCode) {
+            showDialog(appUpdateMode);
+        }
     }
 
     public void showDialog(final AppUpdateMode appUpdateMode) {
