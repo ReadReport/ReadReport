@@ -80,6 +80,8 @@ public class ReportDetailFragment extends PtrFragment {
     @BindView(R.id.report_detail_report_pic_rv)
     RecyclerView        picRecyleView;
     //-----用户备注------
+    @BindView(R.id.report_detail_note_ll)
+    View                userNoteView;
     @BindView(R.id.report_detail_note_head_icon)
     ImageView           userNoteHeader;
     @BindView(R.id.report_detail_note_content)
@@ -123,7 +125,7 @@ public class ReportDetailFragment extends PtrFragment {
     @BindView(R.id.report_detail_suggestion_old)
     LinearLayout suggestionOldVersion;
     @BindView(R.id.report_detail_suggestion_old_content)
-    TextView suggestionOldVersionContent;
+    TextView     suggestionOldVersionContent;
 
 
     //指标说明
@@ -214,7 +216,7 @@ public class ReportDetailFragment extends PtrFragment {
 
     private void updateUserPrivate(boolean isPrivate) {
         if (isPrivate) {
-            userName.setText("******");
+            userName.setText("***");
             picContentPrivate.setVisibility(VISIBLE);
             picRecyleView.setVisibility(GONE);
             quotaView.setVisibility(GONE);
@@ -277,8 +279,14 @@ public class ReportDetailFragment extends PtrFragment {
         });
 
 
-        //更新用户备注
-        userNoteContent.setText(reportInfo.getRemark());
+        if (StringUtils.isNotBlank(reportInfo.getRemark())) {
+            userNoteView.setVisibility(VISIBLE);
+            //更新用户备注
+            userNoteContent.setText(reportInfo.getRemark());
+        } else {
+            userNoteView.setVisibility(GONE);
+        }
+
         //更新得分
         score.setCurrentValues(reportInfo.getScore());
         //更新医生信息

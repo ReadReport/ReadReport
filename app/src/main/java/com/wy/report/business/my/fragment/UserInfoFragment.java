@@ -71,7 +71,7 @@ public class UserInfoFragment extends NetworkFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        updateInfo();
+        updateInfo(user);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class UserInfoFragment extends NetworkFragment {
     }
 
 
-    private void updateInfo() {
+    private void updateInfo(User user) {
         if (user != null) {
             name.setText(user.getName());
             birthday.setText(TimeUtils.millis2StringWithoutTime(user.getBirthday()));
@@ -101,7 +101,7 @@ public class UserInfoFragment extends NetworkFragment {
      */
     @OnClick(R.id.user_info_user_name_info)
     public void modifyName() {
-        AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_EDIT_USERNAME);
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_EDIT_USERNAME);
     }
 
     /**
@@ -139,13 +139,12 @@ public class UserInfoFragment extends NetworkFragment {
         }).show();
     }
 
-    private void save()
-    {
-        final String newName = name.getText().toString();
+    private void save() {
+        final String newName     = name.getText().toString();
         final String newBirthday = birthday.getText().toString();
-        final int sexy = StringUtils.getSex2UploadInt(sex.getText().toString());
-        final String uid = UserManger.getInstance().getLoginUser().getId();
-        mMyService.editInfo(uid,newName,newBirthday,String.valueOf(sexy)).subscribe(new NetworkSubscriber<ResponseModel>(this) {
+        final int    sexy        = StringUtils.getSex2UploadInt(sex.getText().toString());
+        final String uid         = UserManger.getInstance().getLoginUser().getId();
+        mMyService.editInfo(uid, newName, newBirthday, String.valueOf(sexy)).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
@@ -153,20 +152,17 @@ public class UserInfoFragment extends NetworkFragment {
                 User user = UserManger.getInstance().getLoginUser();
                 user.setName(newName);
                 user.setSex(sexy);
-                user.setBirthday(TimeUtils.string2Millis(newBirthday,TimeUtils.DATE_FORMAT));
+                user.setBirthday(TimeUtils.string2Millis(newBirthday, TimeUtils.DATE_FORMAT));
                 UserManger.getInstance().updateUser(user);
-                rxBus.post(RxKey.RX_MODIFY_USER_INFO,user);
+                rxBus.post(RxKey.RX_MODIFY_USER_INFO, user);
             }
         });
     }
 
-    @Subscribe(tags = {@Tag(RxKey.RX_EDIT_USER_NAME)})
-    public void onNameEdit(String newName)
-    {
-        name.setText(newName);
-        save();
+    @Subscribe(tags = {@Tag(RxKey.RX_MODIFY_USER_INFO)})
+    public void onNameEdit(User user) {
+        updateInfo(user);
     }
-
 
 
 }

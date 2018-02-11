@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dp_10"
+    android:id="@+id/report_detail_note_ll"
+    android:visibility="gone"
     >
 
     <TextView
@@ -41,7 +43,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/dialog_bg_left"
-            android:text="@string/doctor_detail_service_content_instruction_content"
             android:textColor="@color/hei_333333"
             android:textSize="14sp"
             />

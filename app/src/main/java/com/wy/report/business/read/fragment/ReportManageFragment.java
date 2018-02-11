@@ -85,6 +85,21 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         });
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
         ptrFrameLayout.autoRefresh();
+
+        quickAdapter.bindToRecyclerView(recyclerView);
+        quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
+        quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_get_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_QUERY);
+            }
+        });
+        quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_upload_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_UPLOAD);
+            }
+        });
     }
 
 
