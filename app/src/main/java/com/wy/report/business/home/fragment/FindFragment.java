@@ -118,7 +118,7 @@ public class FindFragment extends PtrFragment {
                 }
                 HealthTestModel model = (HealthTestModel) adapter.getItem(position);
                 //健康测试http://dbg.vip120.com/Poll/p_cont/poll_id/14/thridParty/12567/timestamp/12567355
-                String url = model.getId() + "/thridParty/" + UserManger.getUid() + "/timestamp/" + System.currentTimeMillis() / 1000;
+                String url = model.getId() + "/thirdParty/" + UserManger.getUid() + "/timestamp/" + System.currentTimeMillis() / 1000;
                 authRouterManager.openWebView(getActivity(), url, model.getTitle());
             }
         });
@@ -268,7 +268,7 @@ public class FindFragment extends PtrFragment {
             return;
         }
         HomeFindHealthyTestModel testModel = model.getHomeFindHealthyTestModel();
-        String url = testModel.getMore() + "/thridParty/" + UserManger.getUid() + "/timestamp/" + System.currentTimeMillis() / 1000;
+        String url = testModel.getMore() + "/thirdParty/" + UserManger.getUid() + "/timestamp/" + System.currentTimeMillis() / 1000;
         authRouterManager.openWebView(getActivity(), url, "");
     }
 

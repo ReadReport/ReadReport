@@ -53,6 +53,9 @@
                 android:gravity="right|center_vertical"
                 android:singleLine="true"
                 android:textSize="14sp"
+                android:hint="@string/report_query_member"
+                android:textColorHint="@color/hui_ababab"
+                android:textColor="@color/hei_575757"
                 tools:text="姓名"/>
 
             <ImageView
@@ -100,8 +103,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="left|center_vertical"
+                android:gravity="right|center_vertical"
                 android:singleLine="true"
+                android:textColorHint="@color/hui_ababab"
+                android:textColor="@color/hei_575757"
+                android:hint="@string/report_query_hospital"
                 android:textSize="14sp"/>
 
             <ImageView
@@ -149,6 +155,8 @@
                 android:background="@null"
                 android:gravity="left|center_vertical"
                 android:hint="@string/report_account_hint"
+                android:textColorHint="@color/hui_ababab"
+                android:textColor="@color/hei_575757"
                 android:singleLine="true"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -190,6 +198,8 @@
                 android:gravity="left|center_vertical"
                 android:hint="@string/report_password_hint"
                 android:inputType="textPassword"
+                android:textColorHint="@color/hui_ababab"
+                android:textColor="@color/hei_575757"
                 android:singleLine="true"
                 android:textSize="14sp"/>
         </LinearLayout>
