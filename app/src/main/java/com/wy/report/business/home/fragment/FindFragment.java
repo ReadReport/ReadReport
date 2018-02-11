@@ -35,6 +35,7 @@ import com.wy.report.business.home.model.HomeFindModel;
 import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.DensityUtils;
@@ -112,8 +113,13 @@ public class FindFragment extends PtrFragment {
         healthTestAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!UserManger.checkLogin()) {
+                    return;
+                }
                 HealthTestModel model = (HealthTestModel) adapter.getItem(position);
-                authRouterManager.openWebView(getActivity(), model.getId(), model.getTitle());
+                //健康测试http://dbg.vip120.com/Poll/p_cont/poll_id/14/thridParty/12567/timestamp/12567355
+                String url = model.getId() + "/thridParty/" + UserManger.getUid() + "/timestamp/" + System.currentTimeMillis() / 1000;
+                authRouterManager.openWebView(getActivity(), url, model.getTitle());
             }
         });
 
@@ -258,8 +264,12 @@ public class FindFragment extends PtrFragment {
         if (model == null) {
             return;
         }
+        if (!UserManger.checkLogin()) {
+            return;
+        }
         HomeFindHealthyTestModel testModel = model.getHomeFindHealthyTestModel();
-        authRouterManager.openWebView(getActivity(), testModel.getMore(), "");
+        String url = testModel.getMore() + "/thridParty/" + UserManger.getUid() + "/timestamp/" + System.currentTimeMillis() / 1000;
+        authRouterManager.openWebView(getActivity(), url, "");
     }
 
     @OnClick(R.id.home_find_health_knowledge_more)

@@ -56,6 +56,8 @@ public class WebViewFragment extends NetworkFragment {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setUseWideViewPort(true);
         settings.setPluginState(WebSettings.PluginState.ON);
+        settings.setAppCacheEnabled(true);
+        settings.setAppCachePath(getActivity().getCacheDir().getAbsolutePath());
         if (android.os.Build.VERSION.SDK_INT > 16) {
             settings.setMediaPlaybackRequiresUserGesture(false);
         }
