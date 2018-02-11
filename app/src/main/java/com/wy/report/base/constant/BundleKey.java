@@ -33,4 +33,6 @@ public final class BundleKey {
     public static final String BUNDLE_KEY_PICTURE_NEED_DELETE = "BUNDLE_KEY_PICTURE_NEED_DELETE";
 
     public static final String BUNDLE_KEY_DOCTOR_ID = "BUNDLE_KEY_DOCTOR_ID";
+
+    public static final String BUNDLE_KEY_MAX_CHOOSE_PICTURE_NUM = "BUNDLE_KEY_MAX_CHOOSE_PICTURE_NUM";
 }

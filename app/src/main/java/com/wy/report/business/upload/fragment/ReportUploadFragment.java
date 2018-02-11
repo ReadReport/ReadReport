@@ -163,7 +163,7 @@ public class ReportUploadFragment extends NetworkFragment {
     }
 
     private void createAdapter() {
-        adapter = new BaseItemDraggableAdapter<PictureModel, BaseViewHolder>(R.layout.vh_select_image, null) {
+        adapter = new BaseItemDraggableAdapter<PictureModel, BaseViewHolder>(R.layout.vh_selected_picture, null) {
 
 
             /**
