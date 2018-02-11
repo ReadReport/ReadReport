@@ -209,7 +209,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
             ToastUtils.showLong(getString(R.string.report_not_more_data));
             return;
         }
-        readService.getReportList(uid, page, 0).subscribe(new PtrSubscriber<ResponseModel<ReportListMode>>(this) {
+        readService.getReportList(uid, page, ifAll).subscribe(new PtrSubscriber<ResponseModel<ReportListMode>>(this) {
             @Override
             public void onNext(ResponseModel<ReportListMode> listResponseModel) {
                 super.onNext(listResponseModel);
