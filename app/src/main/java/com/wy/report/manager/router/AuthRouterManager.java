@@ -25,7 +25,9 @@ import com.wy.report.business.my.fragment.UserInfoFragment;
 import com.wy.report.business.my.fragment.VerifyIdentifyFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
-import com.wy.report.business.other.fragment.PictureFragment;
+import com.wy.report.business.other.fragment.PictureChooseFragment;
+import com.wy.report.business.other.fragment.PictureChoosePreviewFragment;
+import com.wy.report.business.other.fragment.PicturePreviewFragment;
 import com.wy.report.business.read.activity.AskActivity;
 import com.wy.report.business.read.fragment.ClipImageFragment;
 import com.wy.report.business.read.activity.UserInfoActivity;
@@ -208,16 +210,21 @@ public class AuthRouterManager {
      */
     public static final String ROUTER_CLIP_IMAGE = LOGIN_ACTIVITY_PREFIX + "ROUTER_CLIP_IMAGE";
 
+    /**
+     * 选择图片
+     */
+    public static final String ROUTER_PICTURE_CHOOSE = LOGIN_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE";
 
-    private Router router;
-
-    private UserManger userManger;
-
+    /**
+     * 选择图片预览
+     */
+    public static final String ROUTER_PICTURE_CHOOSE_PREVIEW = LOGIN_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_PREVIEW";
     //体检预约
     public static String TJYY_URL;
-
     //自我解读
     public static String ZWJD_URL;
+    private Router router;
+    private UserManger userManger;
 
     /**
      * Instantiates a new router manager.
@@ -250,7 +257,7 @@ public class AuthRouterManager {
         router.map(ROUTER_REPORT_UPLOAD_QUERY, StandardActivity.class, ReportUploadQueryFragment.class);
         router.map(ROUTER_REPORT_UPLOAD, StandardActivity.class, ReportUploadFragment.class);
         router.map(ROUTER_REPORT_QUERY, StandardActivity.class, ReportQueryFragment.class);
-        router.map(ROUTER_OTHER_PICTURE_PREVIEW, StandardActivity.class, PictureFragment.class);
+        router.map(ROUTER_OTHER_PICTURE_PREVIEW, StandardActivity.class, PicturePreviewFragment.class);
         router.map(ROUTER_FAMILY_MEMBER_SELECT, StandardActivity.class, FamilyMemberSelectFragment.class);
         router.map(ROUTER_REPORT_HOSPITAL_LIST, StandardActivity.class, HospitalListFragment.class);
         router.map(ROUTER_REPORT_MANAGE, StandardActivity.class, ReportManageFragment.class);
@@ -278,6 +285,8 @@ public class AuthRouterManager {
         router.map(ROUTER_REPORT_UPLOAD_SUCCESS, StandardActivity.class, ReportUploadSuccessFragment.class);
         router.map(ROUTER_REPORT_QUERY_SUCCESS, StandardActivity.class, ReportQuerySuccessFragment.class);
         router.map(ROUTER_CLIP_IMAGE, StandardActivity.class, ClipImageFragment.class);
+        router.map(ROUTER_PICTURE_CHOOSE, StandardActivity.class, PictureChooseFragment.class);
+        router.map(ROUTER_PICTURE_CHOOSE_PREVIEW, StandardActivity.class, PictureChoosePreviewFragment.class);
     }
 
     /**
