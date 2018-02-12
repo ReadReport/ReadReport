@@ -27,21 +27,16 @@ import uk.co.senab.photoview.PhotoView;
  * @author cantalou
  * @date 2017-12-09 13:56
  */
-public class PictureFragment extends ToolbarFragment {
+public class PicturePreviewFragment extends ToolbarFragment {
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
-    private List<String> paths;
-
-    private int index;
-
-    private PagerAdapter adapter;
-
-    private boolean needDelete;
-
     @BindView(R.id.toolbar_delete)
     ImageView toolBarDelete;
+    private List<String> paths;
+    private int index;
+    private PagerAdapter adapter;
+    private boolean needDelete;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -113,13 +108,13 @@ public class PictureFragment extends ToolbarFragment {
         super.initToolbar();
         setTitle((index + 1) + "/" + paths.size());
         statusBarBg.setImageResource(R.color.hei_1e1e1e);
-        int visiable = needDelete ? View.VISIBLE : View.GONE;
-        toolBarDelete.setVisibility(visiable);
+        int visible = needDelete ? View.VISIBLE : View.GONE;
+        toolBarDelete.setVisibility(visible);
     }
 
     @Override
     protected int contentLayoutID() {
-        return R.layout.fragment_picture;
+        return R.layout.fragment_picture_preview;
     }
 
     @Override
@@ -156,4 +151,6 @@ public class PictureFragment extends ToolbarFragment {
                                               .create()
                                               .show();
     }
+
+
 }

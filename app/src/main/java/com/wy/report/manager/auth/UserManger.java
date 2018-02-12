@@ -1,10 +1,14 @@
 package com.wy.report.manager.auth;
 
 import com.hwangjr.rxbus.RxBus;
+import com.wy.report.ReportApplication;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.manager.preferences.Key;
 import com.wy.report.manager.preferences.PreferenceManager;
+import com.wy.report.manager.router.AuthRouterManager;
+
+import static com.wy.report.manager.router.AuthRouterManager.ROUTER_LOGIN;
 
 /**
  * @author cantalou
@@ -67,4 +71,20 @@ public class UserManger {
         static final UserManger INSTANCE = new UserManger();
     }
 
+    /**
+     * 检测当前
+     *
+     * @return
+     */
+    public static boolean checkLogin() {
+
+        if (getInstance().isLogin()) {
+            return true;
+        }
+
+        AuthRouterManager.getInstance()
+                         .getRouter()
+                         .open(ReportApplication.getCurrentActivity(), ROUTER_LOGIN);
+        return false;
+    }
 }

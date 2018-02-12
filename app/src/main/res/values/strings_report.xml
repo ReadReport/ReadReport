@@ -42,6 +42,8 @@
     <string name="report_hospital_tab_unit">连锁机构</string>
     <string name="report_hospital_title">体检医院机构</string>
 
+    <string name="report_query_member">请选择体检人员</string>
+    <string name="report_query_hospital">请选择体检医院</string>
     <string name="report_account">账\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020号:</string>
     <string name="report_account_hint">请输入医院提供的查询账号</string>
     <string name="report_password">密\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020码:</string>
