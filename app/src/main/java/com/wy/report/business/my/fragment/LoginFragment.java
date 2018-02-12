@@ -25,9 +25,9 @@ import com.wy.report.util.ToastUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.wy.report.manager.router.AuthRouterManager.ROUTER_MODIFY_PWD;
 import static com.wy.report.manager.router.AuthRouterManager.ROUTER_REGISTER;
 import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_LOGIN;
+import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_PHONE_NUM;
 
 /**
  * @author: ZangSong
@@ -125,7 +125,7 @@ public class LoginFragment extends NetworkFragment {
 
     @OnClick(R.id.verify_code_forget_psw)
     public void forgetPsw() {
-        AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_MODIFY_PWD);
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_VERIFY_PHONE_NUM);
     }
 
 

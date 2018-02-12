@@ -153,7 +153,7 @@ public class AuthRouterManager {
     /**
      * 验证手机号
      */
-    public static final String ROUTER_VERIFY_PHONE_NUM = LOGIN_ACTIVITY_PREFIX + "ROUTER_VERIFY_PHONE_NUM";
+    public static final String ROUTER_VERIFY_PHONE_NUM = PUBLIC_ACTIVITY_PREFIX + "ROUTER_VERIFY_PHONE_NUM";
 
     /**
      * 修改密码

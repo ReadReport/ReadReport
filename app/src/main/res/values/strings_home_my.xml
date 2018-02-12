@@ -82,5 +82,8 @@
     <string name="bind_phone_submit">绑定</string>
     <string name="bind_phone_success">绑定成功！</string>
 
-
+    <string name="phone_hint">手机号</string>
+    <string name="register_password_hint">设置登录密码</string>
+    <string name="password_hint">登录密码</string>
+    <string name="verify_code_hint">验证码</string>
 </resources>

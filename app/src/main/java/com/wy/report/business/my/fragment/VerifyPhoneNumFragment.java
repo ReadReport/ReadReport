@@ -51,7 +51,9 @@ public class VerifyPhoneNumFragment extends NetworkFragment {
     protected void initView(View contentView) {
         super.initView(contentView);
         contentView.findViewById(R.id.pwd).setVisibility(View.GONE);
-        userName.setText(UserManger.getInstance().getLoginUser().getMobile());
+        if (UserManger.getInstance().isLogin()) {
+            userName.setText(UserManger.getInstance().getLoginUser().getMobile());
+        }
     }
 
     @Override
@@ -69,7 +71,7 @@ public class VerifyPhoneNumFragment extends NetworkFragment {
     @OnClick(R.id.verify_phone_num_next)
     public void next() {
         final String username = userName.getText().toString();
-        String pwd      = verifyCode.getText().toString();
+        String       pwd      = verifyCode.getText().toString();
 
         if (StringUtils.isBlank(username)) {
             ToastUtils.showLong(R.string.my_verify_mobile_null);
@@ -86,8 +88,8 @@ public class VerifyPhoneNumFragment extends NetworkFragment {
                 String loginId = String.valueOf(UserManger.getInstance().getLoginUser().getId());
                 if (loginId.equals(userModelResponseModel.getData().getId())) {
                     Bundle bundle = new Bundle();
-                    bundle.putString(BundleKey.BUNDLE_KEY_MODIFY_PWD_USERNAME,username);
-                    AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_MODIFY_PWD,bundle);
+                    bundle.putString(BundleKey.BUNDLE_KEY_MODIFY_PWD_USERNAME, username);
+                    AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_MODIFY_PWD, bundle);
                 }
             }
         });
