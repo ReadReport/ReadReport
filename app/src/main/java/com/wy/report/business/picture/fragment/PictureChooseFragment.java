@@ -1,13 +1,16 @@
 package com.wy.report.business.picture.fragment;
 
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.cantalou.android.util.DeviceUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
@@ -16,6 +19,7 @@ import com.wy.report.base.constant.RxKey;
 import com.wy.report.business.picture.model.BucketModel;
 import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.DensityUtils;
 import com.wy.report.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -37,12 +41,13 @@ import static com.wy.report.base.constant.Constants.PICTURE_CHOOSE_MAX_NUM;
  */
 public class PictureChooseFragment extends AbstractPictureChooseFragment {
 
+    private static int LINE_PICTURE_NUM = 4;
     @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
-
     private BaseQuickAdapter<PictureModel, BaseViewHolder> adapter;
-
     private ArrayList<BucketModel> buckets = new ArrayList<>();
+    private int pictureWidth;
+    private int itemOffset;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -56,6 +61,9 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
             load();
             rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_LIST, buckets);
         }
+
+        pictureWidth = (DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 50)) / LINE_PICTURE_NUM;
+        itemOffset = DensityUtils.dip2px(getActivity(), 10);
     }
 
     @Override
@@ -64,7 +72,11 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         adapter = new BaseQuickAdapter<PictureModel, BaseViewHolder>(R.layout.vh_picture_choose) {
             @Override
             protected void convert(BaseViewHolder helper, PictureModel item) {
+
                 ImageView picture = helper.getView(R.id.vh_choose_picture);
+                ViewGroup.LayoutParams layoutParams = picture.getLayoutParams();
+                layoutParams.width = pictureWidth;
+                layoutParams.height = pictureWidth;
                 Glide.with(getActivity())
                      .load(item.getPath())
                      .into(picture);
@@ -92,7 +104,20 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
                 updateChosenNum();
             }
         });
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), LINE_PICTURE_NUM));
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+                if (itemPosition < LINE_PICTURE_NUM) {
+                    outRect.top = itemOffset;
+                }
+                if(itemPosition % LINE_PICTURE_NUM == 0){
+                    outRect.left = itemOffset;
+                }
+                outRect.right = itemOffset;
+                outRect.bottom = itemOffset;
+            }
+        });
         recyclerView.setAdapter(adapter);
         adapter.setNewData(allPictures);
     }
@@ -167,7 +192,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
     }
 
     @OnClick(R.id.toolbar_cancel)
-    public void cancelClick(){
+    public void cancelClick() {
         rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_FINISH, "");
     }
 }

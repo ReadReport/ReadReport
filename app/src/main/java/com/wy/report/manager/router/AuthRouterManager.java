@@ -25,6 +25,7 @@ import com.wy.report.business.my.fragment.UserInfoFragment;
 import com.wy.report.business.my.fragment.VerifyIdentifyFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
+import com.wy.report.business.picture.fragment.PictureChooseCategoryFragment;
 import com.wy.report.business.picture.fragment.PictureChooseFragment;
 import com.wy.report.business.picture.fragment.PictureChoosePreviewFragment;
 import com.wy.report.business.picture.fragment.PicturePreviewFragment;
@@ -291,6 +292,7 @@ public class AuthRouterManager {
         router.map(ROUTER_REPORT_UPLOAD_SUCCESS, StandardActivity.class, ReportUploadSuccessFragment.class);
         router.map(ROUTER_REPORT_QUERY_SUCCESS, StandardActivity.class, ReportQuerySuccessFragment.class);
         router.map(ROUTER_CLIP_IMAGE, StandardActivity.class, ClipImageFragment.class);
+        router.map(ROUTER_PICTURE_CHOOSE_CATEGORY, StandardActivity.class, PictureChooseCategoryFragment.class);
         router.map(ROUTER_PICTURE_CHOOSE, StandardActivity.class, PictureChooseFragment.class);
         router.map(ROUTER_PICTURE_CHOOSE_PREVIEW, StandardActivity.class, PictureChoosePreviewFragment.class);
     }
