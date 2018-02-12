@@ -4,6 +4,8 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:focusable="true"
+             android:focusableInTouchMode="true"
              android:orientation="vertical">
 
     <android.support.v4.widget.NestedScrollView
@@ -13,8 +15,7 @@
         android:layout_marginBottom="50dp"
         android:background="@color/hui_f9f9f9"
         android:fillViewport="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -60,7 +61,10 @@
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
+                        android:hint="@string/report_medical_examiner_hint"
                         android:singleLine="true"
+                        android:textColor="@color/hei_575757"
+                        android:textColorHint="@color/hui_ababab"
                         android:textSize="14sp"
                         tools:text="姓名"/>
 
@@ -109,7 +113,10 @@
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
+                        android:hint="@string/report_examine_time_hint"
                         android:singleLine="true"
+                        android:textColor="@color/hei_575757"
+                        android:textColorHint="@color/hui_ababab"
                         android:textSize="14sp"
                         tools:text="时间"/>
 
@@ -153,6 +160,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:background="@null"
@@ -160,7 +168,10 @@
                         android:gravity="left|center_vertical"
                         android:hint="@string/report_examine_hospital_hint"
                         android:includeFontPadding="false"
+                        android:maxLength="25"
                         android:singleLine="true"
+                        android:textColor="@color/hei_575757"
+                        android:textColorHint="@color/hui_ababab"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp"/>
 
@@ -207,9 +218,11 @@
                         android:hint="@string/report_remark_hint"
                         android:maxLines="3"
                         android:minHeight="50dp"
+                        android:paddingTop="2.5dp"
+                        android:textColor="@color/hei_575757"
+                        android:textColorHint="@color/hui_ababab"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/report_upload_remark_title"
                         app:layout_constraintLeft_toRightOf="@+id/report_upload_remark_title"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/report_upload_remark_title"/>

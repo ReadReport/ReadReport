@@ -2,6 +2,9 @@ package com.wy.report.util;
 
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,5 +36,18 @@ public class ViewUtils {
     public static String getText(TextView tv) {
         return tv.getText()
                  .toString();
+    }
+
+    /**
+     * 修改TextView的提示文字大小
+     *
+     * @param tv
+     * @param size 文字大小 sp
+     */
+    public static void setTextViewHintSize(TextView tv, int size){
+        SpannableString ss = new SpannableString(tv.getHint());
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(size,true);
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv.setHint(ss);
     }
 }

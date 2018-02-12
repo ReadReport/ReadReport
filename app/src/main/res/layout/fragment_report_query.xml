@@ -7,7 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/hui_f9f9f9"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:id="@+id/report_query_info_container"
@@ -51,11 +53,11 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="right|center_vertical"
+                android:hint="@string/report_empty_tip_member"
                 android:singleLine="true"
-                android:textSize="14sp"
-                android:hint="@string/report_query_member"
-                android:textColorHint="@color/hui_ababab"
                 android:textColor="@color/hei_575757"
+                android:textColorHint="@color/hui_ababab"
+                android:textSize="14sp"
                 tools:text="姓名"/>
 
             <ImageView
@@ -104,10 +106,10 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="right|center_vertical"
+                android:hint="@string/report_empty_tip_hospital"
                 android:singleLine="true"
-                android:textColorHint="@color/hui_ababab"
                 android:textColor="@color/hei_575757"
-                android:hint="@string/report_query_hospital"
+                android:textColorHint="@color/hui_ababab"
                 android:textSize="14sp"/>
 
             <ImageView
@@ -150,15 +152,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="left|center_vertical"
                 android:hint="@string/report_account_hint"
-                android:textColorHint="@color/hui_ababab"
-                android:textColor="@color/hei_575757"
                 android:singleLine="true"
-                android:textSize="14sp"/>
+                android:textColor="@color/hei_575757"
+                android:textColorHint="@color/hui_ababab"
+                android:textSize="14sp"
+                android:textCursorDrawable="@null"/>
         </LinearLayout>
 
         <!--密码-->
@@ -192,15 +196,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:ellipsize="end"
                 android:gravity="left|center_vertical"
                 android:hint="@string/report_password_hint"
                 android:inputType="textPassword"
-                android:textColorHint="@color/hui_ababab"
-                android:textColor="@color/hei_575757"
                 android:singleLine="true"
+                android:textColor="@color/hei_575757"
+                android:textColorHint="@color/hui_ababab"
+                android:textCursorDrawable="@null"
                 android:textSize="14sp"/>
         </LinearLayout>
     </LinearLayout>

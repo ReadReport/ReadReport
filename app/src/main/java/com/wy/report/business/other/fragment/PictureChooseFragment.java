@@ -20,6 +20,7 @@ import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.BaseFragment;
 import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ import butterknife.OnClick;
 import static android.provider.MediaStore.Images.ImageColumns.DATE_TAKEN;
 import static android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 import static android.provider.MediaStore.MediaColumns.DATA;
+import static com.wy.report.base.constant.Constants.PICTURE_CHOOSE_MAX_NUM;
 
 /**
  * @author cantalou
@@ -79,6 +81,10 @@ public class PictureChooseFragment extends BaseFragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 PictureModel pictureModel = allPictures.get(position);
+                if (!pictureModel.isChoose() && countChosenNum() >= PICTURE_CHOOSE_MAX_NUM) {
+                    ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
+                    return;
+                }
                 pictureModel.setChoose(!pictureModel.isChoose());
                 adapter.notifyItemChanged(position);
                 updateChosenNum();
@@ -146,12 +152,17 @@ public class PictureChooseFragment extends BaseFragment {
     }
 
     private void updateChosenNum() {
+        int i = countChosenNum();
+        chosenNum.setText(Integer.toString(i));
+    }
+
+    private int countChosenNum() {
         int i = 0;
         for (PictureModel model : allPictures) {
             if (model.isChoose()) {
                 i++;
             }
         }
-        chosenNum.setText(Integer.toString(i));
+        return i;
     }
 }

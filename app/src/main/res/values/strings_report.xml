@@ -6,7 +6,9 @@
     <string name="report_manage">报告管理</string>
     
     <string name="report_medical_examiner">体检人员:</string>
+    <string name="report_medical_examiner_hint">请选择体检人员</string>
     <string name="report_examine_time">体检时间:</string>
+    <string name="report_examine_time_hint">请选择体检时间</string>
     <string name="report_examine_hospital">体检医院:</string>
     <string name="report_examine_hospital_hint">请输入体检医院</string>
     <string name="report_remark">备\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020注:</string>
@@ -30,6 +32,7 @@
     <string name="report_upload_remark_limit">备注不得超过100个字</string>
     <string name="report_upload_time_not_empty">报告时间不能为空</string>
     <string name="report_upload_file_not_empty">请上传报告图片</string>
+    <string name="report_upload_picture_limit1">你最多只能选择%d张照片</string>
 
 
 
@@ -42,8 +45,8 @@
     <string name="report_hospital_tab_unit">连锁机构</string>
     <string name="report_hospital_title">体检医院机构</string>
 
-    <string name="report_query_member">请选择体检人员</string>
-    <string name="report_query_hospital">请选择体检医院</string>
+    <string name="report_empty_tip_member">请选择体检人员</string>
+    <string name="report_empty_tip_hospital">请选择体检医院</string>
     <string name="report_account">账\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020号:</string>
     <string name="report_account_hint">请输入医院提供的查询账号</string>
     <string name="report_password">密\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020码:</string>

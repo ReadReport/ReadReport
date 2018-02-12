@@ -2,6 +2,7 @@ package com.wy.report.business.upload.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -59,6 +60,15 @@ public class ReportQueryFragment extends NetworkFragment {
     }
 
     @Override
+    protected void initView(View contentView) {
+        super.initView(contentView);
+        ViewUtils.setTextViewHintSize(name,11);
+        ViewUtils.setTextViewHintSize(hospital,11);
+        ViewUtils.setTextViewHintSize(account,11);
+        ViewUtils.setTextViewHintSize(password,11);
+    }
+
+    @Override
     protected void initToolbar() {
         super.initToolbar();
         setTitle(R.string.report_query);
@@ -101,12 +111,12 @@ public class ReportQueryFragment extends NetworkFragment {
     public void submit() {
 
         if(familyMemberModel == null){
-            ToastUtils.showShort(R.string.report_query_member);
+            ToastUtils.showShort(R.string.report_empty_tip_member);
             return;
         }
 
         if(unitModel == null){
-            ToastUtils.showShort(R.string.report_query_hospital);
+            ToastUtils.showShort(R.string.report_empty_tip_hospital);
             return;
         }
 
@@ -130,7 +140,7 @@ public class ReportQueryFragment extends NetworkFragment {
                              DialogHelper.showReportQueryConfirmDialog(getActivity(), new DialogInterface.OnClickListener() {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
-                                     router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY_SUCCESS);
+                                     router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
                                  }
                              });
                          }
