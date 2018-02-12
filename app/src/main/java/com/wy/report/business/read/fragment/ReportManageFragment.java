@@ -86,20 +86,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
         ptrFrameLayout.autoRefresh();
 
-        quickAdapter.bindToRecyclerView(recyclerView);
-        quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
-        quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_get_report).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_QUERY);
-            }
-        });
-        quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_upload_report).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_UPLOAD);
-            }
-        });
+
     }
 
 
@@ -216,6 +203,17 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 quickAdapter.addData(listResponseModel.getData().getData());
             }
         });
+    }
+
+    @Override
+    public void handlePtrError(Throwable t) {
+        super.handlePtrError(t);
+    }
+
+    @Override
+    public void handlePtrSuccess(Object o) {
+        super.handlePtrSuccess(o);
+        initRecyleEmptyView();
     }
 
     private void setItem(BaseViewHolder reportItemModeBaseViewHolder, ReportItemMode reportItemMode) {
@@ -374,6 +372,25 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 super.onNext(listResponseModel);
                 quickAdapter.setNewData(listResponseModel.getData().getData());
                 pageConut = listResponseModel.getData().getCount();
+            }
+        });
+    }
+
+
+    private void initRecyleEmptyView()
+    {
+        quickAdapter.bindToRecyclerView(recyclerView);
+        quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
+        quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_get_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_QUERY);
+            }
+        });
+        quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_upload_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_UPLOAD);
             }
         });
     }
