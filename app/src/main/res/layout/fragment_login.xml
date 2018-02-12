@@ -28,6 +28,7 @@
         />
 
     <TextView
+        android:id="@+id/verify_code_forget_psw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

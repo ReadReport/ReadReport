@@ -158,7 +158,7 @@ public class AuthRouterManager {
     /**
      * 修改密码
      */
-    public static final String ROUTER_MODIFY_PWD = LOGIN_ACTIVITY_PREFIX + "ROUTER_MODIFY_PWD";
+    public static final String ROUTER_MODIFY_PWD = PUBLIC_ACTIVITY_PREFIX + "ROUTER_MODIFY_PWD";
 
     /**
      * 验证身份

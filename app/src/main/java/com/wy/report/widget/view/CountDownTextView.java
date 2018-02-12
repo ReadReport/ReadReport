@@ -17,7 +17,7 @@ public class CountDownTextView extends android.support.v7.widget.AppCompatTextVi
 
         @Override
         public void onTick(long millisUntilFinished) {
-            setText((millisUntilFinished / 1000) + "秒后重发");
+            setText((millisUntilFinished / 1000) + "s");
         }
 
         @Override
