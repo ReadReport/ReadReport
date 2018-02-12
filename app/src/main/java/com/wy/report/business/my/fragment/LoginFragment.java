@@ -27,6 +27,7 @@ import butterknife.OnClick;
 
 import static com.wy.report.manager.router.AuthRouterManager.ROUTER_REGISTER;
 import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_LOGIN;
+import static com.wy.report.manager.router.AuthRouterManager.ROUTER_VERIFY_PHONE_NUM;
 
 /**
  * @author: ZangSong
@@ -121,6 +122,12 @@ public class LoginFragment extends NetworkFragment {
     public void verifyCodeLogin() {
         AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_VERIFY_LOGIN);
     }
+
+    @OnClick(R.id.verify_code_forget_psw)
+    public void forgetPsw() {
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_VERIFY_PHONE_NUM);
+    }
+
 
 
     @OnClick(R.id.toolbar_menu)

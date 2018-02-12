@@ -65,6 +65,7 @@ public class RegisterFragment extends NetworkFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
+        passWord.setHint(getString(R.string.register_password_hint));
     }
 
     @Override

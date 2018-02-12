@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.fragment.PtrFragment;
@@ -525,7 +526,7 @@ public class ReportDetailFragment extends PtrFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, final String item) {
-            ImageView pic = helper.getView(R.id.view_report_detail_report_pic_img);
+            RoundedImageView pic = helper.getView(R.id.view_report_detail_report_pic_img);
             Glide.with(getActivity()).load(item).into(pic);
         }
     }
