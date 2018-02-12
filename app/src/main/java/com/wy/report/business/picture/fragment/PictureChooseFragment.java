@@ -1,4 +1,4 @@
-package com.wy.report.business.other.fragment;
+package com.wy.report.business.picture.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -6,27 +6,25 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.cantalou.android.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hwangjr.rxbus.annotation.Subscribe;
-import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.BaseFragment;
+import com.wy.report.business.picture.model.BucketModel;
 import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static android.provider.MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME;
 import static android.provider.MediaStore.Images.ImageColumns.DATE_TAKEN;
 import static android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 import static android.provider.MediaStore.MediaColumns.DATA;
@@ -37,29 +35,33 @@ import static com.wy.report.base.constant.Constants.PICTURE_CHOOSE_MAX_NUM;
  * @date 2018年02月11日 17:13
  * <p>
  */
-public class PictureChooseFragment extends BaseFragment {
-
-    private static final String CAMERA_PATH = "camera";
+public class PictureChooseFragment extends AbstractPictureChooseFragment {
 
     @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
 
-    @BindView(R.id.vh_picture_choose_num)
-    TextView chosenNum;
-
-    private ArrayList<PictureModel> allPictures = new ArrayList<>();
-
     private BaseQuickAdapter<PictureModel, BaseViewHolder> adapter;
+
+    private ArrayList<BucketModel> buckets = new ArrayList<>();
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        loadPicture();
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            allPictures = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST);
+        }
+        if (allPictures == null || allPictures.isEmpty()) {
+            load();
+            rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_LIST, buckets);
+        }
     }
 
     @Override
     protected void initView(View contentView) {
-        adapter = new BaseQuickAdapter<PictureModel, BaseViewHolder>(R.layout.vh_choose_picture) {
+        super.initView(contentView);
+        adapter = new BaseQuickAdapter<PictureModel, BaseViewHolder>(R.layout.vh_picture_choose) {
             @Override
             protected void convert(BaseViewHolder helper, PictureModel item) {
                 ImageView picture = helper.getView(R.id.vh_choose_picture);
@@ -95,6 +97,19 @@ public class PictureChooseFragment extends BaseFragment {
         adapter.setNewData(allPictures);
     }
 
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        setTitle(R.string.picture_choose_title);
+        toolbar.setBackgroundColor(getColor(R.color.lan_30acff));
+        statusBarBg.setBackgroundResource(R.color.lan_30acff);
+    }
+
+    @Override
+    protected int toolbarLayoutID() {
+        return R.layout.view_picture_choose_toolbar;
+    }
+
     private void openPicturePreview(int index) {
         Bundle param = new Bundle();
         param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, allPictures);
@@ -107,62 +122,52 @@ public class PictureChooseFragment extends BaseFragment {
         return R.layout.fragment_picture_choose;
     }
 
+    public void load() {
 
-    public void loadPicture() {
-        String selection = null;
-        String[] params = null;
-        String order = DATE_TAKEN + " DESC LIMIT ";
-        Cursor mCursor = null;
+        String[] projection = new String[]{BUCKET_DISPLAY_NAME, DATA};
+        Cursor cursor = null;
         try {
-            mCursor = getActivity().getContentResolver()
-                                   .query(EXTERNAL_CONTENT_URI, new String[]{DATA}, selection, params, order);
-
-            while (mCursor.moveToNext()) {
-                String path = mCursor.getString(0);
-                if (StringUtils.isBlank(path)) {
-                    continue;
-                }
-                allPictures.add(new PictureModel(path));
+            cursor = getActivity().getContentResolver()
+                                  .query(EXTERNAL_CONTENT_URI, projection, null, null, DATE_TAKEN + " DESC");
+            if (cursor == null) {
+                return;
             }
+
+            BucketModel allBucket = new BucketModel(getString(R.string.picture_all));
+            buckets.add(allBucket);
+
+            HashMap<String, BucketModel> bucketMap = new HashMap<>();
+            while (cursor.moveToNext()) {
+                String path = cursor.getString(1);
+                String bucketName = cursor.getString(0);
+                BucketModel model = bucketMap.get(bucketName);
+                if (model == null) {
+                    model = new BucketModel(bucketName);
+                    bucketMap.put(bucketName, model);
+                    buckets.add(model);
+                }
+                model.addPath(path);
+                allBucket.addPath(path);
+            }
+            if (allPictures == null) {
+                allPictures = new ArrayList<>();
+            }
+            allPictures.addAll(allBucket.getPictures());
         } finally {
-            if (mCursor != null) {
-                mCursor.close();
+            if (cursor != null) {
+                cursor.close();
             }
         }
-        //allPictures.add(0, CAMERA_PATH);
     }
+
 
     @OnClick(R.id.vh_picture_choose_preview)
     public void preview() {
         openPicturePreview(0);
     }
 
-    @OnClick(R.id.vh_picture_choose_done)
-    public void done() {
-        rxBus.post(RxKey.RX_PICTURE_CHOOSE_LIST, allPictures);
-        getActivity().finish();
-    }
-
-    @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_PREVIEW_LIST)})
-    public void previewChoose(ArrayList<PictureModel> list) {
-        allPictures.clear();
-        allPictures.addAll(list);
-        adapter.notifyDataSetChanged();
-        updateChosenNum();
-    }
-
-    private void updateChosenNum() {
-        int i = countChosenNum();
-        chosenNum.setText(Integer.toString(i));
-    }
-
-    private int countChosenNum() {
-        int i = 0;
-        for (PictureModel model : allPictures) {
-            if (model.isChoose()) {
-                i++;
-            }
-        }
-        return i;
+    @OnClick(R.id.toolbar_cancel)
+    public void cancelClick(){
+        rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_FINISH, "");
     }
 }

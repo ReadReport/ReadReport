@@ -3,8 +3,12 @@ package com.wy.report.helper.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
+import android.view.Gravity;
+import android.view.View;
 
 import com.wy.report.R;
+import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.widget.dialog.CommonDialog;
 import com.wy.report.widget.dialog.CommonResultDialog;
 
 /*
@@ -53,4 +57,36 @@ public class DialogHelper {
         return dialog;
     }
 
+    public static Dialog showChoosePictureMenu(final Context context) {
+        CommonDialog.Builder builder = new CommonDialog.Builder(context);
+        builder.setContainerViewLayoutId(R.layout.view_dialog_picture_choose);
+        final Dialog dialog = builder.create();
+        dialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
+        dialog.findViewById(R.id.view_dialog_choose_picture_album)
+              .setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      AuthRouterManager.getInstance()
+                                       .getRouter()
+                                       .open(context, AuthRouterManager.ROUTER_PICTURE_CHOOSE_CATEGORY);
+                      dialog.dismiss();
+                  }
+              });
+        dialog.findViewById(R.id.view_dialog_choose_picture_camera)
+              .setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      dialog.dismiss();
+                  }
+              });
+        dialog.findViewById(R.id.view_dialog_choose_picture_cancel)
+              .setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      dialog.dismiss();
+                  }
+              });
+        dialog.show();
+        return dialog;
+    }
 }

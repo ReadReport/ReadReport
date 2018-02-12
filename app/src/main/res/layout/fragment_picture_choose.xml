@@ -10,22 +10,31 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"/>
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48.5dp"
+        android:layout_gravity="bottom"
         android:background="@color/bai_ffffff">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/hui_e0e0e0"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/vh_picture_choose_preview"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
             android:text="@string/preview"
-            android:textColor="@color/hei_333333"
-            android:textSize="14sp"
+            android:textColor="@color/hui_ababab"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -34,13 +43,11 @@
             android:id="@+id/vh_picture_choose_done"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingRight="20dp"
             android:text="@string/done"
             android:textColor="@color/lan_24aaff"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -48,12 +55,11 @@
             android:id="@+id/vh_picture_choose_num"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:gravity="center"
+            android:paddingRight="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/vh_picture_choose_done"
             app:layout_constraintTop_toTopOf="parent"/>
-
 
 
     </android.support.constraint.ConstraintLayout>

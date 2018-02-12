@@ -25,9 +25,9 @@ import com.wy.report.business.my.fragment.UserInfoFragment;
 import com.wy.report.business.my.fragment.VerifyIdentifyFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
-import com.wy.report.business.other.fragment.PictureChooseFragment;
-import com.wy.report.business.other.fragment.PictureChoosePreviewFragment;
-import com.wy.report.business.other.fragment.PicturePreviewFragment;
+import com.wy.report.business.picture.fragment.PictureChooseFragment;
+import com.wy.report.business.picture.fragment.PictureChoosePreviewFragment;
+import com.wy.report.business.picture.fragment.PicturePreviewFragment;
 import com.wy.report.business.read.activity.AskActivity;
 import com.wy.report.business.read.fragment.ClipImageFragment;
 import com.wy.report.business.read.activity.UserInfoActivity;
@@ -219,6 +219,12 @@ public class AuthRouterManager {
      * 选择图片预览
      */
     public static final String ROUTER_PICTURE_CHOOSE_PREVIEW = LOGIN_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_PREVIEW";
+
+    /**
+     * 选择图片分类
+     */
+    public static final String ROUTER_PICTURE_CHOOSE_CATEGORY = LOGIN_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_CATEGORY";
+
     //体检预约
     public static String TJYY_URL;
     //自我解读

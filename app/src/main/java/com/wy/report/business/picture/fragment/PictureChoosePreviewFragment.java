@@ -1,4 +1,4 @@
-package com.wy.report.business.other.fragment;
+package com.wy.report.business.picture.fragment;
 
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -30,18 +30,13 @@ import static com.wy.report.base.constant.Constants.PICTURE_CHOOSE_MAX_NUM;
  * @author cantalou
  * @date 2017-12-09 13:56
  */
-public class PictureChoosePreviewFragment extends ToolbarFragment {
+public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment {
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
     @BindView(R.id.toolbar_choose_status)
     TextView chooseStatus;
-
-    @BindView(R.id.vh_picture_choose_num)
-    TextView chosenNum;
-
-    private List<PictureModel> models;
 
     private int index;
 
@@ -53,7 +48,7 @@ public class PictureChoosePreviewFragment extends ToolbarFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         Bundle bundle = getArguments();
-        models = bundle.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
+        allPictures = bundle.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
         index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
     }
 
@@ -63,7 +58,7 @@ public class PictureChoosePreviewFragment extends ToolbarFragment {
         adapter = new PagerAdapter() {
             @Override
             public int getCount() {
-                return models.size();
+                return allPictures.size();
             }
 
             @Override
@@ -77,7 +72,7 @@ public class PictureChoosePreviewFragment extends ToolbarFragment {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 container.addView(imageView, lp);
-                PictureModel model = models.get(position);
+                PictureModel model = allPictures.get(position);
                 Glide.with(getActivity())
                      .load(model.getPath())
                      .into(imageView);
@@ -131,7 +126,7 @@ public class PictureChoosePreviewFragment extends ToolbarFragment {
 
     @OnClick(R.id.toolbar_choose_status)
     public void chooseStatusClick() {
-        PictureModel model = models.get(position);
+        PictureModel model = allPictures.get(position);
 
         if (!model.isChoose() && countChosenNum() >= PICTURE_CHOOSE_MAX_NUM) {
             ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
@@ -144,33 +139,8 @@ public class PictureChoosePreviewFragment extends ToolbarFragment {
     }
 
     private void updateToolbarChooseStatus() {
-        PictureModel model = models.get(position);
+        PictureModel model = allPictures.get(position);
         chooseStatus.setSelected(model.isChoose());
     }
 
-    private void updateChosenNum() {
-        int i = countChosenNum();
-        chosenNum.setText(Integer.toString(i));
-    }
-
-    private int countChosenNum() {
-        int i = 0;
-        for (PictureModel model : models) {
-            if (model.isChoose()) {
-                i++;
-            }
-        }
-        return i;
-    }
-
-    @OnClick(R.id.vh_picture_choose_done)
-    public void done() {
-        getActivity().finish();
-    }
-
-    @Override
-    public void onPause() {
-        rxBus.post(RxKey.RX_PICTURE_CHOOSE_PREVIEW_LIST, models);
-        super.onPause();
-    }
 }

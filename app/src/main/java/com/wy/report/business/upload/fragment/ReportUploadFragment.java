@@ -247,7 +247,7 @@ public class ReportUploadFragment extends NetworkFragment {
                 } else if (adapter.getItemCount() == MAX_PICTURE_NUM + 1) {
                     ToastUtils.showLong(R.string.report_upload_picture_limit);
                 } else {
-                    startActivityForResult(SystemIntentUtil.createJumpIntoSystemAlbumIntent(), ActivityRequestCode.CODE_OPEN_ALBUM);
+                   DialogHelper.showChoosePictureMenu(getActivity());
                 }
             }
         });

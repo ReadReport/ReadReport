@@ -38,6 +38,10 @@ public class RxKey {
 
     public static final String RX_PICTURE_CHOOSE_LIST = "RX_PICTURE_CHOOSE_LIST";
 
-    public static final String RX_PICTURE_CHOOSE_PREVIEW_LIST = "RX_PICTURE_CHOOSE_PREVIEW_LIST";
+    public static final String RX_PICTURE_CHOOSE_BUCKET_LIST = "RX_PICTURE_CHOOSE_BUCKET_LIST";
+
+    public static final String RX_PICTURE_CHOOSE_BUCKET_FINISH = "RX_PICTURE_CHOOSE_BUCKET_FINISH";
+
+    public static final String RX_PICTURE_CHOOSE_CHANGE = "RX_PICTURE_CHOOSE_CHANGE";
 
 }

@@ -229,16 +229,19 @@ public class CommonDialog extends Dialog {
             return this;
         }
 
-        public void setContentView(View contentView) {
+        public Builder setContentView(View contentView) {
             this.contentView = contentView;
+            return this;
         }
 
-        public void setContainerViewLayoutId(int containerViewLayoutId) {
+        public Builder setContainerViewLayoutId(int containerViewLayoutId) {
             this.containerViewLayoutId = containerViewLayoutId;
+            return this;
         }
 
-        public void setContentViewLayoutId(int contentViewLayoutId) {
+        public Builder setContentViewLayoutId(int contentViewLayoutId) {
             this.contentViewLayoutId = contentViewLayoutId;
+            return this;
         }
 
         /**

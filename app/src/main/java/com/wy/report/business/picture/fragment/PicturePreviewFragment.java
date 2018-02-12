@@ -1,4 +1,4 @@
-package com.wy.report.business.other.fragment;
+package com.wy.report.business.picture.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
