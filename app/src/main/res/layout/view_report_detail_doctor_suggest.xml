@@ -6,7 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/dp_10"
+    android:background="@drawable/shape_white_corner"
     android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
     >
 
     <!--医生建议标题-->
@@ -92,10 +95,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report_detail_note_title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="20dp"
         >
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -122,6 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingBottom="20dp"
         >
         <!--指标说明title-->
         <com.wy.report.widget.view.CloseTitleLayout
@@ -295,7 +298,6 @@
                 />
         </LinearLayout>
     </LinearLayout>
-
 
 
 </LinearLayout>
