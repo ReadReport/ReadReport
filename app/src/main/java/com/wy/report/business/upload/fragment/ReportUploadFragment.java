@@ -42,6 +42,7 @@ import com.wy.report.helper.retrofit.util.PartUtils;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.manager.router.Router;
+import com.wy.report.util.DensityUtils;
 import com.wy.report.util.PhotoUtil;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.SystemIntentUtil;
@@ -160,6 +161,29 @@ public class ReportUploadFragment extends NetworkFragment {
             }
         });
         remarkTextLen.setText(Integer.toString(MAX_REMARK_NUM));
+
+        ViewUtils.setTextViewHintSize(name,11);
+        ViewUtils.setTextViewHintSize(time,11);
+        ViewUtils.setTextViewHintSize(hospital, 11);
+        ViewUtils.setTextViewHintSize(remark, 11);
+        remark.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null && s.length() > 0) {
+                    remark.setPadding(0, 0, 0, 0);
+                } else {
+                    remark.setPadding(0, DensityUtils.dip2px(getActivity(), 2.5f), 0, 0);
+                }
+            }
+        });
     }
 
     private void createAdapter() {
@@ -393,6 +417,11 @@ public class ReportUploadFragment extends NetworkFragment {
     @OnClick(R.id.upload_report)
     public void upload() {
 
+        if(!StringUtils.isNotBlank(name)){
+            ToastUtils.showLong(R.string.report_empty_tip_member);
+            return;
+        }
+
         if (!StringUtils.isNotBlank(time)) {
             ToastUtils.showLong(R.string.report_upload_time_not_empty);
             return;
@@ -412,7 +441,7 @@ public class ReportUploadFragment extends NetworkFragment {
             files.add(new File(pictureModel.getPath()));
         }
 
-        if(files.isEmpty()){
+        if (files.isEmpty()) {
             ToastUtils.showLong(R.string.report_upload_file_not_empty);
             return;
         }

@@ -8,4 +8,6 @@ package com.wy.report.base.constant;
 public class Constants {
 
     public static final int PICTURE_CHOOSE_MAX_NUM = 12;
+
+    public static final String HEALTHY_STATUS_RESEARCH = "http://m.viptijian.com/Custom/third.html";
 }

@@ -15,12 +15,15 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.upload.model.PictureModel;
+import com.wy.report.util.ToastUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import uk.co.senab.photoview.PhotoView;
+
+import static com.wy.report.base.constant.Constants.PICTURE_CHOOSE_MAX_NUM;
 
 /*
  *
@@ -129,6 +132,12 @@ public class PictureChoosePreviewFragment extends ToolbarFragment {
     @OnClick(R.id.toolbar_choose_status)
     public void chooseStatusClick() {
         PictureModel model = models.get(position);
+
+        if (!model.isChoose() && countChosenNum() >= PICTURE_CHOOSE_MAX_NUM) {
+            ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
+            return;
+        }
+
         model.setChoose(!model.isChoose());
         updateToolbarChooseStatus();
         updateChosenNum();
@@ -140,13 +149,18 @@ public class PictureChoosePreviewFragment extends ToolbarFragment {
     }
 
     private void updateChosenNum() {
+        int i = countChosenNum();
+        chosenNum.setText(Integer.toString(i));
+    }
+
+    private int countChosenNum() {
         int i = 0;
         for (PictureModel model : models) {
             if (model.isChoose()) {
                 i++;
             }
         }
-        chosenNum.setText(Integer.toString(i));
+        return i;
     }
 
     @OnClick(R.id.vh_picture_choose_done)
