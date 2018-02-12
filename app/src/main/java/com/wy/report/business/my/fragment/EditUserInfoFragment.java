@@ -33,7 +33,7 @@ public class EditUserInfoFragment extends NetworkFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        setTitle(getResources().getString(R.string.user_info_title));
+        setTitle(getResources().getString(R.string.user_info_name));
         toolbarMenu.setText(getString(R.string.edit_family_save));
         toolbarMenu.setOnClickListener(new View.OnClickListener() {
             @Override
