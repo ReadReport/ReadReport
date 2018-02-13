@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 
 import com.cantalou.android.util.BitmapUtils;
 import com.wy.report.ReportApplication;
@@ -123,7 +126,7 @@ public class PhotoUtil {
      * @return 有sd卡的手机返回拍照后图片保存路径; 无sd卡手机返回null,拍照结果通过intent的data返回
      */
     public static String openCamera(Activity activity) {
-        Intent intent = null;
+        Intent intent;
         String path = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             path = generatePhotoPath();
@@ -135,9 +138,36 @@ public class PhotoUtil {
         try {
             activity.startActivityForResult(intent, ActivityRequestCode.CODE_OPEN_CAMERA);
         } catch (Exception e) {
+            ToastUtils.showShort("相机打开失败");
             path = null;
         }
         generatedPaths.put(activity.getLocalClassName(), path);
+        return path;
+    }
+
+    /**
+     * 打开相机
+     *
+     * @param fragment
+     * @return 有sd卡的手机返回拍照后图片保存路径; 无sd卡手机返回null,拍照结果通过intent的data返回
+     */
+    public static String openCamera(Fragment fragment) {
+        Intent intent;
+        String path = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            path = generatePhotoPath();
+            intent = SystemIntentUtil.createJumpIntoSystemCameraIntent(path);
+        } else {
+            intent = SystemIntentUtil.createJumpIntoSystemCameraIntent();
+        }
+
+        try {
+            fragment.startActivityForResult(intent, ActivityRequestCode.CODE_OPEN_CAMERA);
+        } catch (Exception e) {
+            ToastUtils.showShort("相机打开失败");
+            path = null;
+        }
+        generatedPaths.put(fragment.getClass().getName(), path);
         return path;
     }
 
@@ -165,6 +195,39 @@ public class PhotoUtil {
                     BitmapUtils.saveBitmap2file(bmp, path);
                     BitmapUtils.destroyBitmap(bmp);
                 }
+            }else{
+                MediaScanner.scanFile(path, MediaScanner.TYPE_IMG);
+            }
+        }
+        return path;
+    }
+
+    /**
+     * 处理相册和拍照的onActivityResult回调
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    public static String onActivityResult(Fragment fragment, int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return null;
+        }
+        String path = null;
+        if (requestCode == ActivityRequestCode.CODE_OPEN_ALBUM) {
+            path = onActivityResultForOpenAlbum(fragment.getActivity(), data);
+        } else if (requestCode == ActivityRequestCode.CODE_OPEN_CAMERA) {
+            path = generatedPaths.get(fragment.getClass().getName());
+            if (StringUtils.isBlank(path)) {
+                Bitmap bmp = null;
+                Bundle extras = data.getExtras();
+                if (extras != null && (bmp = extras.getParcelable("data")) != null) {
+                    path = generatePhotoPath();
+                    BitmapUtils.saveBitmap2file(bmp, path);
+                    BitmapUtils.destroyBitmap(bmp);
+                }
+            }else{
+                MediaScanner.scanFile(path, MediaScanner.TYPE_IMG);
             }
         }
         return path;
@@ -180,6 +243,31 @@ public class PhotoUtil {
         HashMap<String, String> maps = (HashMap<String, String>) savedInstanceState.getSerializable(PHOTO_UTIL_ON_SAVE_INSTANCE_STATE_KEY);
         if (maps != null && maps.size() > 0) {
             generatedPaths = maps;
+        }
+    }
+
+    public static class MediaScanner
+    {
+
+        public final static String TYPE_IMG = "image/jpeg";
+
+
+        public static void scanFile(final String path, final String type)
+        {
+            Context context = ReportApplication.getGlobalContext();
+            MediaScannerConnection.scanFile(context, new String[]{path}, new String[]{type}, null);
+            if (Build.MODEL.equalsIgnoreCase("vivo X6D"))
+            {
+                try
+                {
+                    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    mediaScanIntent.setData(Uri.fromFile(new File(path)));
+                    context.sendBroadcast(mediaScanIntent);
+                }
+                catch (Exception e)
+                {
+                }
+            }
         }
     }
 }

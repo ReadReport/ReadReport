@@ -3,6 +3,8 @@
     <string name="picture_all">全部图片</string>
     <string name="picture_category_num">(%d)</string>
     <string name="picture_choose_dialog_title">选择照片</string>
-    <string name="picture_choose_dialog_picture">照片</string>
-    <string name="picture_choose_dialog_camera">拍照</string>
+    <string name="picture_choose_picture">照片</string>
+    <string name="picture_choose_camera">拍照</string>
+    <string name="picture_choose_recapture">重拍</string>
+    <string name="picture_choose_use">使用照片</string>
 </resources>

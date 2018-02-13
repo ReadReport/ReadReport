@@ -1,15 +1,13 @@
 package com.wy.report.business.upload.fragment;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.DatePicker;
@@ -25,7 +23,6 @@ import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
-import com.wy.report.base.constant.ActivityRequestCode;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.NetworkFragment;
@@ -43,9 +40,7 @@ import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.manager.router.Router;
 import com.wy.report.util.DensityUtils;
-import com.wy.report.util.PhotoUtil;
 import com.wy.report.util.StringUtils;
-import com.wy.report.util.SystemIntentUtil;
 import com.wy.report.util.ToastUtils;
 import com.wy.report.util.ViewUtils;
 import com.wy.report.widget.view.recycleview.NestedGridLayoutManager;
@@ -61,8 +56,6 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import static com.wy.report.base.constant.ActivityRequestCode.CODE_OPEN_ALBUM;
 
 /*
  *
@@ -162,8 +155,8 @@ public class ReportUploadFragment extends NetworkFragment {
         });
         remarkTextLen.setText(Integer.toString(MAX_REMARK_NUM));
 
-        ViewUtils.setTextViewHintSize(name,11);
-        ViewUtils.setTextViewHintSize(time,11);
+        ViewUtils.setTextViewHintSize(name, 11);
+        ViewUtils.setTextViewHintSize(time, 11);
         ViewUtils.setTextViewHintSize(hospital, 11);
         ViewUtils.setTextViewHintSize(remark, 11);
         remark.addTextChangedListener(new TextWatcher() {
@@ -247,7 +240,9 @@ public class ReportUploadFragment extends NetworkFragment {
                 } else if (adapter.getItemCount() == MAX_PICTURE_NUM + 1) {
                     ToastUtils.showLong(R.string.report_upload_picture_limit);
                 } else {
-                   DialogHelper.showChoosePictureMenu(getActivity());
+                    Bundle param = new Bundle();
+                    param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, (ArrayList<? extends Parcelable>) adapter.getData());
+                    DialogHelper.showChoosePictureMenu(getActivity(), param);
                 }
             }
         });
@@ -300,6 +295,9 @@ public class ReportUploadFragment extends NetworkFragment {
         return picturePaths;
     }
 
+    /**
+     * 还原Activity被销毁后图片丢失
+     */
     private void restorePictureModel() {
         if (savedPictureList != null && savedPictureList.size() > 0) {
             ArrayList<PictureModel> models = new ArrayList<>();
@@ -357,33 +355,9 @@ public class ReportUploadFragment extends NetworkFragment {
         name.setText(model.getName());
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
-            case CODE_OPEN_ALBUM: {
-                String picturePath = PhotoUtil.onActivityResult(getActivity(), requestCode, resultCode, data);
-                if (TextUtils.isEmpty(picturePath)) {
-                    return;
-                }
-                for (PictureModel pictureModel : adapter.getData()) {
-                    if (picturePath.equals(pictureModel.getPath())) {
-                        ToastUtils.showLong(R.string.report_upload_picture_duplicate);
-                        return;
-                    }
-                }
-                adapter.addData(adapter.getItemCount() - 1, new PictureModel(picturePath));
-                if (adapter.getItemCount() > MAX_PICTURE_NUM) {
-                    adapter.remove(adapter.getItemCount() - 1);
-                }
-                updateSelectedPictureInfo();
-                break;
-            }
-        }
-    }
-
+    /**
+     * 更新顶部已选择数量信息
+     */
     private void updateSelectedPictureInfo() {
         List<PictureModel> models = adapter.getData();
         int size = models.size();
@@ -417,7 +391,7 @@ public class ReportUploadFragment extends NetworkFragment {
     @OnClick(R.id.upload_report)
     public void upload() {
 
-        if(!StringUtils.isNotBlank(name)){
+        if (!StringUtils.isNotBlank(name)) {
             ToastUtils.showLong(R.string.report_empty_tip_member);
             return;
         }
@@ -498,4 +472,18 @@ public class ReportUploadFragment extends NetworkFragment {
         return super.onBackPressed();
     }
 
+    @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_CAMERA_RESULT)})
+    public void camera(PictureModel model) {
+        adapter.addData(adapter.getItemCount() - 1, model);
+        if (adapter.getItemCount() > MAX_PICTURE_NUM) {
+            adapter.remove(adapter.getItemCount() - 1);
+        }
+        updateSelectedPictureInfo();
+    }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_LIST)})
+    public void ablum(ArrayList<PictureModel> paths) {
+        adapter.setNewData(paths);
+        updateSelectedPictureInfo();
+    }
 }

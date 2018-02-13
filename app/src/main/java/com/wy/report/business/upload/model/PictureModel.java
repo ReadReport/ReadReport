@@ -15,17 +15,7 @@ public class PictureModel extends BaseModel implements Parcelable{
     public static final int TYPE_NORMAL = 0;
 
     public static final int TYPE_ADD = 1;
-    public static final Creator<PictureModel> CREATOR = new Creator<PictureModel>() {
-        @Override
-        public PictureModel createFromParcel(Parcel source) {
-            return new PictureModel(source);
-        }
 
-        @Override
-        public PictureModel[] newArray(int size) {
-            return new PictureModel[size];
-        }
-    };
     private int type;
     private String path;
     private boolean choose;
@@ -39,12 +29,6 @@ public class PictureModel extends BaseModel implements Parcelable{
 
     public PictureModel(String path) {
         this.path = path;
-    }
-
-    protected PictureModel(Parcel in) {
-        this.type = in.readInt();
-        this.path = in.readString();
-        this.choose = in.readByte() != 0;
     }
 
     public int getType() {
@@ -96,6 +80,22 @@ public class PictureModel extends BaseModel implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.type);
         dest.writeString(this.path);
-        dest.writeByte(this.choose ? (byte) 1 : (byte) 0);
+        dest.writeByte(choose ? (byte) 1 : (byte) 0);
     }
+
+    protected PictureModel(Parcel in) {
+        this.type = in.readInt();
+        this.path = in.readString();
+        this.choose = in.readByte() != 0;
+    }
+
+    public static final Creator<PictureModel> CREATOR = new Creator<PictureModel>() {
+        public PictureModel createFromParcel(Parcel source) {
+            return new PictureModel(source);
+        }
+
+        public PictureModel[] newArray(int size) {
+            return new PictureModel[size];
+        }
+    };
 }

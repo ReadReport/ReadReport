@@ -47,7 +47,7 @@
             android:layout_height="50dp"
             android:background="@drawable/shape_white_corner_10"
             android:gravity="center"
-            android:text="@string/picture_choose_dialog_picture"
+            android:text="@string/picture_choose_picture"
             android:textColor="@color/hei_333333"
             android:textSize="15sp"/>
 
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="@string/picture_choose_dialog_camera"
+            android:text="@string/picture_choose_camera"
             android:textColor="@color/hei_333333"
             android:textSize="15sp"/>
 

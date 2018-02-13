@@ -3,6 +3,7 @@ package com.wy.report.helper.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 
@@ -57,18 +58,19 @@ public class DialogHelper {
         return dialog;
     }
 
-    public static Dialog showChoosePictureMenu(final Context context) {
+    public static Dialog showChoosePictureMenu(final Context context, final Bundle param) {
         CommonDialog.Builder builder = new CommonDialog.Builder(context);
         builder.setContainerViewLayoutId(R.layout.view_dialog_picture_choose);
         final Dialog dialog = builder.create();
-        dialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
+        dialog.getWindow()
+              .getAttributes().gravity = Gravity.BOTTOM;
         dialog.findViewById(R.id.view_dialog_choose_picture_album)
               .setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View v) {
                       AuthRouterManager.getInstance()
                                        .getRouter()
-                                       .open(context, AuthRouterManager.ROUTER_PICTURE_CHOOSE_CATEGORY);
+                                       .open(context, AuthRouterManager.ROUTER_PICTURE_CHOOSE_CATEGORY, param);
                       dialog.dismiss();
                   }
               });
@@ -76,6 +78,9 @@ public class DialogHelper {
               .setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View v) {
+                      AuthRouterManager.getInstance()
+                                       .getRouter()
+                                       .open(context, AuthRouterManager.ROUTER_PICTURE_CHOOSE_CAMERA_PREVIEW, param);
                       dialog.dismiss();
                   }
               });

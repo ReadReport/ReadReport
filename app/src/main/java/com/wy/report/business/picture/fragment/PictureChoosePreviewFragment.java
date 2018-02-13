@@ -13,11 +13,10 @@ import com.bumptech.glide.Glide;
 import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
-import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.util.ToastUtils;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,9 +35,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
     ViewPager viewPager;
 
     @BindView(R.id.toolbar_choose_status)
-    TextView chooseStatus;
-
-    private int index;
+    ImageView chooseStatus;
 
     private PagerAdapter adapter;
 
@@ -49,7 +46,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
         super.initData(savedInstanceState);
         Bundle bundle = getArguments();
         allPictures = bundle.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
-        index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
+        position = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
     }
 
     @Override
@@ -90,7 +87,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
             }
         };
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(index);
+        viewPager.setCurrentItem(position);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -106,6 +103,8 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
             public void onPageScrollStateChanged(int state) {
             }
         });
+        preview.setVisibility(View.GONE);
+        updateToolbarChooseStatus();
     }
 
     @Override
@@ -127,15 +126,18 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
     @OnClick(R.id.toolbar_choose_status)
     public void chooseStatusClick() {
         PictureModel model = allPictures.get(position);
-
-        if (!model.isChoose() && countChosenNum() >= PICTURE_CHOOSE_MAX_NUM) {
+        if (!model.isChoose() && countChosenNum(allPictures) >= PICTURE_CHOOSE_MAX_NUM) {
             ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
             return;
         }
-
         model.setChoose(!model.isChoose());
+        rxBus.post(RxKey.RX_PICTURE_CHOOSE_CHANGE,model);
+    }
+
+    @Override
+    protected void updateChosenInfo(ArrayList<PictureModel> paths) {
+        super.updateChosenInfo(paths);
         updateToolbarChooseStatus();
-        updateChosenNum();
     }
 
     private void updateToolbarChooseStatus() {

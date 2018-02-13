@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.umeng.analytics.MobclickAgent;
 import com.wy.report.manager.auth.AuthManager;
 import com.wy.report.util.Utils;
@@ -42,5 +44,6 @@ public class ReportApplication extends Application {
         MobclickAgent.setCatchUncaughtExceptions(true);
         AuthManager.getInstance();
         Utils.init(this);
+        ViewTarget.setTagId(R.id.glide_tag_id);
     }
 }

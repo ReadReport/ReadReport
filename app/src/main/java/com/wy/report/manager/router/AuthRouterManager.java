@@ -25,6 +25,7 @@ import com.wy.report.business.my.fragment.UserInfoFragment;
 import com.wy.report.business.my.fragment.VerifyIdentifyFragment;
 import com.wy.report.business.my.fragment.VerifyLoginFragment;
 import com.wy.report.business.my.fragment.VerifyPhoneNumFragment;
+import com.wy.report.business.picture.fragment.CameraPreviewFragment;
 import com.wy.report.business.picture.fragment.PictureChooseCategoryFragment;
 import com.wy.report.business.picture.fragment.PictureChooseFragment;
 import com.wy.report.business.picture.fragment.PictureChoosePreviewFragment;
@@ -214,17 +215,23 @@ public class AuthRouterManager {
     /**
      * 选择图片
      */
-    public static final String ROUTER_PICTURE_CHOOSE = LOGIN_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE";
+    public static final String ROUTER_PICTURE_CHOOSE = PUBLIC_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE";
 
     /**
      * 选择图片预览
      */
-    public static final String ROUTER_PICTURE_CHOOSE_PREVIEW = LOGIN_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_PREVIEW";
+    public static final String ROUTER_PICTURE_CHOOSE_PREVIEW = PUBLIC_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_PREVIEW";
 
     /**
      * 选择图片分类
      */
-    public static final String ROUTER_PICTURE_CHOOSE_CATEGORY = LOGIN_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_CATEGORY";
+    public static final String ROUTER_PICTURE_CHOOSE_CATEGORY = PUBLIC_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_CATEGORY";
+
+
+    /**
+     * 图片分类-相机预览
+     */
+    public static final String ROUTER_PICTURE_CHOOSE_CAMERA_PREVIEW = PUBLIC_ACTIVITY_PREFIX + "ROUTER_PICTURE_CHOOSE_CAMERA_PREVIEW";
 
     //体检预约
     public static String TJYY_URL;
@@ -295,6 +302,7 @@ public class AuthRouterManager {
         router.map(ROUTER_PICTURE_CHOOSE_CATEGORY, StandardActivity.class, PictureChooseCategoryFragment.class);
         router.map(ROUTER_PICTURE_CHOOSE, StandardActivity.class, PictureChooseFragment.class);
         router.map(ROUTER_PICTURE_CHOOSE_PREVIEW, StandardActivity.class, PictureChoosePreviewFragment.class);
+        router.map(ROUTER_PICTURE_CHOOSE_CAMERA_PREVIEW, StandardActivity.class, CameraPreviewFragment.class);
     }
 
     /**

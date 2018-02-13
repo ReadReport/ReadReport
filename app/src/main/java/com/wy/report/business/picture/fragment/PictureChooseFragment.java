@@ -48,6 +48,9 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
     private ArrayList<BucketModel> buckets = new ArrayList<>();
     private int pictureWidth;
     private int itemOffset;
+    private GridLayoutManager gridLayoutManager;
+
+    private ArrayList<PictureModel> chosenPaths;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             allPictures = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST);
+            chosenPaths = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
         }
         if (allPictures == null || allPictures.isEmpty()) {
             load();
@@ -71,9 +75,8 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         super.initView(contentView);
         adapter = new BaseQuickAdapter<PictureModel, BaseViewHolder>(R.layout.vh_picture_choose) {
             @Override
-            protected void convert(BaseViewHolder helper, PictureModel item) {
-
-                ImageView picture = helper.getView(R.id.vh_choose_picture);
+            protected void convert(BaseViewHolder helper, final PictureModel item) {
+                final ImageView picture = helper.getView(R.id.vh_choose_picture);
                 ViewGroup.LayoutParams layoutParams = picture.getLayoutParams();
                 layoutParams.width = pictureWidth;
                 layoutParams.height = pictureWidth;
@@ -85,39 +88,39 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
                       .setSelected(item.isChoose());
             }
         };
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                openPicturePreview(position);
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                openPicturePreview(position ,false);
             }
         });
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 PictureModel pictureModel = allPictures.get(position);
-                if (!pictureModel.isChoose() && countChosenNum() >= PICTURE_CHOOSE_MAX_NUM) {
+                if (!pictureModel.isChoose() && countChosenNum(allPictures) >= PICTURE_CHOOSE_MAX_NUM) {
                     ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
                     return;
                 }
                 pictureModel.setChoose(!pictureModel.isChoose());
+                rxBus.post(RxKey.RX_PICTURE_CHOOSE_CHANGE, pictureModel);
                 adapter.notifyItemChanged(position);
-                updateChosenNum();
             }
         });
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), LINE_PICTURE_NUM));
+        gridLayoutManager = new GridLayoutManager(getActivity(), LINE_PICTURE_NUM);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-                if (itemPosition < LINE_PICTURE_NUM) {
-                    outRect.top = itemOffset;
-                }
-                if(itemPosition % LINE_PICTURE_NUM == 0){
-                    outRect.left = itemOffset;
-                }
-                outRect.right = itemOffset;
-                outRect.bottom = itemOffset;
+                int half = itemOffset / 2;
+                outRect.top = itemPosition < LINE_PICTURE_NUM ? itemOffset : half;
+                outRect.left = (itemPosition % LINE_PICTURE_NUM == 0) ? itemOffset : half;
+                outRect.right = ((itemPosition + 1) % LINE_PICTURE_NUM == 0) ? itemOffset : half;
+                outRect.bottom += itemPosition >= adapter.getItemCount() / LINE_PICTURE_NUM * LINE_PICTURE_NUM ? itemOffset : half;
             }
         });
+        recyclerView.getItemAnimator()
+                    .setSupportsChangeAnimations(false);
         recyclerView.setAdapter(adapter);
         adapter.setNewData(allPictures);
     }
@@ -127,7 +130,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         super.initToolbar();
         setTitle(R.string.picture_choose_title);
         toolbar.setBackgroundColor(getColor(R.color.lan_30acff));
-        statusBarBg.setBackgroundResource(R.color.lan_30acff);
+        statusBarBg.setImageResource(R.color.lan_30acff);
     }
 
     @Override
@@ -135,9 +138,19 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         return R.layout.view_picture_choose_toolbar;
     }
 
-    private void openPicturePreview(int index) {
+    private void openPicturePreview(int index, boolean onlyChosen) {
         Bundle param = new Bundle();
-        param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, allPictures);
+        if (onlyChosen) {
+            ArrayList<PictureModel> paths = new ArrayList<>();
+            for (PictureModel model : allPictures) {
+                if(model.isChoose()){
+                    paths.add(model);
+                }
+            }
+            param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, paths);
+        } else {
+            param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, allPictures);
+        }
         param.putInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX, index);
         router.open(getActivity(), AuthRouterManager.ROUTER_PICTURE_CHOOSE_PREVIEW, param);
     }
@@ -165,14 +178,18 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
             while (cursor.moveToNext()) {
                 String path = cursor.getString(1);
                 String bucketName = cursor.getString(0);
-                BucketModel model = bucketMap.get(bucketName);
-                if (model == null) {
-                    model = new BucketModel(bucketName);
-                    bucketMap.put(bucketName, model);
-                    buckets.add(model);
+                BucketModel newBucket = bucketMap.get(bucketName);
+                if (newBucket == null) {
+                    newBucket = new BucketModel(bucketName);
+                    bucketMap.put(bucketName, newBucket);
+                    buckets.add(newBucket);
                 }
-                model.addPath(path);
-                allBucket.addPath(path);
+                PictureModel pictureModel = new PictureModel(path);
+                newBucket.addPath(pictureModel);
+                allBucket.addPath(pictureModel);
+                if(chosenPaths != null && chosenPaths.contains(pictureModel)){
+                    pictureModel.setChoose(true);
+                }
             }
             if (allPictures == null) {
                 allPictures = new ArrayList<>();
@@ -186,13 +203,13 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
     }
 
 
-    @OnClick(R.id.vh_picture_choose_preview)
+    @OnClick(R.id.fragment_picture_choose_preview)
     public void preview() {
-        openPicturePreview(0);
+        openPicturePreview(0,true);
     }
 
     @OnClick(R.id.toolbar_cancel)
     public void cancelClick() {
-        rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_FINISH, "");
+        rxBus.post(RxKey.RX_PICTURE_CHOOSE_FINISH, "");
     }
 }

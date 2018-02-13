@@ -1,7 +1,9 @@
 package com.wy.report.business.picture.fragment;
 
+import android.view.View;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.wy.report.R;
@@ -21,19 +23,38 @@ import butterknife.OnClick;
  */
 public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
 
-    @BindView(R.id.vh_picture_choose_num)
-    TextView chosenNum;
-
     protected ArrayList<PictureModel> allPictures = new ArrayList<>();
 
-    protected void updateChosenNum() {
-        int i = countChosenNum();
-        chosenNum.setText(Integer.toString(i));
+    protected BaseQuickAdapter adapter;
+
+    @BindView(R.id.fragment_picture_choose_preview)
+    protected View preview;
+
+    @BindView(R.id.fragment_picture_choose_num)
+    protected TextView chosenNum;
+
+    @BindView(R.id.fragment_picture_choose_done)
+    protected View done;
+
+    @Override
+    protected void initView(View contentView) {
+        super.initView(contentView);
+        if (allPictures != null) {
+            updateChosenInfo(allPictures);
+        }
     }
 
-    protected int countChosenNum() {
+    protected void updateChosenInfo(ArrayList<PictureModel> paths) {
+        int i = countChosenNum(paths);
+        chosenNum.setVisibility(i > 0 ? View.VISIBLE : View.GONE);
+        chosenNum.setText(Integer.toString(i));
+        preview.setEnabled(i > 0);
+        done.setEnabled(i > 0);
+    }
+
+    protected int countChosenNum(ArrayList<PictureModel> paths) {
         int i = 0;
-        for (PictureModel model : allPictures) {
+        for (PictureModel model : paths) {
             if (model.isChoose()) {
                 i++;
             }
@@ -51,13 +72,13 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
         return result;
     }
 
-    @OnClick(R.id.vh_picture_choose_done)
+    @OnClick(R.id.fragment_picture_choose_done)
     public void done() {
         rxBus.post(RxKey.RX_PICTURE_CHOOSE_LIST, getChosenList());
-        rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_FINISH, "");
+        rxBus.post(RxKey.RX_PICTURE_CHOOSE_FINISH, "");
     }
 
-    @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_BUCKET_FINISH)})
+    @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_FINISH)})
     public void finish(String s) {
         getActivity().finish();
     }
@@ -66,8 +87,8 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
     public void choose(PictureModel model) {
         for (PictureModel pictureModel : allPictures) {
             if (pictureModel.equals(model)) {
-                pictureModel.setChoose(!model.isChoose());
-                updateChosenNum();
+                pictureModel.setChoose(model.isChoose());
+                updateChosenInfo(allPictures);
                 break;
             }
         }

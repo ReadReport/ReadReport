@@ -16,8 +16,6 @@ public class BucketModel extends BaseModel {
 
     private ArrayList<PictureModel> pictures = new ArrayList<>();
 
-    private int chosenNum;
-
     public BucketModel(String name) {
         this.name = name;
     }
@@ -34,12 +32,22 @@ public class BucketModel extends BaseModel {
         return pictures;
     }
 
-    public void addPath(String path) {
-        pictures.add(new PictureModel(path));
+    public void addPath(PictureModel path) {
+        pictures.add(path);
     }
 
     public int getChosenNum() {
+        int chosenNum = 0;
+        for (PictureModel model : pictures) {
+            if (model.isChoose()) {
+                chosenNum++;
+            }
+        }
         return chosenNum;
+    }
+
+    public int getNum() {
+        return pictures.size();
     }
 
     public String getFirst() {
@@ -47,11 +55,10 @@ public class BucketModel extends BaseModel {
                        .getPath();
     }
 
-    public void countChosenNum(ArrayList<PictureModel> chosenPaths) {
-        chosenNum = 0;
+    public void updateChosenStatus(ArrayList<PictureModel> chosenPaths) {
         for (PictureModel model : pictures) {
             if (chosenPaths.contains(model)) {
-                chosenNum++;
+                model.setChoose(true);
             }
         }
     }
