@@ -62,12 +62,12 @@ public class Router {
 
         Intent intent = new Intent(context, item.activityClass);
 
-        if (item.fragmentClass != null) {
-            intent.putExtra(BundleKey.BUNDLE_KEY_FRAGMENT_CLASS_NAME, item.fragmentClass.getName());
-        }
-
         if (extras != null) {
             intent.putExtras(extras);
+        }
+
+        if (item.fragmentClass != null) {
+            intent.putExtra(BundleKey.BUNDLE_KEY_FRAGMENT_CLASS_NAME, item.fragmentClass.getName());
         }
 
         if (context instanceof Activity) {

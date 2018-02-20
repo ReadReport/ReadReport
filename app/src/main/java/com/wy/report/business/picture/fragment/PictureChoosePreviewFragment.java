@@ -14,6 +14,7 @@ import com.wy.report.R;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.business.upload.model.PictureModel;
+import com.wy.report.helper.picture.PictureChoseHelper;
 import com.wy.report.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -126,12 +127,12 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
     @OnClick(R.id.toolbar_choose_status)
     public void chooseStatusClick() {
         PictureModel model = allPictures.get(position);
-        if (!model.isChoose() && countChosenNum(allPictures) >= PICTURE_CHOOSE_MAX_NUM) {
+        if (!model.isChoose() && PictureChoseHelper.size() >= PICTURE_CHOOSE_MAX_NUM) {
             ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
             return;
         }
         model.setChoose(!model.isChoose());
-        rxBus.post(RxKey.RX_PICTURE_CHOOSE_CHANGE,model);
+        rxBus.post(RxKey.RX_PICTURE_CHOOSE_CHANGE, model);
     }
 
     @Override

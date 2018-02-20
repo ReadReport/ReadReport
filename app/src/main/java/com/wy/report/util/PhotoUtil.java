@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -60,8 +61,8 @@ public class PhotoUtil {
      * @date 2015年5月21日 上午11:19:19
      */
     public static String generatePhotoPath() {
-        String photoName = new SimpleDateFormat("yyyyMMddHHmmssSSS") + ".jpg";
-        File file = FileUtil.getFile("camera", photoName);
+        String photoName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".jpg";
+        File file = FileUtil.getFile("/camera", photoName);
         return file.getAbsolutePath();
     }
 

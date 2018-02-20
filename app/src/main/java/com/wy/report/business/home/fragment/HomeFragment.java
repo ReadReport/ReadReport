@@ -231,11 +231,17 @@ public class HomeFragment extends PtrFragment {
 
     @OnClick(R.id.home_examination_reserve)
     public void examinationReserveClick() {
+        if(homeReportModel == null){
+            return;
+        }
         authRouterManager.openWebView(getActivity(), homeReportModel.getTjyy(), getString(R.string.home_examination_reserve));
     }
 
     @OnClick(R.id.home_self_interpretation)
     public void selfInterpretationClick() {
+        if(homeReportModel == null){
+            return;
+        }
         authRouterManager.openWebView(getActivity(), homeReportModel.getZwjd(), getString(R.string.home_self_interpretation));
     }
 

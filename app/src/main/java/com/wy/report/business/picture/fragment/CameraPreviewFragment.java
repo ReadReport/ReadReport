@@ -30,7 +30,12 @@ public class CameraPreviewFragment extends BaseFragment {
     @BindView(R.id.fragment_camera_preview_picture)
     ImageView content;
 
-    private String path;
+    @BindView(R.id.preview_content_container)
+    View contentContainer;
+
+    private String path ;
+
+    private boolean fromActivityResult = true;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -51,7 +56,7 @@ public class CameraPreviewFragment extends BaseFragment {
 
     @OnClick(R.id.fragment_camera_preview_recapture)
     public void reCapture() {
-        PhotoUtil.openCamera(getActivity());
+        PhotoUtil.openCamera(this);
     }
 
     @OnClick(R.id.fragment_camera_preview_use)
@@ -69,13 +74,25 @@ public class CameraPreviewFragment extends BaseFragment {
             case ActivityRequestCode.CODE_OPEN_CAMERA: {
                 path = PhotoUtil.onActivityResult(this, requestCode, resultCode, data);
                 if (TextUtils.isEmpty(path)) {
+                    getActivity().finish();
                     return;
                 }
+                contentContainer.setVisibility(View.VISIBLE);
                 Glide.with(getActivity())
                      .load(path)
                      .into(content);
                 break;
             }
         }
+        fromActivityResult = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!fromActivityResult){
+            getActivity().finish();
+        }
+        fromActivityResult = false;
     }
 }

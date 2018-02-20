@@ -135,12 +135,10 @@ public class ReportUploadFragment extends NetworkFragment {
         remark.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -232,7 +230,7 @@ public class ReportUploadFragment extends NetworkFragment {
                 PictureModel model = (PictureModel) adapter.getItem(position);
                 if (model.getType() == PictureModel.TYPE_NORMAL) {
                     Bundle bundleKey = new Bundle();
-                    bundleKey.putStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, toPicturePath());
+                    bundleKey.putStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, toChosenPicturePath());
                     bundleKey.putInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX, position);
                     AuthRouterManager.getInstance()
                                      .getRouter()
@@ -241,7 +239,7 @@ public class ReportUploadFragment extends NetworkFragment {
                     ToastUtils.showLong(R.string.report_upload_picture_limit);
                 } else {
                     Bundle param = new Bundle();
-                    param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, (ArrayList<? extends Parcelable>) adapter.getData());
+                    param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, toChosenPictureModel());
                     DialogHelper.showChoosePictureMenu(getActivity(), param);
                 }
             }
@@ -284,7 +282,7 @@ public class ReportUploadFragment extends NetworkFragment {
         adapter.enableDragItem(itemTouchHelper, 0, true);
     }
 
-    private ArrayList<String> toPicturePath() {
+    private ArrayList<String> toChosenPicturePath() {
         List<PictureModel> models = adapter.getData();
         ArrayList<String> picturePaths = new ArrayList<>(models.size());
         for (PictureModel model : models) {
@@ -293,6 +291,17 @@ public class ReportUploadFragment extends NetworkFragment {
             }
         }
         return picturePaths;
+    }
+
+    private ArrayList<PictureModel> toChosenPictureModel() {
+        List<PictureModel> models = adapter.getData();
+        ArrayList<PictureModel> pictureModels = new ArrayList<>(models.size());
+        for (PictureModel model : models) {
+            if (model.getType() == PictureModel.TYPE_NORMAL) {
+                pictureModels.add(model);
+            }
+        }
+        return pictureModels;
     }
 
     /**
@@ -384,7 +393,7 @@ public class ReportUploadFragment extends NetworkFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArrayList(SAVED_PICTURE_LIST, toPicturePath());
+        outState.putStringArrayList(SAVED_PICTURE_LIST, toChosenPicturePath());
     }
 
 
@@ -474,16 +483,24 @@ public class ReportUploadFragment extends NetworkFragment {
 
     @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_CAMERA_RESULT)})
     public void camera(PictureModel model) {
-        adapter.addData(adapter.getItemCount() - 1, model);
-        if (adapter.getItemCount() > MAX_PICTURE_NUM) {
-            adapter.remove(adapter.getItemCount() - 1);
+        List<PictureModel> list = adapter.getData();
+        int size = list.size();
+        if (size == MAX_PICTURE_NUM) {
+            list.set(size - 1, model);
+        } else {
+            list.add(size - 1, model);
         }
+        adapter.replaceData(list);
         updateSelectedPictureInfo();
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_LIST)})
-    public void ablum(ArrayList<PictureModel> paths) {
-        adapter.setNewData(paths);
+    public void album(ArrayList<PictureModel> paths) {
+        if (paths.size() < MAX_PICTURE_NUM) {
+            paths.add(new PictureModel(PictureModel.TYPE_ADD));
+        }
+        adapter.replaceData(paths);
+        adapter.notifyItemChanged(paths.size() - 1);
         updateSelectedPictureInfo();
     }
 }

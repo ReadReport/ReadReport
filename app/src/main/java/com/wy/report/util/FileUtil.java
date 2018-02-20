@@ -95,6 +95,9 @@ public class FileUtil {
 
         File dirFile = getDir(root, dir);
         File file = new File(dirFile, fileName);
+        if(dirFile.isDirectory()){
+            dirFile.mkdirs();
+        }
 
         sPathOnceGetFileCalled = file.getAbsolutePath();
 

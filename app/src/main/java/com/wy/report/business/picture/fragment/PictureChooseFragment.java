@@ -18,6 +18,7 @@ import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.business.picture.model.BucketModel;
 import com.wy.report.business.upload.model.PictureModel;
+import com.wy.report.helper.picture.PictureChoseHelper;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.DensityUtils;
 import com.wy.report.util.ToastUtils;
@@ -61,6 +62,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
             allPictures = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST);
             chosenPaths = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
         }
+        PictureChoseHelper.set(chosenPaths);
         if (allPictures == null || allPictures.isEmpty()) {
             load();
             rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_LIST, buckets);
@@ -98,7 +100,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 PictureModel pictureModel = allPictures.get(position);
-                if (!pictureModel.isChoose() && countChosenNum(allPictures) >= PICTURE_CHOOSE_MAX_NUM) {
+                if (!pictureModel.isChoose() && PictureChoseHelper.size() >= PICTURE_CHOOSE_MAX_NUM) {
                     ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
                     return;
                 }
@@ -211,5 +213,17 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
     @OnClick(R.id.toolbar_cancel)
     public void cancelClick() {
         rxBus.post(RxKey.RX_PICTURE_CHOOSE_FINISH, "");
+    }
+
+    public void choose(PictureModel model) {
+        super.choose(model);
+        for (int i = 0; i < allPictures.size(); i++) {
+            PictureModel pictureModel = allPictures.get(i);
+            if(model.equals(pictureModel)){
+                pictureModel.setChoose(model.isChoose());
+                adapter.notifyItemChanged(i);
+                break;
+            }
+        }
     }
 }

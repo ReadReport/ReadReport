@@ -8,8 +8,7 @@
         android:id="@+id/vh_select_image_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="center"
-        tools:src="@drawable/upload_plus"/>
+        android:layout_gravity="center"/>
 
     <ImageView
         android:id="@+id/vh_select_image_delete"

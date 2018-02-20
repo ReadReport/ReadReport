@@ -17,6 +17,7 @@ import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.picture.model.BucketModel;
 import com.wy.report.business.upload.model.PictureModel;
+import com.wy.report.helper.picture.PictureChoseHelper;
 import com.wy.report.manager.router.AuthRouterManager;
 
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class PictureChooseCategoryFragment extends ToolbarFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
-        router.open(getActivity(), AuthRouterManager.ROUTER_PICTURE_CHOOSE ,getArguments());
+        router.open(getActivity(), AuthRouterManager.ROUTER_PICTURE_CHOOSE, getArguments());
     }
 
     @Override

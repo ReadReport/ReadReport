@@ -10,6 +10,7 @@ import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
 import com.wy.report.business.upload.model.PictureModel;
+import com.wy.report.helper.picture.PictureChoseHelper;
 
 import java.util.ArrayList;
 
@@ -45,21 +46,11 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
     }
 
     protected void updateChosenInfo(ArrayList<PictureModel> paths) {
-        int i = countChosenNum(paths);
+        int i = PictureChoseHelper.size();
         chosenNum.setVisibility(i > 0 ? View.VISIBLE : View.GONE);
         chosenNum.setText(Integer.toString(i));
         preview.setEnabled(i > 0);
         done.setEnabled(i > 0);
-    }
-
-    protected int countChosenNum(ArrayList<PictureModel> paths) {
-        int i = 0;
-        for (PictureModel model : paths) {
-            if (model.isChoose()) {
-                i++;
-            }
-        }
-        return i;
     }
 
     protected ArrayList<PictureModel> getChosenList() {
@@ -72,7 +63,7 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
         return result;
     }
 
-    @OnClick(R.id.fragment_picture_choose_done)
+    @OnClick({R.id.fragment_picture_choose_done, R.id.fragment_picture_choose_num})
     public void done() {
         rxBus.post(RxKey.RX_PICTURE_CHOOSE_LIST, getChosenList());
         rxBus.post(RxKey.RX_PICTURE_CHOOSE_FINISH, "");
@@ -88,10 +79,15 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
         for (PictureModel pictureModel : allPictures) {
             if (pictureModel.equals(model)) {
                 pictureModel.setChoose(model.isChoose());
-                updateChosenInfo(allPictures);
                 break;
             }
         }
+        if (model.isChoose()) {
+            PictureChoseHelper.add(model);
+        } else {
+            PictureChoseHelper.remove(model);
+        }
+        updateChosenInfo(allPictures);
     }
 
 }
