@@ -249,16 +249,7 @@ public class ReportUploadFragment extends NetworkFragment {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.vh_select_image_delete: {
-                        List<PictureModel> list = adapter.getData();
-                        PictureModel lastModel = list.get(list.size() - 1);
-                        if (lastModel.getType() == PictureModel.TYPE_NORMAL) {
-                            list.remove(position);
-                            list.add(new PictureModel(PictureModel.TYPE_ADD));
-                            adapter.replaceData(list);
-                        } else {
-                            adapter.remove(position);
-                        }
-                        updateSelectedPictureInfo();
+                        deletePosition(position);
                         break;
                     }
                 }
@@ -280,6 +271,24 @@ public class ReportUploadFragment extends NetworkFragment {
         });
         itemTouchHelper.attachToRecyclerView(recyclerView);
         adapter.enableDragItem(itemTouchHelper, 0, true);
+    }
+
+    /**
+     * 删除指定位置的图片， 并判断是否需要恢复”添加图片按钮“
+     *
+     * @param position
+     */
+    private void deletePosition(int position) {
+        List<PictureModel> list = adapter.getData();
+        PictureModel lastModel = list.get(list.size() - 1);
+        if (lastModel.getType() == PictureModel.TYPE_NORMAL) {
+            list.remove(position);
+            list.add(new PictureModel(PictureModel.TYPE_ADD));
+            adapter.replaceData(list);
+        } else {
+            adapter.remove(position);
+        }
+        updateSelectedPictureInfo();
     }
 
     private ArrayList<String> toChosenPicturePath() {
@@ -355,7 +364,7 @@ public class ReportUploadFragment extends NetworkFragment {
 
     @Subscribe(tags = {@Tag(RxKey.RX_REPORT_UPLOAD_DELETE_PICTURE)})
     public void pictureDelete(Integer index) {
-        adapter.remove(index);
+        deletePosition(index);
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_FAMILY_MEMBER_SELECT)})

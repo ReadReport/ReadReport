@@ -44,7 +44,7 @@ public class PicturePreviewFragment extends ToolbarFragment {
         Bundle bundle = getArguments();
         paths = bundle.getStringArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
         index = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
-        needDelete = bundle.getBoolean(BundleKey.BUNDLE_KEY_PICTURE_NEED_DELETE,true);
+        needDelete = bundle.getBoolean(BundleKey.BUNDLE_KEY_PICTURE_NEED_DELETE, true);
     }
 
     @Override
@@ -144,7 +144,10 @@ public class PicturePreviewFragment extends ToolbarFragment {
                                                       }
                                                       viewPager.setAdapter(adapter);
                                                       viewPager.setCurrentItem(currentIndex);
-                                                      setTitle((currentIndex + 1) + "/" + paths.size());
+                                                      if (currentIndex + 1 <= paths.size()) {
+                                                          currentIndex++;
+                                                      }
+                                                      setTitle(currentIndex + "/" + paths.size());
                                                       dialog.dismiss();
                                                   }
                                               })
