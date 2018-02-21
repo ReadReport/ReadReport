@@ -34,7 +34,9 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
 
     @BindView(R.id.view_letter_index)
     LetterIndexView letterIndexView;
+
     private HospitalService hospitalService;
+
     private UnitModel selectedModel;
 
     @Override
@@ -88,6 +90,7 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
                                    }
                                }
                                quickAdapter.setNewData(listResponseModel.getData());
+                               letterIndexView.setVisibility(View.VISIBLE);
                            }
                        });
     }

@@ -14,7 +14,8 @@
         android:id="@+id/view_letter_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|right"/>
+        android:layout_gravity="center_vertical|right"
+        android:visibility="gone"/>
 
 </FrameLayout>
 

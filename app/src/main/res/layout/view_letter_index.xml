@@ -10,6 +10,7 @@
         android:id="@+id/view_letter_index_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="40dp"
         android:background="@drawable/sorting_selected"
         android:gravity="center|left"
         android:paddingLeft="6dp"
