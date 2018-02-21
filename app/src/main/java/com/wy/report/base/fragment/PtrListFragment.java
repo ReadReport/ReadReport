@@ -39,6 +39,8 @@ public abstract class PtrListFragment<T, K extends BaseViewHolder> extends PtrFr
 
     protected BaseQuickAdapter<T, K> quickAdapter;
 
+    protected LinearLayoutManager layoutManager;
+
     @Override
     @CallSuper
     protected void initView(View contentView) {
@@ -47,7 +49,8 @@ public abstract class PtrListFragment<T, K extends BaseViewHolder> extends PtrFr
     }
 
     protected void initRecycleView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
         quickAdapter = createAdapter();
         quickAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(quickAdapter);

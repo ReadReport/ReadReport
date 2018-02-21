@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
+import com.wy.report.base.activity.BaseActivity;
 import com.wy.report.base.constant.BundleKey;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.PtrFragment;
@@ -18,6 +19,7 @@ import com.wy.report.business.upload.model.UnitModel;
 import com.wy.report.business.upload.service.HospitalService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.widget.view.report.LetterIndexView;
 
 import java.util.List;
 
@@ -30,8 +32,9 @@ import butterknife.BindView;
  */
 public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder> {
 
+    @BindView(R.id.view_letter_index)
+    LetterIndexView letterIndexView;
     private HospitalService hospitalService;
-
     private UnitModel selectedModel;
 
     @Override
@@ -51,6 +54,19 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
     protected void initView(View contentView) {
         super.initView(contentView);
         ptrFrameLayout.setEnabled(false);
+        letterIndexView.setOnLetterChangedListener(new LetterIndexView.OnLetterChangedListener() {
+            @Override
+            public void onChanged(String s, int position) {
+                List<UnitModel> data = quickAdapter.getData();
+                for (int i = 0; i < data.size(); i++) {
+                    UnitModel unitModel = data.get(i);
+                    if (s.equals(unitModel.getTitle())) {
+                        layoutManager.scrollToPositionWithOffset(i, 0);
+                        layoutManager.setStackFromEnd(true);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -88,6 +104,9 @@ public class ChainUnitFragment extends PtrListFragment<UnitModel, BaseViewHolder
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        if (adapter.getItemViewType(position) == UnitModel.TYPE_TITLE) {
+            return;
+        }
         rxBus.post(RxKey.RX_HOSPITAL_UNIT_SELECT, quickAdapter.getItem(position));
         getActivity().finish();
     }
