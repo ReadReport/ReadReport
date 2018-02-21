@@ -190,6 +190,10 @@ public class PhotoUtil {
             path = generatedPaths.get(activity.getLocalClassName());
             if (StringUtils.isBlank(path)) {
                 Bitmap bmp = null;
+                if(data == null){
+                    ToastUtils.showShort("照片保存失败");
+                    return null;
+                }
                 Bundle extras = data.getExtras();
                 if (extras != null && (bmp = extras.getParcelable("data")) != null) {
                     path = generatePhotoPath();
