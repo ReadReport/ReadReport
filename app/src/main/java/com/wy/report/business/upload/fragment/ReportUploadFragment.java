@@ -363,7 +363,7 @@ public class ReportUploadFragment extends NetworkFragment {
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                time.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                time.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
             }
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         dialog.getDatePicker()
