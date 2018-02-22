@@ -143,13 +143,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
     private void openPicturePreview(int index, boolean onlyChosen) {
         Bundle param = new Bundle();
         if (onlyChosen) {
-            ArrayList<PictureModel> paths = new ArrayList<>();
-            for (PictureModel model : pictureModels) {
-                if(model.isChoose()){
-                    paths.add(model);
-                }
-            }
-            param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, paths);
+            param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, getChosenList());
         } else {
             param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, pictureModels);
         }

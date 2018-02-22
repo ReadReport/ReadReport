@@ -53,6 +53,11 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
         }
     }
 
+    /**
+     * 更新底部菜单栏:预览,完成(数量)的状态
+     *
+     * @param paths
+     */
     protected void updateChosenInfo(ArrayList<PictureModel> paths) {
         int i = PictureChoseHelper.size();
         chosenNum.setVisibility(i > 0 ? View.VISIBLE : View.GONE);
@@ -61,13 +66,12 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
         done.setEnabled(i > 0);
     }
 
+    /**
+     * 返回已勾选图片列表
+     *
+     * @return
+     */
     protected ArrayList<PictureModel> getChosenList() {
-//        ArrayList<PictureModel> result = new ArrayList<>();
-//        for (PictureModel model : pictureModels) {
-//            if (model.isChoose()) {
-//                result.add(model);
-//            }
-//        }
         return PictureChoseHelper.getChosenPictures();
     }
 
