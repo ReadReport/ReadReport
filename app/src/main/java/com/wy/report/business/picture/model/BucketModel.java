@@ -51,8 +51,8 @@ public class BucketModel extends BaseModel {
     }
 
     public String getFirst() {
-        return pictures.get(0)
-                       .getPath();
+        return pictures.size() == 0 ? "" : pictures.get(0)
+                                                   .getPath();
     }
 
     public void updateChosenStatus(ArrayList<PictureModel> chosenPaths) {

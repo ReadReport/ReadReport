@@ -2,6 +2,7 @@ package com.wy.report.business.web.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -86,8 +87,11 @@ public class WebViewFragment extends NetworkFragment {
     public void onDestroy() {
         webChromeClient.onDestroy();
         if (webView != null) {
+            ViewGroup parent = (ViewGroup)webView.getParent();
+            if(parent != null){
+                parent.removeView(webView);
+            }
             webView.destroy();
-            webView = null;
         }
         super.onDestroy();
     }

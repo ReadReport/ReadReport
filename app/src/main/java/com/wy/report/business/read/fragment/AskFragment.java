@@ -23,6 +23,8 @@ import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 import com.wy.report.widget.SoftKeyboardStateWatcher;
 
+import java.util.List;
+
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -158,10 +160,15 @@ public class AskFragment extends PtrListFragment {
             @Override
             public void onNext(ResponseModel<AskMode> askModeResponseModel) {
                 super.onNext(askModeResponseModel);
-                mAskAdapter.addData(0, askModeResponseModel.getData().getAskItemModes());
-                pageCount = askModeResponseModel.getData().getCount();
-                if (page == 1) {
-                    recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
+                AskMode askMode = askModeResponseModel.getData();
+                List<AskItemMode> askItemModes = askMode.getAskItemModes();
+                if(askItemModes != null){
+                    mAskAdapter.addData(0, askItemModes);
+                    pageCount = askMode
+                                                    .getCount();
+                    if (page == 1) {
+                        recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
+                    }
                 }
             }
         });

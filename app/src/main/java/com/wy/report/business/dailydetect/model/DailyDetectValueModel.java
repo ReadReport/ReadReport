@@ -66,7 +66,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     private String trigValue;
 
     public String getLowValue() {
-        return lowValue;
+        return lowValue == null ? "0" : lowValue;
     }
 
     public void setLowValue(String lowValue) {
@@ -74,7 +74,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getHighValue() {
-        return highValue;
+        return highValue == null ? "0" : highValue;
     }
 
     public void setHighValue(String highValue) {
@@ -82,7 +82,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getPulseValue() {
-        return pulseValue;
+        return pulseValue == null ? "0" : pulseValue;
     }
 
     public void setPulseValue(String pulseValue) {
@@ -90,7 +90,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getSugarValue() {
-        return sugarValue;
+        return sugarValue == null ? "0" : sugarValue;
     }
 
     public void setSugarValue(String sugarValue) {
@@ -98,7 +98,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getTypeCode() {
-        return typeCode;
+        return typeCode == null ? "0" : typeCode;
     }
 
     public void setTypeCode(String typeCode) {
@@ -106,7 +106,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getTypeDetailCode() {
-        return typeDetailCode;
+        return typeDetailCode == null ? "0" : typeDetailCode;
     }
 
     public void setTypeDetailCode(String typeDetailCode) {
@@ -114,7 +114,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getHightValue() {
-        return hightValue;
+        return hightValue == null ? "0" : hightValue;
     }
 
     public void setHightValue(String hightValue) {
@@ -122,7 +122,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getWeightValue() {
-        return weightValue;
+        return weightValue == null ? "0" : weightValue;
     }
 
     public void setWeightValue(String weightValue) {
@@ -130,7 +130,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getCholValue() {
-        return cholValue;
+        return cholValue == null ? "0" : cholValue;
     }
 
     public void setCholValue(String cholValue) {
@@ -138,7 +138,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getHdlValue() {
-        return hdlValue;
+        return hdlValue == null ? "0" : hdlValue;
     }
 
     public void setHdlValue(String hdlValue) {
@@ -146,7 +146,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getLdlValue() {
-        return ldlValue;
+        return ldlValue == null ? "0" : ldlValue;
     }
 
     public void setLdlValue(String ldlValue) {
@@ -154,7 +154,7 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
     }
 
     public String getTrigValue() {
-        return trigValue;
+        return trigValue == null ? "0" : trigValue;
     }
 
     public void setTrigValue(String trigValue) {
