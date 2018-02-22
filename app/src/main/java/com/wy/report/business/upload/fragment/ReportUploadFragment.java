@@ -3,7 +3,6 @@ package com.wy.report.business.upload.fragment;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -280,7 +279,17 @@ public class ReportUploadFragment extends NetworkFragment {
      */
     private void deletePosition(int position) {
         List<PictureModel> list = adapter.getData();
-        PictureModel lastModel = list.get(list.size() - 1);
+        int size = list.size();
+        if (size == 0) {
+            //防止快速点击删除按钮, 导致数量和位置数据出错
+            return;
+        }
+
+        PictureModel lastModel = list.get(size - 1);
+        if (size == 1 && lastModel.getType() == PictureModel.TYPE_ADD) {
+            //防止快速点击删除按钮, 导致数量和位置数据出错
+            return;
+        }
         if (lastModel.getType() == PictureModel.TYPE_NORMAL) {
             list.remove(position);
             list.add(new PictureModel(PictureModel.TYPE_ADD));

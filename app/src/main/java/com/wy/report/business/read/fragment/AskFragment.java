@@ -164,8 +164,7 @@ public class AskFragment extends PtrListFragment {
                 List<AskItemMode> askItemModes = askMode.getAskItemModes();
                 if(askItemModes != null){
                     mAskAdapter.addData(0, askItemModes);
-                    pageCount = askMode
-                                                    .getCount();
+                    pageCount = askMode.getCount();
                     if (page == 1) {
                         recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
                     }
