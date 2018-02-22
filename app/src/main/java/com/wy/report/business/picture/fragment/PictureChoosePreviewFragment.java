@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wy.report.R;
@@ -46,7 +45,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         Bundle bundle = getArguments();
-        allPictures = bundle.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
+        pictureModels = bundle.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
         position = bundle.getInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX);
     }
 
@@ -56,7 +55,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
         adapter = new PagerAdapter() {
             @Override
             public int getCount() {
-                return allPictures.size();
+                return pictureModels.size();
             }
 
             @Override
@@ -70,7 +69,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
                 imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 container.addView(imageView, lp);
-                PictureModel model = allPictures.get(position);
+                PictureModel model = pictureModels.get(position);
                 Glide.with(getActivity())
                      .load(model.getPath())
                      .into(imageView);
@@ -126,7 +125,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
 
     @OnClick(R.id.toolbar_choose_status)
     public void chooseStatusClick() {
-        PictureModel model = allPictures.get(position);
+        PictureModel model = pictureModels.get(position);
         if (!model.isChoose() && PictureChoseHelper.size() >= PICTURE_CHOOSE_MAX_NUM) {
             ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
             return;
@@ -142,7 +141,7 @@ public class PictureChoosePreviewFragment extends AbstractPictureChooseFragment 
     }
 
     private void updateToolbarChooseStatus() {
-        PictureModel model = allPictures.get(position);
+        PictureModel model = pictureModels.get(position);
         chooseStatus.setSelected(model.isChoose());
     }
 

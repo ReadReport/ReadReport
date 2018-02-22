@@ -66,6 +66,7 @@ public class PictureChooseCategoryFragment extends ToolbarFragment {
                 Bundle param = new Bundle();
                 BucketModel model = buckets.get(position);
                 param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST, model.getPictures());
+                param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, PictureChoseHelper.getChosenPictures());
                 router.open(getActivity(), authRouterManager.ROUTER_PICTURE_CHOOSE, param);
             }
         });

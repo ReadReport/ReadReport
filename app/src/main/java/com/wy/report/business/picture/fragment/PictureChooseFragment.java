@@ -59,11 +59,11 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            allPictures = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST);
+            pictureModels = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST);
             chosenPaths = arguments.getParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST);
         }
         PictureChoseHelper.set(chosenPaths);
-        if (allPictures == null || allPictures.isEmpty()) {
+        if (pictureModels == null || pictureModels.isEmpty()) {
             load();
             rxBus.post(RxKey.RX_PICTURE_CHOOSE_BUCKET_LIST, buckets);
         }
@@ -99,7 +99,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                PictureModel pictureModel = allPictures.get(position);
+                PictureModel pictureModel = pictureModels.get(position);
                 if (!pictureModel.isChoose() && PictureChoseHelper.size() >= PICTURE_CHOOSE_MAX_NUM) {
                     ToastUtils.showShort(getString(R.string.report_upload_picture_limit1, PICTURE_CHOOSE_MAX_NUM));
                     return;
@@ -124,7 +124,7 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         recyclerView.getItemAnimator()
                     .setSupportsChangeAnimations(false);
         recyclerView.setAdapter(adapter);
-        adapter.setNewData(allPictures);
+        adapter.setNewData(pictureModels);
     }
 
     @Override
@@ -144,14 +144,14 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
         Bundle param = new Bundle();
         if (onlyChosen) {
             ArrayList<PictureModel> paths = new ArrayList<>();
-            for (PictureModel model : allPictures) {
+            for (PictureModel model : pictureModels) {
                 if(model.isChoose()){
                     paths.add(model);
                 }
             }
             param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, paths);
         } else {
-            param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, allPictures);
+            param.putParcelableArrayList(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST, pictureModels);
         }
         param.putInt(BundleKey.BUNDLE_KEY_PICTURE_PATH_LIST_INDEX, index);
         router.open(getActivity(), AuthRouterManager.ROUTER_PICTURE_CHOOSE_PREVIEW, param);
@@ -193,10 +193,10 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
                     pictureModel.setChoose(true);
                 }
             }
-            if (allPictures == null) {
-                allPictures = new ArrayList<>();
+            if (pictureModels == null) {
+                pictureModels = new ArrayList<>();
             }
-            allPictures.addAll(allBucket.getPictures());
+            pictureModels.addAll(allBucket.getPictures());
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -217,8 +217,8 @@ public class PictureChooseFragment extends AbstractPictureChooseFragment {
 
     public void choose(PictureModel model) {
         super.choose(model);
-        for (int i = 0; i < allPictures.size(); i++) {
-            PictureModel pictureModel = allPictures.get(i);
+        for (int i = 0; i < pictureModels.size(); i++) {
+            PictureModel pictureModel = pictureModels.get(i);
             if(model.equals(pictureModel)){
                 pictureModel.setChoose(model.isChoose());
                 adapter.notifyItemChanged(i);

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PictureChoseHelper {
 
 
-    public static ArrayList<PictureModel> chosenPictures = new ArrayList<>();
+    private static ArrayList<PictureModel> chosenPictures = new ArrayList<>();
 
     public static int size() {
         return chosenPictures.size();
@@ -34,5 +34,9 @@ public class PictureChoseHelper {
         if (pictureModels != null) {
             chosenPictures.addAll(pictureModels);
         }
+    }
+
+    public static ArrayList<PictureModel> getChosenPictures() {
+        return chosenPictures;
     }
 }

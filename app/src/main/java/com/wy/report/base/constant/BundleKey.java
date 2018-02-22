@@ -36,4 +36,6 @@ public final class BundleKey {
 
     public static final String BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST = "BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST";
 
+    public static final String BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST_ALL = "BUNDLE_KEY_PICTURE_CHOOSE_PICTURE_LIST_ALL";
+
 }

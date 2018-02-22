@@ -1,5 +1,6 @@
 package com.wy.report.business.picture.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,7 +25,9 @@ import butterknife.OnClick;
  */
 public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
 
-    protected ArrayList<PictureModel> allPictures = new ArrayList<>();
+    protected ArrayList<PictureModel> pictureModels = new ArrayList<>();
+
+    protected ArrayList<PictureModel> allPictureModels = new ArrayList<>();
 
     protected BaseQuickAdapter adapter;
 
@@ -38,10 +41,15 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
     protected View done;
 
     @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+    }
+
+    @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        if (allPictures != null) {
-            updateChosenInfo(allPictures);
+        if (pictureModels != null) {
+            updateChosenInfo(pictureModels);
         }
     }
 
@@ -54,13 +62,13 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
     }
 
     protected ArrayList<PictureModel> getChosenList() {
-        ArrayList<PictureModel> result = new ArrayList<>();
-        for (PictureModel model : allPictures) {
-            if (model.isChoose()) {
-                result.add(model);
-            }
-        }
-        return result;
+//        ArrayList<PictureModel> result = new ArrayList<>();
+//        for (PictureModel model : pictureModels) {
+//            if (model.isChoose()) {
+//                result.add(model);
+//            }
+//        }
+        return PictureChoseHelper.getChosenPictures();
     }
 
     @OnClick({R.id.fragment_picture_choose_done, R.id.fragment_picture_choose_num})
@@ -76,7 +84,7 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
 
     @Subscribe(tags = {@Tag(RxKey.RX_PICTURE_CHOOSE_CHANGE)})
     public void choose(PictureModel model) {
-        for (PictureModel pictureModel : allPictures) {
+        for (PictureModel pictureModel : pictureModels) {
             if (pictureModel.equals(model)) {
                 pictureModel.setChoose(model.isChoose());
                 break;
@@ -87,7 +95,7 @@ public abstract class AbstractPictureChooseFragment extends ToolbarFragment {
         } else {
             PictureChoseHelper.remove(model);
         }
-        updateChosenInfo(allPictures);
+        updateChosenInfo(pictureModels);
     }
 
 }
