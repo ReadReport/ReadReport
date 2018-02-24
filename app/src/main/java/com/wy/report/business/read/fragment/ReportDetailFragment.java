@@ -193,6 +193,7 @@ public class ReportDetailFragment extends PtrFragment {
         super.initView(contentView);
         setTitle(R.string.report_detail_title);
         ptrFrameLayout.autoRefresh();
+        ptrFrameLayout.setMode(PtrFrameLayout.Mode.NONE);
     }
 
     @Override

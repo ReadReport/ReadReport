@@ -16,6 +16,7 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
 
 import butterknife.BindView;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * 消息详情
@@ -51,6 +52,7 @@ public class MessageDetailFragment extends PtrFragment {
     @Override
     protected void initView(View content) {
         super.initView(content);
+        ptrFrameLayout.setMode(PtrFrameLayout.Mode.NONE);
         setTitle(getString(R.string.message_detail_title));
         loadData();
     }

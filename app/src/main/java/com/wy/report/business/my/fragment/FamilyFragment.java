@@ -22,6 +22,8 @@ import com.wy.report.util.DensityUtils;
 
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
+
 /**
  * 家庭成员
  *
@@ -52,6 +54,7 @@ public class FamilyFragment extends PtrListFragment<FamilyItemMode, BaseViewHold
         recyclerView.setBackground(getResources().getDrawable(R.drawable.shape_white_corner));
 
         ptrFrameLayout.autoRefresh();
+        ptrFrameLayout.setMode(PtrFrameLayout.Mode.NONE);
     }
 
     @Override
