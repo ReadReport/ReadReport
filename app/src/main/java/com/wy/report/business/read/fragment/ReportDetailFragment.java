@@ -223,6 +223,7 @@ public class ReportDetailFragment extends PtrFragment {
             picRecyleView.setVisibility(GONE);
             quotaView.setVisibility(GONE);
             quotaPrivateView.setVisibility(VISIBLE);
+            bottomBtn.setText(R.string.report_manage_add_report);
         }
     }
 
@@ -505,10 +506,11 @@ public class ReportDetailFragment extends PtrFragment {
                 });
                 break;
             case ReportItemMode.READ_STATE_UNREAD:
+                //未解读
                 if (bottomBtn.getText().toString().equals(getResources().getString(R.string.report_detail_bottom_btn_unread_new_clicked))) {
                     ToastUtils.showLong(R.string.report_detail_bottom_btn_unread_new_clicked);
                 } else {
-                    //未解读
+
                     mReadService.remind2Doctor(reportId).subscribe(new PtrSubscriber<ResponseModel>(this) {
                         @Override
                         public void onNext(ResponseModel responseModel) {
@@ -519,10 +521,14 @@ public class ReportDetailFragment extends PtrFragment {
                 }
                 break;
             case ReportItemMode.READ_STATE_READED:
-                //已解读
-                Bundle bundle = new Bundle();
-                bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID, reportId);
-                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_ASK, bundle);
+                if (fromHome) {
+                    AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD);
+                } else {
+                    //已解读
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID, reportId);
+                    AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_ASK, bundle);
+                }
                 break;
             default:
                 break;
