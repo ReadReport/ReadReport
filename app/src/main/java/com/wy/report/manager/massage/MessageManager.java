@@ -1,5 +1,7 @@
 package com.wy.report.manager.massage;
 
+import com.hwangjr.rxbus.RxBus;
+import com.wy.report.base.constant.RxKey;
 import com.wy.report.manager.auth.UserManger;
 
 import java.util.ArrayList;
@@ -41,10 +43,13 @@ public class MessageManager {
     public void setUnreadMessageCount(int unreadMessageCount) {
         this.unreadMessageCount = unreadMessageCount;
         notifyNewUnreadMessageCount();
+        RxBus.get().post(RxKey.RX_NEW_MESSAGE,new Object());
     }
 
     public void notifyAllMessageRead()
     {
+        unreadMessageCount = 0;
+        RxBus.get().post(RxKey.RX_NEW_MESSAGE,new Object());
         if(mListeners!=null)
         {
             for(OnMessageChangeListener listener:mListeners)
