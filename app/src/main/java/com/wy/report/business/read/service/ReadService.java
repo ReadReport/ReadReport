@@ -6,7 +6,10 @@ import com.wy.report.business.read.mode.DoctorMode;
 import com.wy.report.business.read.mode.ReportDetailMode;
 import com.wy.report.business.read.mode.ReportListMode;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -61,8 +64,9 @@ public interface ReadService {
      * 追问
      * @return
      */
-    @GET("/Report/user_more_conversation")
-    Observable<ResponseModel> ask(@Query("rep_id") String repId, @Query("member_id") String page, @Query("content") String content);
+    @FormUrlEncoded
+    @POST("/Report/user_more_conversation")
+    Observable<ResponseModel> ask(@Field("rep_id") String repId, @Field("member_id") String page, @Field("content") String content);
 
 
     /**
@@ -70,7 +74,7 @@ public interface ReadService {
      * @return
      */
     @GET("/Report/member_reask")
-    Observable<ResponseModel> reAsk(@Query("mid") String repId, @Query("qid") String page, @Query("content") String content);
+    Observable<ResponseModel> reAsk(@Field("mid") String repId, @Field("qid") String page, @Field("content") String content);
 
 
     /**

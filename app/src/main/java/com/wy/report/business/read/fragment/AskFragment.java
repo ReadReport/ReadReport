@@ -139,6 +139,7 @@ public class AskFragment extends PtrListFragment {
                     askItemMode.setMemberId(UserManger.getInstance().getLoginUser().getId());
                     askItemMode.setName(name);
                     mAskAdapter.addData(askItemMode);
+                    recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
                 }
             });
         }
