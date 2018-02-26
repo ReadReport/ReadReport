@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wy.report.R;
 import com.wy.report.business.my.model.FamilyItemMode;
+import com.wy.report.manager.router.AuthRouterManager;
 
 import java.util.List;
 
@@ -50,6 +51,17 @@ public class ManagePopMenu extends PopupWindow
         recyclerView.setAdapter(quickAdapter);
         setContentView(recyclerView);
 
+        //添加底部
+        View bottom = LayoutInflater.from(getContext).inflate(R.layout.view_report_manage_pop_bottom_item, null);
+        bottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthRouterManager.getInstance().getRouter().open(getContext, AuthRouterManager.ROUTER_EDIT_FAMILY);
+                dismiss();
+            }
+        });
+        quickAdapter.setFooterView(bottom);
+
         View item = LayoutInflater.from(getContext).inflate(R.layout.view_report_manage_pop_item_new, null);
         item.measure(0, 0);
 
@@ -82,6 +94,8 @@ public class ManagePopMenu extends PopupWindow
         int newCol = newData.size() > MAX_ITEM_COUNT ? MAX_ITEM_COUNT : newData.size();
         setWidth(itemWitdh);
         setHeight(itemHeight * newCol);
+
+
         quickAdapter.setNewData(newData);
     }
 
