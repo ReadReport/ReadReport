@@ -58,8 +58,8 @@ public class LoginFragment extends NetworkFragment {
         super.initView(contentView);
         contentView.findViewById(R.id.verify_code).setVisibility(View.GONE);
         contentView.findViewById(R.id.get_verify_code).setVisibility(View.GONE);
-        userName.setText("18046042250");
-        passWord.setText("111111");
+//        userName.setText("18046042250");
+//        passWord.setText("111111");
     }
 
     @Override
