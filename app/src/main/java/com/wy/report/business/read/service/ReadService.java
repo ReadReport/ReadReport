@@ -72,4 +72,12 @@ public interface ReadService {
     @GET("/Report/member_reask")
     Observable<ResponseModel> reAsk(@Query("mid") String repId, @Query("qid") String page, @Query("content") String content);
 
+
+    /**
+     * 提醒医生解读报告
+     * @param reportId
+     * @return
+     */
+    @GET("/Doctor/reminding_doctor_readed")
+    Observable<ResponseModel> remind2Doctor(@Query("rep_id") String reportId);
 }

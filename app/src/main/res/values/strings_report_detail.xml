@@ -46,6 +46,8 @@
 
     <string name="report_detail_bottom_btn_readed">追问</string>
     <string name="report_detail_bottom_btn_unread">报告正在解读，请耐心等待...</string>
+    <string name="report_detail_bottom_btn_unread_new">提醒医生解读报告</string>
+    <string name="report_detail_bottom_btn_unread_new_clicked">已提醒医生解读，一天只能一次</string>
     <string name="report_detail_bottom_btn_un_submit">提交报告</string>
     <string name="report_detail_bottom_btn_submited">已提交</string>
 

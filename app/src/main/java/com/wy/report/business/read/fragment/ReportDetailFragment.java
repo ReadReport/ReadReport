@@ -421,7 +421,7 @@ public class ReportDetailFragment extends PtrFragment {
                 scoreView.setVisibility(GONE);
                 bodyView.setVisibility(GONE);
                 suggestionView.setVisibility(GONE);
-                bottomBtn.setText(R.string.report_detail_bottom_btn_unread);
+                bottomBtn.setText(R.string.report_detail_bottom_btn_unread_new);
                 break;
             case ReportItemMode.READ_STATE_UNGTE:
             case ReportItemMode.READ_STATE_GETFAILED:
@@ -505,8 +505,18 @@ public class ReportDetailFragment extends PtrFragment {
                 });
                 break;
             case ReportItemMode.READ_STATE_UNREAD:
-                ToastUtils.showLong(R.string.report_detail_bottom_btn_unread);
-                //未解读
+                if (bottomBtn.getText().toString().equals(getResources().getString(R.string.report_detail_bottom_btn_unread_new_clicked))) {
+                    ToastUtils.showLong(R.string.report_detail_bottom_btn_unread_new_clicked);
+                } else {
+                    //未解读
+                    mReadService.remind2Doctor(reportId).subscribe(new PtrSubscriber<ResponseModel>(this) {
+                        @Override
+                        public void onNext(ResponseModel responseModel) {
+                            super.onNext(responseModel);
+                            bottomBtn.setText(R.string.report_detail_bottom_btn_unread_new_clicked);
+                        }
+                    });
+                }
                 break;
             case ReportItemMode.READ_STATE_READED:
                 //已解读
