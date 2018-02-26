@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.wy.report.R;
+import com.wy.report.util.DensityUtils;
 
 /**
  * @author cantalou
@@ -41,7 +42,7 @@ public class DailyDetectDataListViewPager extends ViewPager {
         int height = 0;
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
-            child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+            child.measure(widthMeasureSpec, 0);
             View titleView = findViewById(R.id.fragment_daily_detect_data_list_title);
             if (titleView != null && titleView.getVisibility() == View.VISIBLE) {
                 View dataListView = findViewById(R.id.daily_detect_data_list_container);
@@ -52,71 +53,14 @@ public class DailyDetectDataListViewPager extends ViewPager {
                 if (h > height) height = h;
             }
         }
+        int minHeight = DensityUtils.dip2px(getContext(), 250);
+        if (height < minHeight) {
+            height = minHeight;
+        }
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        switch (ev.getAction()) {
-//            case MotionEvent.ACTION_MOVE: {
-//                float deltaX = ev.getX() - mX;
-//                float deltaY = Math.abs(ev.getY() - mY);
-//
-//                if (deltaY > Math.abs(deltaX) && deltaY > touchSlop) {
-//                    getParent().requestDisallowInterceptTouchEvent(false);
-//                    return false;
-//                }
-//
-//                if (Math.abs(deltaY) > touchSlop) {
-//                    getParent().requestDisallowInterceptTouchEvent(true);
-//                }
-//
-//                break;
-//            }
-//            case MotionEvent.ACTION_UP: {
-//                getParent().requestDisallowInterceptTouchEvent(false);
-//                break;
-//            }
-//            case MotionEvent.ACTION_DOWN:{
-//                mX = ev.getX();
-//                mY = ev.getY();
-//                break;
-//            }
-//        }
-//        return super.onInterceptTouchEvent(ev);
-//    }
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent ev) {
-//        switch (ev.getAction()) {
-//            case MotionEvent.ACTION_DOWN: {
-//                mX = ev.getX();
-//                mY = ev.getY();
-//                break;
-//            }
-//            case MotionEvent.ACTION_MOVE: {
-//                float deltaX = ev.getX() - mX;
-//                float deltaY = Math.abs(ev.getY() - mY);
-//
-//                if (deltaY > Math.abs(deltaX) && deltaY > touchSlop) {
-//                    getParent().requestDisallowInterceptTouchEvent(false);
-//                    return false;
-//                }
-//
-//                if (Math.abs(deltaX) > touchSlop) {
-//                    getParent().requestDisallowInterceptTouchEvent(true);
-//                }
-//
-//                break;
-//            }
-//            case MotionEvent.ACTION_UP: {
-//                getParent().requestDisallowInterceptTouchEvent(false);
-//                break;
-//            }
-//        }
-//        return super.onTouchEvent(ev);
-//    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

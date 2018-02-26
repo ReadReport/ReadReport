@@ -1,10 +1,7 @@
 package com.wy.report.business.dailydetect.service;
 
 import com.wy.report.base.model.ResponseModel;
-import com.wy.report.business.dailydetect.model.DailyDetectDataModel;
 import com.wy.report.business.dailydetect.model.RecordResultModel;
-
-import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -34,8 +31,8 @@ public interface DailyDetectService {
      */
     @POST("/DailyMonitor/do_idp_records")
     @FormUrlEncoded
-    Observable<ResponseModel> recordBloodPressure(@Field("mid") String mid, @Field("test_type") int type, @Field("low_press") String lowPress,
-                                                  @Field("high_press") String highPress, @Field("pulse") String pulse);
+    Observable<ResponseModel> recordBloodPressure(@Field("mid") String mid, @Field("test_type") int type, @Field("high_press") String highPress,
+                                                  @Field("low_press") String lowPress, @Field("pulse") String pulse);
 
     /**
      * 2
@@ -64,8 +61,8 @@ public interface DailyDetectService {
      */
     @POST("/DailyMonitor/do_idp_records")
     @FormUrlEncoded
-    Observable<ResponseModel> recordBMI(@Field("mid") String mid, @Field("test_type") int type, @Field("hight_value") String high,
-                                        @Field("weight_value") String weight);
+    Observable<ResponseModel> recordBMI(@Field("mid") String mid, @Field("test_type") int type,
+                                        @Field("weight_value") String weight, @Field("hight_value") String high);
 
     /**
      * 6
