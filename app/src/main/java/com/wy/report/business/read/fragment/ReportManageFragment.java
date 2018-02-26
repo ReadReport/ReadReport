@@ -393,5 +393,13 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_UPLOAD);
             }
         });
+        quickAdapter.getEmptyView().findViewById(R.id.top_item).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID, "1");
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_DETAIL, bundle);
+            }
+        });
     }
 }
