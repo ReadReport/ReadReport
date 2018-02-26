@@ -14,6 +14,7 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.util.TimeUtils;
 
 import butterknife.BindView;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -73,8 +74,8 @@ public class MessageDetailFragment extends PtrFragment {
                 MessageItemMode detail = listResponseModel.getData();
                 title.setText(detail.getTitle());
                 content.setText(detail.getMessage());
-                time.setText(detail.getCreateDate());
-                date.setText(detail.getCreateDate());
+                time.setText(TimeUtils.millis2StringWithoutDate(Long.valueOf(detail.getCreateDate())));
+                date.setText(TimeUtils.millis2StringWithoutTime(Long.valueOf(detail.getCreateDate())));
                 rxBus.post(RxKey.RX_MESSAGE_READED, detail.getId());
             }
         });

@@ -196,6 +196,17 @@ public final class TimeUtils {
     public static String millis2StringWithoutTime(final long millis) {
         return millis2String(millis, DEFAULT_FORMAT).substring(0,10);
     }
+
+    /**
+     * 将时间戳转为时间字符串
+     * <p>格式为 yyyy-MM-dd HH:mm:ss</p>
+     *
+     * @param millis 毫秒时间戳
+     * @return 时间字符串
+     */
+    public static String millis2StringWithoutDate(final long millis) {
+        return millis2String(millis, DEFAULT_FORMAT).substring(11,19);
+    }
     /**
      * 将时间戳转为时间字符串
      * <p>格式为 yyyy-MM-dd HH:mm:ss</p>
