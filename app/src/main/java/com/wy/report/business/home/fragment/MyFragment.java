@@ -13,11 +13,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.wy.report.R;
 import com.wy.report.base.constant.RxKey;
 import com.wy.report.base.fragment.ToolbarFragment;
-import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
-import com.wy.report.business.home.model.MsgNumModel;
-import com.wy.report.business.my.service.MyService;
-import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
@@ -25,7 +21,6 @@ import com.wy.report.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscriber;
 
 /**
  * 我的
@@ -33,7 +28,7 @@ import rx.Subscriber;
  * @author cantalou
  * @date 2017-11-26 23:04
  */
-public class MyFragment extends ToolbarFragment implements MessageManager.OnMessageChangeListener {
+public class MyFragment extends ToolbarFragment {
 
 
     @BindView(R.id.my_header)
@@ -51,17 +46,13 @@ public class MyFragment extends ToolbarFragment implements MessageManager.OnMess
     @BindView(R.id.home_my_msg_num)
     TextView msgNum;
 
-    MyService mMyService;
-
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         if (UserManger.getInstance().isLogin()) {
             getMsgNum();
-            MessageManager.getInstance().addOnAllMessageReadedListener(this);
         }
-
     }
 
     @Override
@@ -208,47 +199,23 @@ public class MyFragment extends ToolbarFragment implements MessageManager.OnMess
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MessageManager.getInstance().removeAllMessageReadedListener(this);
-    }
-
-    @Override
-    public void onAllMessageRead() {
-        msgLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onNewUnreadMessageCount(int count) {
-        if (count > 0) {
-            msgLayout.setVisibility(View.VISIBLE);
-            msgNum.setText(getShowMsgNum(count));
-        }
-    }
 
     /**
      * 获取消息数量
      */
     private void getMsgNum() {
-        String uid = UserManger.getInstance().getLoginUser().getId();
-        //获取消息数量
-        mMyService = RetrofitHelper.getInstance().create(MyService.class);
-        mMyService.getUnreadMsgNum(uid).subscribe(new Subscriber<ResponseModel<MsgNumModel>>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(ResponseModel<MsgNumModel> msgNumModelResponseModel) {
-                MessageManager.getInstance().setUnreadMessageCount(msgNumModelResponseModel.getData().getNum());
-            }
-        });
+        MessageManager.getInstance().getMessage();
     }
+
+    @Subscribe(tags = {@Tag(RxKey.RX_NEW_MESSAGE)})
+    public void updateToolbarMessageState(Object obj) {
+        int count = MessageManager.getInstance().getUnreadMessageCount();
+        if (count > 0) {
+            msgLayout.setVisibility(View.VISIBLE);
+            msgNum.setText(getShowMsgNum(count));
+        } else {
+            msgLayout.setVisibility(View.GONE);
+        }
+    }
+
 }

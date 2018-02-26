@@ -17,6 +17,7 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.LogUtils;
 import com.wy.report.util.StringUtils;
@@ -113,6 +114,7 @@ public class LoginFragment extends NetworkFragment {
                 user.setRelationship(userModel.getRelationship());
                 UserManger.getInstance().updateUser(user);
                 rxBus.post(RxKey.RX_LOGIN,UserManger.getInstance().getLoginUser());
+                MessageManager.getInstance().getMessage();
             }
         });
 
