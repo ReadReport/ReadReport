@@ -104,6 +104,11 @@ public class FamilyFragment extends PtrListFragment<FamilyItemMode, BaseViewHold
         super.onItemClick(adapter, view, position);
         Bundle         bundle         = new Bundle();
         FamilyItemMode familyItemMode = (FamilyItemMode) adapter.getData().get(position);
+        if(familyItemMode.getId().equals(UserManger.getUid()))
+        {
+            AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_USER_INFO);
+            return;
+        }
         bundle.putParcelable(BundleKey.BUNDLE_KEY_FAMILY_ITEM, familyItemMode);
         AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_EDIT_FAMILY, bundle);
     }
