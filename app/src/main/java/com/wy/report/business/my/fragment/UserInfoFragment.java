@@ -31,6 +31,8 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.wy.report.util.TimeUtils.DATE_FORMAT;
+
 /**
  * 我的信息
  *
@@ -117,9 +119,15 @@ public class UserInfoFragment extends NetworkFragment {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String time = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
-                birthday.setText(time);
-                save();
+                String  time     = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
+                long    millis   = TimeUtils.string2Millis(time, DATE_FORMAT);
+                boolean isBefore = TimeUtils.isBeforeNow(millis);
+                if (isBefore) {
+                    birthday.setText(time);
+                    save();
+                } else {
+                    ToastUtils.showLong("日期不能晚于当前时间");
+                }
             }
         }, year, month, day);
         datePickerDialog.show();
@@ -152,7 +160,7 @@ public class UserInfoFragment extends NetworkFragment {
                 User user = UserManger.getInstance().getLoginUser();
                 user.setName(newName);
                 user.setSex(sexy);
-                user.setBirthday(TimeUtils.string2Millis(newBirthday, TimeUtils.DATE_FORMAT));
+                user.setBirthday(TimeUtils.string2Millis(newBirthday, DATE_FORMAT));
                 UserManger.getInstance().updateUser(user);
                 rxBus.post(RxKey.RX_MODIFY_USER_INFO, user);
             }

@@ -1597,6 +1597,18 @@ public final class TimeUtils {
     }
 
     /**
+     * 判断是否在当前时间之前
+     *
+     * @param millis 毫秒时间戳
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isBeforeNow(final long millis) {
+        Date nowDate = getNowDate();
+        Date date = millis2Date(millis);
+        return date.before(nowDate);
+    }
+
+    /**
      * 获取星座
      *
      * @param month 月

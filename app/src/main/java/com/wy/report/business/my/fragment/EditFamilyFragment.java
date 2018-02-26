@@ -22,6 +22,7 @@ import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.TimeUtils;
+import com.wy.report.util.ToastUtils;
 
 import java.util.Calendar;
 
@@ -162,7 +163,13 @@ public class EditFamilyFragment extends NetworkFragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String time = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
-                birthday.setText(time);
+                long    millis   = TimeUtils.string2Millis(time, DATE_FORMAT);
+                boolean isBefore = TimeUtils.isBeforeNow(millis);
+                if (isBefore) {
+                    birthday.setText(time);
+                } else {
+                    ToastUtils.showLong("日期不能晚于当前时间");
+                }
             }
         }, year, month, day);
         datePickerDialog.show();
