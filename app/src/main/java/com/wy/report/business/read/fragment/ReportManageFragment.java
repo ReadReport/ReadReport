@@ -340,13 +340,12 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         super.onItemClick(adapter, view, position);
         ReportItemMode item = (ReportItemMode) adapter.getItem(position);
-
         switch (item.getParseState()) {
             case ReportItemMode.READ_STATE_GETFAILED:
-                ToastUtils.showLong(R.string.report_manage_get_failed_tips);
+                ToastUtils.showCenter(R.string.report_manage_get_failed_tips);
                 break;
             case ReportItemMode.READ_STATE_UNGTE:
-                ToastUtils.showLong(R.string.report_manage_getting_tips);
+                ToastUtils.showCenter(R.string.report_manage_getting_tips);
                 break;
             case ReportItemMode.READ_STATE_UNSUBMIT:
             case ReportItemMode.READ_STATE_UNREAD:

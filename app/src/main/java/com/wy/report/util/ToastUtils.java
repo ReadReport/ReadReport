@@ -138,6 +138,34 @@ public final class ToastUtils {
     /**
      * 安全地显示长时吐司
      *
+     * @param text 文本
+     */
+    public static void showCenter(@NonNull final CharSequence text) {
+        HANDLER.post(new Runnable() {
+            @Override
+            public void run() {
+                cancel();
+                sToast = Toast.makeText(Utils.getApp(), text, Toast.LENGTH_LONG);
+                // solve the font of toast
+                TextView tvMessage = (TextView) sToast.getView().findViewById(android.R.id.message);
+                tvMessage.setTextAppearance(tvMessage.getContext(),android.R.style.TextAppearance);
+                tvMessage.setTextColor(msgColor);
+                sToast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+                setBg(tvMessage);
+                sToast.show();
+            }
+        });
+
+    }
+
+    public static void showCenter(@NonNull final int resId) {
+        showCenter(Utils.getApp().getResources().getText(resId).toString());
+    }
+
+
+    /**
+     * 安全地显示长时吐司
+     *
      * @param resId 资源 Id
      */
     public static void showLong(@StringRes final int resId) {
