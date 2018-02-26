@@ -86,6 +86,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
         ptrFrameLayout.autoRefresh();
 
+        quickAdapter.bindToRecyclerView(recyclerView);
 
     }
 
@@ -379,7 +380,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
 
     private void initRecyleEmptyView()
     {
-        quickAdapter.bindToRecyclerView(recyclerView);
+
         quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
         quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_get_report).setOnClickListener(new View.OnClickListener() {
             @Override
