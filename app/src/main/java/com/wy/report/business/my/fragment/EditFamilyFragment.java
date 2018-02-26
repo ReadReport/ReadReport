@@ -193,6 +193,38 @@ public class EditFamilyFragment extends NetworkFragment {
         final String newSex          = StringUtils.getSex2Upload(sex.getText().toString());
         final String newIdCard       = idCard.getText().toString();
 
+        if(StringUtils.isBlank(name))
+        {
+            ToastUtils.showLong("姓名不能为空");
+            return;
+        }
+        if(StringUtils.isBlank(birthday))
+        {
+            ToastUtils.showLong("生日不能为空");
+            return;
+        }
+        if(StringUtils.isBlank(relationship))
+        {
+            ToastUtils.showLong("关系不能为空");
+            return;
+        }
+        if(StringUtils.isBlank(phone))
+        {
+            ToastUtils.showLong("电话不能为空");
+            return;
+        }
+        if(StringUtils.isBlank(sex))
+        {
+            ToastUtils.showLong("性别不能为空");
+            return;
+        }
+        if(StringUtils.isBlank(idCard))
+        {
+            ToastUtils.showLong("身份证不能为空");
+            return;
+        }
+
+
         if (editMode) {
             myService.editFamilyMember(familyItem.getId(), newName, newSex, newBirthday, newRelationship, newPhone, newIdCard).subscribe(new NetworkSubscriber<ResponseModel>(this) {
                 @Override
