@@ -139,7 +139,7 @@ public class RegisterFragment extends NetworkFragment {
             return;
         }
 
-        myService.getVerifyCode(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this) {
+        myService.getVerifyCodeForRegister(mobile).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
                 super.onNext(responseModel);
