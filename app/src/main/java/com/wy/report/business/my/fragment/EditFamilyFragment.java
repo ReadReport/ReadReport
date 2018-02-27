@@ -20,6 +20,7 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.util.RegexUtils;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.TimeUtils;
 import com.wy.report.util.ToastUtils;
@@ -162,7 +163,7 @@ public class EditFamilyFragment extends NetworkFragment {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String time = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
+                String  time     = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
                 long    millis   = TimeUtils.string2Millis(time, DATE_FORMAT);
                 boolean isBefore = TimeUtils.isBeforeNow(millis);
                 if (isBefore) {
@@ -193,36 +194,49 @@ public class EditFamilyFragment extends NetworkFragment {
         final String newSex          = StringUtils.getSex2Upload(sex.getText().toString());
         final String newIdCard       = idCard.getText().toString();
 
-        if(StringUtils.isBlank(name))
-        {
+        if (StringUtils.isBlank(name)) {
             ToastUtils.showLong("姓名不能为空");
             return;
         }
-        if(StringUtils.isBlank(birthday))
-        {
+
+        int nameLength = StringUtils.length(newName);
+        if (nameLength < 4 || nameLength > 16) {
+            ToastUtils.showLong(getString(R.string.user_info_edit_tip));
+            return;
+        }
+
+        if (StringUtils.isBlank(birthday)) {
             ToastUtils.showLong("生日不能为空");
             return;
         }
-        if(StringUtils.isBlank(relationship))
-        {
+        if (StringUtils.isBlank(relationship)) {
             ToastUtils.showLong("关系不能为空");
             return;
         }
-        if(StringUtils.isBlank(phone))
-        {
+        if (StringUtils.isBlank(phone)) {
             ToastUtils.showLong("电话不能为空");
             return;
         }
-        if(StringUtils.isBlank(sex))
-        {
+        if (!RegexUtils.isMobileSimple(phone.getText().toString())) {
+            ToastUtils.showLong("电话号码格式不对");
+            return;
+        }
+        if (StringUtils.isBlank(sex)) {
             ToastUtils.showLong("性别不能为空");
             return;
         }
-        if(StringUtils.isBlank(idCard))
-        {
+
+        if (StringUtils.isBlank(idCard)) {
             ToastUtils.showLong("身份证不能为空");
             return;
         }
+
+        if (!RegexUtils.isIDCard18(idCard.getText().toString()) && !RegexUtils.isIDCard15(idCard.getText().toString())) {
+            ToastUtils.showLong("身份证号格式不对");
+            return;
+        }
+
+
 
 
         if (editMode) {
@@ -261,8 +275,6 @@ public class EditFamilyFragment extends NetworkFragment {
         }
 
     }
-
-
 
 
     private String string2millis(String dateString) {

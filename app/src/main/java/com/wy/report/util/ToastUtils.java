@@ -145,7 +145,7 @@ public final class ToastUtils {
             @Override
             public void run() {
                 cancel();
-                sToast = Toast.makeText(Utils.getApp(), text, Toast.LENGTH_LONG);
+                sToast = Toast.makeText(Utils.getApp(), text, Toast.LENGTH_SHORT);
                 // solve the font of toast
                 TextView tvMessage = (TextView) sToast.getView().findViewById(android.R.id.message);
                 tvMessage.setTextAppearance(tvMessage.getContext(),android.R.style.TextAppearance);

@@ -523,7 +523,7 @@ public class ReportDetailFragment extends PtrFragment {
                 break;
             case ReportItemMode.READ_STATE_READED:
                 if (fromHome) {
-                    AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD);
+                    AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD_QUERY);
                 } else {
                     //已解读
                     Bundle bundle = new Bundle();

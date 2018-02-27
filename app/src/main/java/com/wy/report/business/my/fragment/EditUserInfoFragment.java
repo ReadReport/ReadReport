@@ -64,11 +64,17 @@ public class EditUserInfoFragment extends NetworkFragment {
     }
 
     private void saveAll() {
-        User user = UserManger.getInstance().getLoginUser();
+        User         user        = UserManger.getInstance().getLoginUser();
         final String newName     = userName.getText().toString();
-        final long newBirthday = user.getBirthday();
+        final long   newBirthday = user.getBirthday();
         final int    sexy        = user.getSex();
         final String uid         = UserManger.getInstance().getLoginUser().getId();
+
+        int nameLength = StringUtils.length(newName);
+        if (nameLength < 4 || nameLength > 16) {
+            ToastUtils.showLong(getString(R.string.user_info_edit_tip));
+            return;
+        }
         mMyService.editInfo(uid, newName, String.valueOf(newBirthday), String.valueOf(sexy)).subscribe(new NetworkSubscriber<ResponseModel>(this) {
             @Override
             public void onNext(ResponseModel responseModel) {
