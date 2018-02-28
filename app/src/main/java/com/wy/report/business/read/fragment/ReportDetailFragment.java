@@ -334,35 +334,35 @@ public class ReportDetailFragment extends PtrFragment {
 
         for (final ReportDetailMode.BodySystem system : bodySystems) {
             switch (system.getSystemId()) {
-                case ReportDetailMode.BodySystem.BODY_1:
+                case ReportDetailMode.BodySystem.BODY_4:
                     illItems.add(body1);
                     illSystems.add(system);
                     break;
-                case ReportDetailMode.BodySystem.BODY_2:
+                case ReportDetailMode.BodySystem.BODY_1:
                     illItems.add(body2);
                     illSystems.add(system);
                     break;
-                case ReportDetailMode.BodySystem.BODY_3:
+                case ReportDetailMode.BodySystem.BODY_6:
                     illItems.add(body3);
                     illSystems.add(system);
                     break;
-                case ReportDetailMode.BodySystem.BODY_4:
+                case ReportDetailMode.BodySystem.BODY_2:
                     illItems.add(body4);
                     illSystems.add(system);
                     break;
-                case ReportDetailMode.BodySystem.BODY_5:
+                case ReportDetailMode.BodySystem.BODY_3:
                     illItems.add(body5);
                     illSystems.add(system);
                     break;
-                case ReportDetailMode.BodySystem.BODY_6:
+                case ReportDetailMode.BodySystem.BODY_8:
                     illItems.add(body6);
                     illSystems.add(system);
                     break;
-                case ReportDetailMode.BodySystem.BODY_7:
+                case ReportDetailMode.BodySystem.BODY_5:
                     illItems.add(body7);
                     illSystems.add(system);
                     break;
-                case ReportDetailMode.BodySystem.BODY_8:
+                case ReportDetailMode.BodySystem.BODY_7:
                     illItems.add(isMale ? body8Male : body8Female);
                     illSystems.add(system);
                     break;

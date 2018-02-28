@@ -185,7 +185,7 @@ public class AuthRouterManager {
     /**
      * 报告详细界面
      */
-    public static final String ROUTER_REPORT_DETAIL = LOGIN_ACTIVITY_PREFIX + "ROUTER_REPORT_DETAIL";
+    public static final String ROUTER_REPORT_DETAIL = PUBLIC_ACTIVITY_PREFIX + "ROUTER_REPORT_DETAIL";
 
     /**
      * 医生详细界面
