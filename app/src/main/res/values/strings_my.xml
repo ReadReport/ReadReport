@@ -8,8 +8,10 @@
     <string name="my_verify_code_send">验证码已发送，请注意查收！</string>
     <string name="my_verify_mobile_null">电话号码无效</string>
     <string name="my_verify_pwd_null">密码不能为空</string>
+    <string name="my_verify_pwd_out">密码为6到12位</string>
     <string name="my_verify_check">阅读并同意读报告协议</string>
     <string name="my_verify_verify_null">验证码不能为空</string>
+    <string name="my_verify_verify_out">验证码为6位数字</string>
     <string name="my_read_protocol">阅读并同意</string>
     <string name="my_protocol">读报告协议</string>
 </resources>

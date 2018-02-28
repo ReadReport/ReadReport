@@ -87,27 +87,32 @@ public class RegisterFragment extends NetworkFragment {
 
     @OnClick(R.id.register)
     public void register() {
-        String username = userName.getText().toString();
-        String pwd = passWord.getText().toString();
+        String username   = userName.getText().toString();
+        String pwd        = passWord.getText().toString();
         String verifycode = verifyCode.getText().toString();
 
-        if (!RegexUtils.isMobileSimple(username))
-        {
+        if (!RegexUtils.isMobileSimple(username)) {
             ToastUtils.showLong(R.string.my_verify_mobile_null);
             return;
         }
-        if (StringUtils.isBlank(verifycode))
-        {
+        if (StringUtils.isBlank(verifycode)) {
             ToastUtils.showLong(R.string.my_verify_verify_null);
             return;
         }
-        if (StringUtils.isBlank(pwd))
-        {
+
+        if (verifycode.length() > 6) {
+            ToastUtils.showLong(R.string.my_verify_verify_out);
+            return;
+        }
+        if (StringUtils.isBlank(pwd)) {
             ToastUtils.showLong(R.string.my_verify_pwd_null);
             return;
         }
-        if (!check.isChecked())
-        {
+        if (pwd.length() < 6 || pwd.length() > 12) {
+            ToastUtils.showLong(R.string.my_verify_pwd_out);
+            return;
+        }
+        if (!check.isChecked()) {
             ToastUtils.showLong(R.string.my_verify_check);
             return;
         }
@@ -120,10 +125,10 @@ public class RegisterFragment extends NetworkFragment {
             public void onNext(ResponseModel<RegisterMode> registerModeResponseModel) {
                 super.onNext(registerModeResponseModel);
                 String newId = registerModeResponseModel.getData().getId();
-                User user = new User();
+                User   user  = new User();
                 user.setId(newId);
                 UserManger.getInstance().updateUser(user);
-                rxBus.post(RxKey.RX_LOGIN,UserManger.getInstance().getLoginUser());
+                rxBus.post(RxKey.RX_LOGIN, UserManger.getInstance().getLoginUser());
             }
         });
     }
@@ -133,8 +138,7 @@ public class RegisterFragment extends NetworkFragment {
     public void getVerifyCode(final CountDownTextView textView) {
         String mobile = userName.getText().toString();
 
-        if (!RegexUtils.isMobileSimple(mobile))
-        {
+        if (!RegexUtils.isMobileSimple(mobile)) {
             ToastUtils.showLong(R.string.my_verify_mobile_null);
             return;
         }
@@ -155,8 +159,7 @@ public class RegisterFragment extends NetworkFragment {
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
-    public void onLoginSuccess(User user)
-    {
+    public void onLoginSuccess(User user) {
         getActivity().finish();
     }
 }
