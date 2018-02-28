@@ -137,6 +137,7 @@ public class AskFragment extends PtrListFragment {
                     askItemMode.setConversation(content);
                     askItemMode.setUserImage(UserManger.getInstance().getLoginUser().getHead());
                     askItemMode.setMemberId(UserManger.getInstance().getLoginUser().getId());
+                    askItemMode.setTime(System.currentTimeMillis());
                     askItemMode.setName(name);
                     mAskAdapter.addData(askItemMode);
                     recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
