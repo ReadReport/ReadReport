@@ -199,8 +199,14 @@ public class EditFamilyFragment extends NetworkFragment {
             return;
         }
 
-        int nameLength = StringUtils.length(newName);
-        if (nameLength < 4 || nameLength > 16) {
+//        int nameLength = StringUtils.length(newName);
+//        if (nameLength < 4 || nameLength > 16) {
+//            ToastUtils.showLong(getString(R.string.user_info_edit_tip));
+//            return;
+//        }
+//
+        int nameLength = newName.length();
+        if (nameLength < 2 || nameLength > 8) {
             ToastUtils.showLong(getString(R.string.user_info_edit_tip));
             return;
         }
