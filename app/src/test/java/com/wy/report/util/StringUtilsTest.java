@@ -1,10 +1,8 @@
 package com.wy.report.util;
 
-import android.os.SystemClock;
-
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /*
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -71,6 +69,13 @@ import static org.junit.Assert.*;
         time = System.currentTimeMillis() - 1000;
         time -= 60 * 60 * 1000 * 72;
         assertEquals("3天前", StringUtils.formatTime(time));
+    }
+
+    @Test
+    public void testStringLenght()
+    {
+        assertEquals(3, "3天前".length());
+        assertEquals(3, "abc".length());
     }
 
 }
