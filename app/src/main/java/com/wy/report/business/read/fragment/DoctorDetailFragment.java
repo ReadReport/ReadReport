@@ -15,6 +15,7 @@ import com.wy.report.business.read.mode.DoctorMode;
 import com.wy.report.business.read.service.ReadService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
+import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
 
 import butterknife.BindView;
@@ -75,6 +76,8 @@ public class DoctorDetailFragment extends PtrFragment {
         super.initToolbar();
         Drawable toolbarBackground = toolbar.getBackground();
         toolbarBackground.setAlpha(0);
+        toolbarBack.setBackgroundResource(R.drawable.selector_toolbar_back_white);
+        toolbarTitle.setTextColor(getColor(R.color.bai_ffffff));
     }
 
     @Override
@@ -110,7 +113,7 @@ public class DoctorDetailFragment extends PtrFragment {
         level.setText(doctorMode.getAppellation());
 
         serviceNum.setText(String.format(getString(R.string.doctor_detail_server), doctorMode.getServerNum()));
-        goodNum.setText(String.format(getString(R.string.doctor_detail_good), doctorMode.getServerNum()));
+        goodNum.setText(String.format(getString(R.string.doctor_detail_good), doctorMode.getGoodAt()));
 
         goodAt.setText(doctorMode.getGoodAt());
         summary.setText(doctorMode.getSummary());
@@ -119,6 +122,6 @@ public class DoctorDetailFragment extends PtrFragment {
 
     @OnClick(R.id.doctor_detail_upload_report_2_doctor)
     public void upload() {
-        //        readService.sumbitReport2Doctor();
+        AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD_QUERY);
     }
 }
