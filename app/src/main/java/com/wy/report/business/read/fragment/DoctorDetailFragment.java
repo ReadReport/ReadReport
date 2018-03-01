@@ -3,6 +3,7 @@ package com.wy.report.business.read.fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -76,7 +77,7 @@ public class DoctorDetailFragment extends PtrFragment {
         super.initToolbar();
         Drawable toolbarBackground = toolbar.getBackground();
         toolbarBackground.setAlpha(0);
-        toolbarBack.setBackgroundResource(R.drawable.selector_toolbar_back_white);
+        ((ImageView)toolbarBack).setImageResource(R.drawable.selector_toolbar_back_white);
         toolbarTitle.setTextColor(getColor(R.color.bai_ffffff));
     }
 
@@ -113,7 +114,7 @@ public class DoctorDetailFragment extends PtrFragment {
         level.setText(doctorMode.getAppellation());
 
         serviceNum.setText(String.format(getString(R.string.doctor_detail_server), doctorMode.getServerNum()));
-        goodNum.setText(String.format(getString(R.string.doctor_detail_good), doctorMode.getGoodAt()));
+        goodNum.setText(String.format(getString(R.string.doctor_detail_good), doctorMode.getServerNum()));
 
         goodAt.setText(doctorMode.getGoodAt());
         summary.setText(doctorMode.getSummary());

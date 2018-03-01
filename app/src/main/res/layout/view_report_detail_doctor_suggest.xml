@@ -70,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_date"
+            android:layout_marginRight="3dp"
             app:layout_constraintBottom_toBottomOf="@+id/report_detail_doctor_name"
             app:layout_constraintRight_toLeftOf="@+id/report_detail_doctor_suggestion_time"
             app:layout_constraintTop_toTopOf="@+id/report_detail_doctor_name"
