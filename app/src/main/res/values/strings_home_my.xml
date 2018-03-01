@@ -31,11 +31,11 @@
     <string name="family_add">添加</string>
 
     <string name="edit_family_title">成员编辑</string>
-    <string name="edit_family_name">姓  名：</string>
-    <string name="edit_family_birthday">生  日：</string>
-    <string name="edit_family_sex">性  别：</string>
-    <string name="edit_family_relationship">关  系：</string>
-    <string name="edit_family_phone">电  话：</string>
+    <string name="edit_family_name">姓\u0020\u0020\u0020\u0020名：</string>
+    <string name="edit_family_birthday">生\u0020\u0020\u0020\u0020日：</string>
+    <string name="edit_family_sex">性\u0020\u0020\u0020\u0020别：</string>
+    <string name="edit_family_relationship">关\u0020\u0020\u0020\u0020系：</string>
+    <string name="edit_family_phone">电\u0020\u0020\u0020\u0020话：</string>
     <string name="edit_family_id_card">身份证：</string>
     <string name="edit_family_name_hint">请输入姓名</string>
     <string name="edit_family_name_birthday">请输入生日</string>
