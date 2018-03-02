@@ -200,9 +200,9 @@ public class StringUtils {
      * @return
      */
     public static String getSex2Show(String sex) {
-        if (sex.equals("1")) {
+        if (sex.equals("1") || sex.equals("男")) {
             return "男";
-        } else if (sex.equals("2")) {
+        } else if (sex.equals("2") || sex.equals("女")) {
             return "女";
         }
         return "男";

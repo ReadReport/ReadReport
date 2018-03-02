@@ -194,6 +194,7 @@ public final class TimeUtils {
      * @return 时间字符串
      */
     public static String millis2StringWithoutTime(final long millis) {
+        DateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         return millis2String(millis, DEFAULT_FORMAT).substring(0,10);
     }
 
@@ -227,7 +228,7 @@ public final class TimeUtils {
      * @return 时间字符串
      */
     public static String millis2String(final long millis, final DateFormat format) {
-        return format.format(new Date(millis));
+        return format.format(new Date(millis*1000));
     }
 
     /**
@@ -251,7 +252,7 @@ public final class TimeUtils {
      */
     public static long string2Millis(final String time, final DateFormat format) {
         try {
-            return format.parse(time).getTime();
+            return format.parse(time).getTime()/1000;
         } catch (ParseException e) {
             e.printStackTrace();
         }

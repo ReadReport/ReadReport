@@ -11,6 +11,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/hui_f9f9f9"
         >
         <!--兰色背景-->
         <ImageView
@@ -151,11 +152,14 @@
             android:id="@+id/doctor_detail_good_at_summary_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/shape_white_corner"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/doctor_detail_head_cl"
             >
             <!--擅长-->
@@ -259,105 +263,117 @@
         </LinearLayout>
 
 
-        <!--服务内容-->
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:id="@+id/doctor_detail_server_content_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/shape_white_corner"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/doctor_detail_good_at_summary_ll"
             >
 
-            <ImageView
-                android:id="@+id/doctor_detail_server_content_icon"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/ic_dption"
-                />
-
-            <!--服务内容-->
-            <TextView
-                android:id="@+id/doctor_detail_server_content_title"
-                android:layout_width="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="@string/doctor_detail_service_content"
-                android:textColor="@color/hei_333333"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/doctor_detail_server_content_icon"
-                app:layout_constraintLeft_toRightOf="@+id/doctor_detail_server_content_icon"
-                app:layout_constraintTop_toTopOf="@+id/doctor_detail_server_content_icon"
-                />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                >
 
-            <!--报告解析-->
-            <TextView
-                android:id="@+id/doctor_detail_parse_report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/doctor_detail_service_content_report_parse"
-                android:textColor="@color/hei_333333"
-                android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@+id/doctor_detail_server_content_icon"
-                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_icon"
-                />
+                <ImageView
+                    android:id="@+id/doctor_detail_server_content_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_dption"
+                    />
 
-            <!--报告解析-->
-            <TextView
-                android:id="@+id/doctor_detail_parse_report_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/doctor_detail_service_content_report_parse_price"
-                android:textColor="@color/hong_f54f52"
-                android:textSize="14sp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_icon"
-                />
+                <!--服务内容-->
+                <TextView
+                    android:id="@+id/doctor_detail_server_content_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="@string/doctor_detail_service_content"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/doctor_detail_server_content_icon"
+                    app:layout_constraintLeft_toRightOf="@+id/doctor_detail_server_content_icon"
+                    app:layout_constraintTop_toTopOf="@+id/doctor_detail_server_content_icon"
+                    />
 
-            <TextView
-                android:id="@+id/doctor_detail_parse_report_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/doctor_detail_service_content_report_parse_content"
-                android:textColor="@color/hui_575757"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_parse_report"
-                />
+                <!--报告解析-->
+                <TextView
+                    android:id="@+id/doctor_detail_parse_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/doctor_detail_service_content_report_parse"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/doctor_detail_server_content_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_icon"
+                    />
 
-            <!--服务说明-->
-            <TextView
-                android:id="@+id/doctor_detail_server_instruction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/doctor_detail_service_content_instruction"
-                android:textColor="@color/hei_333333"
-                android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@+id/doctor_detail_parse_report_content"
-                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_parse_report_content"
-                />
+                <!--报告解析-->
+                <TextView
+                    android:id="@+id/doctor_detail_parse_report_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/doctor_detail_service_content_report_parse_price"
+                    android:textColor="@color/hong_f54f52"
+                    android:textSize="14sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_icon"
+                    />
 
-            <TextView
-                android:id="@+id/doctor_detail_server_instruction_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/doctor_detail_service_content_instruction_content"
-                android:textColor="@color/hui_575757"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_instruction"
-                />
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/doctor_detail_parse_report_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/doctor_detail_service_content_report_parse_content"
+                    android:textColor="@color/hui_575757"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@+id/doctor_detail_parse_report"
+                    />
 
+                <!--服务说明-->
+                <TextView
+                    android:id="@+id/doctor_detail_server_instruction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/doctor_detail_service_content_instruction"
+                    android:textColor="@color/hei_333333"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/doctor_detail_parse_report_content"
+                    app:layout_constraintTop_toBottomOf="@+id/doctor_detail_parse_report_content"
+                    />
+
+                <TextView
+                    android:id="@+id/doctor_detail_server_instruction_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/doctor_detail_service_content_instruction_content"
+                    android:textColor="@color/hui_575757"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_instruction"
+                    />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+        <!--服务内容-->
         <TextView
             android:id="@+id/doctor_detail_upload_report_2_doctor"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/shape_blue_fill"
             android:gravity="center"
             android:text="@string/doctor_detail_bottom_btn_readed"
@@ -365,5 +381,6 @@
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/doctor_detail_server_content_ll"
             />
+
     </android.support.constraint.ConstraintLayout>
 </com.wy.report.widget.ObservableScrollView>

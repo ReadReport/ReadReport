@@ -37,6 +37,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:text="@string/edit_family_name"
+
+            android:textColor="@color/hei_333333"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/edit_family_name_icon"
             app:layout_constraintTop_toTopOf="parent"
@@ -89,6 +91,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:text="@string/edit_family_birthday"
+            android:textColor="@color/hei_333333"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/edit_family_birthday_icon"
             app:layout_constraintTop_toTopOf="parent"
@@ -157,6 +161,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:text="@string/edit_family_sex"
+
+            android:textColor="@color/hei_333333"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/edit_family_sex_icon"
             app:layout_constraintTop_toTopOf="parent"
@@ -223,6 +229,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:text="@string/edit_family_relationship"
+            android:textColor="@color/hei_333333"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/edit_family_relationship_icon"
             app:layout_constraintTop_toTopOf="parent"
@@ -287,6 +295,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:text="@string/edit_family_phone"
+            android:textColor="@color/hei_333333"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/edit_family_phone_icon"
             app:layout_constraintTop_toTopOf="parent"
@@ -338,6 +348,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:text="@string/edit_family_id_card"
+            android:textColor="@color/hei_333333"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/edit_family_id_card_icon"
             app:layout_constraintTop_toTopOf="parent"
