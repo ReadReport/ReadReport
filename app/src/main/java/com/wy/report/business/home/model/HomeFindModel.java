@@ -28,7 +28,7 @@ public class HomeFindModel {
             dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BLOOD_SUGAR, "血糖管理", R.drawable.btn_rcjc_bloodsugar));
             dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BMI, "体重管理", R.drawable.btn_rcjc_bodyweight));
             dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BODY_FAT, "体脂管理", R.drawable.btn_rcjc_bodyfat));
-            dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT, "血脂管理", R.drawable.btn_rcjc_bloodlipids));
+            dailyDetectTypeModels.add(new DailyDetectTypeModel(DailyDetectTypeModel.DETECT_TYPE_BLOOD_FAT, "体脂率管理", R.drawable.btn_rcjc_bloodlipids));
         }
         return dailyDetectTypeModels;
     }
