@@ -246,7 +246,7 @@ public class EditFamilyFragment extends NetworkFragment {
 
 
         if (editMode) {
-            myService.editFamilyMember(familyItem.getId(), newName, newSex, newBirthday, newRelationship, newPhone, newIdCard).subscribe(new NetworkSubscriber<ResponseModel>(this) {
+            myService.editFamilyMember(familyItem.getId(), newName, newSex, birthday.getText().toString(), newRelationship, newPhone, newIdCard).subscribe(new NetworkSubscriber<ResponseModel>(this) {
                 @Override
                 public void onNext(ResponseModel responseModel) {
                     super.onNext(responseModel);
