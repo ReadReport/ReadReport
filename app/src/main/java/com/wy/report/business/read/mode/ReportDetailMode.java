@@ -1,7 +1,6 @@
 package com.wy.report.business.read.mode;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.wy.report.util.StringUtils;
 
 import java.util.List;
 
@@ -416,9 +415,6 @@ public class ReportDetailMode {
             }
 
             public String getResZb() {
-                if (StringUtils.isBlank(resZb)) {
-                    resZb = "无";
-                }
                 return resZb;
             }
 
@@ -435,9 +431,6 @@ public class ReportDetailMode {
             }
 
             public String getReferenceRange() {
-                if (StringUtils.isBlank(referenceRange)) {
-                    referenceRange = "无";
-                }
                 return referenceRange;
             }
 

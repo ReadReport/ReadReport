@@ -465,11 +465,13 @@ public class ReportDetailFragment extends PtrFragment {
             protected void convert(BaseViewHolder baseViewHolder, ReportDetailMode.BodySystem.IllItem illItem) {
                 int    position = baseViewHolder.getAdapterPosition() + 1;
                 String title    = String.format(getString(R.string.report_detail_bottom_dialog_item_title), position, illItem.getItemName());
-                String refer    = String.format(getString(R.string.report_detail_bottom_dialog_item_refer), illItem.getReferenceRange());
-                String actual   = String.format(getString(R.string.report_detail_bottom_dialog_item_actual), illItem.getResZb());
+                String realRefer = StringUtils.isBlank(illItem.getReferenceRange()) ? "此项目无参考范围，详情查看医生建议" : illItem.getReferenceRange();
+                String realActual = StringUtils.isBlank(illItem.getResZb()) ? "此项目无数据值，详情查看医生建议" : illItem.getResZb();
+                String refer    = String.format(getString(R.string.report_detail_bottom_dialog_item_refer), realRefer);
+                String actual   = String.format(getString(R.string.report_detail_bottom_dialog_item_actual), realActual);
                 baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_title, title);
-                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content1, refer);
-                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content2, actual);
+                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content1, actual);
+                baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content2, refer);
             }
         };
         recyclerView.setAdapter(quickAdapter);
