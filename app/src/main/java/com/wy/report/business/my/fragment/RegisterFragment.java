@@ -19,6 +19,7 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
 import com.wy.report.manager.auth.UserManger;
+import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.RegexUtils;
 import com.wy.report.util.StringUtils;
 import com.wy.report.util.ToastUtils;
@@ -161,5 +162,11 @@ public class RegisterFragment extends NetworkFragment {
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
     public void onLoginSuccess(User user) {
         getActivity().finish();
+    }
+
+    @OnClick(R.id.register_protocol)
+    public void gotoRegisterPaper()
+    {
+        AuthRouterManager.getInstance().openWebView(getActivity(),"http://dbg.vip120.com/Login/userProtocol","注册协议");
     }
 }
