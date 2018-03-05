@@ -193,8 +193,9 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
     @Override
     protected void loadNext() {
         page++;
-        if (page > pageConut - 1) {
+        if (page > pageConut) {
             ToastUtils.showLong(getString(R.string.report_not_more_data));
+            ptrFrameLayout.refreshComplete();
             return;
         }
         readService.getReportList(uid, page, ifAll).subscribe(new PtrSubscriber<ResponseModel<ReportListMode>>(this) {
@@ -371,7 +372,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
             public void onNext(ResponseModel<ReportListMode> listResponseModel) {
                 super.onNext(listResponseModel);
                 quickAdapter.setNewData(listResponseModel.getData().getData());
-                pageConut = listResponseModel.getData().getCount();
+                pageConut = Math.round(listResponseModel.getData().getCount()/10);
             }
         });
     }
