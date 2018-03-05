@@ -1,7 +1,11 @@
 package com.wy.report.business.my.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -59,8 +63,21 @@ public class LoginFragment extends NetworkFragment {
         super.initView(contentView);
         contentView.findViewById(R.id.verify_code).setVisibility(View.GONE);
         contentView.findViewById(R.id.get_verify_code).setVisibility(View.GONE);
-//        userName.setText("18046042250");
-//        passWord.setText("111111");
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(userName, 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 500);
+
+        //        userName.setText("18046042250");
+        //        passWord.setText("111111");
     }
 
     @Override
@@ -86,13 +103,11 @@ public class LoginFragment extends NetworkFragment {
                                   .create(MyService.class);
         String username = userName.getText().toString();
         String pwd      = passWord.getText().toString();
-        if(StringUtils.isBlank(username))
-        {
+        if (StringUtils.isBlank(username)) {
             ToastUtils.showLong(R.string.my_verify_mobile_null);
             return;
         }
-        if(StringUtils.isBlank(pwd))
-        {
+        if (StringUtils.isBlank(pwd)) {
             ToastUtils.showLong(R.string.my_verify_pwd_null);
             return;
         }
@@ -113,7 +128,7 @@ public class LoginFragment extends NetworkFragment {
                 user.setSex(Integer.valueOf(userModel.getSex()));
                 user.setRelationship(userModel.getRelationship());
                 UserManger.getInstance().updateUser(user);
-                rxBus.post(RxKey.RX_LOGIN,UserManger.getInstance().getLoginUser());
+                rxBus.post(RxKey.RX_LOGIN, UserManger.getInstance().getLoginUser());
                 MessageManager.getInstance().getMessage();
             }
         });
@@ -131,16 +146,13 @@ public class LoginFragment extends NetworkFragment {
     }
 
 
-
     @OnClick(R.id.toolbar_menu)
-    public void gotoRegister()
-    {
+    public void gotoRegister() {
         AuthRouterManager.getInstance().getRouter().open(getActivity(), ROUTER_REGISTER);
     }
 
     @Subscribe(tags = {@Tag(RxKey.RX_LOGIN)})
-    public void onLoginSuccess(User user)
-    {
+    public void onLoginSuccess(User user) {
         getActivity().finish();
     }
 }
