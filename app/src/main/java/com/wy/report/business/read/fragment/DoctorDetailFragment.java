@@ -114,7 +114,7 @@ public class DoctorDetailFragment extends PtrFragment {
         level.setText(doctorMode.getAppellation());
 
         serviceNum.setText(String.format(getString(R.string.doctor_detail_server), doctorMode.getServerNum()));
-        goodNum.setText(String.format(getString(R.string.doctor_detail_good), doctorMode.getServerNum()));
+        goodNum.setText(String.format(getString(R.string.doctor_detail_good), "98%"));
 
         goodAt.setText(doctorMode.getGoodAt());
         summary.setText(doctorMode.getSummary());

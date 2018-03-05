@@ -219,6 +219,18 @@ public final class TimeUtils {
         return millis2String(millis, DEFAULT_FORMAT);
     }
 
+
+    /**
+     * 将时间戳转为时间字符串
+     * <p>格式为 yyyy-MM-dd HH:mm:ss</p>
+     *
+     * @param millis 毫秒时间戳
+     * @return 时间字符串
+     */
+    public static long getTimeStamp() {
+        return System.currentTimeMillis()/1000;
+    }
+
     /**
      * 将时间戳转为时间字符串
      * <p>格式为 format</p>

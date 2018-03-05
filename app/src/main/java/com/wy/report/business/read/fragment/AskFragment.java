@@ -21,12 +21,14 @@ import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
+import com.wy.report.util.TimeUtils;
 import com.wy.report.widget.SoftKeyboardStateWatcher;
 
 import java.util.List;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import rx.Subscriber;
 
 /**
  * @author: ZangSong
@@ -128,16 +130,25 @@ public class AskFragment extends PtrListFragment {
         final String name    = UserManger.getInstance().getLoginUser().getName();
         final String content = editText.getText().toString();
         if (StringUtils.isNotBlank(editText)) {
-            mReadService.ask(mReportId, uid, content).subscribe(new PtrSubscriber<ResponseModel>(this) {
+            mReadService.ask(mReportId, uid, content).subscribe(new Subscriber() {
                 @Override
-                public void onNext(ResponseModel responseModel) {
-                    super.onNext(responseModel);
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(Object o) {
                     editText.getText().clear();
                     AskItemMode askItemMode = new AskItemMode();
                     askItemMode.setConversation(content);
                     askItemMode.setUserImage(UserManger.getInstance().getLoginUser().getHead());
                     askItemMode.setMemberId(UserManger.getInstance().getLoginUser().getId());
-                    askItemMode.setTime(System.currentTimeMillis());
+                    askItemMode.setTime(TimeUtils.getTimeStamp());
                     askItemMode.setName(name);
                     mAskAdapter.addData(askItemMode);
                     recyclerView.scrollToPosition(mAskAdapter.getData().size() - 1);
