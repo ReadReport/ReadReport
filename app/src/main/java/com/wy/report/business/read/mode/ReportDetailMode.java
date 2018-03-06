@@ -80,7 +80,7 @@ public class ReportDetailMode {
         @JSONField(name = "tj_date")
         private long   date;
         @JSONField(name = "age")
-        private int    age;
+        private String    age;
 
         public String getName() {
             return name;
@@ -122,11 +122,11 @@ public class ReportDetailMode {
             this.date = date;
         }
 
-        public int getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(int age) {
+        public void setAge(String age) {
             this.age = age;
         }
     }
