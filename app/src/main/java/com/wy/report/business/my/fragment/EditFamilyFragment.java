@@ -163,7 +163,15 @@ public class EditFamilyFragment extends NetworkFragment {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String  time     = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
+                int    month = monthOfYear + 1;
+                int    day   = dayOfMonth;
+                String finalMonth;
+                String finalDay;
+
+                finalMonth = month < 10 ? "0" + month : "" + month;
+                finalDay = day < 10 ? "0" + day : "" + day;
+
+                String  time     = year + TIME_SPLIT + finalMonth + TIME_SPLIT + finalDay;
                 long    millis   = TimeUtils.string2Millis(time, DATE_FORMAT);
                 boolean isBefore = TimeUtils.isBeforeNow(millis);
                 if (isBefore) {
@@ -199,12 +207,12 @@ public class EditFamilyFragment extends NetworkFragment {
             return;
         }
 
-//        int nameLength = StringUtils.length(newName);
-//        if (nameLength < 4 || nameLength > 16) {
-//            ToastUtils.showLong(getString(R.string.user_info_edit_tip));
-//            return;
-//        }
-//
+        //        int nameLength = StringUtils.length(newName);
+        //        if (nameLength < 4 || nameLength > 16) {
+        //            ToastUtils.showLong(getString(R.string.user_info_edit_tip));
+        //            return;
+        //        }
+        //
         int nameLength = newName.length();
         if (nameLength < 2 || nameLength > 8) {
             ToastUtils.showLong(getString(R.string.user_info_edit_tip));
@@ -241,8 +249,6 @@ public class EditFamilyFragment extends NetworkFragment {
             ToastUtils.showLong("身份证号格式不对");
             return;
         }
-
-
 
 
         if (editMode) {
