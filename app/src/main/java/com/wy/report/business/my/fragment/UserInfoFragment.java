@@ -121,7 +121,7 @@ public class UserInfoFragment extends NetworkFragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String  time     = year + TIME_SPLIT + (monthOfYear + 1) + TIME_SPLIT + dayOfMonth;
                 long    millis   = TimeUtils.string2Millis(time, DATE_FORMAT);
-                boolean isBefore = TimeUtils.isBeforeNow(millis);
+                boolean isBefore = TimeUtils.isBeforeNow(millis*1000);
                 if (isBefore) {
                     birthday.setText(time);
                     save();

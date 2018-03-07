@@ -173,7 +173,7 @@ public class EditFamilyFragment extends NetworkFragment {
 
                 String  time     = year + TIME_SPLIT + finalMonth + TIME_SPLIT + finalDay;
                 long    millis   = TimeUtils.string2Millis(time, DATE_FORMAT);
-                boolean isBefore = TimeUtils.isBeforeNow(millis);
+                boolean isBefore = TimeUtils.isBeforeNow(millis * 1000);
                 if (isBefore) {
                     birthday.setText(time);
                 } else {
