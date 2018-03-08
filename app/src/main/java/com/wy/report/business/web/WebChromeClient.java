@@ -252,8 +252,15 @@ public class WebChromeClient extends android.webkit.WebChromeClient implements M
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
-        if (!TextUtils.isEmpty(title) && fragment instanceof ToolbarFragment) {
-            ((ToolbarFragment) fragment).setTitle(title);
+        if (TextUtils.isEmpty(title)) {
+            return;
         }
+        if (!(fragment instanceof ToolbarFragment)) {
+            return;
+        }
+        if (title.contains(".com")) {
+            return;
+        }
+        ((ToolbarFragment) fragment).setTitle(title);
     }
 }

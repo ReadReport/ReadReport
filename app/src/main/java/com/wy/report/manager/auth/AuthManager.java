@@ -195,4 +195,8 @@ public class AuthManager {
     public TokenModel getTokenModel() {
         return tokenModel;
     }
+
+    public static String addAuthInfo(String url){
+        return url + "/thirdParty/" + UserManger.getUid() + "/timestamp/" + System.currentTimeMillis() / 1000;
+    }
 }

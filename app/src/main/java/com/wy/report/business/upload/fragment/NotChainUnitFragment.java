@@ -87,6 +87,7 @@ public class NotChainUnitFragment extends NetworkFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HospitalProvinceModel provinceModel = provinces.get(position);
                 rightShowProvince(provinceModel.getProvince());
+                leftShowProvince(provinceModel.getProvince());
             }
         });
         recycleViewLeft.setLayoutManager(new SmoothScrollLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

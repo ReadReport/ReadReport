@@ -27,6 +27,7 @@ import com.wy.report.business.dailydetect.service.DailyDetectService;
 import com.wy.report.business.home.model.DailyDetectTypeModel;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.NetworkSubscriber;
+import com.wy.report.manager.auth.AuthManager;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.widget.tab.TwoTabLayoutDetect;
 import com.wy.report.widget.view.dailydetect.ValueView;
@@ -136,7 +137,7 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.find_daily_detect_more: {
-                authRouterManager.openWebView(getActivity(), recordResultModel.getLinkDetail(), "健康知识");
+                authRouterManager.openWebView(getActivity(), AuthManager.addAuthInfo(recordResultModel.getLinkDetail()), "健康知识");
                 break;
             }
         }

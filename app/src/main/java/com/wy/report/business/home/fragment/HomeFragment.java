@@ -22,6 +22,7 @@ import com.wy.report.business.home.service.HomeService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.helper.update.AppUpdateHelper;
+import com.wy.report.manager.auth.AuthManager;
 import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
@@ -242,7 +243,7 @@ public class HomeFragment extends PtrFragment {
         if(homeReportModel == null){
             return;
         }
-        authRouterManager.openWebView(getActivity(), homeReportModel.getZwjd(), getString(R.string.home_self_interpretation));
+        authRouterManager.openWebView(getActivity(), AuthManager.addAuthInfo(homeReportModel.getZwjd()), getString(R.string.home_self_interpretation));
     }
 
     @OnClick(R.id.toolbar_msg_icon)
