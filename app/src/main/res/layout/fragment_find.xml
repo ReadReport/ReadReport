@@ -46,13 +46,22 @@
                 app:layout_constraintLeft_toRightOf="@+id/home_find_daily_detect_icon"
                 app:layout_constraintTop_toTopOf="@+id/home_find_daily_detect_icon"/>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
+            <HorizontalScrollView
+                android:id="@+id/horizontal_scrollview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:scrollbars="none"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_find_daily_detect_title"/>
+                app:layout_constraintTop_toBottomOf="@+id/home_find_daily_detect_title">
+
+                <LinearLayout
+                    android:id="@+id/home_find_daily_detect_type_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"></LinearLayout>
+
+            </HorizontalScrollView>
 
             <com.wy.report.widget.indicator.CircleNavigator
                 android:layout_width="wrap_content"

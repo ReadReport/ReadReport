@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,14 +62,14 @@ public class FindFragment extends PtrFragment {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 
-    @BindView(R.id.view_pager)
-    ViewPager dailyDetectViewPager;
-
     @BindView(R.id.home_find_health_test_rv)
     RecyclerView healthTestRecycleView;
 
     @BindView(R.id.home_find_health_knowledge_rv)
     RecyclerView healthKnowledgeRecycleView;
+
+    @BindView(R.id.home_find_daily_detect_type_container)
+    LinearLayout dailyDetectTypeContainer;
 
     private MessageManager messageManager;
 
@@ -192,65 +193,25 @@ public class FindFragment extends PtrFragment {
 
         final int itemWidth = (DeviceUtils.getDeviceWidthPixels(getActivity()) - DensityUtils.dip2px(getActivity(), 20)) / DAILY_DETECT_LINE_NUM;
 
-        final ArrayList<ArrayList<DailyDetectTypeModel>> dailyDetectLines = new ArrayList<>();
-        ArrayList<DailyDetectTypeModel> line = null;
         List<DailyDetectTypeModel> dailyDetects = model.getDailyDetectTypeModels();
-        for (int i = 0; i < dailyDetects.size(); i++) {
-            if (i % DAILY_DETECT_LINE_NUM == 0) {
-                line = new ArrayList<>();
-                dailyDetectLines.add(line);
-            }
-            line.add(dailyDetects.get(i));
-        }
-
-        dailyDetectViewPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return dailyDetectLines.size();
-            }
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view == object;
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                ArrayList<DailyDetectTypeModel> line = dailyDetectLines.get(position);
-                LinearLayout lineContainer = new LinearLayout(getActivity());
-                LayoutInflater layoutInflater = getLayoutInflater(null);
-                for (DailyDetectTypeModel model : line) {
-                    View item = layoutInflater.inflate(R.layout.view_home_find_daily_detect_item, lineContainer, false);
-                    ImageView icon = (ImageView) item.findViewById(R.id.home_find_daily_detect_item_icon);
-                    icon.setImageResource(model.getIconID());
-                    TextView title = (TextView) item.findViewById(R.id.home_find_daily_detect_item_title);
-                    title.setText(model.getTitle());
-                    lineContainer.addView(item, new LayoutParams(itemWidth, LayoutParams.WRAP_CONTENT));
-                    item.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelable(BundleKey.BUNDLE_KEY_MODEL, (Parcelable) v.getTag());
-                            router.open(getActivity(), AuthRouterManager.ROUTER_DAILY_DETECT, bundle);
-                        }
-                    });
-                    item.setTag(model);
+        LayoutInflater layoutInflater = getLayoutInflater(null);
+        for (DailyDetectTypeModel detectTypeModel : dailyDetects) {
+            View item = layoutInflater.inflate(R.layout.view_home_find_daily_detect_item, dailyDetectTypeContainer, false);
+            ImageView icon = (ImageView) item.findViewById(R.id.home_find_daily_detect_item_icon);
+            icon.setImageResource(detectTypeModel.getIconID());
+            TextView title = (TextView) item.findViewById(R.id.home_find_daily_detect_item_title);
+            title.setText(detectTypeModel.getTitle());
+            dailyDetectTypeContainer.addView(item, new LayoutParams(itemWidth, LayoutParams.WRAP_CONTENT));
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(BundleKey.BUNDLE_KEY_MODEL, (Parcelable) v.getTag());
+                    router.open(getActivity(), AuthRouterManager.ROUTER_DAILY_DETECT, bundle);
                 }
-                container.addView(lineContainer, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                lineContainer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        router.open(getActivity(), AuthRouterManager.ROUTER_DAILY_DETECT);
-                    }
-                });
-                return lineContainer;
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((View) object);
-            }
-        });
+            });
+            item.setTag(detectTypeModel);
+        }
 
         HomeFindHealthyTestModel testModel = model.getHomeFindHealthyTestModel();
         healthTestAdapter.setNewData(testModel.getHealthTestModels());

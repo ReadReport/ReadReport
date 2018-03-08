@@ -110,6 +110,7 @@ public abstract class DailyDetectFragment extends NetworkFragment implements Too
             }
         });
         tabLayout.setUpWithViewPager(viewPager);
+        tabLayout.onPageSelected(0);
         loadData();
     }
 

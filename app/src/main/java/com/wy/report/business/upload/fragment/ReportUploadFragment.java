@@ -2,19 +2,23 @@ package com.wy.report.business.upload.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cantalou.android.util.Log;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -257,6 +261,8 @@ public class ReportUploadFragment extends NetworkFragment {
         adapter.onAttachedToRecyclerView(recyclerView);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(adapter) {
+
+            View view;
             @Override
             public boolean canDropOver(RecyclerView recyclerView, RecyclerView.ViewHolder current, RecyclerView.ViewHolder target) {
                 if (target instanceof BaseViewHolder) {
@@ -266,6 +272,16 @@ public class ReportUploadFragment extends NetworkFragment {
                     }
                 }
                 return super.canDropOver(recyclerView, current, target);
+            }
+
+            @Override
+            public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    view = viewHolder.itemView;
+                    view.setScaleX(isCurrentlyActive ? 1.07f : 1.0f);
+                    view.setScaleY(isCurrentlyActive ? 1.07f : 1.0f);
+                }
+                super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerView);

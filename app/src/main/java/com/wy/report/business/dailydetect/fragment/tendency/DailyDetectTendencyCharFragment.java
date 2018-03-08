@@ -160,8 +160,8 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         for (LineDataSet set : getDataSet()) {
-            set.setLineWidth(3f);
-            set.setCircleRadius(4f);
+            set.setLineWidth(2.3f);
+            set.setCircleRadius(3f);
             set.setDrawCircleHole(false);
             set.setCircleColor(set.getColor());
             set.setDrawFilled(false);

@@ -63,7 +63,7 @@ public class TwoTabLayoutDetect extends ConstraintLayout implements ViewPager.On
         Resources res = getResources();
         if (position == 0) {
             tab0.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.daily_detect_tab_selected));
-            tab0.setTextColor(res.getColor(R.color.hei_333333));
+            tab0.setTextColor(res.getColor(R.color.lan_30acff));
             tabLine0.setVisibility(View.VISIBLE);
 
             tab1.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.daily_detect_tab));
@@ -75,7 +75,7 @@ public class TwoTabLayoutDetect extends ConstraintLayout implements ViewPager.On
             tabLine0.setVisibility(View.GONE);
 
             tab1.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.daily_detect_tab_selected));
-            tab1.setTextColor(res.getColor(R.color.hei_333333));
+            tab1.setTextColor(res.getColor(R.color.lan_30acff));
             tabLine1.setVisibility(View.VISIBLE);
         }
     }

@@ -12,6 +12,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:includeFontPadding="false"
+        android:textColor="@color/hei_333333"
         tools:text="测量名称"
         />
 
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:includeFontPadding="false"
+        android:textColor="@color/hui_ababab"
         tools:text="单位"/>
 
     <FrameLayout
