@@ -311,7 +311,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="@color/lan_30acff"
+        android:background="@drawable/selector_btn_blue_shape_fill"
         android:gravity="center"
         android:text="@string/report_submit"
         android:textColor="@color/bai_ffffff"
