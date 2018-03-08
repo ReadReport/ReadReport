@@ -1,6 +1,7 @@
 package com.wy.report.business.read.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +24,9 @@ import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.router.AuthRouterManager;
+import com.wy.report.util.DensityUtils;
 import com.wy.report.util.ToastUtils;
+import com.wy.report.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,13 +83,19 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                             , 0);
                     toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
                     isPop = true;
+                } else {
+                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                    isPop = false;
                 }
             }
         });
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
         ptrFrameLayout.autoRefresh();
-
         quickAdapter.bindToRecyclerView(recyclerView);
+
+        recyclerView.setBackgroundColor(getResources().getColor(R.color.hui_f9f9f9));
+        recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, DensityUtils.dip2px(getActivity(), 10), getResources().getColor(R.color.hui_f9f9f9)));
+
 
     }
 
@@ -372,26 +381,25 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
             public void onNext(ResponseModel<ReportListMode> listResponseModel) {
                 super.onNext(listResponseModel);
                 quickAdapter.setNewData(listResponseModel.getData().getData());
-                pageConut = Math.round(listResponseModel.getData().getCount()/10);
+                pageConut = Math.round(listResponseModel.getData().getCount() / 10);
             }
         });
     }
 
 
-    private void initRecyleEmptyView()
-    {
+    private void initRecyleEmptyView() {
 
         quickAdapter.setEmptyView(R.layout.view_report_manage_empty);
         quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_get_report).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_QUERY);
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_QUERY);
             }
         });
         quickAdapter.getEmptyView().findViewById(R.id.report_manage_empty_upload_report).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthRouterManager.getInstance().getRouter().open(getActivity(),AuthRouterManager.ROUTER_REPORT_UPLOAD);
+                AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD);
             }
         });
         quickAdapter.getEmptyView().findViewById(R.id.top_item).setOnClickListener(new View.OnClickListener() {
