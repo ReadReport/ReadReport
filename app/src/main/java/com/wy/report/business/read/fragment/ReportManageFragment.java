@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -75,15 +74,29 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         initPopMenu();
         toolBarPop.setText("全部");
         toolBarPop.setClickable(true);
+        mPopMenu.setOutsideTouchable(false);
         toolBarPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isPop) {
+//                    mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                        @Override
+//                        public void onDismiss() {
+//                            toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+//                            isPop = false;
+//                        }
+//                    });
                     mPopMenu.showAsDropDown(toolbar, toolbar.getMeasuredWidth() - mPopMenu.getWidth()
                             , 0);
                     toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
                     isPop = true;
                 } else {
+//                    mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                        @Override
+//                        public void onDismiss() {
+//                        }
+//                    });
+                    mPopMenu.dismiss();
                     toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
                     isPop = false;
                 }
@@ -166,13 +179,6 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
 
     private void initPopMenu() {
         mPopMenu = new ManagePopMenu(getActivity());
-        mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
-                isPop = false;
-            }
-        });
         mPopMenu.setOnPopItemClick(new ManagePopMenu.OnPopItemClick() {
             @Override
             public void onPopItemClick(FamilyItemMode item) {
