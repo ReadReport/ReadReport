@@ -39,8 +39,8 @@ public class BMITendencyChartFragment extends DailyDetectTendencyCharFragment {
         result.add(height);
 
         LineDataSet weight = new LineDataSet(weightEntry, "体重");
-        weight.setColor(getColor(R.color.lan_26f0df));
-        weight.setCircleColor(getColor(R.color.lan_26f0df));
+        weight.setColor(getColor(R.color.hong_f54f52));
+        weight.setCircleColor(getColor(R.color.hong_f54f52));
         result.add(weight);
 
         return result;

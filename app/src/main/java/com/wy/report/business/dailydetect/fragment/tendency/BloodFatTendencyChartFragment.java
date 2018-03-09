@@ -36,25 +36,27 @@ public class BloodFatTendencyChartFragment extends DailyDetectTendencyCharFragme
             trigEntry.add(new Entry(i, Float.parseFloat(valueModel.getTrigValue())));
         }
 
-        LineDataSet hdl = new LineDataSet(hdlEntry, "高胆固醇");
-        hdl.setColor(getColor(R.color.lan_26f0df));
-        hdl.setCircleColor(getColor(R.color.lan_26f0df));
-        result.add(hdl);
-
-        LineDataSet ldl = new LineDataSet(ldlEntry, "低胆固醇");
-        ldl.setColor(getColor(R.color.huang_ffe720));
-        ldl.setCircleColor(getColor(R.color.huang_ffe720));
-        result.add(ldl);
 
         LineDataSet chol = new LineDataSet(cholEntry, "总胆固醇 ");
-        chol.setColor(getColor(R.color.hong_f54f52));
-        chol.setCircleColor(getColor(R.color.hong_f54f52));
+        chol.setColor(getColor(R.color.lan_30acff));
+        chol.setCircleColor(getColor(R.color.lan_30acff));
         result.add(chol);
 
         LineDataSet trig = new LineDataSet(trigEntry, "甘油三酯");
-        trig.setColor(getColor(R.color.lan_30acff));
-        trig.setCircleColor(getColor(R.color.lan_30acff));
+        trig.setColor(getColor(R.color.hong_f54f52));
+        trig.setCircleColor(getColor(R.color.hong_f54f52));
         result.add(trig);
+
+        LineDataSet hdl = new LineDataSet(hdlEntry, "高胆固醇");
+        hdl.setColor(getColor(R.color.huang_ffe720));
+        hdl.setCircleColor(getColor(R.color.huang_ffe720));
+        result.add(hdl);
+
+        LineDataSet ldl = new LineDataSet(ldlEntry, "低胆固醇");
+        ldl.setColor(getColor(R.color.lan_26f0df));
+        ldl.setCircleColor(getColor(R.color.lan_26f0df));
+        result.add(ldl);
+
 
         return result;
     }

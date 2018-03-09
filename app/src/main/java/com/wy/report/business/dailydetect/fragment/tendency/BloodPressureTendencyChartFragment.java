@@ -42,8 +42,8 @@ public class BloodPressureTendencyChartFragment extends DailyDetectTendencyCharF
         result.add(high);
 
         LineDataSet low = new LineDataSet(lowEntry, "低压");
-        low.setColor(getColor(R.color.lan_26f0df));
-        low.setCircleColor(getColor(R.color.lan_26f0df));
+        low.setColor(getColor(R.color.hong_f54f52));
+        low.setCircleColor(getColor(R.color.hong_f54f52));
         result.add(low);
 
         LineDataSet pulse = new LineDataSet(pulseEntry, "心率");

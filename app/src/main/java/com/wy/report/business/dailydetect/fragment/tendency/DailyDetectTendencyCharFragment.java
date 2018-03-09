@@ -37,7 +37,7 @@ import butterknife.BindView;
  */
 public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
 
-    protected List<DailyDetectDataModel> data;
+    protected List<DailyDetectDataModel> data = new ArrayList<>();
 
     @BindView(R.id.line_chart)
     LineChart lineChart;
@@ -62,7 +62,10 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
 
     @Subscribe(tags = {@Tag(RxKey.RX_DAILY_DETECT_DATA_LOADED)})
     public void dataLoaded(ArrayList<DailyDetectDataModel> data) {
-        this.data = data;
+        this.data.clear();
+        for (DailyDetectDataModel model : data) {
+            this.data.add(0, model);
+        }
         updateTendencyChar();
     }
 
@@ -160,8 +163,8 @@ public abstract class DailyDetectTendencyCharFragment extends NetworkFragment {
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         for (LineDataSet set : getDataSet()) {
-            set.setLineWidth(2.3f);
-            set.setCircleRadius(3f);
+            set.setLineWidth(2f);
+            set.setCircleRadius(2.2f);
             set.setDrawCircleHole(false);
             set.setCircleColor(set.getColor());
             set.setDrawFilled(false);
