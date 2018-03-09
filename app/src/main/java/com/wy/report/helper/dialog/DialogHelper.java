@@ -49,7 +49,7 @@ public class DialogHelper {
         CommonResultDialog.Builder builder = new CommonResultDialog.Builder(context);
         builder.setContentViewLayoutId(R.layout.view_dialog_result);
         builder.setPositiveButton(R.string.confirm, positive);
-        builder.setPositiveBackgroundResource(R.drawable.shape_blue_corner_5_bottom);
+        builder.setPositiveBackgroundResource(R.drawable.selector_btn_blue_corner_5_bottom);
         builder.setResultIconId(R.drawable.msg_success);
         builder.setResultTips1Id(R.string.report_query_success_tips1);
         builder.setResultTips2Id(R.string.report_query_success_tips2);

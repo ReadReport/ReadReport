@@ -278,7 +278,7 @@ public class CommonDialog extends Dialog {
                 positive.setText(positiveButtonText);
 
                 if (positiveBackgroundRes == -1) {
-                    positiveBackgroundRes = R.drawable.shape_blue_corner_5_right_bottom;
+                    positiveBackgroundRes = R.drawable.selector_btn_blue_corner_5_right_bottom;
                 }
                 positive.setBackgroundResource(positiveBackgroundRes);
 
