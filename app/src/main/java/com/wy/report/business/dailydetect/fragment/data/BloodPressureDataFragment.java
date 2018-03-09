@@ -15,7 +15,7 @@ public class BloodPressureDataFragment extends DailyDetectDataListFragment {
     @NonNull
     @Override
     protected String createShowValue(DailyDetectValueModel valueModel) {
-        return valueModel.getLowValue() + "/" + valueModel.getHighValue() + "/" + valueModel.getPulseValue();
+        return valueModel.getHighValue() + "/" + valueModel.getLowValue() + "/" + valueModel.getPulseValue();
     }
 
     @Override
