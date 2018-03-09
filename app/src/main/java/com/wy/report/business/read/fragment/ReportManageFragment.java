@@ -93,10 +93,10 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ptrFrameLayout.autoRefresh();
         quickAdapter.bindToRecyclerView(recyclerView);
 
+        recyclerView.setPadding(0,DensityUtils.dip2px(getActivity(), 10),0,0);
+
         recyclerView.setBackgroundColor(getResources().getColor(R.color.hui_f9f9f9));
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, DensityUtils.dip2px(getActivity(), 10), getResources().getColor(R.color.hui_f9f9f9)));
-
-
     }
 
 

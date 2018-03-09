@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
             android:text="@string/report_detail_body_state_un_normal"
-            android:textColor="@color/hui_8d8d8d"
+            android:textColor="@color/hong_e60012"
             android:textSize="10sp" />
     </LinearLayout>
 
