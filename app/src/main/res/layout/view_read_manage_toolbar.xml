@@ -43,6 +43,7 @@
             android:gravity="center"
             android:adjustViewBounds="true"
             android:layout_marginRight="15dp"
+            android:paddingLeft="@dimen/dp_10"
             android:textSize="13sp"
             android:textColor="@color/read_manage_nav_text_selector"
             android:drawableRight="@drawable/selector_read_manage_nav_down"

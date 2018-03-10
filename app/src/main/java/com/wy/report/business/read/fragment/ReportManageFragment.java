@@ -1,10 +1,12 @@
 package com.wy.report.business.read.fragment;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -74,18 +76,20 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         initPopMenu();
         toolBarPop.setText("全部");
         toolBarPop.setClickable(true);
+        mPopMenu.setBackgroundDrawable(new ColorDrawable(0x00000000));
         mPopMenu.setOutsideTouchable(false);
+        mPopMenu.setFocusable(true);
         toolBarPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isPop) {
-//                    mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                        @Override
-//                        public void onDismiss() {
-//                            toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
-//                            isPop = false;
-//                        }
-//                    });
+                    mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                            isPop = false;
+                        }
+                    });
                     mPopMenu.showAsDropDown(toolbar, toolbar.getMeasuredWidth() - mPopMenu.getWidth()
                             , 0);
                     toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
