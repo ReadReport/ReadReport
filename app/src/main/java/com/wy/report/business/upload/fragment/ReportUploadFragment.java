@@ -32,6 +32,7 @@ import com.wy.report.base.fragment.NetworkFragment;
 import com.wy.report.base.model.ResponseModel;
 import com.wy.report.business.auth.model.User;
 import com.wy.report.business.family.model.FamilyMemberModel;
+import com.wy.report.business.read.service.ReadService;
 import com.wy.report.business.upload.model.PictureModel;
 import com.wy.report.business.upload.model.UploadModel;
 import com.wy.report.business.upload.service.ReportService;
@@ -109,6 +110,8 @@ public class ReportUploadFragment extends NetworkFragment {
 
     private UserManger userManger;
 
+    private ReadService readService;
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -120,6 +123,8 @@ public class ReportUploadFragment extends NetworkFragment {
         userManger = UserManger.getInstance();
         reportService = RetrofitHelper.getInstance()
                                       .create(ReportService.class);
+        readService = RetrofitHelper.getInstance()
+                                    .create(ReadService.class);
     }
 
     @Override
@@ -263,6 +268,7 @@ public class ReportUploadFragment extends NetworkFragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(adapter) {
 
             View view;
+
             @Override
             public boolean canDropOver(RecyclerView recyclerView, RecyclerView.ViewHolder current, RecyclerView.ViewHolder target) {
                 if (target instanceof BaseViewHolder) {
@@ -472,7 +478,7 @@ public class ReportUploadFragment extends NetworkFragment {
                          }
 
                          @Override
-                         public void handleSuccess(ResponseModel<UploadModel> responseModel) {
+                         public void handleSuccess(final ResponseModel<UploadModel> responseModel) {
                              super.handleSuccess(responseModel);
                              DialogHelper.showReportUploadSuccessDialog(getActivity(), new DialogInterface.OnClickListener() {
                                  @Override
@@ -490,11 +496,28 @@ public class ReportUploadFragment extends NetworkFragment {
                              }, new DialogInterface.OnClickListener() {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
-                                     router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD_SUCCESS);
+                                     submitToDoctor(responseModel.getData()
+                                                                 .getRid());
                                  }
                              });
                          }
                      });
+    }
+
+    /**
+     * 提交医生解读
+     *
+     * @param rid
+     */
+    private void submitToDoctor(String rid) {
+        readService.sumbitReport2Doctor(rid)
+                   .subscribe(new NetworkSubscriber<ResponseModel>(this) {
+                       @Override
+                       public void handleSuccess(ResponseModel responseModel) {
+                           super.handleSuccess(responseModel);
+                           router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_UPLOAD_SUCCESS);
+                       }
+                   });
     }
 
     @Override
