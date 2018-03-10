@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_blue_fill"
+        android:background="@drawable/selector_btn_blue_shape_fill"
         android:gravity="center"
         android:text="@string/report_detail_bottom_btn_readed"
         android:textColor="@color/bai_ffffff"

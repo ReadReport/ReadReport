@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/shape_white_corner"
         >
@@ -129,7 +128,7 @@
             android:id="@+id/report_manage_empty_get_report"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:background="@drawable/shape_blue_corner_25_fill"
+            android:background="@drawable/selector_btn_blue_corner_25_fill"
             android:gravity="center"
             android:text="获取电子报告"
             android:textColor="@android:color/white"

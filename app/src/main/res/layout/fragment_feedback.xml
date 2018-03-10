@@ -43,7 +43,7 @@
         android:layout_width="320dp"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/shape_blue_corner_25_fill"
+        android:background="@drawable/selector_btn_blue_corner_25_fill"
         android:gravity="center"
         android:text="@string/feedback_commit"
         android:textColor="@color/bai_ffffff"

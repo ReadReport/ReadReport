@@ -73,7 +73,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/shape_blue_corner_25_fill"
+        android:background="@drawable/selector_btn_blue_corner_25_fill"
         android:gravity="center"
         android:text="@string/verify_identify_submit"
         android:textColor="@color/bai_ffffff"
