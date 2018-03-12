@@ -23,6 +23,9 @@ public class MessageListMode {
 
 
     public List<MessageItemMode> getViewedMessage() {
+        if (viewedMessage == null) {
+            viewedMessage = new ArrayList<>();
+        }
         return viewedMessage;
     }
 
@@ -31,6 +34,9 @@ public class MessageListMode {
     }
 
     public List<MessageItemMode> getNoViewMessage() {
+        if (noViewMessage == null) {
+            noViewMessage = new ArrayList<>();
+        }
         return noViewMessage;
     }
 
@@ -40,8 +46,12 @@ public class MessageListMode {
 
     public List<MessageItemMode> getAll() {
         all = new ArrayList<>();
-        all.addAll(noViewMessage);
-        all.addAll(viewedMessage);
+        if (noViewMessage != null) {
+            all.addAll(noViewMessage);
+        }
+        if (viewedMessage != null) {
+            all.addAll(viewedMessage);
+        }
         return all;
     }
 
