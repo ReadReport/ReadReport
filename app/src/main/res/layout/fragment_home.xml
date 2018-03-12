@@ -181,7 +181,7 @@
             android:layout_below="@id/home_report_operation"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="5dp">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/home_examination_reserve"
