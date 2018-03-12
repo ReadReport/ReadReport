@@ -82,7 +82,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
                 isPop = false;
             }
         });
@@ -92,11 +92,11 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 if (!isPop) {
                     mPopMenu.showAsDropDown(toolbar, toolbar.getMeasuredWidth() - mPopMenu.getWidth()
                             , 0);
-                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
+                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
                     isPop = true;
                 } else {
                     mPopMenu.dismiss();
-                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
                     isPop = false;
                 }
             }
