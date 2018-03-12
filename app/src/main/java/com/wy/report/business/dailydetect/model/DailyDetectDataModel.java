@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.wy.report.base.model.BaseModel;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -227,4 +227,22 @@ public class DailyDetectDataModel extends BaseModel implements Parcelable {
             return new DailyDetectDataModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "DailyDetectDataModel{" +
+                "id='" + id + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", no='" + no + '\'' +
+                ", testType='" + testType + '\'' +
+                ", res=" + res +
+                ", message='" + message + '\'' +
+                ", describe='" + describe + '\'' +
+                ", testTime=" + testTime +
+                ", suggest='" + suggest + '\'' +
+                ", collectType='" + collectType + '\'' +
+                ", deviceType='" + deviceType + '\'' +
+                ", values=" + Arrays.toString(values) +
+                '}';
+    }
 }

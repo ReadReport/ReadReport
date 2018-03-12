@@ -210,4 +210,22 @@ public class DailyDetectValueModel extends BaseModel implements Parcelable {
             return new DailyDetectValueModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "DailyDetectValueModel{" +
+                "lowValue='" + lowValue + '\'' +
+                ", highValue='" + highValue + '\'' +
+                ", pulseValue='" + pulseValue + '\'' +
+                ", sugarValue='" + sugarValue + '\'' +
+                ", typeCode='" + typeCode + '\'' +
+                ", typeDetailCode='" + typeDetailCode + '\'' +
+                ", hightValue='" + hightValue + '\'' +
+                ", weightValue='" + weightValue + '\'' +
+                ", cholValue='" + cholValue + '\'' +
+                ", hdlValue='" + hdlValue + '\'' +
+                ", ldlValue='" + ldlValue + '\'' +
+                ", trigValue='" + trigValue + '\'' +
+                '}';
+    }
 }

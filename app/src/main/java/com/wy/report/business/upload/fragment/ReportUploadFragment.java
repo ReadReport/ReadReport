@@ -498,6 +498,14 @@ public class ReportUploadFragment extends NetworkFragment {
                                  public void onClick(DialogInterface dialog, int which) {
                                      submitToDoctor(responseModel.getData()
                                                                  .getRid());
+                                     Observable.timer(300, TimeUnit.MILLISECONDS)
+                                               .observeOn(AndroidSchedulers.mainThread())
+                                               .subscribe(new Action1<Long>() {
+                                                   @Override
+                                                   public void call(Long aLong) {
+                                                       getActivity().finish();
+                                                   }
+                                               });
                                  }
                              });
                          }

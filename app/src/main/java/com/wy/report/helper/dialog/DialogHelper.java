@@ -28,6 +28,7 @@ public class DialogHelper {
         builder.setResultTips1Id(R.string.report_upload_success_tips1);
         builder.setResultTips2Id(R.string.report_upload_success_tips2);
         Dialog dialog = builder.create();
+        dialog.setCancelable(false);
         dialog.show();
         return dialog;
     }
