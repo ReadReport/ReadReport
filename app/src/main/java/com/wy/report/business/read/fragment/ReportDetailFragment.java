@@ -318,7 +318,6 @@ public class ReportDetailFragment extends PtrFragment {
                 sportSuggestion.setText(suggestion.getSportSuggestion());
             }
         }
-
     }
 
     /**
@@ -329,58 +328,60 @@ public class ReportDetailFragment extends PtrFragment {
     private void updateBodyInfo(ReportDetailMode detailMode) {
         List<ReportDetailMode.BodySystem> bodySystems = detailMode.getBodySystems();
 
-        final List<BodyItemView>                illItems   = new ArrayList<>();
-        final List<ReportDetailMode.BodySystem> illSystems = new ArrayList<>();
+        if (bodySystems != null) {
+            final List<BodyItemView>                illItems   = new ArrayList<>();
+            final List<ReportDetailMode.BodySystem> illSystems = new ArrayList<>();
 
-        for (final ReportDetailMode.BodySystem system : bodySystems) {
-            switch (system.getSystemId()) {
-                case ReportDetailMode.BodySystem.BODY_4:
-                    illItems.add(body1);
-                    illSystems.add(system);
-                    break;
-                case ReportDetailMode.BodySystem.BODY_1:
-                    illItems.add(body2);
-                    illSystems.add(system);
-                    break;
-                case ReportDetailMode.BodySystem.BODY_6:
-                    illItems.add(body3);
-                    illSystems.add(system);
-                    break;
-                case ReportDetailMode.BodySystem.BODY_2:
-                    illItems.add(body4);
-                    illSystems.add(system);
-                    break;
-                case ReportDetailMode.BodySystem.BODY_3:
-                    illItems.add(body5);
-                    illSystems.add(system);
-                    break;
-                case ReportDetailMode.BodySystem.BODY_8:
-                    illItems.add(body6);
-                    illSystems.add(system);
-                    break;
-                case ReportDetailMode.BodySystem.BODY_5:
-                    illItems.add(body7);
-                    illSystems.add(system);
-                    break;
-                case ReportDetailMode.BodySystem.BODY_7:
-                    illItems.add(isMale ? body8Male : body8Female);
-                    illSystems.add(system);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        //设置异常项目
-        for (int i = 0; i < illItems.size(); i++) {
-            final ReportDetailMode.BodySystem bodySystem = illSystems.get(i);
-            illItems.get(i).setNormal(false);
-            illItems.get(i).addUnNormalClickListener(new BodyItemView.UnNormalClickListener() {
-                @Override
-                public void onUnNormalClick() {
-                    createPopDialog(bodySystem.getIllItems());
+            for (final ReportDetailMode.BodySystem system : bodySystems) {
+                switch (system.getSystemId()) {
+                    case ReportDetailMode.BodySystem.BODY_4:
+                        illItems.add(body1);
+                        illSystems.add(system);
+                        break;
+                    case ReportDetailMode.BodySystem.BODY_1:
+                        illItems.add(body2);
+                        illSystems.add(system);
+                        break;
+                    case ReportDetailMode.BodySystem.BODY_6:
+                        illItems.add(body3);
+                        illSystems.add(system);
+                        break;
+                    case ReportDetailMode.BodySystem.BODY_2:
+                        illItems.add(body4);
+                        illSystems.add(system);
+                        break;
+                    case ReportDetailMode.BodySystem.BODY_3:
+                        illItems.add(body5);
+                        illSystems.add(system);
+                        break;
+                    case ReportDetailMode.BodySystem.BODY_8:
+                        illItems.add(body6);
+                        illSystems.add(system);
+                        break;
+                    case ReportDetailMode.BodySystem.BODY_5:
+                        illItems.add(body7);
+                        illSystems.add(system);
+                        break;
+                    case ReportDetailMode.BodySystem.BODY_7:
+                        illItems.add(isMale ? body8Male : body8Female);
+                        illSystems.add(system);
+                        break;
+                    default:
+                        break;
                 }
-            });
+            }
+
+            //设置异常项目
+            for (int i = 0; i < illItems.size(); i++) {
+                final ReportDetailMode.BodySystem bodySystem = illSystems.get(i);
+                illItems.get(i).setNormal(false);
+                illItems.get(i).addUnNormalClickListener(new BodyItemView.UnNormalClickListener() {
+                    @Override
+                    public void onUnNormalClick() {
+                        createPopDialog(bodySystem.getIllItems());
+                    }
+                });
+            }
         }
 
     }
@@ -463,12 +464,12 @@ public class ReportDetailFragment extends PtrFragment {
         BaseQuickAdapter<ReportDetailMode.BodySystem.IllItem, BaseViewHolder> quickAdapter = new BaseQuickAdapter<ReportDetailMode.BodySystem.IllItem, BaseViewHolder>(R.layout.view_report_detail_bottom_dialog_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, ReportDetailMode.BodySystem.IllItem illItem) {
-                int    position = baseViewHolder.getAdapterPosition() + 1;
-                String title    = String.format(getString(R.string.report_detail_bottom_dialog_item_title), position, illItem.getItemName());
-                String realRefer = StringUtils.isBlank(illItem.getReferenceRange()) ? "此项目无参考范围，详情查看医生建议" : illItem.getReferenceRange();
+                int    position   = baseViewHolder.getAdapterPosition() + 1;
+                String title      = String.format(getString(R.string.report_detail_bottom_dialog_item_title), position, illItem.getItemName());
+                String realRefer  = StringUtils.isBlank(illItem.getReferenceRange()) ? "此项目无参考范围，详情查看医生建议" : illItem.getReferenceRange();
                 String realActual = StringUtils.isBlank(illItem.getResZb()) ? "此项目无数据值，详情查看医生建议" : illItem.getResZb();
-                String refer    = String.format(getString(R.string.report_detail_bottom_dialog_item_refer), realRefer);
-                String actual   = String.format(getString(R.string.report_detail_bottom_dialog_item_actual), realActual);
+                String refer      = String.format(getString(R.string.report_detail_bottom_dialog_item_refer), realRefer);
+                String actual     = String.format(getString(R.string.report_detail_bottom_dialog_item_actual), realActual);
                 baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_title, title);
                 baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content1, actual);
                 baseViewHolder.setText(R.id.report_detail_bottom_dialog_item_content2, refer);

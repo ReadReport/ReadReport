@@ -3,6 +3,7 @@ package com.wy.report.business.read.fragment;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,7 +83,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
                 isPop = false;
             }
         });
@@ -92,11 +93,11 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 if (!isPop) {
                     mPopMenu.showAsDropDown(toolbar, toolbar.getMeasuredWidth() - mPopMenu.getWidth()
                             , 0);
-                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
+                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
                     isPop = true;
                 } else {
                     mPopMenu.dismiss();
-                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                    toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
                     isPop = false;
                 }
             }
@@ -104,8 +105,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
         ptrFrameLayout.autoRefresh();
         quickAdapter.bindToRecyclerView(recyclerView);
-
-        recyclerView.setPadding(0,DensityUtils.dip2px(getActivity(), 10),0,0);
+        quickAdapter.setHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.view_divider_report_manage,null));
 
         recyclerView.setBackgroundColor(getResources().getColor(R.color.hui_f9f9f9));
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, DensityUtils.dip2px(getActivity(), 10), getResources().getColor(R.color.hui_f9f9f9)));
