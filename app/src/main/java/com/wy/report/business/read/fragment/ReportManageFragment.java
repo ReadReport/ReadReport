@@ -3,6 +3,7 @@ package com.wy.report.business.read.fragment;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -104,8 +105,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
         ptrFrameLayout.autoRefresh();
         quickAdapter.bindToRecyclerView(recyclerView);
-
-        recyclerView.setPadding(0,DensityUtils.dip2px(getActivity(), 10),0,0);
+        quickAdapter.setHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.view_divider_report_manage,null));
 
         recyclerView.setBackgroundColor(getResources().getColor(R.color.hui_f9f9f9));
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, DensityUtils.dip2px(getActivity(), 10), getResources().getColor(R.color.hui_f9f9f9)));
