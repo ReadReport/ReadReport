@@ -195,6 +195,7 @@ public class FindFragment extends PtrFragment {
 
         List<DailyDetectTypeModel> dailyDetects = model.getDailyDetectTypeModels();
         LayoutInflater layoutInflater = getLayoutInflater(null);
+        dailyDetectTypeContainer.removeAllViews();;
         for (DailyDetectTypeModel detectTypeModel : dailyDetects) {
             View item = layoutInflater.inflate(R.layout.view_home_find_daily_detect_item, dailyDetectTypeContainer, false);
             ImageView icon = (ImageView) item.findViewById(R.id.home_find_daily_detect_item_icon);
