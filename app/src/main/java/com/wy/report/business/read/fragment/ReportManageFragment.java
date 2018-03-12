@@ -79,27 +79,22 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         mPopMenu.setBackgroundDrawable(new ColorDrawable(0x00000000));
         mPopMenu.setOutsideTouchable(false);
         mPopMenu.setFocusable(true);
+        mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
+                isPop = false;
+            }
+        });
         toolBarPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isPop) {
-                    mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                        @Override
-                        public void onDismiss() {
-                            toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
-                            isPop = false;
-                        }
-                    });
                     mPopMenu.showAsDropDown(toolbar, toolbar.getMeasuredWidth() - mPopMenu.getWidth()
                             , 0);
                     toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_down, 0);
                     isPop = true;
                 } else {
-//                    mPopMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                        @Override
-//                        public void onDismiss() {
-//                        }
-//                    });
                     mPopMenu.dismiss();
                     toolBarPop.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.selector_read_manage_nav_up, 0);
                     isPop = false;
