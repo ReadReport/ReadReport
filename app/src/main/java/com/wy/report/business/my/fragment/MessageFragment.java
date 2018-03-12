@@ -67,10 +67,12 @@ public class MessageFragment extends PtrListFragment<MessageItemMode, BaseViewHo
             public void onNext(ResponseModel<MessageListMode> listResponseModel) {
                 super.onNext(listResponseModel);
                 messageData = listResponseModel.getData();
-                for (MessageItemMode item : messageData.getViewedMessage()) {
-                    item.setViewed(true);
+                if (messageData!= null && messageData.getViewedMessage() != null) {
+                    for (MessageItemMode item : messageData.getViewedMessage()) {
+                        item.setViewed(true);
+                    }
+                    quickAdapter.setNewData(messageData.getAll());
                 }
-                quickAdapter.setNewData(messageData.getAll());
                 MessageManager.getInstance().notifyAllMessageRead();
             }
         });

@@ -8,9 +8,6 @@ import com.wy.report.business.my.service.MyService;
 import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.manager.auth.UserManger;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rx.Subscriber;
 
 /*
@@ -80,9 +77,4 @@ public class MessageManager {
         }
     }
 
-    public interface OnMessageChangeListener {
-        void onAllMessageRead();
-
-        void onNewUnreadMessageCount(int count);
-    }
 }
