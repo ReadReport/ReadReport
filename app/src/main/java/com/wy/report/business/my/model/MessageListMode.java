@@ -2,7 +2,6 @@ package com.wy.report.business.my.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,49 +12,37 @@ import java.util.List;
  */
 public class MessageListMode {
 
-    @JSONField(name = "viewed_message")
-    private List<MessageItemMode> viewedMessage;
 
-    @JSONField(name = "noview_message")
-    private List<MessageItemMode> noViewMessage;
+    @JSONField(name = "messages")
+    private List<MessageItemMode.MessageMode> all;
 
-    private List<MessageItemMode> all;
+    @JSONField(name = "count")
+    private int count;
 
+    @JSONField(name = "state")
+    private int state;
 
-    public List<MessageItemMode> getViewedMessage() {
-        if (viewedMessage == null) {
-            viewedMessage = new ArrayList<>();
-        }
-        return viewedMessage;
-    }
-
-    public void setViewedMessage(List<MessageItemMode> viewedMessage) {
-        this.viewedMessage = viewedMessage;
-    }
-
-    public List<MessageItemMode> getNoViewMessage() {
-        if (noViewMessage == null) {
-            noViewMessage = new ArrayList<>();
-        }
-        return noViewMessage;
-    }
-
-    public void setNoViewMessage(List<MessageItemMode> noViewMessage) {
-        this.noViewMessage = noViewMessage;
-    }
-
-    public List<MessageItemMode> getAll() {
-        all = new ArrayList<>();
-        if (noViewMessage != null) {
-            all.addAll(noViewMessage);
-        }
-        if (viewedMessage != null) {
-            all.addAll(viewedMessage);
-        }
+    public List<MessageItemMode.MessageMode> getAll() {
         return all;
     }
 
-    public void setAll(List<MessageItemMode> all) {
+    public void setAll(List<MessageItemMode.MessageMode> all) {
         this.all = all;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

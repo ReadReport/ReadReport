@@ -71,7 +71,7 @@ public class MessageDetailFragment extends PtrFragment {
             @Override
             public void onNext(ResponseModel<MessageItemMode> listResponseModel) {
                 super.onNext(listResponseModel);
-                MessageItemMode detail = listResponseModel.getData();
+                MessageItemMode.MessageMode detail = listResponseModel.getData().getMessage();
                 title.setText(detail.getTitle());
                 content.setText(detail.getMessage());
                 time.setText(TimeUtils.millis2StringWithoutDate(Long.valueOf(detail.getCreateDate())));

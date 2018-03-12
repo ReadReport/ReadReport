@@ -58,6 +58,8 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
     private final int ALL = 1;
     private final int ONE = 0;
 
+    private boolean firstLoad;
+
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                                   .create(MyService.class);
         uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
         ifAll = ALL;
+
+        firstLoad = true;
     }
 
     @Override
@@ -105,7 +109,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
         ptrFrameLayout.autoRefresh();
         quickAdapter.bindToRecyclerView(recyclerView);
-        quickAdapter.setHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.view_divider_report_manage,null));
+        quickAdapter.setHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.view_divider_report_manage, null));
 
         recyclerView.setBackgroundColor(getResources().getColor(R.color.hui_f9f9f9));
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, DensityUtils.dip2px(getActivity(), 10), getResources().getColor(R.color.hui_f9f9f9)));
@@ -147,33 +151,40 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
 
     @Override
     protected void loadData() {
-        toolBarPop.setText("全部");
-        page = 0;
-        ifAll = ALL;
-        uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
-        getList(uid, page, ifAll);
-        myService.getFamily(uid).subscribe(new Subscriber<ResponseModel<List<FamilyItemMode>>>() {
-            @Override
-            public void onCompleted() {
+        if (firstLoad) {
+            toolBarPop.setText("全部");
+            page = 0;
+            ifAll = ALL;
+            uid = String.valueOf(UserManger.getInstance().getLoginUser().getId());
+            getList(uid, page, ifAll);
+            myService.getFamily(uid).subscribe(new Subscriber<ResponseModel<List<FamilyItemMode>>>() {
+                @Override
+                public void onCompleted() {
 
-            }
+                }
 
-            @Override
-            public void onError(Throwable e) {
+                @Override
+                public void onError(Throwable e) {
 
-            }
+                }
 
-            @Override
-            public void onNext(ResponseModel<List<FamilyItemMode>> listResponseModel) {
-                FamilyItemMode familyItemMode = new FamilyItemMode();
-                familyItemMode.setId("-1");
-                familyItemMode.setName("全部");
-                List<FamilyItemMode> newData = new ArrayList<>();
-                newData.add(familyItemMode);
-                newData.addAll(listResponseModel.getData());
-                mPopMenu.setNewData(newData);
-            }
-        });
+                @Override
+                public void onNext(ResponseModel<List<FamilyItemMode>> listResponseModel) {
+                    FamilyItemMode familyItemMode = new FamilyItemMode();
+                    familyItemMode.setId("-1");
+                    familyItemMode.setName("全部");
+                    List<FamilyItemMode> newData = new ArrayList<>();
+                    newData.add(familyItemMode);
+                    newData.addAll(listResponseModel.getData());
+                    mPopMenu.setNewData(newData);
+                    firstLoad = false;
+                }
+            });
+        } else {
+            page = 0;
+            ifAll = ONE;
+            getList(uid, page, ifAll);
+        }
     }
 
     private void initPopMenu() {

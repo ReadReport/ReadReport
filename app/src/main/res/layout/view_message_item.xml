@@ -1,93 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout android:id="@+id/parent"
-                                xmlns:android="http://schemas.android.com/apk/res/android"
-                                xmlns:app="http://schemas.android.com/apk/res-auto"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/message_item_ll"
+    android:background="@drawable/shape_white"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
     >
 
-    <!--bottom view-->
-    <TextView
-        android:id="@+id/message_delete"
-        android:layout_width="90dp"
-        android:layout_height="80dp"
-        android:background="@color/hong_f54f52"
-        android:gravity="center"
-        android:text="@string/message_delete"
-        android:textColor="@color/bai_ffffff"
-        android:textSize="14sp"
-        />
-
-    <!--top view-->
-    <android.support.constraint.ConstraintLayout
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="match_parent"
         >
 
+        <!--bottom view-->
         <TextView
-            android:id="@+id/message_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="成功提示注册"
-            android:textColor="@color/hei_333333"
+            android:id="@+id/message_delete"
+            android:layout_width="90dp"
+            android:layout_height="80dp"
+            android:background="@color/hong_f54f52"
+            android:gravity="center"
+            android:text="@string/message_delete"
+            android:textColor="@color/bai_ffffff"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/message_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
             />
 
-        <TextView
-            android:id="@+id/message_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:lines="1"
-            android:singleLine="true"
-            android:text="成功提示注册成功提示注册成功提示注册成功提示注册成功提示注册"
-            android:textColor="@color/hei_333333"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/message_title"
-            />
+        <!--top view-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            >
 
-        <TextView
-            android:id="@+id/message_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="2018-01-03"
-            android:textColor="@color/hui_ababab"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/message_title"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/message_title"
-            />
+            <TextView
+                android:id="@+id/message_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="成功提示注册"
+                android:textColor="@color/hei_333333"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/message_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_newslist_date"
-            app:layout_constraintBottom_toBottomOf="@id/message_date"
-            app:layout_constraintRight_toLeftOf="@id/message_date"
-            app:layout_constraintTop_toTopOf="@id/message_date"
-            />
+            <TextView
+                android:id="@+id/message_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="left"
+                android:lines="1"
+                android:singleLine="true"
+                android:text="成功提示注册成功提示注册成功提示注册成功提示注册成功提示注册"
+                android:textColor="@color/hei_333333"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/message_title"
+                />
 
-        <ImageView
-            android:id="@+id/message_notify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_newslist_prompt"
-            app:layout_constraintBottom_toTopOf="@id/message_title"
-            app:layout_constraintLeft_toRightOf="@+id/message_title"
-            />
+            <TextView
+                android:id="@+id/message_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="2018-01-03"
+                android:textColor="@color/hui_ababab"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/message_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/message_title"
+                />
 
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_newslist_date"
+                app:layout_constraintBottom_toBottomOf="@id/message_date"
+                app:layout_constraintRight_toLeftOf="@id/message_date"
+                app:layout_constraintTop_toTopOf="@id/message_date"
+                />
 
+            <ImageView
+                android:id="@+id/message_notify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_newslist_prompt"
+                app:layout_constraintBottom_toTopOf="@id/message_title"
+                app:layout_constraintLeft_toRightOf="@+id/message_title"
+                />
 
-</com.daimajia.swipe.SwipeLayout>
+        </android.support.constraint.ConstraintLayout>
+
+    </com.daimajia.swipe.SwipeLayout>
+</LinearLayout>
+
 
