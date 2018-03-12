@@ -93,6 +93,7 @@ public class MessageFragment extends PtrListFragment<MessageItemMode.MessageMode
             page = pageConut;
             ToastUtils.showLong(getString(R.string.report_not_more_data));
             ptrFrameLayout.refreshComplete();
+            quickAdapter.notifyDataSetChanged();
             return;
         }
         myService.getMessage(uid, page).subscribe(new PtrSubscriber<ResponseModel<MessageListMode>>(this) {
@@ -135,7 +136,7 @@ public class MessageFragment extends PtrListFragment<MessageItemMode.MessageMode
                 if (position == 0) {
                     helper.getConvertView().setBackgroundResource(R.drawable.shape_white_corner_top);
                     params.setMargins(0, DensityUtils.dip2px(getActivity(), 10), 0, 0);
-                } else if (position == this.getData().size() - 1 && page == pageConut) {
+                } else if (position == this.getData().size() - 1) {
                     params.setMargins(0, 0, 0, DensityUtils.dip2px(getActivity(), 10));
                     helper.getConvertView().setBackgroundResource(R.drawable.shape_white_corner_bottom);
                 } else {

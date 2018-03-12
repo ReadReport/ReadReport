@@ -15,7 +15,10 @@
         android:id="@+id/doctor_detail_suggestion_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="30dp"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/selector_btn_report_detail_open"
+        android:src="@drawable/selector_btn_report_detail_close"
         />
 </merge>
