@@ -24,8 +24,12 @@ import com.wy.report.util.StringUtils;
 import com.wy.report.util.ToastUtils;
 import com.wy.report.util.ViewUtils;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.functions.Action1;
 
 /*
  *
@@ -62,10 +66,10 @@ public class ReportQueryFragment extends NetworkFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        ViewUtils.setTextViewHintSize(name,11);
-        ViewUtils.setTextViewHintSize(hospital,11);
-        ViewUtils.setTextViewHintSize(account,11);
-        ViewUtils.setTextViewHintSize(password,11);
+        ViewUtils.setTextViewHintSize(name, 11);
+        ViewUtils.setTextViewHintSize(hospital, 11);
+        ViewUtils.setTextViewHintSize(account, 11);
+        ViewUtils.setTextViewHintSize(password, 11);
     }
 
     @Override
@@ -110,22 +114,22 @@ public class ReportQueryFragment extends NetworkFragment {
     @OnClick({R.id.report_query_submit})
     public void submit() {
 
-        if(familyMemberModel == null){
+        if (familyMemberModel == null) {
             ToastUtils.showShort(R.string.report_empty_tip_member);
             return;
         }
 
-        if(unitModel == null){
+        if (unitModel == null) {
             ToastUtils.showShort(R.string.report_empty_tip_hospital);
             return;
         }
 
-        if(StringUtils.isBlank(account)){
+        if (StringUtils.isBlank(account)) {
             ToastUtils.showShort(R.string.report_account_hint);
             return;
         }
 
-        if(StringUtils.isBlank(password)){
+        if (StringUtils.isBlank(password)) {
             ToastUtils.showShort(R.string.report_password_hint);
             return;
         }
@@ -141,6 +145,13 @@ public class ReportQueryFragment extends NetworkFragment {
                                  @Override
                                  public void onClick(DialogInterface dialog, int which) {
                                      router.open(getActivity(), AuthRouterManager.ROUTER_REPORT_MANAGE);
+                                     Observable.timer(300, TimeUnit.MILLISECONDS)
+                                               .subscribe(new Action1<Long>() {
+                                                   @Override
+                                                   public void call(Long aLong) {
+                                                       getActivity().finish();
+                                                   }
+                                               });
                                  }
                              });
                          }
