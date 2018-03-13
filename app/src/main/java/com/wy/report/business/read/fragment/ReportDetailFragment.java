@@ -59,6 +59,7 @@ public class ReportDetailFragment extends PtrFragment {
     private int         reportStatus;
     private String      reportId;
     private boolean     fromHome;
+    private boolean     simpleReport;
 
     /**********************************界面************************************/
     //-----用户信息------
@@ -172,6 +173,7 @@ public class ReportDetailFragment extends PtrFragment {
         if (argument != null) {
             reportId = argument.getString(BundleKey.BUNDLE_KEY_REPORT_ID);
             fromHome = argument.getBoolean(BundleKey.BUNDLE_KEY_REPORT_FROM_HOME);
+            simpleReport = argument.getBoolean(BundleKey.BUNDLE_KEY_REPORT_IS_SIMPLE, false);
         }
     }
 
@@ -194,6 +196,13 @@ public class ReportDetailFragment extends PtrFragment {
         setTitle(R.string.report_detail_title);
         ptrFrameLayout.autoRefresh();
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.NONE);
+        if (simpleReport) {
+            contentView.findViewById(R.id.report_detail_bottom).setVisibility(GONE);
+//            LinearLayout.LayoutParams paramNew = (LinearLayout.LayoutParams) suggestionView.getLayoutParams();
+//            LinearLayout.LayoutParams paramOld = (LinearLayout.LayoutParams) suggestionOldVersion.getLayoutParams();
+//            paramNew.setMargins(0, DensityUtils.dip2px(getActivity(), 10), 0, DensityUtils.dip2px(getActivity(), 10));
+//            paramOld.setMargins(0, DensityUtils.dip2px(getActivity(), 10), 0, DensityUtils.dip2px(getActivity(), 10));
+        }
     }
 
     @Override
