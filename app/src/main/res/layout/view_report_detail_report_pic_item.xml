@@ -11,6 +11,7 @@
         android:id="@+id/view_report_detail_report_pic_img"
         android:layout_width="105dp"
         android:layout_height="105dp"
+        android:scaleType="centerCrop"
         app:riv_corner_radius="5dp"
         />
 </LinearLayout>
