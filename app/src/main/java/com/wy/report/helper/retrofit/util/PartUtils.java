@@ -27,7 +27,7 @@ public class PartUtils {
         for (int i = 0; i < files.size(); i++) {
             File        file = files.get(i);
             RequestBody body = RequestBody.create(JPEG_MEDIA_TYPE, file);
-            fileParts[i] = MultipartBody.Part.createFormData(UPLOAD_FIELD_NAME, file.getName(), body);
+            fileParts[i] = MultipartBody.Part.createFormData(UPLOAD_FIELD_NAME + i, file.getName().replace(".png",".jpg"), body);
         }
         return fileParts;
     }
