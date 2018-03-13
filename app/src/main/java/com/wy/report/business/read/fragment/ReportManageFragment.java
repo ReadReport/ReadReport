@@ -151,7 +151,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
 
     @Override
     protected void loadData() {
-        if (firstLoad) {
+        if (firstLoad || toolBarPop.getText().equals("全部")) {
             toolBarPop.setText("全部");
             page = 0;
             ifAll = ALL;
@@ -195,6 +195,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
                 toolBarPop.setText(item.getName());
                 //所有
                 if (item.getId().equals("-1")) {
+                    firstLoad = true;
                     loadData();
                 } else {
                     //单个
