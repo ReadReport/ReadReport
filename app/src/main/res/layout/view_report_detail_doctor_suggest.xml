@@ -147,7 +147,6 @@
                 android:id="@+id/report_detail_quota_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 >
                 <!--正常指标title-->
@@ -235,7 +234,6 @@
             android:id="@+id/report_detail_suggestion_content_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:orientation="vertical"
             >
             <!--检查建议title-->

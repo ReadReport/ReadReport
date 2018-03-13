@@ -68,13 +68,13 @@ public class CloseTitleLayout extends LinearLayout {
                     if (mOnSwitchListener != null) {
                         mOnSwitchListener.onClose();
                     }
-                    mIcon.setImageResource(R.drawable.selector_btn_report_detail_close);
+                    mIcon.setImageResource(R.drawable.selector_btn_report_detail_open);
                     isOpen = false;
                 } else {
                     if (mOnSwitchListener != null) {
                         mOnSwitchListener.onOpen();
                     }
-                    mIcon.setImageResource(R.drawable.selector_btn_report_detail_open);
+                    mIcon.setImageResource(R.drawable.selector_btn_report_detail_close);
                     isOpen = true;
                 }
             }

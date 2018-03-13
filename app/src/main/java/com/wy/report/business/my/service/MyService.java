@@ -81,24 +81,24 @@ public interface MyService {
      *
      * @return
      */
-    @GET("/Message/get_messages")
-    Observable<ResponseModel<MessageListMode>> getMessage(@Query("mid") String mid);
+    @GET("/Message/app_dbg_list_messages")
+    Observable<ResponseModel<MessageListMode>> getMessage(@Query("mid") String mid,@Query("page") int page);
 
     /**
      * 消息详情
      *
      * @return
      */
-    @GET("/Message/get_message_details")
-    Observable<ResponseModel<MessageItemMode>> getMessageDetail(@Query("mid") String mid, @Query("mes_id") String msgId);
+    @GET("/Message/app_dbg_message_details")
+    Observable<ResponseModel<MessageItemMode>> getMessageDetail(@Query("mid") String mid, @Query("msid") String msgId);
 
     /**
      * 删除消息
      *
      * @return
      */
-    @GET("/Message/del_messges")
-    Observable<ResponseModel> delMessage(@Query("mid") String mid, @Query("single_del_messges") String msgId);
+    @GET("/Message/app_dbg_message_del")
+    Observable<ResponseModel> delMessage(@Query("mid") String mid, @Query("msid") String msgId);
 
 
     /**

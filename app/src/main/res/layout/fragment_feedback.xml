@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginRight="@dimen/dp_10"
+    android:background="@color/hui_f9f9f9"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
     >
 
     <ImageView
@@ -28,9 +29,11 @@
         android:background="@drawable/shape_white_corner"
         android:hint="@string/feedback_hint"
         android:inputType="textMultiLine"
+        android:textCursorDrawable="@null"
         android:gravity="left|top"
         android:padding="15dp"
-        android:textSize="19sp"
+        android:textSize="12sp"
+        android:textColor="@color/hei_333333"
         android:textColorHint="@color/hui_ababab"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
