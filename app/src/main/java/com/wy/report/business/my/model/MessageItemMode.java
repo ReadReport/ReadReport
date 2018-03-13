@@ -47,13 +47,10 @@ public class MessageItemMode {
         private String status;
 
         /**
-         * 发布状态（0未读 1已读
+         * 发布状态 0已读 1未读
          */
         @JSONField(name = "view_status")
-        private int viewStatus;
-
-        private boolean viewed;
-
+        private String viewStatus;
 
         public String getId() {
             return id;
@@ -111,12 +108,20 @@ public class MessageItemMode {
             this.status = status;
         }
 
+        public String getViewStatus() {
+            return viewStatus;
+        }
+
+        public void setViewStatus(String viewStatus) {
+            this.viewStatus = viewStatus;
+        }
+
         public boolean isViewed() {
-            return viewStatus == 1;
+            return viewStatus.equals("0");
         }
 
         public void setViewed(boolean viewed) {
-            viewStatus = viewed ? 1 : 0;
+            viewStatus = viewed ? "0" : "1";
         }
 
     }

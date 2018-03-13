@@ -63,6 +63,7 @@ public class MessageFragment extends PtrListFragment<MessageItemMode.MessageMode
     protected void initView(View content) {
         super.initView(content);
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.BOTH);
+        quickAdapter.bindToRecyclerView(recyclerView);
         setTitle(getString(R.string.message_title));
         loadData();
     }
@@ -121,7 +122,7 @@ public class MessageFragment extends PtrListFragment<MessageItemMode.MessageMode
     @Override
     public void handlePtrSuccess(Object o) {
         super.handlePtrSuccess(o);
-        quickAdapter.bindToRecyclerView(recyclerView);
+
         quickAdapter.setEmptyView(R.layout.view_message_empty);
     }
 
