@@ -1,6 +1,9 @@
 package com.wy.report.business.my.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
 
@@ -41,6 +44,32 @@ public class FeedbackFragment extends NetworkFragment {
     protected void initView(View contentView) {
         super.initView(contentView);
         setTitle(R.string.feedback_title);
+        content.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int start, int before,
+                                      int count) {
+                if (arg0.length() == 0) {
+                    // No entered text so will show hint
+                    content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                } else {
+                    content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
+                }
+            }
+        });
     }
 
     @Override

@@ -52,7 +52,7 @@
     <string name="setting_about">关于我们</string>
 
     <string name="feedback_title">意见反馈</string>
-    <string name="feedback_hint">欢迎您提出对我们的感受和建议</string>
+    <string name="feedback_hint">欢迎您提出对我们的感受和建议~</string>
     <string name="feedback_commit">发表</string>
     <string name="feedback_empty_tip">请输入内容哦～</string>
     <string name="feedback_empty_out_long">意见内容不超过200个字哦～</string>

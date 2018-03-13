@@ -1,6 +1,7 @@
 package com.wy.report.business.my.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,6 +23,7 @@ import com.wy.report.util.DensityUtils;
 
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
@@ -49,12 +51,14 @@ public class FamilyFragment extends PtrListFragment<FamilyItemMode, BaseViewHold
     protected void initView(View content) {
         super.initView(content);
         setTitle(getString(R.string.family_title));
-        int padding = DensityUtils.dip2px(getActivity(), 10);
-        recyclerView.setPadding(padding, padding, padding, 0);
-        recyclerView.setBackground(getResources().getDrawable(R.drawable.shape_white_corner));
 
         ptrFrameLayout.autoRefresh();
         ptrFrameLayout.setMode(PtrFrameLayout.Mode.NONE);
+    }
+
+    @Override
+    protected int contentLayoutID() {
+        return R.layout.fragment_message;
     }
 
     @Override
@@ -93,6 +97,19 @@ public class FamilyFragment extends PtrListFragment<FamilyItemMode, BaseViewHold
         return new BaseQuickAdapter<FamilyItemMode, BaseViewHolder>(R.layout.view_family_item) {
             @Override
             protected void convert(BaseViewHolder helper, final FamilyItemMode item) {
+                int                       position = getData().indexOf(item);
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) helper.getConvertView().getLayoutParams();
+                if (position == 0) {
+                    helper.getConvertView().setBackgroundResource(R.drawable.shape_white_corner_top);
+                    params.setMargins(0, DensityUtils.dip2px(getActivity(), 10), 0, 0);
+                } else if (position == this.getData().size() - 1) {
+                    params.setMargins(0, 0, 0, DensityUtils.dip2px(getActivity(), 10));
+                    helper.getConvertView().setBackgroundResource(R.drawable.shape_white_corner_bottom);
+                } else {
+                    helper.getConvertView().setBackgroundResource(R.drawable.shape_white);
+                    params.setMargins(0, 0, 0, 0);
+                }
+
                 helper.setText(R.id.family_name, item.getName());
                 helper.setText(R.id.family_relation, item.getRelationship());
             }
@@ -128,5 +145,11 @@ public class FamilyFragment extends PtrListFragment<FamilyItemMode, BaseViewHold
     public void notifyMemberAdd(FamilyItemMode mode) {
         quickAdapter.addData(mode);
         quickAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+        return PtrDefaultHandler2.checkContentCanBePulledDown(frame, recyclerView, header);
     }
 }
