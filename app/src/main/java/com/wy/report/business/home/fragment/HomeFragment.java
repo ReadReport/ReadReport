@@ -23,6 +23,7 @@ import com.wy.report.helper.retrofit.RetrofitHelper;
 import com.wy.report.helper.retrofit.subscriber.PtrSubscriber;
 import com.wy.report.helper.update.AppUpdateHelper;
 import com.wy.report.manager.auth.AuthManager;
+import com.wy.report.manager.auth.UserManger;
 import com.wy.report.manager.massage.MessageManager;
 import com.wy.report.manager.router.AuthRouterManager;
 import com.wy.report.util.StringUtils;
@@ -197,22 +198,23 @@ public class HomeFragment extends PtrFragment {
                    });
 
         //获取更新信息
-        homeService.getUpdateInfo().subscribe(new Subscriber<ResponseModel<AppUpdateMode>>() {
-            @Override
-            public void onCompleted() {
+        homeService.getUpdateInfo()
+                   .subscribe(new Subscriber<ResponseModel<AppUpdateMode>>() {
+                       @Override
+                       public void onCompleted() {
 
-            }
+                       }
 
-            @Override
-            public void onError(Throwable e) {
+                       @Override
+                       public void onError(Throwable e) {
 
-            }
+                       }
 
-            @Override
-            public void onNext(ResponseModel<AppUpdateMode> responseModel) {
-                new AppUpdateHelper(getActivity()).checkUpdate(responseModel.getData());
-            }
-        });
+                       @Override
+                       public void onNext(ResponseModel<AppUpdateMode> responseModel) {
+                           new AppUpdateHelper(getActivity()).checkUpdate(responseModel.getData());
+                       }
+                   });
     }
 
     @OnClick(R.id.home_report_upload)
@@ -232,7 +234,7 @@ public class HomeFragment extends PtrFragment {
 
     @OnClick(R.id.home_examination_reserve)
     public void examinationReserveClick() {
-        if(homeReportModel == null){
+        if (homeReportModel == null) {
             return;
         }
         authRouterManager.openWebView(getActivity(), homeReportModel.getTjyy(), getString(R.string.home_examination_reserve));
@@ -240,10 +242,12 @@ public class HomeFragment extends PtrFragment {
 
     @OnClick(R.id.home_self_interpretation)
     public void selfInterpretationClick() {
-        if(homeReportModel == null){
+        if (homeReportModel == null) {
             return;
         }
-        authRouterManager.openWebView(getActivity(), AuthManager.addAuthInfo(homeReportModel.getZwjd()), getString(R.string.home_self_interpretation));
+        if (UserManger.checkLogin()) {
+            authRouterManager.openWebView(getActivity(), AuthManager.addAuthInfo(homeReportModel.getZwjd()), getString(R.string.home_self_interpretation));
+        }
     }
 
     @OnClick(R.id.toolbar_msg_icon)
