@@ -424,6 +424,7 @@ public class ReportManageFragment extends PtrListFragment<ReportItemMode, BaseVi
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString(BundleKey.BUNDLE_KEY_REPORT_ID, "1");
+                bundle.putBoolean(BundleKey.BUNDLE_KEY_REPORT_IS_SIMPLE, true);
                 AuthRouterManager.getInstance().getRouter().open(getActivity(), AuthRouterManager.ROUTER_REPORT_DETAIL, bundle);
             }
         });

@@ -34,7 +34,7 @@ public interface ReadService {
      * @param reportId
      * @return
      */
-    @GET("/Report/do_submit_my_report")
+    @GET("/Doctor/rep_submit_to_doctor")
     Observable<ResponseModel> sumbitReport2Doctor(@Query("rep_id") String reportId);
 
     /**
