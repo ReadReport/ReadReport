@@ -191,7 +191,7 @@ public class StringUtils {
         } else if (sex.equals("女")) {
             return 2;
         }
-        return 1;
+        return 0;
     }
 
     /**
@@ -205,7 +205,7 @@ public class StringUtils {
         } else if (sex.equals("2") || sex.equals("女")) {
             return "女";
         }
-        return "男";
+        return "未知";
     }
 
     /**

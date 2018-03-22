@@ -251,9 +251,9 @@ public class ReportDetailFragment extends PtrFragment {
             long date = detailMode.getReportInfo().getUploadDate() == 0 ? userInfo.getDate() : detailMode.getReportInfo().getUploadDate();
             userCheckTime.setText(TimeUtils.millis2StringWithoutTime(date));
             userCheckHospital.setText(userInfo.getHospital());
-            isMale = userInfo.getSex().equals("男");
+            isMale = userInfo.getSex().equals("男") || userInfo.getSex().equals("未知");
+            checkMale(isMale);
         }
-        checkMale(isMale);
     }
 
     /**
