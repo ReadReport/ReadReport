@@ -10,7 +10,7 @@ android {
     compileSdkVersion 22
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.wy.report1"
+        applicationId "cn.zomcom.zomcomreport"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
